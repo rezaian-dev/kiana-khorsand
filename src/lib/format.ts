@@ -9,3 +9,7 @@ export function formatYear(value: Date) {
 export function getInitials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((word) => Array.from(word)[0] ?? "").join(" ");
 }
+
+export function formatDate(value: Date, options: Intl.DateTimeFormatOptions = { dateStyle: "long" }) {
+  return new Intl.DateTimeFormat("fa-IR", { ...options, calendar: "persian", timeZone: "Asia/Tehran" }).format(value);
+}

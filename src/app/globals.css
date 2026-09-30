@@ -1029,10 +1029,65 @@
 .command-search > svg { inline-size: 1.2rem; block-size: 1.2rem; flex-shrink: 0; color: var(--muted-foreground); }
 .command-field { inline-size: 100%; min-inline-size: 0; min-block-size: 2.75rem; background: transparent; outline: none; }
 .command-field::placeholder { color: var(--muted-foreground); }
-.command-demo [data-slot="command-list"] { block-size: 13rem; }
+.command-demo [data-slot="command-list"] { block-size: 16rem; }
 .command-demo [data-slot="command-item"] { min-block-size: 2.75rem; }
 .load-status { position: fixed; z-index: 70; inset-block-end: 1rem; inset-inline-start: 1rem; margin-inline-end: 1rem; padding: 0.75rem 1rem; color: var(--foreground); background: var(--card); border: 1px solid var(--input); border-radius: 1rem; box-shadow: var(--elevation-float); }
 @media (min-width: 40rem) { .sample-body { block-size: 17rem; min-block-size: 17rem; } }
 .count-badge { inline-size: 2.25rem; flex-shrink: 0; }
 .photo-card img { object-position: 50% 25%; }
 @media (prefers-reduced-motion: reduce) { .photo img { opacity: 1 !important; } .card-lift { transform: none !important; } }
+
+/* Native Calendar and Chart specimens; no mount gates or browser-time defaults. */
+.tools-grid { display: grid; gap: 1.25rem; align-items: stretch; }
+.tools-grid > * { min-inline-size: 0; }
+.tool-heading { margin-block-end: 1.5rem; }
+.tool-heading p { margin-block-start: 0.75rem; }
+.tool-caption { margin-block-start: 1rem; }
+.calendar-frame { inline-size: min(100%, 24rem); margin-inline: auto; }
+.brand-calendar { inline-size: 100%; font: inherit; }
+.brand-calendar .rdp-months { position: relative; }
+.brand-calendar .rdp-month { inline-size: 100%; }
+.brand-calendar .rdp-nav { position: absolute; inset-inline: 0; inset-block-start: 0; display: flex; justify-content: space-between; pointer-events: none; }
+.brand-calendar .rdp-button_previous, .brand-calendar .rdp-button_next { display: grid; place-items: center; inline-size: 2.75rem; block-size: 2.75rem; border: 1px solid var(--input); border-radius: 0.75rem; background: var(--card); color: var(--foreground); pointer-events: auto; }
+.brand-calendar .rdp-nav button[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.brand-calendar .rdp-month_caption { display: flex; align-items: center; justify-content: center; min-block-size: 2.75rem; padding-inline: 2.75rem; margin-block-end: 0.5rem; font-weight: 750; }
+.brand-calendar .rdp-month_grid { border-collapse: collapse; table-layout: fixed; inline-size: 100%; }
+.brand-calendar .rdp-weekday { block-size: 2rem; text-align: center; color: var(--muted-foreground); font-weight: 500; }
+.brand-calendar .rdp-day { padding: 0; text-align: center; block-size: 2.75rem; }
+.brand-calendar .calendar-day { inline-size: 100%; min-inline-size: 2.75rem; block-size: 2.75rem; min-block-size: 2.75rem; padding: 0; border: 2px solid transparent; border-radius: 0.7rem; box-shadow: none; font-variant-numeric: tabular-nums; }
+.brand-calendar .rdp-today .calendar-day { border-color: var(--primary); font-weight: 750; }
+.brand-calendar .rdp-outside { color: var(--muted-foreground); }
+.brand-calendar .rdp-disabled .calendar-day { opacity: 0.4; }
+.brand-calendar .calendar-day[data-selected-single="true"], .brand-calendar .calendar-day[data-range-start="true"], .brand-calendar .calendar-day[data-range-end="true"] { background: var(--primary); color: var(--primary-foreground); }
+.brand-calendar .calendar-day[data-range-middle="true"] { background: var(--secondary); color: var(--secondary-foreground); border-radius: 0; }
+.brand-calendar .rdp-hidden { visibility: hidden; }
+.brand-calendar .calendar-day:focus-visible { outline-offset: -3px; }
+.brand-calendar .rdp-dropdowns { display: flex; gap: 0.5rem; align-items: center; }
+.brand-calendar .rdp-dropdown_root { position: relative; min-block-size: 2.75rem; display: flex; align-items: center; }
+.brand-calendar .rdp-dropdown { position: absolute; inset: 0; inline-size: 100%; opacity: 0; cursor: pointer; }
+.brand-calendar .rdp-caption_label { display: flex; align-items: center; gap: 0.25rem; }
+.calendar-selection { display: flex; align-items: center; justify-content: center; text-align: center; min-block-size: 4.75rem; margin-block-start: 1rem; padding: 0.5rem 1rem; border: 1px solid var(--border); background: var(--secondary); color: var(--secondary-foreground); border-radius: 1rem; }
+.chart-tabs { inline-size: 100%; margin-block-end: 1rem; }
+.chart-tabs [data-slot="tabs-trigger"] { flex: 1; min-block-size: 2.75rem; }
+.chart-panel { block-size: 18rem; min-block-size: 18rem; }
+.sample-table { inline-size: 100%; block-size: 100%; table-layout: fixed; border-collapse: collapse; }
+.sample-table th, .sample-table td { text-align: start; line-height: 1.5; padding: 0.4rem 0.6rem; border-block-end: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+.sample-table thead { background: var(--muted); }
+.sample-table tbody th { font-weight: 500; }
+.brand-chart { min-inline-size: 0; inline-size: 100%; block-size: 18rem; font-size: 1rem; }
+.brand-chart .recharts-cartesian-axis-tick text { fill: var(--muted-foreground); font-family: inherit; font-size: 1rem; }
+.brand-chart .recharts-cartesian-grid line { stroke: var(--border); }
+.brand-chart .recharts-wrapper:focus-visible, .brand-chart .recharts-surface:focus-visible { outline: 2px solid var(--ring); outline-offset: -2px; border-radius: 0.5rem; }
+.chart-tooltip { max-inline-size: min(16rem, 80vw); padding: 0.75rem; border: 1px solid var(--input); border-radius: 1rem; background: var(--popover); color: var(--popover-foreground); box-shadow: var(--elevation-float); font-size: 1rem; }
+.chart-tooltip > p { font-weight: 750; margin-block-end: 0.4rem; }
+.chart-value { display: flex; align-items: center; gap: 0.5rem; }
+.chart-value strong { margin-inline-start: auto; font-variant-numeric: tabular-nums; }
+.chart-key { display: inline-block; inline-size: 0.75rem; block-size: 0.75rem; flex-shrink: 0; border-radius: 0.25rem; }
+.chart-legend, .chart-legend > span { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; }
+@media (max-width: 25rem) {
+  .calendar-card { margin-inline: -1rem; padding-inline: 0; border-inline: 0; border-radius: 0; }
+  .calendar-card .tool-heading, .calendar-card .tool-caption { margin-inline: 1rem; }
+  .calendar-frame { inline-size: calc(100% - 0.75rem); }
+  .calendar-selection { margin-inline: 0.75rem; }
+}
+@media (min-width: 64rem) { .tools-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }

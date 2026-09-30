@@ -6,6 +6,9 @@
 | npm (bundled with Node) | 11.19.0 | https://nodejs.org/dist/index.json |
 | create-next-app (one-off scaffolder) | 16.3.8 | https://registry.npmjs.org/create-next-app/16.3.8 |
 | `@better-auth/mongo-adapter` | 1.7.6 | https://registry.npmjs.org/@better-auth/mongo-adapter/1.7.6 |
+| `@daypicker/persian` (Phase 2 approved calendar add-on) | 10.0.2 | https://registry.npmjs.org/@daypicker/persian/10.0.2 |
+| `@daypicker/react` (transitive compatibility facade) | 10.0.2 | https://registry.npmjs.org/@daypicker/react/10.0.2 |
+| `date-fns-jalali` (approved transitive runtime prerelease exception) | 4.1.0-0 | https://registry.npmjs.org/date-fns-jalali/4.1.0-0 |
 | `@hookform/resolvers` | 5.9.1 | https://registry.npmjs.org/@hookform/resolvers/5.9.1 |
 | `better-auth` | 1.7.6 | https://registry.npmjs.org/better-auth/1.7.6 |
 | `class-variance-authority` | 0.7.1 | https://registry.npmjs.org/class-variance-authority/0.7.1 |
@@ -43,7 +46,7 @@
 
 ## Client Component register
 
-Updated in Phase 2 part 2 (2026-10-01). **23 authored client entry files**, including one context-only module. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 2 part 3 (2026-10-01). **31 authored client entry files**, including two context-only modules. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` | Client reason and boundary |
 | --- | --- |
@@ -70,10 +73,18 @@ Updated in Phase 2 part 2 (2026-10-01). **23 authored client entry files**, incl
 | `ui/dropdown-menu-content.tsx` | DropdownMenuContent — forceMount portal and controlled AnimatePresence for post-interaction Motion exit/entry. |
 | `ui/sheet-content.tsx` | SheetContent — controlled forceMount portal/overlay/content, Motion presence, reduced-motion handling. |
 | `ui/sonner.tsx` | Toaster — Sonner leaf with Persian region label, RTL, stable semantic CSS theme; native transitions/animations disabled. |
+| `sections/showcase/calendar-demo.tsx` | CalendarDemo — selected date state; module-level fixed TZDate samples, not browser/current time; no persistence or availability claim. |
+| `sections/showcase/chart-demo.tsx` | ChartDemo — explicit table/chart tab state and Recharts interaction; first SSR and hydration remain the same complete table, chart mounts only after user selection. |
+| `ui/calendar.tsx` | Calendar — native interactive DayPicker with local component/formatter functions, enforced Persian/RTL/Tehran and required deterministic today prop; fixed weeks, native animation disabled. |
+| `ui/calendar-day-button.tsx` | CalendarDayButton — native focus modifier and button ref effect with preventScroll; no autoFocus on initial page. |
+| `ui/chart-context.ts` | ChartContext/useChart — native client context hook and config type; no component or barrel. |
+| `ui/chart-container.tsx` | ChartContainer — useId, native chart context and ResponsiveContainer; fixed-height slot and deterministic initial dimensions. |
+| `ui/chart-tooltip-content.tsx` | ChartTooltipContent — native chart context and active payload, safe type narrowing and Intl numeric formatting; no raw vendor payload read. |
+| `ui/chart-legend-content.tsx` | ChartLegendContent — native chart context for authored Persian labels/colors. |
 
-Header, Footer, Logo, ContactLinks, SocialIcon, PageHeading, SectionSurface, JsonLd, CardSkeleton, Showcase, FaqDemo, pages, loading, layouts and metadata conventions remain server files. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
+Header, Footer, Logo, ContactLinks, SocialIcon, PageHeading, SectionSurface, JsonLd, CardSkeleton, Showcase, FaqDemo, pages, loading, layouts and metadata conventions remain server files. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the part-2 delivery record supersede those statuses.
+No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the part-3 delivery record supersede those statuses.
 
 ## Version selection and compatibility
 
@@ -364,7 +375,7 @@ Continuation authorized by «ادامه», within Phase 2 only. Package.json, pa
 - Motion uses strict LazyMotion/domAnimation plus `motion/react-m`, system reduced motion, AnimatePresence initial=false for post-load menus, transform-based hover/tab/progress effects and scoped load animation; no initial viewport content is hidden — https://motion.dev/docs/react-lazy-motion ; https://motion.dev/docs/react-motion-config ; https://motion.dev/docs/react-animate-presence ; https://motion.dev/docs/react-use-reduced-motion ; https://motion.dev/docs/react-use-scroll ; https://motion.dev/docs/react-use-animate ; https://motion.dev/docs/react-use-in-view
 - Embla 8.6.0 is the mandated native slide transport; autoplay starts only after the explicit eligibility gates, stops on interaction/focus/hover and cleans up. Hosted autoplay docs returned 404, so the official version-pinned repository docs were used — https://github.com/davidjerleke/embla-carousel/tree/v8.6.0/packages/embla-carousel-docs/src/content/pages/plugins ; https://www.embla-carousel.com/api/events/ ; https://www.embla-carousel.com/api/options/
 - Carousel scrollability uses useSyncExternalStore, a memoized subscription with cleanup, primitive immutable snapshots and a deterministic server snapshot; this replaces synchronous effect state updates without lint suppression — https://react.dev/reference/react/useSyncExternalStore
-- cmdk provides local ranking/keyboard selection; CommandDemo only routes to its three static fragment destinations, not untrusted input or DB search — https://github.com/dip/cmdk ; https://nextjs.org/docs/app/api-reference/functions/use-router
+- cmdk provides local ranking/keyboard selection; CommandDemo only routes to its four static fragment destinations, not untrusted input or DB search — https://github.com/dip/cmdk ; https://nextjs.org/docs/app/api-reference/functions/use-router
 - Next getImageProps supports native picture/art direction; explicit source dimensions, ratio boxes, lazy image gallery and a visible loading base reserve geometry. Photo state only handles load fade and error; no blur placeholder or client-only mount gate — https://nextjs.org/docs/app/api-reference/components/image
 - RHF plus zodResolver/messageSchema validates the local demo; inline errors reserve space and the message explicitly says nothing was sent. Sonner uses CSS semantic colors rather than a hydration-time theme branch; its own animation is disabled — https://ui.shadcn.com/docs/forms/react-hook-form ; https://react-hook-form.com/docs/useform ; https://github.com/react-hook-form/resolvers ; https://zod.dev/api ; https://ui.shadcn.com/docs/components/radix/sonner ; https://sonner.emilkowal.ski/toaster
 - Loading shares the actual server Showcase geometry but is inert and accompanied by a visible/live status, preventing duplicate usable forms/menu controls while navigation is pending — https://nextjs.org/docs/app/api-reference/file-conventions/loading ; https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert
@@ -424,3 +435,65 @@ Both proposals await explicit approval. Neither was treated as authorized by the
 TypeScript, ESLint and DB-independent production build passed on pinned Node 24.21.0/npm 11.19.0. Build generated nine static outputs including designed framework not-found, robots and brand metadata routes. npm audit reported **0 vulnerabilities** at every severity. Package/lock versions are unchanged. These checks are not proof of responsive/visual/focus/animation/zero-flicker behavior. No browser, test suite, DB connection/ping/seed/script, live handler, SEO validator or Core Web Vitals measurement ran.
 
 Delivery: stopped the previous part-1 server and started the freshly built production app on 0.0.0.0:3000. The process reported ready with no preview-blocking warning. This is server-readiness evidence only, not a browser/interaction check.
+
+
+## Phase 2 part 3 — calendar, chart and phase review
+
+The user's «ادامه» following the two narrowly stated proposals was taken as permission to execute those proposals only. This is not blanket permission for prereleases, alternate date libraries, registry forks or dependency downgrades. Phase 3 has not started; the temporary noindex showcase remains for approval.
+
+### Dependency and CLI provenance
+
+- Before installation, rechecked npm latest manifests for @daypicker/persian, @daypicker/react, react-day-picker and Recharts: all remain 10.0.2 / 10.0.2 / 10.0.2 / 3.10.1. React/@types >=16.8.0 and Node >=18 fit the exact installed React 19.3.0 and Node 24.21.0; Recharts peers include React 19. No force/legacy-peer-deps/overrides/experimental flags — https://registry.npmjs.org/@daypicker/persian/10.0.2 ; https://registry.npmjs.org/@daypicker/react/10.0.2 ; https://registry.npmjs.org/react-day-picker/10.0.2 ; https://registry.npmjs.org/recharts/3.10.1
+- Installed exact @daypicker/persian 10.0.2 with `--save-exact --strict-peer-deps --engine-strict`. The lock adds only this direct dependency and its new @daypicker/react 10.0.2 / date-fns-jalali 4.1.0-0 transitives. Existing @date-fns/tz 1.5.0 satisfies ^1.4.1 and did not change. The exact required Jalali runtime prerelease is the previously proposed limited exception, not replaced with the also-prerelease latest 4.4.0-0 — https://registry.npmjs.org/date-fns-jalali/4.1.0-0 ; https://registry.npmjs.org/@date-fns/tz/1.5.0
+- Official DayPicker v10 moved Persian support to its separate package; the shadcn calendar page's old react-day-picker/persian import is superseded by the current library migration guide. Existing react-day-picker is still the documented compatibility package and supplies TZDate/types/helpers without adding another direct package — https://daypicker.dev/upgrading ; https://daypicker.dev/localization/persian ; https://daypicker.dev/localization/setting-time-zone
+- Generated Calendar and Chart through pinned shadcn CLI 4.21.0. For Chart, a temporary cached copy of the official radix-nova registry changed exactly one dependency declaration, recharts@3.8.0 to recharts@3.10.1, before the CLI ran. Registry component source was unchanged at that step; afterward it underwent the normal local styling/splitting. Original generated files were kept only in authoring cache, not duplicate application files. Branded Button was restored after Calendar's native dependency generation — https://ui.shadcn.com/docs/cli ; https://ui.shadcn.com/r/styles/radix-nova/chart.json ; https://ui.shadcn.com/docs/components/radix/calendar ; https://ui.shadcn.com/docs/components/radix/chart
+- No unrs-resolver install-script permission was granted. npm repeated its previously recorded allowScripts warning; successful audit/build does not imply this separate tooling exception was removed.
+
+### Calendar decisions and official sources
+
+- Native DayPicker and faIR come from @daypicker/persian. Required `today: Date`, fixed demonstration dates and explicit Asia/Tehran avoid browser clock/timezone defaults. Shared formatDate is native Intl with calendar=persian/timeZone=Asia/Tehran, used by captions, digits, day data attributes and selected-date feedback. Native internal date-fns-jalali is confined to the documented Calendar implementation — https://daypicker.dev/localization/persian ; https://daypicker.dev/localization/setting-time-zone ; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+- Fixed six weeks prevent month-to-month card-height changes; startMonth/endMonth and disabled matchers define only the disclosed sample range, not booking availability. No experimental noonSafe or native CSS animation is enabled — https://daypicker.dev/docs/appearance ; https://daypicker.dev/docs/navigation ; https://daypicker.dev/docs/selection-modes
+- CalendarDayButton preserves the generated native focused-modifier effect, but requests preventScroll to avoid changing document scroll. No initial autoFocus. CalendarChevron follows the native Nav orientation and flips horizontally once for RTL, without the generated duplicate RTL transforms — https://daypicker.dev/guides/custom-components ; https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus ; installed official react-day-picker 10.0.2 `dist/esm/components/Nav.js` and `useFocus.js`
+- Calendar keeps the original discriminated DayPicker props union, intersected with required today. An initial Omit erased the mode-specific selected/onSelect fields; TypeScript caught it and the union-preserving type fixed it without assertions/suppression. Calendar, CalendarDayButton and CalendarChevron each have their own named file; unused generated Root/WeekNumber render callbacks were not retained.
+
+### Chart decisions and official sources
+
+- Native ChartContainer/ChartStyle/context/Tooltip/Legend were split into individual native-named files. Config values are authored code, not DB/user CSS. ChartStyle uses a style text node instead of raw HTML and escapes `<`; ids come from useId and a stable safe-character normalization. Tooltip uses type-narrowed scalar values, no any/unsafe payload access, and Persian Intl digits — https://ui.shadcn.com/docs/components/radix/chart ; https://react.dev/reference/react/useId
+- ResponsiveContainer uses ResizeObserver to measure its parent; initialDimension alone does **not** establish the final browser geometry on the server. Recharts native graphical item state also depends on client registration. Rather than claim a fully measured server graph or use a mount gate, the default is the complete accessible data table. The chart mounts only after the user's explicit tab selection; nothing is automatically hidden/replaced after hydration. Both panels reserve 288px. This choice is for the showcase, not an early implementation of the admin dashboard — https://recharts.github.io/en-US/api/ResponsiveContainer/ ; https://recharts.github.io/en-US/guide/sizes/ ; installed official Recharts 3.10.1 `es6/cartesian/Bar.js` and `es6/component/ResponsiveContainer.js`
+- The chart uses native BarChart/Bar/CartesianGrid/XAxis/YAxis, reversed X axis, right Y axis, Persian label/value text, native accessibilityLayer and a Persian SVG aria-label. Tooltip/legend are native shadcn composition. Bar and Tooltip animations are explicitly disabled so there is no second authored animation system — https://recharts.github.io/en-US/api/BarChart/ ; https://recharts.github.io/en-US/api/Bar/ ; https://ui.shadcn.com/docs/components/radix/chart
+- The guessed Recharts accessibility-guide URL returned 404; accessibility behavior is referenced only to the documented BarChart API and installed RootSurface implementation, not an invented guide. No browser keyboard/tooltip result is asserted.
+
+### Updated complete Phase 2 checklist
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Approved light/dark/mono emblem and outlined lockup SVG assets | Met |
+| 2 | Single server Logo, accessible home link, dimensions and usage guidance | Met |
+| 3 | Icons, manifest and default Persian sharing assets | Met |
+| 4 | Remove Phase 1 logo preview and rejected concepts | Met |
+| 5 | Local official variable font/license and no-late-swap tradeoff | Met |
+| 6 | Prepaint light/dark/system theme with stable control | Met |
+| 7 | All hue scales, gradient families and semantic tokens | Met |
+| 8 | Shared elevation/glow/focus/motion tokens and CLI Button | Met |
+| 9 | Honest noindex review, identical inert loading and downloads | Met |
+| 10 | Naming, one component per file, official sources, 31-entry client register and allowed checks | Met; native compound shadcn names are the specified exception |
+| 11 | Motion/RTL, required primitives, Calendar/Chart and interactive/form states | Met; two limited dependency/registry proposals applied |
+| 12 | Server header, five links, fullscreen mobile and account menus | Met for UI; real session/logout/live count remains Phase 7 |
+| 13 | Server footer/social/contact/booking and crisis/confidentiality/legal bands | Met; unavailable contact/license values remain null |
+| 14 | Surfaces/decorations, typed samples, photographic assets/manifests and reusable skeletons | Met; earlier fictional/upsampled image disclosure unchanged |
+| 15 | Designed 404 and global SEO/robots/security/JSON-LD foundation | Met for phase scope; DB sitemap and page-specific SEO remain later |
+| 16 | Comprehensive temporary noindex showcase and phase source review | Met; awaiting user design approval, not browser-tested |
+
+**Checklist: 16 of 16 met for Phase 2 implementation scope. No unmet naming item.** This is not whole-site completion, production publication, real booking/auth/live implementation or visual certification. Keep the showcase until approval; only the next authorized phase replaces it with Home.
+
+**SEO checklist: met for this temporary review and Phase 2 foundations by source reasoning.** Existing noindex/canonical/metadata, server HTML/h1, images, icons and escaped truthful schema are preserved. Calendar/table data are explicitly fictional UI specimens and have no clinical/Review/AggregateRating markup. DB sitemap, actual content page metadata and deployment validation remain their specified later phases.
+
+**Zero-flicker check: met by design reasoning for the current showcase, not browser verification or a universal guarantee.** Previous font/theme/chrome/loading/image/carousel safeguards remain. Calendar uses deterministic TZDate samples, required today, six rows, stable selected feedback and no initial autofocus. Chart begins as complete HTML table and only changes on user choice, with equal-height panels; it is not hidden pending hydration and is not a post-mount automatic replacement. Native animations are off. Optional-font fallback may persist and scrollbar compensation still needs manual review; signed-in/backend/sidebar/live behavior is not implemented or validated yet.
+
+**Deviations needing approval: none new.** Accepted narrowly scoped date-fns-jalali runtime exception and registry declaration adjustment are recorded above; earlier tooling exceptions and image/font disclosures remain. No extra project scripts, tests, config flags or dependencies beyond the approved calendar add-on were added.
+
+### Allowed checks and delivery
+
+`npm run typecheck`, `npm run lint` and `NEXT_TELEMETRY_DISABLED=1 npm run build` all passed after the changes; nine static outputs, no DB module/access. `npm audit --json` returned 0 info/low/moderate/high/critical vulnerabilities. Lockfile changes are exactly the approved direct package plus two new transitives; no existing package downgrade. No browser, test suite, DB connection/ping/seed/script, SSE/live handler, SEO validator or Core Web Vitals measurement was run.
+
+Delivery: the previous server was stopped and the final Phase 2 production build restarted on 0.0.0.0:3000. It reported ready without preview-blocking warnings; readiness is not browser/interaction verification. Calendar and the user-selected chart are available in the new «زمان و داده» section. No Phase 3 work has begun.

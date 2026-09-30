@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CalendarDemo } from "@/components/sections/showcase/calendar-demo";
+import { ChartDemo } from "@/components/sections/showcase/chart-demo";
 import { CommandDemo } from "@/components/sections/showcase/command-demo";
 import { MessageDemo } from "@/components/sections/showcase/message-demo";
 import { StateDemo } from "@/components/sections/showcase/state-demo";
@@ -60,12 +62,16 @@ export function Showcase({ isLoading = false }: Props) {
         <div className="demo-grid"><div className="design-card" id="form-demo"><MessageDemo /></div><div className="design-card" id="states"><StateDemo /><div className="disabled-field"><Label htmlFor="sample-disabled">نمونهٔ ورودی غیرفعال</Label><Input id="sample-disabled" disabled value="در انتظار تکمیل اطلاعات" readOnly /></div></div></div>
         <div className="design-card command-card"><CommandDemo /></div>
       </SectionSurface>
+      <SectionSurface tone="orchid" id="planning-demo">
+        <div className="section-heading"><div><p className="section-eyebrow">۰۳ / زمان و داده</p><h2>جزئیات دقیق، تجربهٔ ساده.</h2></div><p>تقویم فارسی و نمودار هم‌رنگ با هر دو تم؛ صرفاً برای بازبینی اجزای مشترک.</p></div>
+        <div className="tools-grid"><div className="design-card calendar-card"><CalendarDemo /></div><div className="design-card"><ChartDemo /></div></div>
+      </SectionSurface>
       <SectionSurface tone="peach-glow" id="image-demo">
-        <div className="section-heading"><div><p className="section-eyebrow">۰۳ / تصویر و حرکت</p><h2>انسانی، روشن و بی‌تکلف.</h2></div><p>تصاویر نمونه‌اند. اسلایدر با لمس، فلش و نقطه‌ها حرکت می‌کند؛ پخش خودکار با اشاره‌گر و فوکوس متوقف می‌شود.</p></div>
+        <div className="section-heading"><div><p className="section-eyebrow">۰۴ / تصویر و حرکت</p><h2>انسانی، روشن و بی‌تکلف.</h2></div><p>تصاویر نمونه‌اند. اسلایدر با لمس، فلش و نقطه‌ها حرکت می‌کند؛ پخش خودکار با اشاره‌گر و فوکوس متوقف می‌شود.</p></div>
         <SlideRail label="نمونه‌های تصویری سیستم طراحی" slides={cards.map((card) => ({ key: card.image.key, content: <Lift className="card-lift"><article className="sample-card"><Photo image={card.image} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 82vw" className="photo-card" /><div className="sample-body"><span className="sample-tag">تصویر نمونهٔ هوش مصنوعی</span><h3>{card.title}</h3><p>{card.detail}</p></div></article></Lift> }))} />
       </SectionSurface>
       <SectionSurface tone="dream" id="questions">
-        <div className="section-heading"><div><p className="section-eyebrow">۰۴ / جزئیات قابل اتکا</p><h2>حتی وقتی محتوا هنوز آماده نیست.</h2></div><p>اسکلت هم‌اندازه، پرسش‌های بازشونده و یک صفحهٔ گم‌شدهٔ راهنما.</p></div>
+        <div className="section-heading"><div><p className="section-eyebrow">۰۵ / جزئیات قابل اتکا</p><h2>حتی وقتی محتوا هنوز آماده نیست.</h2></div><p>اسکلت هم‌اندازه، پرسش‌های بازشونده و یک صفحهٔ گم‌شدهٔ راهنما.</p></div>
         <div className="detail-grid"><div className="design-card"><h3>پیش از ادامه بدانید</h3><FaqDemo /><Link href="/design-missing" prefetch={false} className="quiet-link">دیدن صفحهٔ ۴۰۴<ArrowUpLeft aria-hidden="true" /></Link></div><div className="skeleton-demo"><CardSkeleton /><p className="muted">نمونهٔ اسکلت کارت؛ بدون انیمیشن مداوم و با جای تصویر رزروشده.</p></div></div>
         <Lift><div className="review-note scroll-reveal"><Sparkles aria-hidden="true" /><div><h3>پایه‌ها آمادهٔ بازبینی‌اند.</h3><p>{formatNumber(16)} خانوادهٔ گرادیان، نشان تأییدشده و اجزای مشترک؛ صفحهٔ اصلی، محتوا و عملیات واقعی هنوز وارد این نسخه نشده‌اند.</p></div></div></Lift>
       </SectionSurface>

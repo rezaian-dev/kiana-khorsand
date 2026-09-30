@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowUpLeft, Image, Palette, SlidersHorizontal } from "lucide-react";
+import { ArrowUpLeft, CalendarDays, Image, Palette, SlidersHorizontal } from "lucide-react";
 import { Command } from "@/components/ui/command";
 import { CommandInput } from "@/components/ui/command-input";
 import { CommandList } from "@/components/ui/command-list";
@@ -12,6 +12,7 @@ import { CommandItem } from "@/components/ui/command-item";
 const links = [
   { href: "#identity", label: "هویت و رنگ‌ها", icon: Palette },
   { href: "#interaction", label: "فرم و حالت‌ها", icon: SlidersHorizontal },
+  { href: "#planning-demo", label: "تقویم و نمودار", icon: CalendarDays },
   { href: "#image-demo", label: "تصاویر و اسلایدر", icon: Image },
 ];
 
