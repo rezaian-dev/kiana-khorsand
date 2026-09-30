@@ -46,7 +46,7 @@
 
 ## Client Component register
 
-Updated in Phase 3 (2026-10-01). **26 authored client entry files**, including two context-only modules. No new client entry was added; five showcase-only entries were deleted. Retained foundation entries are listed even when Home does not mount them. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 4 (2026-10-01). **26 authored client entry files**, including two context-only modules. Phase 4 adds no client entry; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` | Client reason and boundary |
 | --- | --- |
@@ -77,9 +77,9 @@ Updated in Phase 3 (2026-10-01). **26 authored client entry files**, including t
 | `ui/chart-tooltip-content.tsx` | ChartTooltipContent — native chart context and active payload, safe type narrowing and Intl numeric formatting; no raw vendor payload read. |
 | `ui/chart-legend-content.tsx` | ChartLegendContent — native chart context for authored Persian labels/colors. |
 
-Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, Home and every Home section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
+Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 3 delivery record supersede those statuses.
+No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 4 delivery record supersede those statuses.
 
 ## Version selection and compatibility
 
@@ -558,3 +558,62 @@ Professional claims are restricted to the user-provided name/role. No degree, in
 Pinned Node 24.21.0/npm 11.19.0: TypeScript, ESLint and DB-independent Next production build passed; nine static outputs, with Home replacing the showcase. npm audit reported 0 at all severities. Package/lock diff is empty. No database connection/ping/script/seed, live handler/bus, browser test, test suite, SEO validator or Core Web Vitals measurement ran.
 
 Delivery: stopped the Phase 2 production process and restarted the completed Home build on 0.0.0.0:3000. The process reported ready without preview-blocking warnings. This is server readiness only, not a browser/visual/interaction validation. The next authorized work remains Phase 4.
+
+
+## Phase 4 — About and Services
+
+The user's latest «ادامه» approved Phase 3 and authorized only About and Services. No Phase 5 article/course page, booking/contact form, auth, repository, DB query or live behavior was built. Package/lock/config are unchanged. No new asset or dependency was needed.
+
+### Official sources and decisions
+
+- Refreshed Next static Metadata documentation before implementation: each static server page exports its own Persian title/description, self canonical, index/follow and fa_IR OG/Twitter values. Root file-based sharing images, icons, locale and title template remain in place; no new metadata helper or package — https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Refreshed loading convention: each new route has its own nearest loading boundary rendering its exact page template, made inert with an out-of-flow live status. Group-level Home fallback is retained for `/`; the public layout has no newly added asynchronous/layout work outside the inner boundaries. Native static routes do not require a loading delay or artificial Promise — https://nextjs.org/docs/app/api-reference/file-conventions/loading
+- Native server JSON-LD continues to escape `<`. Only loaded content emits schema; inert loading copies do not emit duplicate structured-data scripts. AboutPage points to the same Person identity as Home. Services uses WebPage and the same four Service identities, each linked to its real anchor. No clinic/medical-organization inference, fabricated degree, synthetic Person image, fee, availability, Review or AggregateRating — https://nextjs.org/docs/app/guides/json-ld
+- Used published Schema.org 30.1 terms, not development-only extensions; inspected AboutPage/BreadcrumbList/ListItem/Service/Person and mainEntity/breadcrumb/isPartOf/provider definitions in the previously downloaded official stable release dataset before use — https://schema.org/version/30.1/ ; https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/30.1/schemaorg-current-https.jsonld
+- Each inner page has visible PageHeading breadcrumbs and matching two-position BreadcrumbList: Home then current page, with absolute URLs and integer positions. Service hashes are sections, not extra breadcrumb levels. Google documentation is guidance only; no eligibility or rich-result validation is claimed — https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
+- Services uses native hash anchors with the existing root scroll-padding for the fixed header, no scroll writes, active-section observer or new client navigation layer. Existing Home service links now reach actual sections; unavailable booking destinations retain prefetch=false. Home's previous all-other-destinations disclosure was corrected — https://nextjs.org/docs/app/api-reference/components/link
+- Lucide remains named, tree-shakable inline SVG imports with decorative aria-hidden. Icons supplement visible labels; no icon loader, new library or logo change — https://lucide.dev/guide/react/
+- Reused local Photo/getImageProps leaves with reserved 4:5 and 4:3 ratios and existing reduced-motion-aware post-load opacity only. No above-fold entrance, full-bleed photo section or new high-priority image; only Home Hero keeps high priority. Reused SectionSurface semantic gradients and elevation tokens in both themes — https://nextjs.org/docs/app/api-reference/components/image ; https://motion.dev/docs/react-use-reduced-motion
+
+### Implementation and content integrity
+
+About has five server sections: framed profile introduction, three collaboration principles, transparent professional-details panel, three-part collaboration guide and a quiet final booking invitation. Only supplied name/role are stated as identity. The license remains null, and education/experience are explicitly awaiting supplied and verified information. The draft collaboration copy identifies principles and questions, not a claimed treatment method or guaranteed result. The final copy and real credentials need owner approval before publication.
+
+Services has four crawlable anchor links and four detailed sections with matching photos, bounded descriptions, discussion/preparation lists and safety/privacy notes. Online is explicitly a delivery format whose suitability must be considered; the website does not claim a video-call platform. Fees, duration, capacity and dates are not invented. Preparation guidance does not diagnose or prescribe. BookingPrompt is genuinely shared by both new pages; BookingBar remains a server component and its footer-clearance rule now uses the booking-page class shared by Home/About/Services only. The 404 layout does not inherit extra booking-bar padding.
+
+The four service records and their type moved from content/home.ts to content/services.ts; Home cards/schema and Services details/schema now share that source. No duplicate service content model, generic CRUD layer, single-use helper, barrel or placeholder backend was added. Images were reused unchanged; manifest placements and public/images/README.md record reuse. The honest synthetic-photo labels remain beside the framed images. No new forms, contact links or invented professional credentials.
+
+Naming: one component per file, matching PascalCase export/kebab-case filename; local Props; all new names are one or two words. Section files stay at components/sections/about and components/sections/services (two levels). Routes contain only page/loading conventions. No any, unsafe non-null assertion, browser render branch or new use-client directive. The complete current client register remains 26; all ten new component files are server files (nine page sections/compositions and one shared BookingPrompt).
+
+### Phase 4 acceptance
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Only authorized About/Services scope and existing hierarchy | Met |
+| 2 | Personal About introduction and framed local portrait | Met; disclosed synthetic sample |
+| 3 | Principles, privacy boundaries and collaboration guide | Met; no invented modality/outcome |
+| 4 | Transparent professional identity/credential state | Met; unknown details explicitly pending |
+| 5 | Four complete service sections with relevant local photos | Met |
+| 6 | Native accessible service anchor navigation | Met by source reasoning; not browser-tested |
+| 7 | Preparation/suitability guidance without fees or diagnosis | Met |
+| 8 | Booking invitations, quieter crosslinks and mobile bar | Met as UI; real booking remains Phase 8 |
+| 9 | Single shared service source and corrected Home disclosure | Met |
+| 10 | Unique Persian metadata/canonical/OG/Twitter and one h1 per page | Met by source review |
+| 11 | Visible matching breadcrumbs and escaped truthful JSON-LD | Met by source review |
+| 12 | Route-specific same-geometry loading and CSS-first RTL/themes | Met by design reasoning |
+| 13 | Naming, server-first boundaries, reuse and unchanged client register | Met |
+| 14 | README/sources, allowed checks and phase-boundary handoff | Met |
+
+**Checklist: 14 of 14 met for Phase 4 implementation scope; no unmet naming item.** Still pending by explicit phase order: article/course pages, remaining public pages, real bookings/contact/auth, repositories and SSE. Missing real photo/credential/contact information is disclosed, not fabricated. No four-tap/sub-minute booking claim.
+
+**SEO checklist: met for About/Services page implementation by source review.** Server content, unique Persian metadata, one h1, meaningful heading order, matching breadcrumbs/schema, crawlable links and reserved image boxes are implemented. This is not publication approval or an SEO-tool result. Request-time DB sitemap is Phase 7; complete destination coverage, confirmed professional content and deployment validation remain pending.
+
+**Zero-flicker check: met by implementation reasoning, not visual verification.** Existing prepaint theme/optional font, fixed chrome, stable gutter and deterministic Intl numbers remain. Each new segment owns its matching inert loading with a fixed status outside layout flow; initial content is visible and image boxes reserve ratios before load. Both themes share markup/geometry. Native hash navigation uses existing header clearance; no viewport branch, initial Motion entry, artificial delay or scroll fighting. Mobile booking-bar clearance is CSS-selected from first paint. Existing font fallback and scrollbar caveats, route transition/loading behavior and both themes still require the manual throttled/cache-disabled review in README. Signed-in and live refresh checks are not possible before their phases.
+
+**Deviations needing approval: none new.** Existing narrow dependency exceptions remain unchanged. Stop after handoff; next phase only after approval/«ادامه» is Phase 5: Articles, article detail and Courses.
+
+### Allowed verification
+
+Pinned Node 24.21.0/npm 11.19.0: TypeScript and ESLint passed; DB-independent Next 16.3.8 production build passed with eleven static outputs, including `/about` and `/services`. npm audit reports 0 at every severity. Package/lock diff is empty. No database connection/ping/seed, live handler/bus, test suite, browser, visual test, SEO validator or Core Web Vitals measurement was run. These are build/source checks, not rendered-UI or clinical-content verification.
+
+Delivery: stopped the Phase 3 production process and restarted the final Phase 4 build on 0.0.0.0:3000. The server reported ready without preview-blocking warnings; readiness alone does not validate UI or interactions. Final TypeScript, ESLint, DB-independent build and diff whitespace checks passed after all code changes. No Phase 5 work has begun.

@@ -1,17 +1,8 @@
 import { images, type ImageAsset } from "@/content/images";
-import { routes } from "@/lib/constants";
 
-export type Service = Readonly<{ key: "individual" | "couples" | "family" | "online"; title: string; description: string; image: ImageAsset; href: string }>;
 export type Course = Readonly<{ slug: string; title: string; description: string; category: string; image: ImageAsset }>;
 export type Article = Readonly<{ slug: string; title: string; description: string; category: string; image: ImageAsset }>;
 export type Story = Readonly<{ key: string; label: string; title: string; description: string; image: ImageAsset }>;
-
-export const services: readonly Service[] = [
-  { key: "individual", title: "مشاورهٔ فردی", description: "وقتی می‌خواهید احساس‌ها، دغدغه‌ها و الگوهای زندگی‌تان را بهتر بشناسید؛ با فضایی برای صحبت از خودتان.", image: images.journal, href: `${routes.services}#individual` },
-  { key: "couples", title: "مشاورهٔ زوج‌ها", description: "فرصتی برای شنیدن یکدیگر و گفت‌وگو دربارهٔ نیازها، تفاوت‌ها و دشواری‌های رابطه.", image: images.conversation, href: `${routes.services}#couples` },
-  { key: "family", title: "مشاورهٔ خانواده", description: "برای گفت‌وگو دربارهٔ ارتباط میان اعضای خانواده، مرزها و تغییرهایی که تجربه می‌کنید.", image: images.family, href: `${routes.services}#family` },
-  { key: "online", title: "مشاورهٔ آنلاین", description: "گفت‌وگو از فضای خصوصی خودتان؛ مناسب‌بودن این شیوه و شرایط برگزاری، پیش از شروع بررسی می‌شود.", image: images.online, href: `${routes.services}#online` },
-];
 
 export const steps = [
   { number: 1, title: "مسیر گفت‌وگو را انتخاب کنید", description: "مشاورهٔ فردی، زوج‌ها یا خانواده؛ اگر مطمئن نیستید، برای انتخاب راهنمایی بگیرید." },

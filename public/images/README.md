@@ -5,7 +5,7 @@ All photographs in this initial design kit are **AI-generated illustrative sampl
 | Key | Files | Subject | Export size / ratio | Intended section |
 | --- | --- | --- | --- | --- |
 | hero | hero.jpg; hero-mobile.jpg | Fictional young Iranian woman, lavender hijab, seated | 2400×1350 16:9; 1080×1440 3:4 | Home hero |
-| portrait | portrait.jpg | Matching fictional seated portrait | 1280×1600 4:5 | About card |
+| portrait | portrait.jpg | Matching fictional seated portrait | 1280×1600 4:5 | Home teaser and About page |
 | quiet | quiet-room.jpg; quiet-room-mobile.jpg | Empty sunlit private counseling room | 2400×1350 16:9; 1080×1440 3:4 | Home final CTA |
 | desk | desk.jpg; desk-mobile.jpg | Notebook, tea and greenery on a pale wood desk | 2400×1350 16:9; 1080×1440 3:4 | Admin greeting |
 
@@ -69,3 +69,7 @@ One photorealistic square editorial portrait of a fictional Iranian man in his l
 
 ### indigo-portrait — English generation prompt
 One photorealistic square editorial portrait of a fictional Iranian woman around forty-five wearing a modest muted indigo hijab and beige blouse, distinct face with fine natural smile lines and hazel brown eyes. Friendly composed expression, realistic unretouched skin, soft daylight and softly blurred pale peach background, centered head and shoulders with generous circular crop space. This is a synthetic illustration, not an actual client or real testimonial. No text, no logos, no watermark.
+
+## Phase 4 reuse
+
+No image was generated, re-encoded or added in Phase 4. About reuses portrait.jpg in a reserved 4:5 frame; Services reuses journal/conversation/family/online.jpg in reserved 4:3 frames for the matching subjects. The typed manifest now explicitly records both Home and detail-page placements. All five photographs remain visibly labeled synthetic samples, not authentic professional or client identities. All are lazy; only the Home hero retains eager/high priority. Original prompts, dimensions and provenance above remain unchanged.

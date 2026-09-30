@@ -4,7 +4,7 @@ import { SectionSurface } from "@/components/shared/section-surface";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ServiceCard } from "@/components/shared/service-card";
 import { Button } from "@/components/ui/button";
-import { services } from "@/content/home";
+import { services } from "@/content/services";
 import { routes } from "@/lib/constants";
 
 export function Services() {

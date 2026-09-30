@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpLeft, HeartHandshake, Laptop, Leaf, UsersRound } from "lucide-react";
 import { Photo } from "./photo";
-import type { Service } from "@/content/home";
+import type { Service } from "@/content/services";
 
 type Props = { service: Service };
 const icons = { individual: Leaf, couples: HeartHandshake, family: UsersRound, online: Laptop };
