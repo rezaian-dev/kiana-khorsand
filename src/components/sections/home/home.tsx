@@ -28,7 +28,7 @@ export function Home({ isLoading = false }: Props) {
         ...services.map((service) => ({ "@type": "Service", "@id": `${origin}/#${service.key}`, url: `${origin}${service.href}`, name: service.title, serviceType: service.title, description: service.description, provider: { "@id": `${origin}/#person` } })),
       ] }} />}
       <Hero />
-      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحه‌های دربارهٔ من و خدمات آماده‌اند؛ رزرو و بخش‌های بعدی هنوز در حال ساخت‌اند و پیوندهایشان فعلاً به صفحهٔ ۴۰۴ می‌رسند.</p></div></div>
+      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحه‌های معرفی، خدمات، مقالات و طرح دوره‌ها آماده‌اند؛ رزرو و بخش‌های بعدی هنوز در حال ساخت‌اند و پیوندهایشان فعلاً به صفحهٔ ۴۰۴ می‌رسند.</p></div></div>
       <About /><Services /><Steps /><Courses /><Articles /><Testimonials /><Faq /><Invitation />
       <BookingBar />
     </main>

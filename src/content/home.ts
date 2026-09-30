@@ -1,7 +1,5 @@
 import { images, type ImageAsset } from "@/content/images";
 
-export type Course = Readonly<{ slug: string; title: string; description: string; category: string; image: ImageAsset }>;
-export type Article = Readonly<{ slug: string; title: string; description: string; category: string; image: ImageAsset }>;
 export type Story = Readonly<{ key: string; label: string; title: string; description: string; image: ImageAsset }>;
 
 export const steps = [
@@ -9,18 +7,6 @@ export const steps = [
   { number: 2, title: "زمان مناسب را پیدا کنید", description: "در بخش رزرو، زمان‌ها و شیوهٔ برگزاری جلسه را بررسی خواهید کرد." },
   { number: 3, title: "درخواستتان را ثبت کنید", description: "اطلاعات ضروری را وارد کنید؛ وضعیت درخواست و تأیید نوبت در حسابتان مشخص می‌شود." },
 ] as const;
-
-export const courses: readonly Course[] = [
-  { slug: "understanding-stress", title: "آشنایی با استرس روزمره", description: "موضوع پیشنهادی برای شناخت نشانه‌های استرس و توجه به نیازهای خود در زندگی روزمره.", category: "خودآگاهی", image: images.journal },
-  { slug: "healthy-conversation", title: "گفت‌وگویی که شنیده می‌شود", description: "موضوع پیشنهادی دربارهٔ شنیدن فعال، بیان روشن نیازها و مکث در گفت‌وگوهای دشوار.", category: "مهارت ارتباط", image: images.conversation },
-  { slug: "family-boundaries", title: "مرزهای سالم در خانواده", description: "موضوع پیشنهادی دربارهٔ احترام به تفاوت‌ها، حریم شخصی و رابطهٔ نزدیک میان اعضای خانواده.", category: "خانواده", image: images.family },
-];
-
-export const articles: readonly Article[] = [
-  { slug: "first-session", title: "برای جلسهٔ اول مشاوره چه آماده کنیم؟", description: "موضوعی برای آشنایی با شروع گفت‌وگو، پرسش‌هایی که می‌توانید بپرسید و انتظاری واقع‌بینانه از جلسهٔ اول.", category: "شروع مشاوره", image: images.online },
-  { slug: "everyday-stress", title: "وقتی استرس در روزمره همراه ماست", description: "موضوعی برای توجه به تجربهٔ بدن و ذهن، بدون برچسب‌زدن یا تشخیص‌گذاری به خودمان.", category: "زندگی روزمره", image: images.walk },
-  { slug: "evening-routine", title: "چطور برای پایان روز فضای آرام‌تری بسازیم؟", description: "موضوعی دربارهٔ عادت‌های سادهٔ عصرگاهی و توجه به استراحت؛ نه نسخه‌ای یکسان برای همه.", category: "مراقبت از خود", image: images.evening },
-];
 
 export const stories: readonly Story[] = [
   { key: "one", label: "نمونهٔ اول", title: "روایت، با انتخاب خود شما", description: "در این جایگاه، تجربهٔ واقعی تنها پس از دریافت رضایت برای انتشار قرار می‌گیرد. این متن، نظر یک مراجع نیست.", image: images.rosePortrait },

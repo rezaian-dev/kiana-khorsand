@@ -73,3 +73,20 @@ One photorealistic square editorial portrait of a fictional Iranian woman around
 ## Phase 4 reuse
 
 No image was generated, re-encoded or added in Phase 4. About reuses portrait.jpg in a reserved 4:5 frame; Services reuses journal/conversation/family/online.jpg in reserved 4:3 frames for the matching subjects. The typed manifest now explicitly records both Home and detail-page placements. All five photographs remain visibly labeled synthetic samples, not authentic professional or client identities. All are lazy; only the Home hero retains eager/high priority. Original prompts, dimensions and provenance above remain unchanged.
+
+
+## Phase 5 editorial and sharing assets
+
+Existing photos are reused without modification: journal for the article index; online, walk and evening for the matching article covers; journal, conversation and family for the three proposed-course outlines. Placement is reflected in the typed manifest. All remain disclosed synthetic illustrations, not evidence of a real class, patient or professional identity.
+
+Three **code-composed sharing graphics**, not newly generated photos, were exported at 1200×630 (40:21) with locally outlined Persian titles, a visible unreviewed-draft label, the approved logo lockup and the appropriate existing photo:
+
+| Key / file | Subject | Section |
+| --- | --- | --- |
+| sessionSocial / session-social.jpg | First-session title + online.jpg | First-session article OG and Twitter |
+| stressSocial / stress-social.jpg | Everyday-stress title + walk.jpg | Everyday-stress article OG and Twitter |
+| eveningSocial / evening-social.jpg | Evening-routine title + evening.jpg | Evening-routine article OG and Twitter |
+
+Authoring reuses the previously available external cached HarfBuzz/fontTools/CairoSVG/Pillow pipeline, not a runtime dependency or project script. Vazirmatn weight 750 is shaped as Persian/Arabic/RTL, then actual glyph outlines are rasterized, not hand-drawn letters or unshaped SVG text. The first sharing graphic was opened only to inspect the authoring artifact's glyph joining/composition; no browser or rendered-site visual test occurred. The original photo generation prompts above still apply; no new generation prompt or fictional author portrait was introduced. Asset paths/alt/size/ratio/subject/placement are in content/images.ts.
+
+Inventory after Phase 5: 13 photographic subjects / 16 photo files, plus 3 sharing graphics = 19 local image files across 16 manifest entries. The new graphic exports total about 236 KiB on disk; no photographic source was upsampled in this phase.

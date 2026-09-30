@@ -21,3 +21,14 @@ export const routes = {
 export const roles = { client: "client", admin: "admin" } as const;
 
 export const themeColors = { light: "#faf8ff", dark: "#100c25" } as const;
+
+export const topics = {
+  start: "شروع مشاوره",
+  daily: "زندگی روزمره",
+  care: "مراقبت از خود",
+  awareness: "خودآگاهی",
+  communication: "مهارت ارتباط",
+  family: "خانواده",
+} as const;
+
+export const sortOrders = { featured: "ترتیب پیشنهادی", title: "عنوان، الفبایی" } as const;

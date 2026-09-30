@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Home } from "@/components/sections/home/home";
 import { routes } from "@/lib/constants";
 
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <Home />;
+  return <Suspense fallback={<Home isLoading />}><Home /></Suspense>;
 }

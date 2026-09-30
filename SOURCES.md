@@ -46,7 +46,7 @@
 
 ## Client Component register
 
-Updated in Phase 4 (2026-10-01). **26 authored client entry files**, including two context-only modules. Phase 4 adds no client entry; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 5 (2026-10-01). **27 authored client entry files**, including two context-only modules. Phase 5 adds only the reused SearchForm leaf; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` | Client reason and boundary |
 | --- | --- |
@@ -59,6 +59,7 @@ Updated in Phase 4 (2026-10-01). **26 authored client entry files**, including t
 | `motion/lift.tsx` | Lift — reduced-aware 8px hover transform; initial=false, server card children. |
 | `motion/motion.tsx` | Motion — strict LazyMotion/domAnimation and system-reduced MotionConfig; passes server children. |
 | `motion/scroll-progress.tsx` | ScrollProgress — useScroll; fixed transform-based track, no scroll writes. |
+| `shared/search-form.tsx` | SearchForm — RHF/Zod query validation, useId, pending transition and safe router navigation; server defaultValue, native GET fallback, no client filtering or data fetch. |
 | `shared/photo.tsx` | Photo — scoped useAnimate load fade and local error state; getImageProps/native picture, reserved geometry. |
 | `shared/slide-rail.tsx` | SlideRail — Embla/autoplay lifecycle, external-store selected/snap-count snapshots, reInit eligibility, viewport/reduced/focus/hover/visibility gates, pause and dots. |
 | `ui/carousel-content.tsx` | CarouselContent — consumes carouselRef/orientation context; CSS-first slide geometry. |
@@ -77,9 +78,9 @@ Updated in Phase 4 (2026-10-01). **26 authored client entry files**, including t
 | `ui/chart-tooltip-content.tsx` | ChartTooltipContent — native chart context and active payload, safe type narrowing and Intl numeric formatting; no raw vendor payload read. |
 | `ui/chart-legend-content.tsx` | ChartLegendContent — native chart context for authored Persian labels/colors. |
 
-Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
+Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 4 delivery record supersede those statuses.
+No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 5 delivery record supersede those statuses.
 
 ## Version selection and compatibility
 
@@ -617,3 +618,75 @@ Naming: one component per file, matching PascalCase export/kebab-case filename; 
 Pinned Node 24.21.0/npm 11.19.0: TypeScript and ESLint passed; DB-independent Next 16.3.8 production build passed with eleven static outputs, including `/about` and `/services`. npm audit reports 0 at every severity. Package/lock diff is empty. No database connection/ping/seed, live handler/bus, test suite, browser, visual test, SEO validator or Core Web Vitals measurement was run. These are build/source checks, not rendered-UI or clinical-content verification.
 
 Delivery: stopped the Phase 3 production process and restarted the final Phase 4 build on 0.0.0.0:3000. The server reported ready without preview-blocking warnings; readiness alone does not validate UI or interactions. Final TypeScript, ESLint, DB-independent build and diff whitespace checks passed after all code changes. No Phase 5 work has begun.
+
+
+## Phase 5 — Articles and Courses
+
+The latest «ادامه» authorized Phase 5 only after the Phase 4 handoff. This delivers Articles, three article details and Courses. Phase 6 public/contact/legal pages, auth, repositories, DB and live behavior remain untouched. No package, lockfile, framework config or approved dependency exception changed. Existing cached authoring tools produced sharing graphics; no new runtime or authoring dependency was installed.
+
+### Official sources and implementation decisions
+
+- Await native Promise params/searchParams in server route conventions. Lists use request-time URL state; no useSearchParams-driven client filtering or top-level client page. Dynamic list metadata only reads query keys to set noindex on variants — https://nextjs.org/docs/app/api-reference/file-conventions/page ; https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Three existing Latin article slugs are generated solely from local fixtures with generateStaticParams and stable dynamicParams=false; unknown content calls notFound before the content Suspense boundary. Phase 7 must remove this fixture-only build strategy before introducing repositories, because production DB reads and newly published slugs must remain request-time — https://nextjs.org/docs/app/api-reference/functions/generate-static-params ; https://nextjs.org/docs/app/api-reference/functions/not-found
+- loading components receive no parameters and parent loading boundaries also cover descendants. Removed the public-group Home fallback rather than allowing it to flash during a detail/list navigation. Home uses a local Suspense fallback; query lists and article detail resolve URL identity first and use explicit same-template inert fallbacks with matching data. No extra route group, artificial delay, client path guess or experimental Suspense prop. While identity resolves, navigation can retain prior content; an instant unknown-destination skeleton is deliberately not claimed. Local fixtures may never activate the fallback — https://nextjs.org/docs/app/api-reference/file-conventions/loading ; https://react.dev/reference/react/Suspense
+- The only new client entry is shared SearchForm. Native method=get/action remains a non-JS fallback; RHF defaultValues plus an explicit native defaultValue keep the query in SSR HTML. The registered input uses zodResolver and a shared Zod string limit; server catalogSchema also validates all URL parameters. Hidden native category/sort fields preserve GET state — https://react-hook-form.com/docs/useform ; https://raw.githubusercontent.com/react-hook-form/resolvers/v5.9.1/README.md ; https://zod.dev/api
+- Search navigation uses a typed local path and URLSearchParams-encoded query, never an untrusted href. A transition exposes pending state without a changing button label; useId supplies stable accessible descriptions. Search/filter/sort preserve scroll; normal native anchors/page links handle deliberate target navigation. No effect-based input reset or browser read during render — https://nextjs.org/docs/app/api-reference/functions/use-router ; https://react.dev/reference/react/useTransition ; https://react.dev/reference/react/useId
+- Source selection, Persian normalization, alphabetical Intl.Collator ordering and six-record pagination are server-side and shared between the two actual catalogs. Only real result counts create page links; with three records, there is one page, not fake pagination. Invalid URL fields show a recoverable notice; no raw validation exception is displayed — https://nextjs.org/docs/app/api-reference/file-conventions/page ; https://zod.dev/api ; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator ; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+- New detail metadata is Persian, self-canonical, OG article/Twitter large-image, with an individual static graphic. Drafts are noindex/follow; catalog query variants are noindex/follow with base canonical. No invented author, publication/modification date or reading duration. The default sharing asset remains inherited by lists — https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Article/BreadcrumbList use native escaped JSON-LD and visible content. Schema.org 30.1 Article/Course/citation/articleSection/mainEntityOfPage definitions were consulted. creativeWorkStatus was discovered to be a pending vocabulary term and was removed; draft status instead appears in visible copy, description and noindex metadata. No pending vocabulary is shipped — https://nextjs.org/docs/app/guides/json-ld ; https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/30.1/schemaorg-current-https.jsonld
+- Google's Article documentation recommends truthful applicable fields and does not require inventing missing dates/authors. The draft's image is its relevant photo, not the logo/title graphic. The page links to About while explicitly declining to attribute the draft to the doctor. There is no claim of rich-result eligibility, particularly for intentionally noindex drafts. Course/Offer markup is withheld because these are unapproved outlines without an actual educational offering or confirmed provider — https://developers.google.com/search/docs/appearance/structured-data/article
+- Three 1200×630 title graphics reuse approved photographs and the approved lockup, with locally shaped Persian glyph outlines. Existing cached HarfBuzz/fontTools/CairoSVG/Pillow authoring tools are outside the project. One asset was opened for glyph/composition inspection, not a rendered-UI test. Font, filename, subject, dimensions, ratios and provenance are recorded in the image manifest/README — https://uharfbuzz.readthedocs.io/reference.html ; https://fonttools.readthedocs.io/en/stable/pens/svgPathPen.html ; https://fonttools.readthedocs.io/en/stable/pens/transformPen.html ; https://cairosvg.org/documentation/ ; https://pillow.readthedocs.io/en/stable/reference/ImageOps.html
+
+### Editorial sources and integrity
+
+These are original Persian **AI-assisted drafts**, not certified translations, published clinical guidance by Dr. Khorsand or patient-specific advice. Prominent draft labels appear in the index, Home, detail heading, author-status box and sharing images. Approval of a design phase is not clinical approval. No author/reviewer identity, credential, publish date, guaranteed outcome or reading-time statistic was fabricated.
+
+- First-session draft: credential/approach/goal/confidentiality/fee questions draw from the official NIMH psychotherapy guide. The draft adds ordinary optional preparation and privacy suggestions, not a claim about this particular practitioner's actual session process — https://www.nimh.nih.gov/health/topics/psychotherapies
+- Everyday-stress draft: varied mind/body experience, routine, social contact, activity and limiting distressing news come from WHO's current public Q&A. It explicitly rejects self-diagnosis and encourages appropriate professional support for persistent impairment — https://www.who.int/news-room/questions-and-answers/item/stress
+- Evening-routine draft: general sleep environment/routine guidance and seeking help for ongoing impairment draw from NHS Insomnia. No supplement/medicine regimen is recommended; the text discourages self-directed medicine changes and driving while sleepy. The old how-to-get-to-sleep URL redirected to the topic index, so it is not used as the article's source — https://www.nhs.uk/conditions/insomnia/
+- The sources are linked in Persian labels at each article's end and identified as English. Their US/UK service numbers, referral systems and specific licensing arrangements were not transposed onto an Iranian website. The site's existing local-emergency disclaimer remains.
+
+The three courses remain proposals: audience, tentative syllabus, boundaries and explicit unavailable enrollment/unknown teacher/format/duration/date/price. No misleading disabled checkout, fake free price, video player, certificate, rating, enrollment count or payment feature was added. Courses are informational outlines only.
+
+### Architecture and naming review
+
+Article/Course types and records moved from content/home.ts into content/articles.ts and content/courses.ts, reused by Home cards and actual routes. Article bodies are typed text/section arrays, not unsafe HTML, a new markdown dependency or generic content renderer. CatalogFilters/CatalogResults/SearchForm and catalog functions have two real consumers. PageHeading gained optional parent links for the three-level article trail without breaking existing breadcrumbs. All new sections are within components/sections/articles, article or courses (two levels).
+
+All authored names remain one or two words; framework-mandated generateStaticParams retains its convention name. One component per file, matching kebab-case/PascalCase, local Props, verb-first functions and typed readonly records. No new generic utils/barrel, any, unsafe non-null assertion, DB module or test suite. Input and Badge's leftover native transition-shadow class was removed; no new CSS animation system was introduced. Existing reduced-aware Photo and Lift are reused. The client register is 27, with only SearchForm newly client-marked; content/card/page/metadata rendering stays server-first.
+
+### Phase 5 acceptance
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Authorized Articles/detail/Courses scope only | Met |
+| 2 | Shared typed records, Home/card links and corrected disclosures | Met |
+| 3 | Responsive server article index with local subject image/cards | Met |
+| 4 | URL server search/category/order/pagination | Met by implementation; one real page with current fixtures |
+| 5 | RHF + resolver + shared Zod, SSR query and adjacent privacy notice | Met |
+| 6 | Pending/error/empty/results states without fabricated content | Met by source reasoning |
+| 7 | Three complete bounded Persian drafts with official sources | Met; professional review pending |
+| 8 | Native contents anchors, related articles and transparent About/byline status | Met; no false authorship |
+| 9 | Three course outlines, local subject photos and matching hash targets | Met |
+| 10 | Truthful enrollment/price/date/teacher/credential state | Met; real course offering not supplied |
+| 11 | Individual Persian article sharing assets and complete manifest | Met |
+| 12 | Unique metadata/canonical/h1/OG/Twitter and intentional draft/query noindex | Met by source review |
+| 13 | Visible matching BreadcrumbList and eligible truthful Article schema | Met; Course intentionally ineligible/omitted |
+| 14 | Known static slugs, notFound path and no build-time DB | Met by source/build; HTTP response not live-tested |
+| 15 | Correctly scoped, resolved-state same-geometry fallback strategy | Met by reasoning; no instant unknown-state fallback claim |
+| 16 | CSS-first RTL/theme/reserved images/mobile bar and reduced-aware reuse | Met by implementation; no responsive/visual certification |
+| 17 | Naming, server-first boundaries, unchanged packages and current register | Met |
+| 18 | README/sources, allowed checks and approval-boundary handoff | Met |
+
+**Checklist: 18 of 18 met for Phase 5 implementation scope; no unmet naming item.** Remaining content/publication requirements: real professional authorship/review, approved publication dates, confirmed actual courses and their teacher/format/terms; these are not supplied and were not fabricated. Remaining application phases: Phase 6 public/contact/legal pages; Phase 7 DB/auth/SSE/sitemap; Phase 8 functional booking and later account/admin work. Four-tap/sub-minute booking is not achieved or measured.
+
+**SEO checklist: met for implemented page code, not publication readiness.** Unique Persian metadata, canonicals, per-article sharing graphics, visible hierarchy/breadcrumbs, server body text, real crawlable links and truthful escaped schema are present. Draft detail pages deliberately remain noindex, without invented author/date fields. Course/Offer and review markup are not eligible for the supplied samples. Real professional approval, DB-driven sitemap and deployment validators remain outstanding. No rich-result or search-engine result is claimed.
+
+**Zero-flicker check: met by implementation reasoning, not browser verification.** Prepaint theme/optional font, fixed header/gutter, CSS-only breakpoints, reserved images and footer/bar clearance persist. No initial hidden content or added entrance effect. Home is no longer an inherited fallback; explicit list/detail boundaries receive resolved query/slug and the same page content. Until identity resolves there is no immediate destination fallback; the previous route may stay visible. Native query state is in the first HTML and keyed only on server URL changes, with a reserved status line and fixed button label. Intentional filter result height changes are not presented as same-height data. Form submit/filter/sort avoid forced scrolling; hash targets use existing header clearance. Dynamic shell timing, native back/forward, focus, font fallback and cache-disabled/throttled/theme cases remain manual checks, not tested claims.
+
+**Deviations needing approval: none new.** The explicit Suspense strategy uses the requested same-geometry state without unsupported loading props or an extra route group. Existing dependencies/photo/credential caveats persist. Stop after handoff; next work only after approval is Phase 6: Testimonials, FAQ, Contact, Privacy and Terms.
+
+### Allowed verification
+
+Pinned Node 24.21.0/npm 11.19.0: final TypeScript and ESLint passed; DB-independent Next 16.3.8 build passed (static generation reported 16/16, including the three known article slugs; Articles/Courses indexes are request-time server-rendered because of searchParams). npm audit reports 0 at all severities. Package/lock diff is empty. No database access, live handler/bus, test suite, browser, rendered-site visual check, SEO validator or Core Web Vitals measurement ran. Only a generated social asset was opened as an authoring artifact.
+
+Delivery: stopped the Phase 4 production process and restarted the final Phase 5 build on 0.0.0.0:3000. The process reported ready without preview-blocking warnings. This is readiness only, not a route/interaction/visual check. Final source whitespace and unchanged package/lock checks passed. Phase 6 has not begun.
