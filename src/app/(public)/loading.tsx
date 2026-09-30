@@ -1,5 +1,5 @@
-import { Showcase } from "@/components/sections/showcase/showcase";
+import { Home } from "@/components/sections/home/home";
 
 export default function Loading() {
-  return <Showcase isLoading />;
+  return <Home isLoading />;
 }

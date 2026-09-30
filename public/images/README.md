@@ -24,3 +24,48 @@ One photorealistic wide editorial interior photograph. Quiet elegant private cou
 
 ### desk
 One photorealistic wide premium editorial photograph of a calm psychologist's working desk. Morning sunlight on pale oak, closed blank lavender linen notebook, ceramic tea cup, pen and a vase with fresh greenery on the LEFT. Plenty of soft neutral ivory desktop and blurred interior at RIGHT for later interface text. Subtle purple/mint details, natural imperfections, shallow depth of field. No visible writing, screens or people. One scene, no collage. No text, no logos, no watermark.
+
+## Phase 3 — Home subjects
+
+Nine additional **AI-generated illustrative photos**, not real patients or documented consultations. The six landscape originals were 1448×1086, downsampled to 1200×900 (4:3). Three unique portrait originals were 1254×1254, downsampled to 640×640. No upsampling in this batch. Existing Hero/final-CTA desktop/mobile exports retain their earlier disclosed upsampling. Hero was inspected as an image asset to choose a head-preserving crop, not as a browser/interface test.
+
+| Key / local filename | Subject | Ratio | Placement |
+| --- | --- | --- | --- |
+| conversation / conversation.jpg | Fictional Iranian adults listening to each other | 4:3 | Couples service and communication course card |
+| family / family.jpg | Fictional Iranian family conversation | 4:3 | Family service and boundaries course card |
+| journal / journal.jpg | Blank notebook, lavender cup and greenery | 4:3 | Individual counseling and stress course card |
+| evening / evening.jpg | Warm bedside light and evening routine | 4:3 | Evening article preview |
+| walk / walk.jpg | Fictional Iranian woman on a park walk | 4:3 | Everyday stress article preview |
+| online / online.jpg | Private laptop/headphones workspace | 4:3 | Online service and first-session article preview |
+| rosePortrait / rose-portrait.jpg | Fictional Iranian woman, rose hijab | 1:1 | Testimonial layout placeholder one, never an authentic client |
+| tealPortrait / teal-portrait.jpg | Fictional Iranian man, teal shirt | 1:1 | Testimonial layout placeholder two, never an authentic client |
+| indigoPortrait / indigo-portrait.jpg | Fictional Iranian woman, indigo hijab | 1:1 | Testimonial layout placeholder three, never an authentic client |
+
+Shared subject photos deliberately connect related service/course/article topics; testimonial portraits are distinct. All alt text, dimensions and placement are also recorded in src/content/images.ts. No stock reviews, outcomes, identities, publication dates, course prices or release schedules were invented. Testimonial cards explicitly contain non-review placeholder copy and no star ratings. Replace/re-author them with consented genuine content before publication.
+
+### conversation — English generation prompt
+One photorealistic premium editorial lifestyle photograph, landscape 4:3. Two fictional Iranian adults, a woman with a soft mauve hijab and a man in a pale linen shirt, in their early thirties, seated facing each other at a warm wood table in an airy home. Attentive quiet conversation, natural thoughtful faces, relaxed hands, respectful distance. A vase with a small green branch, subtle lilac and warm ivory palette, soft window light. Medium wide environmental framing, faces kept within the middle two thirds to allow card crops. Not an actual patient or therapist photograph. Realistic anatomy, photographic textures, no text, no logos, no watermark.
+
+### family — English generation prompt
+One photorealistic premium editorial photograph, landscape 4:3. Fictional Iranian family of three, mother wearing a modest cream hijab, father in sage green shirt and their teenager, seated in a light comfortable living room, calmly listening to each other. Eye-level candid composition, each person visible, realistic natural hands, warm relationships without exaggerated smiles. Cream, peach, mint and warm wood, plants, diffused daylight, restrained sophisticated magazine photography. Subjects within central two thirds suitable for website card crops. Not actual patients. No text, no logos, no watermark.
+
+### journal — English generation prompt
+One photorealistic landscape 4:3 premium editorial still-life photograph about noticing emotions and reflective journaling. Open ivory notebook with entirely blank unlined pages on pale oak table, a simple pen, ceramic lavender tea mug, soft woven fabric and small green leaves. Sunlight gently falls across the pages. Delicate lilac, cream and mint palette, believable tactile materials, shallow depth of field, graceful asymmetrical composition. No people or hands. Single photographic scene, no text, no logos, no watermark.
+
+### evening — English generation prompt
+One photorealistic landscape 4:3 interior photograph for an article about a calmer evening and sleep routine. A quiet warm bedroom corner with soft cream linen pillow and duvet, wooden bedside table, small amber lamp, closed blank linen-covered book, a glass of water and sheer blue twilight beyond the window. No people, no screens, no medication. Muted lavender shadows and peach light, premium architectural editorial photography, calm realistic scene, no text, no logos, no watermark.
+
+### walk — English generation prompt
+One photorealistic premium editorial landscape 4:3 photograph for an article about noticing everyday stress. A fictional young Iranian woman wearing a modest pale lavender hijab and long cream coat, walking slowly along a leafy park path in natural morning light. Three-quarter back view, relaxed shoulders, looking at the trees, no distressed pose, no claim of treatment. Real greenery and soft bokeh, subtle mint and warm gold palette, candid natural photography, subject centrally framed for card crops. No text, no logos, no watermark.
+
+### online — English generation prompt
+One photorealistic premium editorial landscape 4:3 photograph about preparing for a private online counseling conversation. Side view of a small pale wood desk at home, open laptop with a plain neutral blank unlit screen at an angle so no interface is visible, over-ear headphones beside a blank notebook, a lavender mug, houseplant and sheer sunlit curtains. No people. Cozy yet professional, cream and soft lilac palette with mint greenery, realistic materials, soft daylight. No text, no logos, no watermark.
+
+### rose-portrait — English generation prompt
+One photorealistic square editorial portrait of a fictional Iranian woman in her early thirties wearing a dusty rose modest hijab and neutral cream blouse. Natural subtle warm smile, realistic skin, brown eyes, softly blurred warm ivory background, gentle window light, head and shoulders centered with generous space for circular crop. This is a synthetic illustration, not an actual client or real testimonial. No text, no logos, no watermark.
+
+### teal-portrait — English generation prompt
+One photorealistic square editorial portrait of a fictional Iranian man in his late thirties, short dark wavy hair and neatly trimmed beard, muted teal shirt, natural calm expression and slight smile. Realistic skin, gentle daylight, softly blurred pale mint background. Head and shoulders centered with generous space for circular crop, sophisticated authentic photographic lighting. This is a synthetic illustration, not an actual client or real testimonial. No text, no logos, no watermark.
+
+### indigo-portrait — English generation prompt
+One photorealistic square editorial portrait of a fictional Iranian woman around forty-five wearing a modest muted indigo hijab and beige blouse, distinct face with fine natural smile lines and hazel brown eyes. Friendly composed expression, realistic unretouched skin, soft daylight and softly blurred pale peach background, centered head and shoulders with generous circular crop space. This is a synthetic illustration, not an actual client or real testimonial. No text, no logos, no watermark.

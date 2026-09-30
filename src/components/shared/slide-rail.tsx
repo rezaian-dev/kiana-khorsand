@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { useInView, useReducedMotion } from "motion/react";
 import { Pause, Play } from "lucide-react";
@@ -17,7 +17,6 @@ type Props = { slides: readonly { key: string; content: ReactNode }[]; label: st
 
 export function SlideRail({ slides, label }: Props) {
   const [api, setApi] = useState<CarouselApi>();
-  const [selected, setSelected] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [hasHover, setHasHover] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
@@ -27,12 +26,15 @@ export function SlideRail({ slides, label }: Props) {
   const isReduced = useReducedMotion();
   const autoplay = useMemo(() => Autoplay({ delay: 6500, playOnInit: false, stopOnInteraction: true, stopOnMouseEnter: true, stopOnFocusIn: true }), []);
   const plugins = useMemo(() => [autoplay], [autoplay]);
-  useEffect(() => {
-    if (!api) return;
-    function handleSelect() { if (api) setSelected(api.selectedScrollSnap()); }
-    api.on("select", handleSelect).on("reInit", handleSelect);
-    return () => { api.off("select", handleSelect).off("reInit", handleSelect); };
+  const subscribe = useCallback((onChange: () => void) => {
+    if (!api) return () => {};
+    api.on("select", onChange).on("reInit", onChange);
+    return () => { api.off("select", onChange).off("reInit", onChange); };
   }, [api]);
+  const snapshot = useSyncExternalStore(subscribe, () => `${api?.selectedScrollSnap() ?? 0}:${api?.scrollSnapList().length ?? slides.length}`, () => `0:${slides.length}`);
+  const [selection, count] = snapshot.split(":");
+  const selected = Number(selection);
+  const snapCount = Number(count);
   useEffect(() => {
     function handleVisibility() { setIsHidden(document.hidden); }
     document.addEventListener("visibilitychange", handleVisibility);
@@ -41,17 +43,21 @@ export function SlideRail({ slides, label }: Props) {
   }, []);
   useEffect(() => {
     if (!api) return;
-    if (isReduced || isPaused || hasHover || hasFocus || isHidden || !isInView) autoplay.stop();
-    else autoplay.play();
-    return () => autoplay.stop();
+    function handlePlayback() {
+      if (!api || api.scrollSnapList().length < 2 || isReduced || isPaused || hasHover || hasFocus || isHidden || !isInView) autoplay.stop();
+      else autoplay.play();
+    }
+    handlePlayback();
+    api.on("reInit", handlePlayback);
+    return () => { api.off("reInit", handlePlayback); autoplay.stop(); };
   }, [api, autoplay, isReduced, isPaused, hasHover, hasFocus, isHidden, isInView]);
   return (
     <div ref={scope} onMouseEnter={() => setHasHover(true)} onMouseLeave={() => setHasHover(false)} onFocusCapture={() => setHasFocus(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHasFocus(false); }}>
-      <Carousel opts={{ direction: "rtl", loop: true, containScroll: false }} plugins={plugins} setApi={setApi} aria-label={label}>
+      <Carousel opts={{ direction: "rtl", loop: true, containScroll: "trimSnaps" }} plugins={plugins} setApi={setApi} aria-label={label} data-count={slides.length}>
         <CarouselContent>{slides.map((slide, index) => <CarouselItem key={slide.key} aria-label={`${formatNumber(index + 1)} از ${formatNumber(slides.length)}`}>{slide.content}</CarouselItem>)}</CarouselContent>
         <div className="carousel-controls">
           <div className="control-group"><CarouselPrevious /><CarouselNext /><Button type="button" variant="ghost" size="icon" className="autoplay-toggle" aria-label={isPaused ? "شروع پخش خودکار" : "توقف پخش خودکار"} onClick={() => setIsPaused(!isPaused)}>{isPaused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}</Button></div>
-          <div className="carousel-dots" aria-label="انتخاب اسلاید">{slides.map((slide, index) => <button key={slide.key} type="button" aria-label={`رفتن به اسلاید ${formatNumber(index + 1)}`} aria-current={selected === index ? "true" : undefined} onClick={() => { autoplay.stop(); setIsPaused(true); api?.scrollTo(index, Boolean(isReduced)); }}><span /></button>)}</div>
+          <div className="carousel-dots" aria-label="انتخاب اسلاید">{slides.map((slide, index) => <button key={slide.key} type="button" disabled={index >= snapCount} aria-label={`رفتن به اسلاید ${formatNumber(index + 1)}`} aria-current={selected === index ? "true" : undefined} onClick={() => { autoplay.stop(); setIsPaused(true); api?.scrollTo(index, Boolean(isReduced)); }}><span /></button>)}</div>
         </div>
       </Carousel>
     </div>

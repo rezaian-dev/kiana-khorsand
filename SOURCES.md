@@ -46,7 +46,7 @@
 
 ## Client Component register
 
-Updated in Phase 2 part 3 (2026-10-01). **31 authored client entry files**, including two context-only modules. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 3 (2026-10-01). **26 authored client entry files**, including two context-only modules. No new client entry was added; five showcase-only entries were deleted. Retained foundation entries are listed even when Home does not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` | Client reason and boundary |
 | --- | --- |
@@ -59,11 +59,8 @@ Updated in Phase 2 part 3 (2026-10-01). **31 authored client entry files**, incl
 | `motion/lift.tsx` | Lift — reduced-aware 8px hover transform; initial=false, server card children. |
 | `motion/motion.tsx` | Motion — strict LazyMotion/domAnimation and system-reduced MotionConfig; passes server children. |
 | `motion/scroll-progress.tsx` | ScrollProgress — useScroll; fixed transform-based track, no scroll writes. |
-| `sections/showcase/command-demo.tsx` | CommandDemo — local cmdk filtering/keyboard selection, allowlisted hash destinations via useRouter; no global admin search yet. |
-| `sections/showcase/message-demo.tsx` | MessageDemo — RHF/Zod client validation and truthful local-only Sonner feedback; no network/storage. |
-| `sections/showcase/state-demo.tsx` | StateDemo — selected Radix tab and Motion indicator for empty/error/success specimens. |
 | `shared/photo.tsx` | Photo — scoped useAnimate load fade and local error state; getImageProps/native picture, reserved geometry. |
-| `shared/slide-rail.tsx` | SlideRail — Embla/autoplay lifecycle, viewport/reduced/focus/hover/visibility gates, pause and dots. |
+| `shared/slide-rail.tsx` | SlideRail — Embla/autoplay lifecycle, external-store selected/snap-count snapshots, reInit eligibility, viewport/reduced/focus/hover/visibility gates, pause and dots. |
 | `ui/carousel-content.tsx` | CarouselContent — consumes carouselRef/orientation context; CSS-first slide geometry. |
 | `ui/carousel-context.ts` | CarouselContext/useCarousel — client context/hook and CarouselApi types, not a component/barrel. |
 | `ui/carousel-next.tsx` | CarouselNext — consumes scrollability/context and handles navigation. |
@@ -73,8 +70,6 @@ Updated in Phase 2 part 3 (2026-10-01). **31 authored client entry files**, incl
 | `ui/dropdown-menu-content.tsx` | DropdownMenuContent — forceMount portal and controlled AnimatePresence for post-interaction Motion exit/entry. |
 | `ui/sheet-content.tsx` | SheetContent — controlled forceMount portal/overlay/content, Motion presence, reduced-motion handling. |
 | `ui/sonner.tsx` | Toaster — Sonner leaf with Persian region label, RTL, stable semantic CSS theme; native transitions/animations disabled. |
-| `sections/showcase/calendar-demo.tsx` | CalendarDemo — selected date state; module-level fixed TZDate samples, not browser/current time; no persistence or availability claim. |
-| `sections/showcase/chart-demo.tsx` | ChartDemo — explicit table/chart tab state and Recharts interaction; first SSR and hydration remain the same complete table, chart mounts only after user selection. |
 | `ui/calendar.tsx` | Calendar — native interactive DayPicker with local component/formatter functions, enforced Persian/RTL/Tehran and required deterministic today prop; fixed weeks, native animation disabled. |
 | `ui/calendar-day-button.tsx` | CalendarDayButton — native focus modifier and button ref effect with preventScroll; no autoFocus on initial page. |
 | `ui/chart-context.ts` | ChartContext/useChart — native client context hook and config type; no component or barrel. |
@@ -82,9 +77,9 @@ Updated in Phase 2 part 3 (2026-10-01). **31 authored client entry files**, incl
 | `ui/chart-tooltip-content.tsx` | ChartTooltipContent — native chart context and active payload, safe type narrowing and Intl numeric formatting; no raw vendor payload read. |
 | `ui/chart-legend-content.tsx` | ChartLegendContent — native chart context for authored Persian labels/colors. |
 
-Header, Footer, Logo, ContactLinks, SocialIcon, PageHeading, SectionSurface, JsonLd, CardSkeleton, Showcase, FaqDemo, pages, loading, layouts and metadata conventions remain server files. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
+Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, Home and every Home section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the part-3 delivery record supersede those statuses.
+No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 3 delivery record supersede those statuses.
 
 ## Version selection and compatibility
 
@@ -497,3 +492,69 @@ The user's «ادامه» following the two narrowly stated proposals was taken 
 `npm run typecheck`, `npm run lint` and `NEXT_TELEMETRY_DISABLED=1 npm run build` all passed after the changes; nine static outputs, no DB module/access. `npm audit --json` returned 0 info/low/moderate/high/critical vulnerabilities. Lockfile changes are exactly the approved direct package plus two new transitives; no existing package downgrade. No browser, test suite, DB connection/ping/seed/script, SSE/live handler, SEO validator or Core Web Vitals measurement was run.
 
 Delivery: the previous server was stopped and the final Phase 2 production build restarted on 0.0.0.0:3000. It reported ready without preview-blocking warnings; readiness is not browser/interaction verification. Calendar and the user-selected chart are available in the new «زمان و داده» section. No Phase 3 work has begun.
+
+
+## Phase 3 — Home
+
+The user's «ادامه» after the completed Phase 2 review was treated as approval of that design system and authorization for Phase 3 only. No About/Services/content/auth/booking/admin page or data layer was implemented early. Package.json, package-lock.json, framework config and all approved dependency exceptions are unchanged.
+
+### Official sources and implementation decisions
+
+- The Home route and static Metadata export remain server-only; Home sections and repeatable cards produce server HTML. Interactive behavior stays in the previously registered Photo, Lift, SlideRail, chrome and native Radix leaves. Server cards are passed as children, not imported into a page-wide client component — https://nextjs.org/docs/app/getting-started/server-and-client-components ; https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Replaced the noindex design showcase with Home and removed its seven files, local-only message schema and specimen-specific CSS. Approved shared primitive skins, brand/font and shared skeleton/heading foundations remain; no duplicate native registry files or alternate preview route were added. Navigation keeps ordinary crawlable links and prefetch=false for still-unbuilt targets — https://nextjs.org/docs/app/api-reference/components/link
+- Only Hero sets loading=eager/fetchPriority=high; it does not fade. Native getImageProps/picture selects existing separate mobile crops. No deprecated priority prop or redundant simultaneous preload. All other images are lazy, dimensioned and keep their solid reserved base/error state — https://nextjs.org/docs/app/api-reference/components/image
+- Home and loading render the same server component/content and CSS geometry. Loading is inert with a separate visible/live message; it is not a mount gate, blank screen or randomly sized spinner. The mobile booking bar and footer bottom space are selected before hydration by CSS, including safe-area padding — https://nextjs.org/docs/app/api-reference/file-conventions/loading ; https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert ; https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+- Embla selected index and snap count now use a stable primitive useSyncExternalStore snapshot with select/reInit cleanup. Autoplay eligibility is rechecked on reInit, including no playback when fewer than two snaps exist; containment trims impossible snaps when loop cannot be satisfied. Dot targets beyond available snaps are disabled without shifting their reserved area. With exactly three cards on desktop, CSS omits unnecessary controls from the first paint while retaining their space. No viewport read or client-only first render — https://react.dev/reference/react/useSyncExternalStore ; https://raw.githubusercontent.com/davidjerleke/embla-carousel/v8.6.0/packages/embla-carousel-docs/src/content/pages/api/methods.mdx ; https://github.com/davidjerleke/embla-carousel/tree/v8.6.0/packages/embla-carousel-docs/src/content/pages/api
+- The hosted Embla methods URL returned 404; the official tag-pinned 8.6.0 repository supplied scrollSnapList/on/off/reInit documentation. No internalEngine API, unsupported loop patch, runtime viewport guess or added carousel dependency is used.
+- Courses/articles use the existing reduced-aware Motion Lift with visible initial content. The requested CSS scroll-driven enhancement remains transform-only on the below-fold service CTA, with a visible fallback. Removed the remaining generated AccordionTrigger transition-shadow utility; no new authored CSS animation or alternate motion library — https://motion.dev/docs/react-lazy-motion ; https://motion.dev/docs/react-use-reduced-motion ; https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline ; https://www.radix-ui.com/primitives/docs/components/accordion
+- Home has unique Persian title/description, self canonical, public index/follow metadata, fa_IR sharing metadata and the existing Persian social assets. The design-preview noindex setting is gone only from Home; 404/privacy-role conventions are unchanged. This is crawlability configuration, not approval to publish unfinished professional content on a real domain — https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Escaped native JSON-LD describes WebSite, the supplied Person identity and the four visibly described Service subjects. No clinic/Physician/Organization, fictional portrait-as-Person-image, fake breadcrumb, Article/Course markup for unpublished topics, Review/AggregateRating, offers, fabricated prices or availability schema — https://nextjs.org/docs/app/guides/json-ld ; https://schema.org/version/30.1/ ; https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/30.1/schemaorg-current-https.jsonld
+
+### Content and asset integrity
+
+Home includes Hero/About/four-service bento/three-step guide/course carousel/article carousel/testimonial-layout carousel/FAQ/final invitation, plus a server mobile BookingBar. The booking CTA appears in Hero, after services, final invitation and the mobile bar; secondary links are quieter. Only Hero/final invitation are full-bleed photographic sections, with different SectionSurface gradients elsewhere. The layout is identical between themes; accents/overlays inherit semantic tokens. Headline Persian text is not artificially letter-spaced.
+
+Nine new AI-generated illustrative assets were exported locally: six subject-specific landscape photos (1448×1086 originals → 1200×900) and three distinct Iranian portrait illustrations (1254×1254 originals → 640×640). No new image was upsampled. Existing Hero/mobile/final-CTA exports keep their prior upsampling disclosure. Image subjects/alt/ratios/dimensions/placements are typed in content/images.ts; every full English generation prompt and export origin is in public/images/README.md. Related service/course/article subjects intentionally share appropriate photographs; testimonial portraits are unique. No hotlinks, SVG photo stand-ins or external browser font/widget scripts. The existing Hero image alone was opened for asset-composition/crop authoring, not a browser or UI visual test.
+
+Professional claims are restricted to the user-provided name/role. No degree, institution, years of experience, outcome statistic, therapy modality, fee, course schedule, publication date or estimated reading time was invented. Course/article entries are explicitly proposed topics awaiting their page phases. Testimonial cards are labeled layout placeholders with non-quote privacy copy; they are not fictional praise attributed to real clients. Their synthetic faces are labeled and no ratings appear. Unknown contacts/license remain null. All of this is stated visibly on the page and in README.
+
+### Naming and client review
+
+- One component per file, kebab-case filename matching its PascalCase named export, local Props and typed readonly content. Home sections live only two levels inside components (`sections/home`); repeatable cards and heading are shared because each is used repeatedly. Default route exports and unchanged native shadcn names retain their allowed exceptions.
+- Removed showcase/calendar-demo/chart-demo/command-demo/message-demo/state-demo/faq-demo and their local validation schema; no barrels, new generic utils, any, unsafe non-null assertions or project scripts were added. New photo filenames describe subjects/colors, not version markers.
+- The complete current register at the top lists 26 authored client entry files (31 minus five specimen entries). Home, Hero, About, Services, Steps, Courses, Articles, Testimonials, Faq, Invitation, BookingBar, SectionHeading and all four repeatable card components are server files. No new client entry, auth provider, backend query or live subscriber.
+
+### Phase 3 acceptance
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Remove approved temporary design showcase and specimen-only code | Met |
+| 2 | Server-first Home and typed section/card content | Met |
+| 3 | Hero portrait background/art direction, personal identity and primary CTA | Met; disclosed synthetic image, only high-priority image |
+| 4 | About teaser, framed portrait and About link | Met; no invented credentials |
+| 5 | Four-service responsive bento and post-service booking CTA | Met |
+| 6 | Three-step booking timeline/guide | Met as guide, not a working booking flow |
+| 7 | Courses carousel with subject photos and quieter links | Met; disclosed unpublished topic previews |
+| 8 | Articles carousel with unique Latin slugs and subject photos | Met; article bodies/routes await Phase 5 |
+| 9 | Testimonial carousel with distinct Iranian portrait placeholders | Met as disclosed layout; no genuine reviews invented |
+| 10 | Four native accessible FAQ entries | Met by source reasoning, not keyboard-tested |
+| 11 | Final invitation with second full-bleed photo and booking CTA | Met |
+| 12 | Mobile sticky booking bar, safe-area and footer clearance | Met by CSS design, not device-tested |
+| 13 | Local images, complete typed manifest/prompts and honest sample content | Met |
+| 14 | Home metadata/canonical/OG/Twitter/h1 and truthful escaped JSON-LD | Met for page implementation; deployment/whole-site SEO pending |
+| 15 | Same-geometry inert loading, CSS-first RTL/breakpoints/theme, reduced-aware motion | Met by design reasoning, not zero-flicker certification |
+| 16 | Naming, current client register, sources/README and allowed checks | Met |
+
+**Checklist: 16 of 16 met for Phase 3 implementation scope; no unmet naming item.** Still unimplemented by deliberate phase order: destination pages, real bookings/contact/auth, dynamic content and SSE. Four-tap/sub-minute booking has **not** been achieved or measured. Whole-site completion is not claimed.
+
+**SEO checklist: met for Home implementation by source review.** Initial server content has one h1 and logical section/card headings, accessible image descriptions/reserved dimensions, crawlable links, unique metadata/canonical and truthful eligible schema. Full publication readiness is not met: targets currently 404, samples need confirmation/replacement, request-time sitemap comes in Phase 7 and deployment validation in Phase 11. Home metadata is now index/follow; this staging build should not be deployed as a finished professional site.
+
+**Zero-flicker check: met by design reasoning for Home, not visually verified.** Existing optional-font/prepaint-theme tradeoffs remain. Fixed header, initial responsive photo/card boxes, CSS mobile/desktop bar selection, bottom clearance, visible first content, no initial viewport entrance and matching inert loading prevent intentional geometry swaps. Hero skips fades; other images fade only after loading. Carousel snapshots are deterministic for SSR/hydration; snap updates keep control space. Review cards share stretched track height rather than clipping longer privacy text. No browser measurement, cache-throttled refresh, authenticated chrome or live-update check has run; the documented font fallback and scrollbar compensation still need manual review.
+
+**Deviations needing approval: none new.** Existing dependency exceptions, generated-photo disclosures and unavailable professional details remain recorded. The staged placeholders do not authorize publishing false clinical claims. Next phase after approval/«ادامه»: Phase 4 About and Services only.
+
+### Allowed verification
+
+Pinned Node 24.21.0/npm 11.19.0: TypeScript, ESLint and DB-independent Next production build passed; nine static outputs, with Home replacing the showcase. npm audit reported 0 at all severities. Package/lock diff is empty. No database connection/ping/script/seed, live handler/bus, browser test, test suite, SEO validator or Core Web Vitals measurement ran.
+
+Delivery: stopped the Phase 2 production process and restarted the completed Home build on 0.0.0.0:3000. The process reported ready without preview-blocking warnings. This is server readiness only, not a browser/visual/interaction validation. The next authorized work remains Phase 4.
