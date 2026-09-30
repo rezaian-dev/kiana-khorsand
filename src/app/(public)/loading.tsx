@@ -1,5 +1,5 @@
-import { Review } from "@/components/sections/foundation/review";
+import { Showcase } from "@/components/sections/showcase/showcase";
 
 export default function Loading() {
-  return <Review />;
+  return <Showcase isLoading />;
 }

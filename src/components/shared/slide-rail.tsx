@@ -1,0 +1,59 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import { useInView, useReducedMotion } from "motion/react";
+import { Pause, Play } from "lucide-react";
+import { Carousel } from "@/components/ui/carousel";
+import { CarouselContent } from "@/components/ui/carousel-content";
+import { CarouselItem } from "@/components/ui/carousel-item";
+import { CarouselPrevious } from "@/components/ui/carousel-previous";
+import { CarouselNext } from "@/components/ui/carousel-next";
+import type { CarouselApi } from "@/components/ui/carousel-context";
+import { Button } from "@/components/ui/button";
+import { formatNumber } from "@/lib/format";
+
+type Props = { slides: readonly { key: string; content: ReactNode }[]; label: string };
+
+export function SlideRail({ slides, label }: Props) {
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [hasHover, setHasHover] = useState(false);
+  const [hasFocus, setHasFocus] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const scope = useRef<HTMLDivElement>(null);
+  const isInView = useInView(scope, { amount: 0.2 });
+  const isReduced = useReducedMotion();
+  const autoplay = useMemo(() => Autoplay({ delay: 6500, playOnInit: false, stopOnInteraction: true, stopOnMouseEnter: true, stopOnFocusIn: true }), []);
+  const plugins = useMemo(() => [autoplay], [autoplay]);
+  useEffect(() => {
+    if (!api) return;
+    function handleSelect() { if (api) setSelected(api.selectedScrollSnap()); }
+    api.on("select", handleSelect).on("reInit", handleSelect);
+    return () => { api.off("select", handleSelect).off("reInit", handleSelect); };
+  }, [api]);
+  useEffect(() => {
+    function handleVisibility() { setIsHidden(document.hidden); }
+    document.addEventListener("visibilitychange", handleVisibility);
+    handleVisibility();
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+  useEffect(() => {
+    if (!api) return;
+    if (isReduced || isPaused || hasHover || hasFocus || isHidden || !isInView) autoplay.stop();
+    else autoplay.play();
+    return () => autoplay.stop();
+  }, [api, autoplay, isReduced, isPaused, hasHover, hasFocus, isHidden, isInView]);
+  return (
+    <div ref={scope} onMouseEnter={() => setHasHover(true)} onMouseLeave={() => setHasHover(false)} onFocusCapture={() => setHasFocus(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHasFocus(false); }}>
+      <Carousel opts={{ direction: "rtl", loop: true, containScroll: false }} plugins={plugins} setApi={setApi} aria-label={label}>
+        <CarouselContent>{slides.map((slide, index) => <CarouselItem key={slide.key} aria-label={`${formatNumber(index + 1)} از ${formatNumber(slides.length)}`}>{slide.content}</CarouselItem>)}</CarouselContent>
+        <div className="carousel-controls">
+          <div className="control-group"><CarouselPrevious /><CarouselNext /><Button type="button" variant="ghost" size="icon" className="autoplay-toggle" aria-label={isPaused ? "شروع پخش خودکار" : "توقف پخش خودکار"} onClick={() => setIsPaused(!isPaused)}>{isPaused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}</Button></div>
+          <div className="carousel-dots" aria-label="انتخاب اسلاید">{slides.map((slide, index) => <button key={slide.key} type="button" aria-label={`رفتن به اسلاید ${formatNumber(index + 1)}`} aria-current={selected === index ? "true" : undefined} onClick={() => { autoplay.stop(); setIsPaused(true); api?.scrollTo(index, Boolean(isReduced)); }}><span /></button>)}</div>
+        </div>
+      </Carousel>
+    </div>
+  );
+}

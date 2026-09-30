@@ -43,16 +43,37 @@
 
 ## Client Component register
 
-Updated in Phase 2 part 1. Exactly two authored client boundaries:
+Updated in Phase 2 part 2 (2026-10-01). **23 authored client entry files**, including one context-only module. This lists directives, not a claim that imported dependency code is server-only.
 
-| File / named component | Client reason and boundary |
+| File under `src/components` | Client reason and boundary |
 | --- | --- |
-| `src/components/layout/theme.tsx` / Theme | Minimal next-themes context and prepaint script; server-rendered children remain server children. No mount gate or theme-based render branch. |
-| `src/components/layout/theme-toggle.tsx` / ThemeToggle | useTheme and click event; renders both CSS-switched icons with a stable accessible label. Reads document only in the click handler. |
+| `layout/account-links.tsx` | AccountLinks — menu selection/logout callbacks; supplied Viewer only, no auth or data access. |
+| `layout/account-menu.tsx` | AccountMenu — controlled Dropdown/Sheet; CSS-first breakpoint choice, no viewport render branch. |
+| `layout/mobile-menu.tsx` | MobileMenu — controlled fullscreen Sheet, user-triggered Motion stagger, close events. |
+| `layout/nav-links.tsx` | NavLinks — usePathname for the five active-link states; no rewrites or render-time browser reads. |
+| `layout/theme-toggle.tsx` | ThemeToggle — useTheme/click; both icons and stable label present in SSR. |
+| `layout/theme.tsx` | Theme — next-themes provider and prepaint script; server children stay server-rendered. |
+| `motion/lift.tsx` | Lift — reduced-aware 8px hover transform; initial=false, server card children. |
+| `motion/motion.tsx` | Motion — strict LazyMotion/domAnimation and system-reduced MotionConfig; passes server children. |
+| `motion/scroll-progress.tsx` | ScrollProgress — useScroll; fixed transform-based track, no scroll writes. |
+| `sections/showcase/command-demo.tsx` | CommandDemo — local cmdk filtering/keyboard selection, allowlisted hash destinations via useRouter; no global admin search yet. |
+| `sections/showcase/message-demo.tsx` | MessageDemo — RHF/Zod client validation and truthful local-only Sonner feedback; no network/storage. |
+| `sections/showcase/state-demo.tsx` | StateDemo — selected Radix tab and Motion indicator for empty/error/success specimens. |
+| `shared/photo.tsx` | Photo — scoped useAnimate load fade and local error state; getImageProps/native picture, reserved geometry. |
+| `shared/slide-rail.tsx` | SlideRail — Embla/autoplay lifecycle, viewport/reduced/focus/hover/visibility gates, pause and dots. |
+| `ui/carousel-content.tsx` | CarouselContent — consumes carouselRef/orientation context; CSS-first slide geometry. |
+| `ui/carousel-context.ts` | CarouselContext/useCarousel — client context/hook and CarouselApi types, not a component/barrel. |
+| `ui/carousel-next.tsx` | CarouselNext — consumes scrollability/context and handles navigation. |
+| `ui/carousel-previous.tsx` | CarouselPrevious — consumes scrollability/context and handles navigation. |
+| `ui/carousel.tsx` | Carousel — native Embla hook/context and useSyncExternalStore select/reInit subscriptions; stable primitive snapshots and SSR default. |
+| `ui/direction.tsx` | DirectionProvider — native shadcn/Radix RTL provider with dir=rtl. |
+| `ui/dropdown-menu-content.tsx` | DropdownMenuContent — forceMount portal and controlled AnimatePresence for post-interaction Motion exit/entry. |
+| `ui/sheet-content.tsx` | SheetContent — controlled forceMount portal/overlay/content, Motion presence, reduced-motion handling. |
+| `ui/sonner.tsx` | Toaster — Sonner leaf with Persian region label, RTL, stable semantic CSS theme; native transitions/animations disabled. |
 
-`src/components/ui/button.tsx` / Button has no client directive: the same shadcn primitive is server-rendered for download links and enters the client graph only beneath ThemeToggle. Native buttonVariants/Slot names are preserved. Vendor next-themes ThemeProvider, Radix Slot (for asChild), lucide icons and Next Link are dependency components, not additional authored boundaries. Logo, Review, every page/loading/layout and all metadata conventions remain server files. There is no auth provider, form, browser effect, Motion provider or live subscriber yet.
+Header, Footer, Logo, ContactLinks, SocialIcon, PageHeading, SectionSurface, JsonLd, CardSkeleton, Showcase, FaqDemo, pages, loading, layouts and metadata conventions remain server files. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-Historical Phase 0/1 records below describe their state at that time; Phase 2 changes and accepted Phase 0 exceptions supersede the earlier pending statements.
+No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the part-2 delivery record supersede those statuses.
 
 ## Version selection and compatibility
 
@@ -328,3 +349,78 @@ For the light action gradient, sRGB-channel luminance convexity bounds the brigh
 - `npm audit --json`: 0 vulnerabilities, including 0 high/critical, at this delivery; accepted EOL/prerelease development exceptions remain disclosed and are not cleared by that count.
 - No database connection/ping/script/seed/live handler, browser test, test suite, SEO validator or Core Web Vitals measurement ran. The only raster inspection was Persian shaping in a static authored brand card.
 - Delivery: restarted the final built production server on 0.0.0.0:3000; `/` now serves the Phase 2 foundation review with genuine downloads. Server readiness is delivery evidence only, not browser/visual verification.
+
+
+## Phase 2 part 2 — shared shell and interactions
+
+Continuation authorized by «ادامه», within Phase 2 only. Package.json, package-lock.json and the installed version set remain unchanged. No Calendar/Persian add-on or Chart dependency downgrade was installed.
+
+### Official sources and decisions
+
+- shadcn official CLI generated Sheet, DropdownMenu, Accordion, Tabs, Carousel, Sonner, Input, Textarea, Label, Badge, Skeleton and Command; generated multi-component files were split into native-named one-component files and unused exports pruned. Existing branded Button/Input/Textarea were preserved when Command added its dependencies. Unused Dialog/InputGroup scaffolding was removed, not shipped — https://ui.shadcn.com/docs/cli ; https://ui.shadcn.com/docs/components/radix/command ; https://ui.shadcn.com/docs/components/radix/carousel
+- RTL uses native DirectionProvider with its required `dir` prop; semantic CSS is logical and breakpoint decisions are CSS-first — https://ui.shadcn.com/docs/rtl/next
+- Radix Dialog/Dropdown retain focus/keyboard/portal behavior; controlled forceMount permits Motion to own presence transitions, without native CSS entrance classes — https://www.radix-ui.com/primitives/docs/components/dialog ; https://www.radix-ui.com/primitives/docs/components/dropdown-menu ; https://www.radix-ui.com/primitives/docs/guides/animation
+- Tabs/Accordion use their native composition rather than custom keyboard/ARIA reimplementations — https://ui.shadcn.com/docs/components/radix/tabs ; https://ui.shadcn.com/docs/components/radix/accordion
+- Motion uses strict LazyMotion/domAnimation plus `motion/react-m`, system reduced motion, AnimatePresence initial=false for post-load menus, transform-based hover/tab/progress effects and scoped load animation; no initial viewport content is hidden — https://motion.dev/docs/react-lazy-motion ; https://motion.dev/docs/react-motion-config ; https://motion.dev/docs/react-animate-presence ; https://motion.dev/docs/react-use-reduced-motion ; https://motion.dev/docs/react-use-scroll ; https://motion.dev/docs/react-use-animate ; https://motion.dev/docs/react-use-in-view
+- Embla 8.6.0 is the mandated native slide transport; autoplay starts only after the explicit eligibility gates, stops on interaction/focus/hover and cleans up. Hosted autoplay docs returned 404, so the official version-pinned repository docs were used — https://github.com/davidjerleke/embla-carousel/tree/v8.6.0/packages/embla-carousel-docs/src/content/pages/plugins ; https://www.embla-carousel.com/api/events/ ; https://www.embla-carousel.com/api/options/
+- Carousel scrollability uses useSyncExternalStore, a memoized subscription with cleanup, primitive immutable snapshots and a deterministic server snapshot; this replaces synchronous effect state updates without lint suppression — https://react.dev/reference/react/useSyncExternalStore
+- cmdk provides local ranking/keyboard selection; CommandDemo only routes to its three static fragment destinations, not untrusted input or DB search — https://github.com/dip/cmdk ; https://nextjs.org/docs/app/api-reference/functions/use-router
+- Next getImageProps supports native picture/art direction; explicit source dimensions, ratio boxes, lazy image gallery and a visible loading base reserve geometry. Photo state only handles load fade and error; no blur placeholder or client-only mount gate — https://nextjs.org/docs/app/api-reference/components/image
+- RHF plus zodResolver/messageSchema validates the local demo; inline errors reserve space and the message explicitly says nothing was sent. Sonner uses CSS semantic colors rather than a hydration-time theme branch; its own animation is disabled — https://ui.shadcn.com/docs/forms/react-hook-form ; https://react-hook-form.com/docs/useform ; https://github.com/react-hook-form/resolvers ; https://zod.dev/api ; https://ui.shadcn.com/docs/components/radix/sonner ; https://sonner.emilkowal.ski/toaster
+- Loading shares the actual server Showcase geometry but is inert and accompanied by a visible/live status, preventing duplicate usable forms/menu controls while navigation is pending — https://nextjs.org/docs/app/api-reference/file-conventions/loading ; https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert
+- Root not-found is the stable native convention, no experimental global-not-found. A Metadata export supplies a unique Persian title/description/noindex. In addition to the convention docs, the installed official Next 16.3.8 implementation was inspected: `dist/lib/metadata/resolve-metadata.js` resolves error-convention exports and `dist/server/app-render/app-render.js` asks for the not-found boundary metadata — https://nextjs.org/docs/app/api-reference/file-conventions/not-found ; https://nextjs.org/docs/app/api-reference/functions/generate-metadata ; https://registry.npmjs.org/next/16.3.8
+- JSON-LD is server-rendered and escapes `<`; WebSite/Person/Service refer to the given individual, not a clinic or Physician. Schema.org published release 30.1 (2026-09-16) is the stable term source; provider explicitly permits Person. No false root-fragment BreadcrumbList or Review/AggregateRating was added — https://nextjs.org/docs/app/guides/json-ld ; https://schema.org/version/30.1/ ; https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/30.1/schemaorg-current-https.jsonld
+- Headers are native Next config; poweredByHeader=false, general nosniff/referrer/permissions headers, HTTPS-forwarded-only HSTS without preload/subdomain commitment, canonical-host-only anti-framing so the preview iframe remains usable. The production proxy must sanitize x-forwarded-proto. The frame-ancestors policy is not represented as a full script CSP — https://nextjs.org/docs/app/api-reference/config/next-config-js/headers ; https://nextjs.org/docs/app/api-reference/config/next-config-js/poweredByHeader ; https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security ; https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options ; https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors
+- Native robots excludes private/auth/API paths; it is not an authorization mechanism, and no premature static DB sitemap is emitted — https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots
+- Narrow react-remove-scroll-bar body-margin compensation override accompanies stable scrollbar-gutter; official package source unconditionally adds margin compensation. This needs manual scrollbar/focus/overlay verification, not an assumed browser pass — https://github.com/theKashey/react-remove-scroll-bar
+- The requested CSS scroll-driven reveal uses feature queries for both timeline/range and stays visible at every frame; browsers without support receive static content. All authored CSS transitions on buttons/nav were removed; the only authored CSS animation is this explicit exception — https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline
+
+### Assets, assumptions and naming
+
+- Seven JPEG exports represent four fictional photographic subjects. Landscape originals were 1672×941; portrait original was 928×1152. Final 2400×1350 / mobile 1080×1440 / portrait 1280×1600 sizes are upsampled/art-directed exports, not native-resolution claims. All generation prompts, ratios and intended use are in public/images/README.md; src/content/images.ts is the typed manifest. These are not authentic doctor/client/office photos. No new image generator/runtime dependency was installed.
+- Contacts, social URLs, address and license remain null rather than fabricated. Header defaults to guest until Phase 7 session resolution; the visibly labeled account specimen is fictional, its count is not live, and logout is disabled. Upcoming links intentionally reach 404. Local demo validation is not a successful contact submission.
+- Footer year is a server-module snapshot using fixed Persian/Tehran formatting, not a render-time random/date/client read; static deployment needs a Persian-New-Year rebuild.
+- One component per file, named PascalCase/kebab-case alignment, local Props types, no barrels/generic utils, no any/unsafe non-null assertion, and no extra project scripts/dependencies. Native shadcn names are retained, including DirectionProvider/Toaster and longer compound primitive names. The context-only carousel-context module is not a second component. Naming is met by source review, not a separate test suite.
+- Reusable shell/surfaces/photos/skeletons are implemented now; actual page-specific backgrounds, services/articles/course/testimonial photos and booking CTA layout still belong to the specified page phases. No Phase 3 or admin route was built early.
+
+### Phase 2 deviations needing approval
+
+1. **Calendar runtime prerequisite, not installed:** official v10 upgrade documentation removes `react-day-picker/persian` and requires the separate `@daypicker/persian` add-on. Registry latest is **10.0.2**, with React/@types React peers >=16.8.0 and a hard dependency on **date-fns-jalali 4.1.0-0**, plus @daypicker/react 10.0.2 and @date-fns/tz. @daypicker/react 10.0.2 itself depends on existing react-day-picker 10.0.2 and requires Node >=18. Its peers/engine fit the pinned stack, but the Jalali dependency violates the blanket no-prerelease rule. `date-fns-jalali/latest` is 4.4.0-0, also prerelease and not the add-on's required exact version. Smallest proposal: permit only the required runtime 4.1.0-0 exception and add exact @daypicker/persian 10.0.2; do not silently override/downgrade/change date handling. This is distinct from accepted development-only Phase 0 exceptions — https://daypicker.dev/upgrading ; https://registry.npmjs.org/@daypicker/persian/10.0.2 ; https://registry.npmjs.org/@daypicker/react/10.0.2 ; https://registry.npmjs.org/date-fns-jalali/latest
+2. **Chart generation, not performed:** the official radix-nova registry declares recharts@3.8.0, whereas the compatible pinned project is 3.10.1. CLI 4.21.0 help has dry-run/view/diff but no skip-install. Smallest proposal: use the same CLI against a temporary copy of the official registry with only that dependency declaration changed to 3.10.1, keeping source provenance and then applying the same approved local component styling/splitting. No dependency downgrade, override or new package is proposed — https://ui.shadcn.com/r/styles/radix-nova/chart.json ; https://ui.shadcn.com/docs/cli
+
+Both proposals await explicit approval. Neither was treated as authorized by the earlier «ادامه». All nonblocked parts of the shared-shell continuation were completed; the next continuation stays in Phase 2.
+
+### Updated Phase 2 workstream checklist
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Approved light/dark/mono emblem and outlined lockup SVG assets | Met |
+| 2 | Single server Logo, accessible home link, 40/44 height, minimum/clear-space guidance | Met |
+| 3 | Brand icons, manifest and default Persian social assets | Met |
+| 4 | Delete Phase 1 preview route/components/content/styles/link | Met |
+| 5 | Official local variable font, complete license and documented no-late-swap strategy | Met |
+| 6 | Prepaint light/dark/system theme and stable theme control | Met |
+| 7 | Full 22 hue scales, 16 gradient families and semantic tokens | Met |
+| 8 | Central elevation/glow/focus/motion-value tokens and CLI Button foundation | Met |
+| 9 | Honest noindex review with dimension-identical inert loading and real downloads | Met |
+| 10 | Naming, official sources, complete client register and allowed checks | Met |
+| 11 | Motion/RTL, primitives and interactive/form states | Not met: Calendar and Chart await decisions; remaining primitives, including Command, implemented |
+| 12 | Fixed-height server header, five links, fullscreen menu, desktop/mobile account menus | Met for Phase 2 UI; real session/action wiring remains Phase 7 |
+| 13 | Server footer, custom social icons, contact/booking card, crisis/confidentiality/legal band | Met; unverified contact/license fields deliberately null |
+| 14 | SectionSurface/decorations, typed samples, local photographic assets/manifests and skeletons | Met with fictional/upsampled image disclosure |
+| 15 | Designed 404 and sitewide SEO/robots/security/JSON-LD foundations | Met by source inspection; DB sitemap/real page schema and deployment validation remain later phases |
+| 16 | Comprehensive noindex showcase and full Phase 2 review | Not met: Calendar/Chart specimens and final full-phase review remain |
+
+**Checklist: 14 of 16 met.** Unmet items are exactly 11 and 16 above; naming is not an outstanding item. Do not remove the temporary showcase or start Phase 3 yet.
+
+### SEO and zero-flicker reasoning
+
+**SEO checklist: met for the temporary noindex route and Phase 2 foundations by source inspection, not SEO-tool verification.** Sitewide completion is not claimed: real pages, their visible breadcrumbs/canonicals/schema and request-time sitemap arrive in later phases.
+
+**Zero-flicker check: not met for complete Phase 2/sitewide delivery**, because Calendar/Chart are pending and no browser verification is permitted. Implemented safeguards: next-themes prepaint + CSS icons; optional local font with persistent-fallback tradeoff; fixed header and CSS-selected mobile/desktop menus; identical page/loading boxes with inert fallback; reserved art-directed image boxes and no hidden initial image; CSS-first carousel geometry and deterministic scrollability server snapshot; fixed specimen/skeleton card-body heights; fixed command results area; reserved form error feedback; stable count badge; static reduced-motion treatment; no render-time Date/random/viewport/theme-dependent branch; one html suppression; no scroll-position writes or external browser assets. Native overlay scrollbar compensation remains a manual-review risk. Current guest first HTML is deliberate Phase 2 scaffolding, not validated authenticated chrome.
+
+### Allowed verification
+
+TypeScript, ESLint and DB-independent production build passed on pinned Node 24.21.0/npm 11.19.0. Build generated nine static outputs including designed framework not-found, robots and brand metadata routes. npm audit reported **0 vulnerabilities** at every severity. Package/lock versions are unchanged. These checks are not proof of responsive/visual/focus/animation/zero-flicker behavior. No browser, test suite, DB connection/ping/seed/script, live handler, SEO validator or Core Web Vitals measurement ran.
+
+Delivery: stopped the previous part-1 server and started the freshly built production app on 0.0.0.0:3000. The process reported ready with no preview-blocking warning. This is server-readiness evidence only, not a browser/interaction check.

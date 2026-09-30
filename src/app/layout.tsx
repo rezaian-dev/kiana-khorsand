@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
+import { Motion } from "@/components/motion/motion";
+import { DirectionProvider } from "@/components/ui/direction";
+import { Toaster } from "@/components/ui/sonner";
 import { Theme } from "@/components/layout/theme";
 import { themeColors } from "@/lib/constants";
 import { getEnv } from "@/lib/env";
@@ -57,7 +60,11 @@ export default function Layout({ children }: Props) {
     // next-themes changes only the root class and color-scheme before hydration.
     <html lang="fa" dir="rtl" className={vazirmatn.variable} suppressHydrationWarning>
       <body>
-        <Theme>{children}</Theme>
+        <Theme>
+          <DirectionProvider dir="rtl">
+            <Motion>{children}<Toaster /></Motion>
+          </DirectionProvider>
+        </Theme>
       </body>
     </html>
   );
