@@ -37,13 +37,22 @@
 | `tailwindcss` (development) | 4.3.3 | https://registry.npmjs.org/tailwindcss/4.3.3 |
 | `tw-animate-css` (development) | 1.4.0 | https://registry.npmjs.org/tw-animate-css/1.4.0 |
 | `typescript` (development) | 6.0.3 | https://registry.npmjs.org/typescript/6.0.3 |
-| Vazirmatn (outline source only; not a runtime font yet) | 33.003 | https://github.com/rastikerdar/vazirmatn/releases/tag/v33.003 |
+| Vazirmatn (local variable WOFF2 and outline source) | 33.003 | https://github.com/rastikerdar/vazirmatn/releases/tag/v33.003 |
 | `gensync` (transitive development; prerelease) | 1.0.0-beta.2 | https://registry.npmjs.org/gensync/1.0.0-beta.2 |
 | `resolve` (transitive development; prerelease) | 2.0.0-next.7 | https://registry.npmjs.org/resolve/2.0.0-next.7 |
 
 ## Client Component register
 
-None through Phase 1: all project components, including Gallery, Specimen and Concept, are Server Components; useId is used in a synchronous Server Component. No file contains a `use client` directive. Framework Link does not change the server boundary of its parent.
+Updated in Phase 2 part 1. Exactly two authored client boundaries:
+
+| File / named component | Client reason and boundary |
+| --- | --- |
+| `src/components/layout/theme.tsx` / Theme | Minimal next-themes context and prepaint script; server-rendered children remain server children. No mount gate or theme-based render branch. |
+| `src/components/layout/theme-toggle.tsx` / ThemeToggle | useTheme and click event; renders both CSS-switched icons with a stable accessible label. Reads document only in the click handler. |
+
+`src/components/ui/button.tsx` / Button has no client directive: the same shadcn primitive is server-rendered for download links and enters the client graph only beneath ThemeToggle. Native buttonVariants/Slot names are preserved. Vendor next-themes ThemeProvider, Radix Slot (for asChild), lucide icons and Next Link are dependency components, not additional authored boundaries. Logo, Review, every page/loading/layout and all metadata conventions remain server files. There is no auth provider, form, browser effect, Motion provider or live subscriber yet.
+
+Historical Phase 0/1 records below describe their state at that time; Phase 2 changes and accepted Phase 0 exceptions supersede the earlier pending statements.
 
 ## Version selection and compatibility
 
@@ -202,3 +211,120 @@ None through Phase 1: all project components, including Gallery, Specimen and Co
 **Checklist: 12 of 12 met.** No new deviations needing approval; prior Phase 0 exceptions remain documented. Await the user's concept choice and emblem/lockup choices for header and footer before beginning Phase 2.
 
 - Phase 1 preview delivery: started the built Next.js production server on 0.0.0.0:3000; the review route is /logo-preview. This is delivery, not a browser, database or real-time behavior test.
+
+
+## Phase 2 part 1 — approved brand and foundations
+
+The user chose B («ب — امضای همراه») and explicitly chose **lockup for both header and footer**. Part 1 was announced as final brand assets, local typography, theme and design tokens; the remaining Phase 2 interactions/chrome/full showcase are a separate approval-gated continuation. No Phase 3 page has been started.
+
+### Official sources and decisions
+
+- Local font: next/font/local with source relative to root layout, weight `100 900`, preload, CSS variable, `display: optional` and adjusted Arial fallback — https://nextjs.org/docs/app/api-reference/components/font
+- No late font swap: optional has an extremely small block period and no swap period; browser timings vary; slow connections may keep fallback for that page view — https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display
+- Preload plus optional avoids the early rerender in the documented Chrome behavior; this is a strategy, not a cross-browser first-paint or measured CLS guarantee — https://web.dev/articles/preload-optional-fonts
+- Official font source/license: unchanged Vazirmatn 33.003 WOFF2 distributed with the complete OFL; font SHA256 `4e3fa217d38fdafc1fea4414ceb58ca5e662cf0ab5fa735a8c8c20e8b42cad92`, license SHA256 `17e355067c8284f47743a1ee3b1ef7ff684ff0601eda357f9353b10b3016ab31` — https://github.com/rastikerdar/vazirmatn/releases/tag/v33.003
+- Theme provider: class attribute, default system, enableColorScheme, enableSystem and disableTransitionOnChange; one root suppressHydrationWarning; SSR-unsafe theme reads are avoided, not hidden with a mounted gate — https://github.com/pacocoursey/next-themes ; https://ui.shadcn.com/docs/dark-mode/next
+- Theme button: both Lucide icons are rendered in equal absolute slots and switched by root CSS; the click handler reads the already-applied root class and calls setTheme; the static accessible label avoids server/client text differences — https://ui.shadcn.com/docs/dark-mode/next ; https://github.com/pacocoursey/next-themes#usetheme
+- shadcn Button: generated using the pinned official CLI (`npx --no-install shadcn add button --yes`) with strict-peer/engine and exact-save environment settings, then restyled; all original variant/size keys and native exports retained; anchor downloads use asChild — https://ui.shadcn.com/docs/components/radix/button ; https://ui.shadcn.com/docs/cli
+- Semantic foreground/background pairs, light/dark overrides, sidebar/chart/radius mappings and named colors follow the official theme convention, not the neutral demo palette — https://ui.shadcn.com/docs/theming
+- Tailwind v4 mapping uses top-level @theme inline for CSS-variable aliases; shadow namespaces map central layered elevations — https://tailwindcss.com/docs/theme ; https://tailwindcss.com/docs/box-shadow
+- All 22 hue scales have levels 50/100/200/300/400/500/600/700/800/900/950; 50–400 mix 4/9/18/34/62% of the anchor with white in oklab, and 600–950 mix 84/68/50/34/20% with #080613; these are author-selected brand scales, not an upstream palette — https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/color-mix
+- All 16 requested gradient families have light/dark accent and surface versions (64 tokens); explicit sRGB interpolation is used for these and the separate contrast-controlled action gradient; raw accent gradients are decoration, not arbitrary text backgrounds — https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/gradient/linear-gradient
+- Stable scrollbar space, logical RTL properties, dvh, fixed logo/icon slots and 44px control minima reduce avoidable geometry changes; reduced motion disables state transitions; no initial content is animated or hydration-hidden — https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-gutter ; https://www.w3.org/TR/WCAG22/
+- Logo: synchronous server useId gives unique paint/title identifiers; exactly the approved four geometric paths plus the one faithfully outlined wordmark path; no image-based logo embedding, filters, external font or hand-drawn lettering — https://react.dev/reference/react/useId ; https://www.w3.org/TR/SVG2/pservers.html ; https://www.w3.org/TR/SVG2/struct.html#TitleElement
+- Icon file conventions: adaptive app/icon.svg and opaque 180×180 app/apple-icon.png are automatically exposed by Next; six standalone brand exports use separate namespaces; the in-app renderer is only Logo — https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons
+- Typed root manifest supplies Persian name/dir/lang and brand icons; display browser makes no offline/PWA/installability claim — https://nextjs.org/docs/app/api-reference/file-conventions/metadata/manifest
+- Default OG and Twitter cards: static 1200×630 PNGs with matching .alt.txt files use Next metadata conventions; designed brand graphics are not substitutes for the required real photographic content — https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image
+- Static-card decision: ImageResponse documents ttf/otf/woff, not WOFF2, and the reviewed API docs do not establish correct Persian joining/bidi for this design; the expressly allowed static option avoids an unsupported shaping claim — https://nextjs.org/docs/app/api-reference/functions/image-response
+- Social-card Persian subtitle is shaped with the same official font using fa/arab/rtl HarfBuzz and converted with SVGPathPen/TransformPen before rasterization; only glyph joining was inspected in the authoring artifact, not a browser; external cached authoring tools are not project dependencies — https://uharfbuzz.readthedocs.io/reference.html ; https://fonttools.readthedocs.io/en/stable/pens/svgPathPen.html ; https://fonttools.readthedocs.io/en/stable/pens/transformPen.html ; https://cairosvg.org/documentation/
+- Metadata: validated metadataBase, title template, Persian default description, fa_IR OG, Twitter large card and optional Google verification; current review adds explicit noindex/nofollow/self canonical and unique title/description; no fabricated business/review schema — https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Viewport preserves browser zoom, adds safe-area viewportFit cover and media-based light/dark themeColor; browser chrome/icon media follows OS preference rather than the manually selected site theme — https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+- Loading reuses the full static Review with identical boxes/copy instead of a generic spinner; the full reusable skeleton system is still in remaining Phase 2 work — https://nextjs.org/docs/app/api-reference/file-conventions/loading
+
+### Asset and naming record
+
+- Removed `/logo-preview`, Gallery, Specimen, Concept, the unselected concept definitions, proof styles and the preview route constant. Selection history stays in git and this document, not live routes.
+- `src/content/brand.ts` is the single typed geometry/wordmark source for Logo and records the selected default form; exports under public/brand are standalone downloadable assets, not duplicate runtime renderers.
+- Font source and full license are shipped under src/fonts. Icon/apple/manifest/OG/Twitter filenames are required Next conventions. No added project scripts, dependency, generic utils file, barrels, extra src level, auth stub or DB code.
+- Authored component filenames match named PascalCase exports; all are one component per file, and section Review is reused by the page and loading route. Default framework exports and native shadcn Button/buttonVariants/Comp names follow the stated exceptions. Handwritten props types are Props; booleans isLockup/isDark; handler handleToggle. No any, unsafe non-null assertion or time/random/browser read during render.
+- All 22 hues are present: violet, purple, fuchsia, magenta, rose, coral, orange, amber, gold, mint, emerald, teal, cyan, sky, azure, indigo, periwinkle, lavender, blush, peach, plum, ink.
+- All 16 gradient names are present: Aurora, Sunrise, Lagoon, Orchid, Cotton Candy, Peach Glow, Ocean, Twilight, Mint Dew, Golden Hour, Dream, Nebula, Berry, Meadow, Dusk, Coral Reef.
+
+### Token contrast calculations
+
+These are WCAG relative-luminance arithmetic from authored tokens, **not rendered/browser sampling**, and do not certify every future surface/state/photo/chart or full-site AA conformance. Decorative dividers are not relied on as control boundaries; outline buttons use the stronger input token. Accent swatches contain no text; captions use solid card surfaces.
+
+| Pair | Light ratio | Dark ratio |
+| --- | --- | --- |
+| foreground / background | 15.53 | 17.48 |
+| foreground / card | 16.36 | 15.63 |
+| muted-foreground / card | 6.67 | 9.25 |
+| muted-foreground / background | 6.33 | 10.35 |
+| primary-foreground / primary | 7.10 | 9.42 |
+| secondary-foreground / secondary | 9.42 | 11.23 |
+| accent-foreground / accent | 7.35 | 9.92 |
+| destructive-foreground / destructive | 7.31 | 8.54 |
+| success-foreground / success | 6.97 | 8.28 |
+| warning-foreground / warning | 7.39 | 9.92 |
+| input / card | 3.83 | 5.00 |
+| input / background | 3.64 | 5.60 |
+| ring / card | 7.10 | 9.23 |
+| ring / background | 6.74 | 10.33 |
+| action foreground / complete gradient (conservative bound) | >=5.47 | >=6.84 |
+
+For the light action gradient, sRGB-channel luminance convexity bounds the brightest point by the brightest endpoint. For dark action, the component-wise minimum RGB across all stops supplies a lower luminance bound against the dark text. Existing logo gradient calculations from Phase 1 remain applicable to the white/ink exports. Full contrast of all future components stays pending — https://www.w3.org/TR/WCAG22/#dfn-relative-luminance ; https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio
+
+### Part 1 zero-flicker reasoning
+
+| Area | Implemented strategy / remaining limitation |
+| --- | --- |
+| Theme | next-themes prepaint root class; two CSS-switched icons; one documented root warning suppression; no mounted gate. |
+| Fonts | Local preloaded optional font, adjusted Arial fallback; no late swap period; slow connections may keep fallback. First-paint timing is UA-dependent, not universally guaranteed. Logo/social lettering is outlined. |
+| Auth | No session UI in the current design-only route; exact server-resolved auth chrome remains Phase 2/7 work, not a signed-out imitation. |
+| Hydration | Stable server markup, useId, no render-time Date/random/document/theme selection; document read only on click. |
+| Images | Logo has explicit viewBox/width/height and CSS height. Social/icon images are metadata assets; photographic wrappers and load fades are still pending. |
+| Widgets | No initialized carousel/calendar/dropdown yet. Their CSS-first geometry must be implemented with the full showcase. |
+| Loading | Page and loading use the identical Review component and content; no spinner or replacement-sized placeholder. |
+| Chrome | Fixed 80px review top row, 40/44px logo, 44px theme target, stable scrollbar gutter; full header/sidebar/overlays are pending. |
+| Animation | No initial entrance, hidden content, layout animation or scroll writes; state-only transform/shadow/gradient-position transitions; reduced-motion static. |
+| State/live | Only genuine asset download anchors and theme switching; no fake submit/booking/login actions, toast claims or live data. |
+| Third parties | No external browser font/image/widget requests; all brand resources are local. |
+| Verification | Only TypeScript, ESLint, DB-independent build and permitted dependency audit, with source/asset-authoring reasoning; no browser/flicker/CLS/live/SEO-tool verification. |
+
+**Zero-flicker check: met by design reasoning for this partial static review, with the documented optional-font tradeoff; not visually verified. Full Phase 2/sitewide check: not met yet because chrome, photos, Motion/widgets and other skeletons are unfinished.**
+
+### Part 1 SEO checklist
+
+**SEO checklist: met for the temporary review, by source inspection only.** Server HTML, one h1, logical headings, unique Persian title/description, self canonical, noindex/nofollow, fa_IR OG/Twitter image/alt, metadataBase and icons/manifest are implemented. This is not a protected route. **Sitewide SEO checklist: not met yet**: designed 404, robots/security/JSON-LD foundation and the comprehensive review remain next part; request-time DB sitemap belongs to Phase 7 and final validation to Phase 11. No public clinical claims beyond the user's provided identity/role, license fabrication or review/rating schema.
+
+### Phase 2 workstream checklist (partial delivery)
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Approved light/dark/mono emblem and outlined lockup SVG assets | Met |
+| 2 | Single server Logo, accessible home link, 40/44 height, minimum/clear-space guidance | Met |
+| 3 | Brand icons, manifest and default Persian social assets | Met |
+| 4 | Delete Phase 1 preview route/components/content/styles/link | Met |
+| 5 | Official local variable font, complete license and documented no-late-swap strategy | Met |
+| 6 | Prepaint light/dark/system theme and stable theme control | Met |
+| 7 | Full 22 hue scales, 16 gradient families and Tailwind/shadcn semantic tokens | Met |
+| 8 | Central elevation/glow/focus/motion-value tokens and CLI-based Button foundation | Met |
+| 9 | Honest noindex foundation review with dimension-identical loading and actual downloads | Met |
+| 10 | Naming rules, official sources, complete client register and allowed code/build checks | Met |
+| 11 | Motion/LazyMotion/MotionConfig, RTL DirectionProvider, remaining primitives and interactive/form states | Not met; next part |
+| 12 | Fixed server header, five links, mobile fullscreen menu and desktop/mobile account menus | Not met; next part; real auth wiring remains Phase 7 |
+| 13 | Pure server footer, custom social icons, contact/booking card, crisis/confidentiality/legal band | Not met; next part |
+| 14 | SectionSurface, decorations, typed sample content, real local photos/manifests and reusable skeletons | Not met; next part |
+| 15 | Designed 404 and remaining sitewide SEO/robots/security/JSON-LD foundations | Not met; next part; DB sitemap remains Phase 7 |
+| 16 | Comprehensive noindex design-system showcase and full Phase 2 review | Not met; next part; remove after approval |
+
+**Checklist: 10 of 16 met.** This is the promised coherent partial delivery, not completion of Phase 2. No new deviations needing approval; the previously accepted tooling exceptions remain, and optional-font fallback is explicitly documented rather than claimed as a universal font-first-paint guarantee. Stop for «ادامه» before completing the remaining Phase 2 work. Do not begin Phase 3.
+
+### Verification and delivery record
+
+- The official Button CLI produced one component file and did not change package.json, package-lock.json or components.json; all exact pins/strict-peer decisions remain unchanged. No new project dependency.
+- First typecheck encountered an obsolete `.next/types` reference to the deleted Phase 1 route. Stopped the old production server, removed generated .next output, rebuilt, then reran TypeScript/ESLint successfully; this was stale generated code, not a hidden source failure.
+- Final allowed commands: `npm run typecheck`, `npm run lint`, `NEXT_TELEMETRY_DISABLED=1 npm run build`; all pass on Node 24.21.0 / npm 11.19.0. Build has only `/`, framework not-found and five brand metadata routes. No DB module/connection exists.
+- `npm audit --json`: 0 vulnerabilities, including 0 high/critical, at this delivery; accepted EOL/prerelease development exceptions remain disclosed and are not cleared by that count.
+- No database connection/ping/script/seed/live handler, browser test, test suite, SEO validator or Core Web Vitals measurement ran. The only raster inspection was Persian shaping in a static authored brand card.
+- Delivery: restarted the final built production server on 0.0.0.0:3000; `/` now serves the Phase 2 foundation review with genuine downloads. Server readiness is delivery evidence only, not browser/visual verification.

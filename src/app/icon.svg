@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="kk-app-icon" viewBox="0 0 96 96" role="img" aria-labelledby="kk-app-icon-title" color="#1e1b4b">
+  <title id="kk-app-icon-title">کیانا خرسند</title>
+  <style>@media(prefers-color-scheme:dark){#kk-app-icon stop:nth-child(1){stop-color:#c4b5fd}#kk-app-icon stop:nth-child(2){stop-color:#818cf8}#kk-app-icon stop:nth-child(3){stop-color:#38bdf8}#kk-app-icon stop:nth-child(4){stop-color:#5eead4}}</style>
+  <defs>
+    <linearGradient id="kk-app-icon-paint" x1="14" y1="14" x2="82" y2="82" gradientUnits="userSpaceOnUse" color-interpolation="sRGB">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="36%" stop-color="#4f46e5"/>
+      <stop offset="70%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <g stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 17V80" fill="none" stroke="url(#kk-app-icon-paint)"/>
+    <path d="M35 43C36 24 53 14 73 15C71 34 55 45 35 43Z" fill="url(#kk-app-icon-paint)"/>
+    <path d="M12 32C12 46 18 53 28 53C49 53 67 43 78 30" fill="none" stroke="url(#kk-app-icon-paint)"/>
+    <path d="M34 55C46 61 56 72 70 80" fill="none" stroke="url(#kk-app-icon-paint)"/>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+export const gradients = [
+  { key: "aurora", label: "شفق" },
+  { key: "sunrise", label: "طلوع" },
+  { key: "lagoon", label: "تالاب" },
+  { key: "orchid", label: "ارکیده" },
+  { key: "cotton-candy", label: "پشمک" },
+  { key: "peach-glow", label: "درخشش هلو" },
+  { key: "ocean", label: "اقیانوس" },
+  { key: "twilight", label: "گرگ‌ومیش" },
+  { key: "mint-dew", label: "شبنم نعنا" },
+  { key: "golden-hour", label: "ساعت طلایی" },
+  { key: "dream", label: "رویا" },
+  { key: "nebula", label: "سحابی" },
+  { key: "berry", label: "توت" },
+  { key: "meadow", label: "چمنزار" },
+  { key: "dusk", label: "شامگاه" },
+  { key: "coral-reef", label: "آبسنگ مرجانی" },
+] as const;
