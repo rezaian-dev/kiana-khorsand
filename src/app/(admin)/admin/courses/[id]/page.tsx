@@ -5,7 +5,7 @@ import { readEditor } from "@/server/publishing";
 import { routes } from "@/lib/constants";
 
 const title = "ویرایش دوره‌ها";
-const description = "فضای خصوصی آماده‌سازی و بازبینی محتوای آموزشی.";
+const description = "ویرایشگر خصوصی دوره؛ آماده‌سازی مخاطب، سرفصل‌ها، مرز آموزشی و مشخصات مدرس.";
 type Props = { params: Promise<{ id: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;

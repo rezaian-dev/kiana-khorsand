@@ -1808,3 +1808,38 @@
 @media (min-width:1600px) { .content-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media (max-width:899px) { .editor-grid { grid-template-columns:minmax(0,1fr); } }
 @media (max-width:599px) { .content-grid { grid-template-columns:minmax(0,1fr); } }
+
+/* Private queues and site preferences; no second live subscriber or client lists. */
+.queue-split { display:grid; grid-template-columns:minmax(15rem,.8fr) minmax(0,1.6fr); gap:1.25rem; min-inline-size:0; align-items:start; }
+.queue-list { list-style:none; margin:1rem 0; padding:0; display:grid; gap:.65rem; }
+.queue-list a { display:grid; gap:.45rem; min-block-size:100px; border:1px solid var(--border); border-radius:1rem; background:var(--background); padding:1rem; overflow-wrap:anywhere; }
+.queue-list a[aria-current] { border-color:var(--primary); background:var(--surface-aurora); box-shadow:inset 0 0 0 1px var(--primary); }
+.queue-list time,.queue-list a > span { color:var(--muted-foreground); }
+.queue-detail { background:var(--surface-lagoon); min-block-size:30rem; }
+.queue-detail h2 { font-size:1.35rem; margin-block-end:1rem; overflow-wrap:anywhere; }
+.queue-detail h3 { font-size:1.15rem; font-weight:700; margin-block:1.25rem .5rem; }
+.queue-detail form { margin-block:1.5rem; }
+.queue-detail fieldset { display:grid; gap:.75rem; padding:0; border:0; min-inline-size:0; }
+.queue-detail legend { font-weight:700; margin-block-end:1rem; }
+.queue-detail .review-check { display:flex; gap:.75rem; align-items:center; min-block-size:44px; }
+.private-text { padding:1.25rem; border:1px solid var(--border); border-radius:1rem; background:var(--card); white-space:pre-wrap; overflow-wrap:anywhere; line-height:2.1; margin-block:1rem; }
+.review-photo { inline-size:160px; max-inline-size:100%; }
+.review-photo .photo { aspect-ratio:1; border-radius:1rem; }
+.message-link { display:inline-flex; align-items:center; min-block-size:44px; text-decoration:underline; text-underline-offset:.25em; }
+.settings-tabs [data-slot="tabs-content"][data-state="inactive"] { display:none; }
+.settings-tabs [data-slot="tabs-content"] { padding-block:1rem; min-inline-size:0; }
+.settings-tabs [data-slot="tabs-list"] { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); inline-size:100%; gap:.5rem; block-size:auto; padding:.5rem; background:var(--surface-cotton-candy); border:1px solid var(--border); border-radius:1rem; }
+.settings-tabs [data-slot="tabs-trigger"] { min-block-size:44px; white-space:normal; }
+.settings-tabs [data-slot="tabs-trigger"][data-state="active"] { background:var(--primary); color:var(--primary-foreground); }
+.settings-form h3 { font-size:1.25rem; font-weight:750; margin-block:1rem; }
+.hours-preview { border:1px solid var(--border); border-radius:1rem; padding:1rem; background:var(--card); margin-block:1.25rem; }
+.hours-axis { display:flex; justify-content:space-between; margin-block-end:1rem; color:var(--muted-foreground); }
+.hours-day { display:grid; grid-template-columns:6rem minmax(0,1fr); gap:.5rem 1rem; padding-block:.65rem; align-items:center; border-block-end:1px solid var(--border); }
+.hours-day:last-child { border-block-end:0; }
+.hours-track { position:relative; block-size:1.5rem; border:1px solid var(--border); border-radius:.5rem; background:var(--muted); overflow:hidden; }
+.hours-track span { position:absolute; inset-block:0; border-radius:.35rem; background:var(--primary); }
+.hours-label { grid-column:2; overflow-wrap:anywhere; }
+.hours-fields { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto; gap:.75rem; align-items:end; padding:1rem; margin-block:.75rem; border:1px solid var(--border); border-radius:1rem; background:var(--card); }
+.hours-fields > div { min-inline-size:0; }
+@media (max-width:899px) { .queue-split { grid-template-columns:minmax(0,1fr); } .queue-detail { min-block-size:24rem; } .settings-tabs [data-slot="tabs-list"] { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:599px) { .hours-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } .hours-day { grid-template-columns:minmax(0,1fr); } .hours-label { grid-column:1; } }

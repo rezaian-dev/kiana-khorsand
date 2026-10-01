@@ -1,4 +1,7 @@
 import "server-only";
+import { z } from "zod";
+import { queueSchema, queueOrders, moderationSchema } from "../../lib/queue";
+import { escapeSearch } from "../query";
 import { ObjectId } from "mongodb";
 import { changeSchema, reviewEditSchema } from "../../lib/mutations";
 import { liveTopics, resultCodes } from "../../lib/constants";
@@ -6,7 +9,7 @@ import type { Receipt } from "../../lib/result";
 import { MutationError, requireWrite } from "../result";
 import { notifyChange } from "../changes";
 import { collections, reviewStates } from "../../lib/constants.ts";
-import { querySchema } from "../../lib/records.ts";
+import { idSchema, querySchema } from "../../lib/records.ts";
 import { getDb } from "../db.ts";
 import { requireAdmin } from "../session.ts";
 import type { Testimonial } from "../models.ts";
@@ -66,4 +69,36 @@ export async function deleteReview(input: unknown) {
   notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
   if (previous.status === reviewStates.approved) notifyChange({ topic: liveTopics.content, id: collections.testimonials, audience: "public" });
   return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
+}
+
+
+export async function browseQueue(input: unknown) {
+  await requireAdmin();
+  const query = queueSchema.parse(input);
+  if (query.kind !== "reviews") throw new MutationError(resultCodes.invalid, "بخش انتخابی معتبر نیست.");
+  const status = query.status === "all" ? null : z.enum(reviewStates).parse(query.status);
+  const search = { $regex: escapeSearch(query.q), $options: "i" };
+  const filter = { ...(status ? { status } : {}), ...(query.q ? { name: search } : {}) };
+  const collection = getDb().collection<Testimonial>(collections.testimonials);
+  const count = await collection.countDocuments(filter);
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 8)));
+  const page = Math.min(query.page, pageCount);
+  const direction = query.sort === queueOrders.oldest ? 1 : -1;
+  const entries = await collection.find(filter).project<Pick<Testimonial, "_id" | "name" | "status" | "createdAt">>({ name: 1, status: 1, createdAt: 1 })
+    .sort({ createdAt: direction, _id: direction }).skip((page - 1) * 8).limit(8).toArray();
+  return { entries, count, pageCount, query: { ...query, page } };
+}
+
+export async function getReview(input: unknown) {
+  await requireAdmin();
+  return getDb().collection<Testimonial>(collections.testimonials).findOne({ _id: new ObjectId(idSchema.parse(input)) });
+}
+
+export async function moderateReview(input: unknown) {
+  await requireAdmin();
+  const change = moderationSchema.parse(input);
+  const current = await getReview(change.id);
+  if (!current || current.revision !== change.revision) throw new MutationError(resultCodes.conflict, "این دیدگاه تغییر کرده یا حذف شده است؛ نسخهٔ تازه را بررسی کنید.");
+  // Moderation cannot rewrite testimony or relabel a sample as genuine.
+  return saveReview({ id: change.id, revision: change.revision, record: { ...current, status: change.status, hasConsent: change.hasConsent, image: change.isImageRemoved ? null : current.image } });
 }

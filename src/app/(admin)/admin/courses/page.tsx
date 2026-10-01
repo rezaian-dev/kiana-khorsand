@@ -6,7 +6,7 @@ import { routes } from "@/lib/constants";
 import type { SearchParams } from "@/lib/catalog";
 
 const title = "مدیریت دوره‌ها";
-const description = "فضای خصوصی آماده‌سازی و بازبینی محتوای آموزشی.";
+const description = "فهرست خصوصی دوره‌ها؛ بررسی پیش‌نویس‌ها، موضوع‌ها و وضعیت انتشار طرح‌های آموزشی.";
 export const metadata: Metadata = { title, description, robots: { index: false, follow: false }, alternates: { canonical: routes.adminCourses }, openGraph: { title, description, locale: "fa_IR" }, twitter: { card: "summary", title, description } };
 type Props = { searchParams: Promise<SearchParams> };
 export default async function Page({ searchParams }: Props) {

@@ -46,10 +46,15 @@
 
 ## Client Component register
 
-Updated in Phase 10, article/course editor partial (2026-10-01). **51 authored client entry files**, including two context-only modules and the required Next error boundary. The previous 48 remain; this part adds ContentFilter, ContentForm and ArticleFields. List/card composition, editor chrome, pages, readers and repositories remain server-owned. ContentForm is the interactive editor boundary; ArticleFields isolates dynamic article arrays and is never mounted for courses.
+Updated at Phase 10 completion (2026-10-01). **56 authored client entry files**, including two context-only modules and the required Next error boundary. The prior 51 remain; this part adds QueueFilter, MessageState, ReviewForm, SettingsForm and HoursEditor. Queue/detail text, settings chrome, pages, readers and repository access remain server-owned. No second live subscriber or context provider was added.
 
 | File under `src/components` unless explicitly prefixed with `src/` | Client reason and boundary |
 | --- | --- |
+| `sections/queue/queue-filter.tsx` | QueueFilter — shared RHF/Zod URL sender/status/order/page filter for the two queues, native GET fallback and dirty/pending pause; never browser-filters message bodies. |
+| `sections/queue/message-state.tsx` | MessageState — small RHF/Zod status action leaf, explicit write only, stable revision snapshot, pending/uncertain/receipt guard; message body/email stay server-rendered. |
+| `sections/queue/review-form.tsx` | ReviewForm — constrained moderation inputs (status/consent/remove-image), RHF/Zod, explicit acknowledged writes and stale/unknown guard; cannot edit testimony or sample provenance. |
+| `sections/preferences/settings-form.tsx` | SettingsForm — RHF/Zod full-singleton snapshot and CAS action, controlled RTL preserved tabs, nullable Controllers, error-tab selection and dirty/pending/unknown/saved states. |
+| `sections/preferences/hours-editor.tsx` | HoursEditor — useFieldArray/useWatch/Controller for bounded weekly intervals and numeric day/duration, explicit empty-row add/remove, deterministic bar/text preview; no availability read or invented hours. |
 | `sections/publishing/content-filter.tsx` | ContentFilter — RHF/Zod URL search/category/status/order, explicit router navigation, native GET fallback and dirty/pending live pause. |
 | `sections/publishing/content-form.tsx` | ContentForm — shared discriminated article/course form, RHF/Zod/useWatch/Controller, manifest-only cover choices, snapshot/CAS actions, pending/receipt/uncertain locks and explicit review consent; no autosave or reset from live props. |
 | `sections/publishing/article-fields.tsx` | ArticleFields — article-only RHF useFieldArray sections/sources with native stable keys, explicit reorder/removal and Controller paragraph/point arrays; passed client form methods, no server reads. |
@@ -61,7 +66,7 @@ Updated in Phase 10, article/course editor partial (2026-10-01). **51 authored c
 | `layout/admin-drawer.tsx` | AdminDrawer — controlled native Sheet, post-interaction Motion and dismissal of server-passed navigation; no viewport render branching. |
 | `layout/sidebar-toggle.tsx` | SidebarToggle — validated native cookie Server Action in a transition, pending/uncertain guard; server cookie controls geometry, no parallel local collapse state. |
 | `layout/command-menu.tsx` | CommandMenu — existing cmdk and Sheet, Ctrl/Cmd+K listener with composition/modal guards, local shortcut filtering plus RHF/Zod authorized record-search action, superseded-response rejection and fixed-destination navigation; no search expression in destination URL. |
-| `layout/notifications.tsx` | Notifications — existing Radix Popover/portal/focus behavior plus reduced-aware Motion presence; server unread count and server-rendered preview children, no client data fetch or mark-read action. |
+| `layout/notifications.tsx` | Notifications — existing Radix Popover/portal/focus behavior plus reduced-aware Motion presence; server unread count and server-rendered preview children, no client data fetch or mark-read action; explicit child link activation closes the Popover. |
 | `sections/dashboard/live-number.tsx` | LiveNumber — Motion spring/transform seeded with the real SSR number; changes animate after refresh, reduced motion jumps, assistive value is the actual target. |
 | `sections/dashboard/visit-chart.tsx` | VisitChart — existing shadcn Chart/Recharts composition, deterministic ID/data and fixed chart slot; native chart animation disabled, Persian labels and server text-table alternative. |
 | `layout/account-links.tsx` | AccountLinks — typed native HTTP logout result, pending/error status and router refresh; identity/role/count supplied by the server, no browser-derived initial session. |
@@ -1524,3 +1529,78 @@ Snapshot toolchain was absent. Restored the official SHA256-verified Node 24.21.
 Intermediate TypeScript/ESLint and approved temporary Webpack build passed (29/29 progress; all four new route patterns dynamic). No DB connection/ping, manual seed/index/migration script, API/action/SSE/bus execution, dev/app server, browser, test suite or visual/accessibility/SEO/performance tool was run. Final verification is recorded below after the remaining source review.
 
 Final post-review verification: `npm run typecheck && npm run lint && npm run build -- --webpack && npm audit && git diff --check` completed with **exit 0 in 59.984 seconds**, no lint warnings, **29/29** build progress and **zero vulnerabilities**. Both lists and both dynamic editor routes are request-time. Only documentation/static inventory/staging followed; no runtime, database, browser or test operation was performed.
+
+
+## Phase 10 — moderation, inbox and settings (part 2)
+
+Date: 2026-10-01. Authorized by continuation after e3e74ca. This section completes the five remaining Phase 10 workstreams and supersedes part-1 pending statuses; it does not begin Phase 11. No live host, database, publication, messaging transport or schedule was activated here.
+
+### Official sources and decisions
+
+- Radix Tabs — https://www.radix-ui.com/primitives/docs/components/tabs (both chunks) — controlled RTL/manual activation, forceMount, data-state=inactive CSS hiding before hydration and native keyboard semantics; retain installed Radix shadcn primitives, not a new tabs library.
+- RHF useFieldArray — https://react-hook-form.com/docs/usefieldarray — fixed record.hours path, native stable keys, full empty-row values, explicit bounded append/remove; no unregister-on-tab-switch or flat primitive field arrays.
+- RHF handleSubmit — https://react-hook-form.com/docs/useform/handlesubmit — separate valid/error callbacks, disable fieldsets rather than losing values, error callback opens the relevant preserved tab; do not focus hidden fields or let async exceptions escape.
+- Next Forms — https://nextjs.org/docs/app/guides/forms — native actions and independent server authentication/authorization, shared validation and explicit pending/error responses; action execution is never triggered by GET/selection.
+- MDN time input — https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/time — HH:mm storage with minute step=60, browser/OS-dependent widget appearance; validate empty/format/range again in shared schema, show Persian textual preview rather than promising native widget localization.
+- MongoDB atomicity — https://www.mongodb.com/docs/manual/core/write-operations-atomicity/ — preserve expected revision in update filters and increment it; whole settings record is one-document atomic write, not a cross-collection booking transaction or an atomic count/list/detail read.
+- Existing recorded RHF Controller/useWatch/useForm, Next page/searchParams/data-security/metadata, Mongo projection/pagination, React transitions and Radix Popover references still apply. No new dependency/API transport, experimental flag, package version or configuration was introduced.
+
+### Data and operations
+
+/admin/messages, /admin/reviews and /admin/settings are request-time guarded pages. Queue readers, selected-record lookups and repositories independently check admin; settings is read through the existing guarded singleton repository. Lists return eight projected ID/name/status/date summaries, with deterministic createdAt/_id sort and visible 1000-page cap. Sender search uses escaped literal regex (message name/email, review display name), not full-body search. Query kind/status compatibility, duplicate numeric input, IDs and enums are shared-Zod validated; invalid URL inputs produce an explicit default-view warning.
+
+Only the explicitly selected record gets a full-text DTO. There is no automatic first selection or implicit read receipt. Selection outside the current page/filter is read independently with a visible explanation; missing selection is distinct from an unselected or empty list, and DB failures do not become empty data. Counts, lists, selected rows and shell summaries are separate reads, not a transaction. No payload/latency/cache behavior was measured. URL query/selection can enter history/host logs and the forms disclose that; message/review text is not placed into query strings.
+
+MessageState wraps the pre-existing changeMessage action, which independently validates role/schema/revision and changes only internal status. Reading/GET/link activation never marks read. Archived is not deleted and read does not mean answered. No SMTP, reply composer, provider, external API or outgoing mail was added; the UI explicitly says replies are not sent. Dashboard/notification links open the actual inbox selection; the Popover closes on explicit link activation without writing read state.
+
+The new moderateTestimonial action uses moderationSchema; the repository requires admin, loads the current revision and merges only status, consent and optional image removal into that server record. It delegates to the pre-existing saveReview schema/CAS path, preserving name, quote and isSample. It cannot turn a seed/sample into genuine testimony or rewrite a client's words. Approval requires consent and non-sample provenance; a sample image cannot accompany an approved real review. Image removal is explicit and cannot be undone by merely unchecking the later null-image form. All current assets are samples, so real published reviews currently use no image. The consent checkbox is not legal evidence or an audit log. No creation/deletion/provenance-changing review UI was added or promised by the requested moderation scope.
+
+Message/review action leaves capture a revision snapshot and do not reset on RSC changes; server-rendered read-only text can refresh independently. New revision blocks submit. Validation is correctable, but revision/access/unknown outcomes lock until explicit full read. Successful receipt also locks duplicate submission; the global existing Sonner is used. The local event send guard is not durable idempotency across navigation/tab closure. A new selection can discard unsubmitted choices; no navigation blocker, local draft storage or resend loop was introduced. Dirty/pending state uses the existing subscriber pause, with security reset retaining priority.
+
+Settings reads the owner-initialized singleton and throws a safe setup error if absent; no upsert, defaults, environment editor or automatic seed. Its DTO contains only the shared settings fields, revision and server updatedAt. Four preserved tabs cover public professional name/title/introduction/license, hours/duration/booking switch, phone/WhatsApp/address and Instagram/Telegram. They are not authentication name/role/password settings. Empty optional Controllers map to null; external URLs require HTTPS without credentials, and saving makes no external request. Validation opens the first affected tab and reports a Persian status instead of trying to focus hidden inputs. Native tab focus behavior is not claimed browser-tested.
+
+HoursEditor uses the existing 0–6 weekday model shown Saturday-first, at most 14 same-day nonoverlapping HH:mm intervals, 15–180-minute duration and existing enabled-schedule refinement. New rows have empty start/end, not guessed office hours. Seven static-width tracks and Persian text reflect current valid field values only; overlapping inputs may be visible but cannot pass the shared schema. These are not availability/capacity or saved-state guarantees. Shorter-than-duration intervals yield no full session; cross-midnight/date exceptions/dragging were not added. Browser time widgets may vary by locale/OS; all authored labels and textual summaries are Persian.
+
+Saving all settings tabs delegates to existing writeSettings/saveSettings as one expected-revision update. Enabling checks the existing required appointment indexes. No existing visit is cancelled/moved by schedule edits or disabling booking. The earlier schedule/appointment cross-document concurrency caveat is unchanged: settings CAS does not make a competing booking validation and insert transactional. Existing content/slots/admin notifications and root revalidation are reused; SSE remains single-process and application-mutation-only. No new event stream, cache layer, index or collection was added.
+
+### Source acceptance and remaining operational evidence
+
+**SEO checklist: met for Phase 10 private-page implementation**, not measured SEO output. All delivered patterns have generic nonpersonal metadata/canonicals/noindex/nofollow and remain under admin robots exclusion/outside the public sitemap. No message, review body, sender contact or search expression enters page metadata. No Review/AggregateRating structured data or fabricated public content was added.
+
+**Zero-flicker check: not met for complete acceptance.** The existing server-first identity/data strategy and same-resolved-DTO Suspense fallbacks are retained; these do not mask initial DB wait. Settings force-mounted inactive panels are CSS-hidden before hydration and preserve values; preview tracks have stable geometry, but detail/validation/hour-row heights, widget locale, focus and live reconciliation are unmeasured. No CLS/AA/performance/visual/responsive/runtime authorization claim is made.
+
+Five client files bring the complete register to 56. No new package, config, asset, collection, index script, barrel, any/unsafe nonnull or lint/type suppression. Server and component depth and short kebab/Pascal names are retained; no unmet naming rule identified. The shared queue schema/reader/filter/frame serves the two requested queues; mutation leaves remain separate because message status and testimony consent have different authority and validation contracts.
+
+Owner-only future review: guest/client/admin and revocation; empty vs failed DB, missing/out-of-filter selection, invalid/duplicate query and Back/Forward; no auto-read, unread count refresh and archive semantics; sample/consent/image approval and withdrawal; two editors on one revision and response loss; nullable settings, all tabs, error-tab selection, interval overlap/adjacency/empty/short duration, enabled/disabled schedule without changing existing visits; schedule revision changes during booking, public/admin SSE and hidden-tab reconnect; keyboard/focus, two themes, reduced motion, cache-disabled throttled hard refresh at 320–1920+. These scenarios were not executed. Phase 11 remains for a fresh continuation.
+
+### Completed Phase 10 implementation ledger
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Ordered Phase 10; independently guarded readers/repos/actions | Met by source; no Phase 11/runtime invocation |
+| 2 | Article/course server lists and thumbnails | Met by part 1 source |
+| 3 | URL search/category/status/sort/pagination | Met; now includes inbox/moderation queues |
+| 4 | Article creation/editing | Met by part 1 source |
+| 5 | Course creation/editing | Met by part 1 source |
+| 6 | Unique slug and local cover/social selection | Met by part 1 source |
+| 7 | Saved/dirty/pending/error/uncertain and publication states | Met; distinct receipts and shared validations |
+| 8 | Existing SSE/invalidation, retained input and CAS | Met by source; no stream/action execution |
+| 9 | Testimonial review/moderation | Met; constrained decision/consent/image removal |
+| 10 | Split message inbox | Met; explicit internal status, not an email sender |
+| 11 | Professional profile settings | Met; not authentication profile/role settings |
+| 12 | Visual hours/schedule editor | Met; validated bounded weekly rows and bar/text preview |
+| 13 | Social/contact settings tabs | Met; preserved RTL tabs and nullable values |
+| 14 | Private metadata/states/naming/register/docs | Met; 56 entries, full zero-flicker acceptance separate |
+| 15 | Permitted type/lint/build/audit/diff verification | Met; final exit 0, 32/32 build, audit zero |
+
+**Checklist: 15 of 15 met for implementation.** No Phase 10 workstream remains open. Operational security/concurrency/live/browser/accessibility/performance evidence, universal zero-flicker acceptance and owner launch-policy decisions remain unresolved/unmeasured, not counted as complete by this ledger. **Deviations needing approval:** no new technical exception; previous dependency/build exceptions and launch prerequisites remain. Next phase is 11 only after the user's next continuation.
+
+### Allowed verification
+
+The snapshot lacked the restored toolchain/dependencies. Official Node 24.21.0 tarball SHA256 matched the official SHASUMS; bundled npm 11.19.0 strict-peer/engine ci with ignored scripts installed 747/audited 748 with zero vulnerabilities, exit 0 in 19.445 seconds. Approved ESLint 9 EOL warning remains; no npm upgrade, version/config change or install script execution.
+
+Intermediate typecheck/lint/approved Webpack build passed with 32/32 progress and the three new routes request-time. Additional post-build source checks fixed explicit notification-link dismissal and kept moderation validation errors Persian. Final comprehensive allowed verification is recorded below. No database/ping/seed/index/migration, API/action/SSE/bus invocation, app/dev server, test, browser or visual/SEO/accessibility/performance tool was executed.
+
+Final post-review verification: `npm run typecheck && npm run lint && npm run build -- --webpack && npm audit && git diff --check` completed with **exit 0 in 44.252 seconds**, no lint warnings, **32/32** build progress and **zero vulnerabilities**. The inbox, moderation and settings routes are request-time. Only documentation/static inventory/staging followed; no database, runtime, browser or test operation was performed.
+
+The earlier full pass took 50.650 seconds. A final source review then made all seven Phase 10 route-pattern descriptions distinct and nonpersonal (including the part-1 list/editor descriptions). The 44.252-second final pass above includes those metadata-copy refinements; no SEO output/browser inspection is implied.

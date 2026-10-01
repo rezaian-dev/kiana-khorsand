@@ -24,6 +24,7 @@ import { CommandEmpty } from "@/components/ui/command-empty";
 import { routes } from "@/lib/constants";
 
 const destinations = [
+  { label: "بررسی دیدگاه‌ها", href: routes.reviews }, { label: "صندوق پیام‌ها", href: routes.inbox }, { label: "تنظیمات حرفه‌ای سایت", href: routes.adminSettings },
   { label: "مدیریت مقالات", href: routes.adminArticles }, { label: "مدیریت دوره‌ها", href: routes.adminCourses },
   { label: "داشبورد", href: routes.admin }, { label: "مدیریت نوبت‌ها", href: routes.agenda }, { label: "حساب‌های مراجعان", href: routes.clients }, { label: "برنامهٔ امروز", href: `${routes.admin}#schedule-today` },
   { label: "خلاصهٔ پیام‌ها", href: `${routes.admin}#message-preview` }, { label: "تغییرهای اخیر", href: `${routes.admin}#recent-activity` },

@@ -1,4 +1,7 @@
 import "server-only";
+import { z } from "zod";
+import { queueSchema, queueOrders } from "../../lib/queue";
+import { escapeSearch } from "../query";
 import { messageSchema } from "../../lib/message";
 import { messageEditSchema } from "../../lib/mutations";
 import { liveTopics, messageStates, resultCodes } from "../../lib/constants";
@@ -59,4 +62,22 @@ export async function summarizeMessages() {
     collection.find({}).project<Preview>(projection).sort({ updatedAt: -1, _id: -1 }).limit(6).toArray(),
   ]);
   return { unread, entries, activity };
+}
+
+
+export async function browseQueue(input: unknown) {
+  await requireAdmin();
+  const query = queueSchema.parse(input);
+  if (query.kind !== "messages") throw new MutationError(resultCodes.invalid, "بخش انتخابی معتبر نیست.");
+  const status = query.status === "all" ? null : z.enum(messageStates).parse(query.status);
+  const search = { $regex: escapeSearch(query.q), $options: "i" };
+  const filter = { ...(status ? { status } : {}), ...(query.q ? { $or: [{ name: search }, { email: search }] } : {}) };
+  const collection = getDb().collection<Message>(collections.messages);
+  const count = await collection.countDocuments(filter);
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 8)));
+  const page = Math.min(query.page, pageCount);
+  const direction = query.sort === queueOrders.oldest ? 1 : -1;
+  const entries = await collection.find(filter).project<Pick<Message, "_id" | "name" | "status" | "createdAt">>({ name: 1, status: 1, createdAt: 1 })
+    .sort({ createdAt: direction, _id: direction }).skip((page - 1) * 8).limit(8).toArray();
+  return { entries, count, pageCount, query: { ...query, page } };
 }
