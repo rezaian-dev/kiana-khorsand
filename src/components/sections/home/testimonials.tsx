@@ -2,7 +2,7 @@ import { SectionSurface } from "@/components/shared/section-surface";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { SlideRail } from "@/components/shared/slide-rail";
 import { ReviewCard } from "@/components/shared/review-card";
-import { stories } from "@/content/home";
+import { stories } from "@/content/stories";
 import { routes } from "@/lib/constants";
 
 export function Testimonials() {

@@ -90,3 +90,8 @@ Three **code-composed sharing graphics**, not newly generated photos, were expor
 Authoring reuses the previously available external cached HarfBuzz/fontTools/CairoSVG/Pillow pipeline, not a runtime dependency or project script. Vazirmatn weight 750 is shaped as Persian/Arabic/RTL, then actual glyph outlines are rasterized, not hand-drawn letters or unshaped SVG text. The first sharing graphic was opened only to inspect the authoring artifact's glyph joining/composition; no browser or rendered-site visual test occurred. The original photo generation prompts above still apply; no new generation prompt or fictional author portrait was introduced. Asset paths/alt/size/ratio/subject/placement are in content/images.ts.
 
 Inventory after Phase 5: 13 photographic subjects / 16 photo files, plus 3 sharing graphics = 19 local image files across 16 manifest entries. The new graphic exports total about 236 KiB on disk; no photographic source was upsampled in this phase.
+
+
+## Phase 6 reuse
+
+No image was added, generated, resized or replaced. Contact reuses the existing portrait in a reserved 4:5 frame with the same synthetic-identity disclosure; Testimonials reuses the three distinct rose/teal/indigo portraits only in clearly marked non-review layout samples. The typed manifest now records these additional placements. Original English prompts, provenance and all dimensions remain unchanged. Inventory remains 16 manifest entries / 19 image files (16 photo files plus 3 sharing graphics). No new full-bleed photograph, hotlink, SVG photo replacement or high-priority image was introduced.

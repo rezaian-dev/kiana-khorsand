@@ -46,7 +46,7 @@
 
 ## Client Component register
 
-Updated in Phase 5 (2026-10-01). **27 authored client entry files**, including two context-only modules. Phase 5 adds only the reused SearchForm leaf; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 6 (2026-10-01). **28 authored client entry files**, including two context-only modules. Phase 6 adds only MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` | Client reason and boundary |
 | --- | --- |
@@ -59,6 +59,7 @@ Updated in Phase 5 (2026-10-01). **27 authored client entry files**, including t
 | `motion/lift.tsx` | Lift — reduced-aware 8px hover transform; initial=false, server card children. |
 | `motion/motion.tsx` | Motion — strict LazyMotion/domAnimation and system-reduced MotionConfig; passes server children. |
 | `motion/scroll-progress.tsx` | ScrollProgress — useScroll; fixed transform-based track, no scroll writes. |
+| `sections/contact/message-form.tsx` | MessageForm — RHF Controller/resolver/Zod, useId and local checked-state; no request, persistence or server action; unnamed native fields prevent no-JS GET of entered values. |
 | `shared/search-form.tsx` | SearchForm — RHF/Zod query validation, useId, pending transition and safe router navigation; server defaultValue, native GET fallback, no client filtering or data fetch. |
 | `shared/photo.tsx` | Photo — scoped useAnimate load fade and local error state; getImageProps/native picture, reserved geometry. |
 | `shared/slide-rail.tsx` | SlideRail — Embla/autoplay lifecycle, external-store selected/snap-count snapshots, reInit eligibility, viewport/reduced/focus/hover/visibility gates, pause and dots. |
@@ -78,9 +79,9 @@ Updated in Phase 5 (2026-10-01). **27 authored client entry files**, including t
 | `ui/chart-tooltip-content.tsx` | ChartTooltipContent — native chart context and active payload, safe type narrowing and Intl numeric formatting; no raw vendor payload read. |
 | `ui/chart-legend-content.tsx` | ChartLegendContent — native chart context for authored Persian labels/colors. |
 
-Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
+Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults, Testimonials, Faq, Contact, PolicyPage, BreadcrumbSchema and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 5 delivery record supersede those statuses.
+No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 6 delivery record supersede those statuses. The newly confirmed ESLint EOL/peer conflict below supersedes earlier broad compatibility/no-deprecation assurances; it has not been silently waived.
 
 ## Version selection and compatibility
 
@@ -690,3 +691,89 @@ All authored names remain one or two words; framework-mandated generateStaticPar
 Pinned Node 24.21.0/npm 11.19.0: final TypeScript and ESLint passed; DB-independent Next 16.3.8 build passed (static generation reported 16/16, including the three known article slugs; Articles/Courses indexes are request-time server-rendered because of searchParams). npm audit reports 0 at all severities. Package/lock diff is empty. No database access, live handler/bus, test suite, browser, rendered-site visual check, SEO validator or Core Web Vitals measurement ran. Only a generated social asset was opened as an authoring artifact.
 
 Delivery: stopped the Phase 4 production process and restarted the final Phase 5 build on 0.0.0.0:3000. The process reported ready without preview-blocking warnings. This is readiness only, not a route/interaction/visual check. Final source whitespace and unchanged package/lock checks passed. Phase 6 has not begun.
+
+
+## Phase 6 — Public information pages
+
+The user's «ادامه» authorized Testimonials, FAQ, Contact, Privacy and Terms only. All five pages are implemented. Phase 7/8 auth, DB, live behavior and real message/booking submission have not begun. **One acceptance item remains unmet: supported/non-deprecated development lint tooling.** The existing ESLint pin was found to be EOL during restoration; the smallest compatible exception is proposed below and is not yet approved.
+
+### Environment restoration and official support conflict
+
+The workspace snapshot did not contain node_modules or the prior cached Node binary. Restored the already pinned Node 24.21.0 from its official archive, verified the tarball using the official SHA256 list, then ran npm ci with strict peers, strict engines and ignore-scripts. No lockfile/package/config version changed, no package was added, and no new postinstall permission was granted — https://nodejs.org/dist/v24.21.0/SHASUMS256.txt ; https://nodejs.org/dist/v24.21.0/node-v24.21.0-linux-x64.tar.xz
+
+npm reported eslint@9.39.5 deprecated. The official support page confirms v9 EOL on 2026-08-06. Current latest is 10.11.0 and its engine accepts the pinned Node, but three latest plugins in Next's preset still exclude ESLint 10. Next's own broad eslint >=9 peer and TypeScript-ESLint's ^10 support do not override those narrower plugin contracts. No upgrade attempt, force/legacy-peer-deps, override, new package or removal of lint rules was used — https://eslint.org/version-support/ ; https://registry.npmjs.org/eslint/latest
+
+| Official package inspected | Version | Relevant peer / engine |
+| --- | --- | --- |
+| eslint | 10.11.0 latest; 9.39.5 installed/EOL | Node ^20.19.0 or ^22.13.0 or >=24 |
+| eslint-config-next | 16.3.8 | eslint >=9.0.0 |
+| typescript-eslint / parser / plugin | 8.71.0 | eslint ^8.57.0 or ^9.0.0 or ^10.0.0; TS >=4.8.4 <6.1.0 |
+| eslint-plugin-react | 7.37.5 latest and installed | eslint ^3 or ^4 or ^5 or ^6 or ^7 or ^8 or ^9.7; no 10 |
+| eslint-plugin-jsx-a11y | 6.10.2 latest and installed | eslint ^3 through ^9; no 10 |
+| eslint-plugin-import | 2.32.0 latest and installed | eslint ^2 through ^9; no 10 |
+
+Official manifests: https://registry.npmjs.org/eslint-config-next/16.3.8 ; https://registry.npmjs.org/typescript-eslint/latest ; https://registry.npmjs.org/eslint-plugin-react/latest ; https://registry.npmjs.org/eslint-plugin-jsx-a11y/latest ; https://registry.npmjs.org/eslint-plugin-import/latest . Installed peer declarations were also read, not bypassed. npm's suggestion to upgrade npm itself was not followed: the approved Node-bundled npm 11.19.0 remains in use.
+
+**Deviations needing approval:** allow the existing **development-only ESLint 9.39.5 temporarily**, retaining strict-peer compatibility and all existing rules, until a supported stable compatible chain is available. This is smaller than replacing Next's preset, dropping checks, adding a third-party fork or forcing invalid peers. It does not assert that EOL is safe or supported; audit reporting zero does not restore maintenance. No approval is presumed from earlier phase approvals. Stop for this decision before Phase 7.
+
+### Official sources and implementation decisions
+
+- Five static server pages export unique Persian Metadata, self canonicals, fa_IR OG/Twitter and inherited brand sharing assets. Contact/FAQ are index/follow; sample Testimonials and the two unapproved legal drafts are noindex/follow, like the existing article drafts — https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+- Each new leaf route has its own native loading.tsx, rendering the exact same page/policy content with inert/aria-busy and an out-of-flow status. The removed inherited Home fallback is not reintroduced. These static leaf routes do not need parameter guesses, a new route group or an artificial delay — https://nextjs.org/docs/app/api-reference/file-conventions/loading
+- BreadcrumbSchema is a small server component actually reused by all five new pages; it delegates to the existing escaped native JsonLd renderer. Breadcrumb labels match PageHeading. ContactPage describes a contact page only, with no made-up telephone, email, address, hours, ContactPoint or clinic entity. Definitions were read from the official stable 30.1 dataset again after the old cache was unavailable — https://nextjs.org/docs/app/guides/json-ld ; https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/30.1/schemaorg-current-https.jsonld
+- Twelve FAQ records are shared with the Home four-question excerpt, grouped under four stable native hash targets. The existing Radix Accordion supports RTL, multiple open answers and native keyboard behavior. forceMount keeps answer text in server HTML, while data-state=closed CSS prevents a flash of all answers. No height animation, FAQPage rich-result eligibility claim or new custom client wrapper — https://www.radix-ui.com/primitives/docs/components/accordion
+- Contact's only new client leaf uses useForm/Controller with empty deterministic defaults, zodResolver and a typed messageSchema. Ref/value/onChange/onBlur are explicitly connected. Native DOM name attributes are deliberately not passed until real sending is authorized, while Controller retains its internal identities — https://react-hook-form.com/docs/usecontroller/controller ; https://react-hook-form.com/docs/useform ; https://raw.githubusercontent.com/react-hook-form/resolvers/v5.9.1/README.md ; https://zod.dev/api
+- The native form action is only /contact with GET, but its text controls and submit button have no name. WHATWG's form entry-list algorithm skips unnamed fields, so an unhydrated/no-JS native submit carries none of the entered values; after hydration RHF prevents native submission and only validates locally. The noscript note explains the reload behavior. This is source/spec reasoning, not an executed network test — https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-entry-list
+- Contact success wording means only valid format, never sent/delivered/booked. Edits or validation failure clear the checked indicator; fixed explanatory copy, a reserved short status line and per-field error space avoid intentional geometry changes. Textarea's leftover transition-shadow/field-sizing-content were removed in favor of fixed initial geometry and user-controlled vertical resize. No request, email transport, console logging, session, DB write or persistent draft store is added.
+- Privacy describes the actual next-themes localStorage preference, not hypothetical session cookies. It distinguishes current app behavior from unknown preview/hosting logs and future auth/message behavior. Defaults/storage behavior were refreshed against the official pinned next-themes README — https://raw.githubusercontent.com/pacocoursey/next-themes/v0.4.6/next-themes/README.md
+- Legal copy is an implementation-aware draft, not jurisdiction-specific legal advice or a representation of GDPR/HIPAA/Iranian-law compliance. It does not invent retention deadlines, refund/cancellation terms, effective dates, blanket intellectual-property ownership, guaranteed security or a contact channel. Owner and appropriate legal review remain necessary before operations/publication. No statute or unsupported legal entitlement is asserted as verified.
+
+### Content, privacy and asset integrity
+
+Testimonials has a genuine empty-state statement, three prospective consent/privacy principles and the already-disclosed synthetic layout samples. There are no real-client quotations, star ratings, totals, outcome statistics or Review/AggregateRating markup. The public review intake/moderation system is still unimplemented. Stories moved from content/home.ts into content/stories.ts and are reused, not copied into a second dataset.
+
+FAQ adds current-stage answers for booking, fee, cancellation, local message checking, urgent help, courses, article drafts and sample portraits. Questions moved into content/questions.ts; Home uses the same first four records. Future phases must update these stage-sensitive answers when capabilities actually change.
+
+Contact reuses the portrait in a bounded 4:5 frame. Telephone/WhatsApp retain existing null-based unavailable states, and address/hours/response time are expressly unconfirmed rather than fabricated. There is no map or newsletter. The emergency disclaimer is prominent before the form and remains in the server footer. Confidentiality guidance and a Privacy link are adjacent to the form. Validation accepts an optional name (up to 80), an email (up to 254) and a short message (20–1200); these are sample UI limits, not an implemented server action. Pre-hydration naming precautions are not an authorization to collect real sensitive data.
+
+Privacy/Terms share the server PolicyPage because both need the same summary/contents/reading layout, but have separate typed content, titles, descriptions, canonical URLs and status. They explain local-only message validation versus server-visible GET search queries; theme preference versus not-yet-existing account cookies; possible hosting logs versus no app analytics; no confirmed intake/retention/contact process; general content versus individual clinical care; and unavailable booking/course/payment/refund behavior. Both explicitly require review and remain noindex drafts. Future backend enablement must update these documents at the same time, not leave misleading inactive-service statements.
+
+No image file or generation was added. Contact and Testimonials reuse the approved portrait/three distinct sample faces, with honest captions and reserved ratios. Manifest placements and public/images/README.md were updated. Only Home Hero retains eager/high-priority loading; no new full-bleed photo section or external image/font resource.
+
+### Naming and client register
+
+Six new component files: Testimonials, Faq, Contact, MessageForm, BreadcrumbSchema and PolicyPage. Only MessageForm is client-marked; the complete register is **28**, including the two existing context-only modules and retaining vendor-boundary qualifications. One component per file, kebab-case/PascalCase match, one/two-word authored names, local Props, verb-first functions/handle events, boolean prefixes and readonly typed content. No barrel, generic utils, any, unsafe non-null assertion, test suite or single-use abstraction. Page routes contain only page/loading conventions. All section files remain within two levels of components; shared policy/schema components each have multiple genuine consumers.
+
+### Phase 6 acceptance
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Only five authorized public routes, no early backend work | Met |
+| 2 | Honest Testimonials empty state and labeled existing sample cards | Met |
+| 3 | Consent/privacy/outcome boundaries without fake reviews | Met |
+| 4 | Twelve grouped FAQs with native anchor navigation and Home reuse | Met |
+| 5 | Native accordion semantics and server-present answer content | Met by source reasoning, not keyboard-tested |
+| 6 | Contact identity/photo and unconfirmed channel/hour/address states | Met |
+| 7 | RHF/Controller/resolver/Zod local form with error/checked states | Met by implementation; not interaction-tested |
+| 8 | No real send, no persistence and unnamed native field precaution | Met by source/spec; no network validation run |
+| 9 | Adjacent confidentiality, contact/footer emergency notice | Met |
+| 10 | Privacy draft reflects current app and unknown hosting behavior | Met as draft; operational/legal confirmation pending |
+| 11 | Terms draft without invented financial or clinical conditions | Met as draft; operational/legal confirmation pending |
+| 12 | Unique metadata/h1/canonical, matching breadcrumbs and truthful schema | Met by source review |
+| 13 | Independent matching page loading without inherited Home flash | Met by design reasoning |
+| 14 | Existing CSS-first RTL/themes, reserved images and mobile bar reuse | Met by source; not visually certified |
+| 15 | Naming, complete 28-entry client register, README/sources/asset records | Met; no unmet naming rule |
+| 16 | Permitted type/lint/build/audit verification and approval boundary | Met |
+| 17 | Supported/non-deprecated lint dependency chain | **Not met: ESLint 9 EOL; stable ESLint 10 conflicts with three latest plugin peer ranges** |
+
+**Checklist: 16 of 17 met.** The sole unmet phase acceptance item is #17; the proposed temporary development-only exception awaits user approval. Professional license/contact details, real consented reviews, clinical review of articles, legal review, actual course/fee/retention information and future backend phases remain unprovided/unimplemented and are explicitly disclosed rather than claimed complete.
+
+**SEO checklist: met for Phase 6 page implementation by source review.** Each page has server content, one h1, logical headings, matching visible/schema breadcrumbs, unique Persian metadata/canonical, reserved image geometry and truthful schema. ContactPage does not assert an active contact channel; FAQ and sample reviews do not claim rich-result eligibility. Sample Testimonials and unapproved legal drafts remain noindex. Publication approval, real credentials/channels, DB sitemap and deployment/validator review remain pending.
+
+**Zero-flicker check: met by implementation reasoning, not visual verification.** Each new loading boundary uses its destination's exact template and starting state; schema scripts are omitted from inert copies. Existing prepaint theme, optional font, fixed header/gutter, deterministic IDs, image ratios and safe-area/mobile-bar clearance remain. Form defaults are present from SSR, error/status space is reserved, and no mount gate, viewport render branch, initial entrance or post-hydration value fill is added. Textarea has fixed first geometry; deliberate user resize/accordion expansion are user-driven layout changes. forceMount answers use first-paint closed CSS. Manual hard-refresh/throttled/cache-disabled/theme/focus/no-JS checks are still required and have not run.
+
+### Allowed verification and next boundary
+
+Pinned Node 24.21.0/npm 11.19.0 were restored with approved exact manifests and scripts disabled. TypeScript, ESLint and DB-independent Next 16.3.8 build passed; generation reported 21/21 including the five new static pages. npm audit reports zero vulnerabilities. The EOL warning remains a support-policy failure despite these passing checks. No browser, UI/network interaction test, test suite, DB connection/ping/seed/script, live handler/bus, SEO validator or Core Web Vitals measurement ran. No source artwork was visually reopened in this phase.
+
+Next, only after the pending tooling decision and phase approval: Phase 7 repositories, Better Auth/session/actions/SSE, the two manual DB scripts and request-time database sitemap. MongoDB remains exclusively on the user's machine and will not be contacted here.

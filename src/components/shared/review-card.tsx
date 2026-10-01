@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { Photo } from "./photo";
 import { Badge } from "@/components/ui/badge";
-import type { Story } from "@/content/home";
+import type { Story } from "@/content/stories";
 
 type Props = { story: Story };
 
