@@ -20,18 +20,21 @@ export function LiveRefresh({ isEnabled, viewer }: Props) {
     let timer: ReturnType<typeof setTimeout> | undefined;
     let reconnect: ReturnType<typeof setTimeout> | undefined;
     let hasChanges = false;
+    let hasReset = false;
     let isDisposed = false;
     let hasFailed = false;
     function refreshPage() {
       if (!hasChanges || document.hidden || isDisposed) return;
-      if (document.activeElement?.matches("input,textarea,select,[contenteditable=true]") || document.querySelector('form[aria-busy="true"]')) {
+      if (!hasReset && (document.activeElement?.matches("input,textarea,select,[contenteditable=true]") || document.querySelector('form[aria-busy="true"],[data-live-pause="true"]'))) {
         timer = setTimeout(refreshPage, 1000); return;
       }
       hasChanges = false;
+      hasReset = false;
       startTransition(() => router.refresh());
     }
-    function queueRefresh() {
+    function queueRefresh(isForced = false) {
       hasChanges = true;
+      hasReset ||= isForced;
       if (timer) clearTimeout(timer);
       timer = setTimeout(refreshPage, 400);
     }
@@ -46,7 +49,7 @@ export function LiveRefresh({ isEnabled, viewer }: Props) {
         hasFailed = false;
         setStatus("به‌روزرسانی خودکار متصل است.");
         // Refresh native session cookies through the real HTTP endpoint, not RSC.
-        if (userId) void authClient.getSession().then(() => { if (!isDisposed) queueRefresh(); }).catch(() => { if (!isDisposed) queueRefresh(); });
+        if (userId) void authClient.getSession().then((response) => { if (!isDisposed) queueRefresh(response.data?.user.id !== userId); }).catch(() => { if (!isDisposed) queueRefresh(); });
         else queueRefresh();
       };
       stream.addEventListener("change", (event: MessageEvent<string>) => {
@@ -57,7 +60,7 @@ export function LiveRefresh({ isEnabled, viewer }: Props) {
         if (source !== stream || isDisposed || document.hidden) return;
         stream.close(); source = null;
         reconnect = setTimeout(openStream, 5000);
-        queueRefresh();
+        queueRefresh(true);
         setStatus("نشست تغییر کرده است؛ صفحه در حال به‌روزرسانی است.");
       });
       stream.onerror = () => {

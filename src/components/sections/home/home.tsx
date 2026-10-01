@@ -29,7 +29,7 @@ export function Home({ profile, articles, courses, reviews, isLoading = false }:
         ...services.map((service) => ({ "@type": "Service", "@id": `${origin}/#${service.key}`, url: `${origin}${service.href}`, name: service.title, serviceType: service.title, description: service.description, provider: { "@id": `${origin}/#person` } })),
       ] }} />}
       <Hero profile={profile} />
-      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحات عمومی و ورود آمادهٔ بازبینی‌اند؛ ورود نیازمند تنظیم میزبان است. رزرو، بخش شخصی حساب و ارسال واقعی پیام هنوز آماده نیستند و پیوند رزرو فعلاً به صفحهٔ ۴۰۴ می‌رسد.</p></div></div>
+      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحات عمومی، ورود و بخش شخصی حساب آمادهٔ بازبینی‌اند و به تنظیم میزبان نیاز دارند. رزرو و ارسال واقعی پیام هنوز آماده نیستند و پیوند رزرو فعلاً به صفحهٔ ۴۰۴ می‌رسد.</p></div></div>
       <About profile={profile} /><Services /><Steps /><Courses courses={courses} /><Articles articles={articles} /><Testimonials reviews={reviews} /><Faq /><Invitation />
       <BookingBar />
     </main>

@@ -10,18 +10,33 @@ import { getSchedule } from "./settings";
 import { MutationError, requireWrite } from "../result";
 import { notifyChange } from "../changes";
 import { consumeRate } from "../rate";
+import { visitsSchema } from "../../lib/visits";
+import { visitScopes } from "../../lib/constants";
 import { MongoServerError, ObjectId } from "mongodb";
 import { appointmentStates, collections, roles } from "../../lib/constants.ts";
-import { idSchema, querySchema, rangeSchema } from "../../lib/records.ts";
+import { idSchema, rangeSchema } from "../../lib/records.ts";
 import { getDb } from "../db.ts";
 import { requireAdmin, requireSession } from "../session.ts";
 import type { Appointment } from "../models.ts";
 
 export async function listAppointments(input: unknown = {}) {
   const session = await requireSession();
-  const query = querySchema.parse(input);
-  return getDb().collection<Appointment>(collections.appointments).find({ userId: session.user.id })
-    .sort({ startsAt: -1, _id: -1 }).skip((query.page - 1) * query.size).limit(query.size).toArray();
+  const query = visitsSchema.parse(input);
+  const now = new Date();
+  const filter = {
+    userId: session.user.id,
+    ...(query.scope === visitScopes.upcoming ? { status: { $in: [appointmentStates.pending, appointmentStates.confirmed] }, startsAt: { $gt: now } } : {}),
+    ...(query.scope === visitScopes.past ? { $or: [{ startsAt: { $lte: now } }, { status: { $in: [appointmentStates.cancelled, appointmentStates.completed] } }] } : {}),
+  };
+  const collection = getDb().collection<Appointment>(collections.appointments);
+  const count = await collection.countDocuments(filter);
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 6)));
+  const page = Math.min(query.page, pageCount);
+  const direction = query.scope === visitScopes.upcoming ? 1 : -1;
+  const entries = await collection.find(filter)
+    .project<Pick<Appointment, "_id" | "service" | "status" | "startsAt" | "endsAt" | "revision">>({ service: 1, status: 1, startsAt: 1, endsAt: 1, revision: 1 })
+    .sort({ startsAt: direction, _id: direction }).skip((page - 1) * 6).limit(6).toArray();
+  return { entries, count, pageCount, query: { ...query, page }, checkedAt: now };
 }
 
 export async function getAppointment(id: unknown) {

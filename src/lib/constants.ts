@@ -53,3 +53,4 @@ export const authPaths = { signIn: "/sign-in/email", signUp: "/sign-up/email", p
 
 export const resultCodes = { invalid: "invalid", unauthorized: "unauthorized", forbidden: "forbidden", conflict: "conflict", unavailable: "unavailable", limited: "limited", occupied: "occupied" } as const;
 export const indexes = { slot: "appointment_slot", minutes: "appointment_minutes" } as const;
+export const visitScopes = { upcoming: "upcoming", past: "past", all: "all" } as const;
