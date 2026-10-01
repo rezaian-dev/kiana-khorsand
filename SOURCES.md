@@ -46,13 +46,18 @@
 
 ## Client Component register
 
-Updated in Phase 9, admin shell/dashboard partial (2026-10-01). **43 authored client entry files**, including two context-only modules and the required Next error boundary. The previous 37 remain; this part adds AdminDrawer, SidebarToggle, CommandMenu, Notifications, LiveNumber and VisitChart. Server pages/layout/readers/navigation/section templates still own private data access and composition. This counts authored directives, not vendor widgets or a claim of a JavaScript-free chart.
+Updated in Phase 9, appointments/clients completion (2026-10-01). **48 authored client entry files**, including two context-only modules and the required Next error boundary. The prior 43 remain; this part adds NavLink, AgendaFilter, VisitSheet, ClientFilter and ClientSheet and extends CommandMenu. Server pages/layout/readers/navigation frames/list/calendar/history templates still own private data access and composition. This counts authored directives, not vendor widgets or a claim of a JavaScript-free chart.
 
 | File under `src/components` unless explicitly prefixed with `src/` | Client reason and boundary |
 | --- | --- |
+| `layout/nav-link.tsx` | NavLink — pathname-only active-link leaf with server-passed icon/label; no post-mount guard or rewritten paths. |
+| `sections/agenda/agenda-filter.tsx` | AgendaFilter — RHF/Zod server query defaults, explicit URL navigation, dirty/pending live pause and native GET fallback; no client-side record filtering. |
+| `sections/agenda/visit-sheet.tsx` | VisitSheet — explicit snapshot/revision, RHF/Zod operation, native CAS actions and guarded availability read, bounded useOptimistic preview inside transition, pending/uncertain lock outside Portal, scoped Ctrl/Cmd+Enter. |
+| `sections/clients/client-filter.tsx` | ClientFilter — RHF/Zod search/sort URL navigation, dirty/pending live pause and explicit query privacy disclosure. |
+| `sections/clients/client-sheet.tsx` | ClientSheet — controlled Sheet only; profile/history remain server-rendered children, stable ID parent key, never automatically opened by URL. |
 | `layout/admin-drawer.tsx` | AdminDrawer — controlled native Sheet, post-interaction Motion and dismissal of server-passed navigation; no viewport render branching. |
 | `layout/sidebar-toggle.tsx` | SidebarToggle — validated native cookie Server Action in a transition, pending/uncertain guard; server cookie controls geometry, no parallel local collapse state. |
-| `layout/command-menu.tsx` | CommandMenu — existing cmdk and Sheet, Ctrl/Cmd+K listener with composition/modal guards, local shortcut filtering and fixed-destination navigation; record search is still pending. |
+| `layout/command-menu.tsx` | CommandMenu — existing cmdk and Sheet, Ctrl/Cmd+K listener with composition/modal guards, local shortcut filtering plus RHF/Zod authorized record-search action, superseded-response rejection and fixed-destination navigation; no search expression in destination URL. |
 | `layout/notifications.tsx` | Notifications — existing Radix Popover/portal/focus behavior plus reduced-aware Motion presence; server unread count and server-rendered preview children, no client data fetch or mark-read action. |
 | `sections/dashboard/live-number.tsx` | LiveNumber — Motion spring/transform seeded with the real SSR number; changes animate after refresh, reduced motion jumps, assistive value is the actual target. |
 | `sections/dashboard/visit-chart.tsx` | VisitChart — existing shadcn Chart/Recharts composition, deterministic ID/data and fixed chart slot; native chart animation disabled, Persian labels and server text-table alternative. |
@@ -1366,3 +1371,78 @@ Typecheck and ESLint passed without warnings; a DB-independent approved Webpack 
 No DB connection/ping, manual seed/index/migration script, API/action/SSE/bus invocation, app server, browser, tests, visual/accessibility/SEO/performance tool or scenario execution occurred. There is no fake admin, synthetic dashboard dataset, new secret, live deployment or hidden activation of the future management interfaces.
 
 Final post-review verification: `npm run typecheck && npm run lint && npm run build -- --webpack && npm audit && git diff --check` completed with exit 0 in 57.676 seconds, no lint warnings, 25/25 build progress and zero vulnerabilities. This includes the six-per-collection recent-version merge, keyboard/layout refinements, cookie privacy wording and greeting image sizing. Only documentation and staging review followed; no runtime or DB operation was performed.
+
+
+## Phase 9 — appointments and clients (part 2)
+
+Date: 2026-10-01. The user's continuation after c25551e authorizes the five remaining Phase 9 workstreams, not Phase 10. This section supersedes the part-1 pending rows and search limitations. No dependency/config/collection/script change, app server, database or runtime invocation was authorized or performed.
+
+### Official references and decisions
+
+- Next page/searchParams — https://nextjs.org/docs/app/api-reference/file-conventions/page — await the plain-object Promise; validate string/array inputs, reject duplicate numeric queries, keep filter/sort/page in server-owned URL state.
+- Next usePathname — https://nextjs.org/docs/app/api-reference/functions/use-pathname — current-route state belongs to a tiny client link leaf; AdminNav remains a server composition; no rewrites, post-mount fallback or new middleware.
+- React useOptimistic — https://react.dev/reference/react/useOptimistic — pure reducer, setter only inside transition; temporary proposed operation is explicitly unconfirmed, never a fabricated persisted row/status.
+- React useTransition — https://react.dev/reference/react/useTransition — async action pending state for reads/writes; separate transitions and a synchronous event-only send guard, no fetch/render effects or stale-response override.
+- RHF useForm — https://react-hook-form.com/docs/useform — cached defaults/reset only on explicit opening/submission, not server refresh; typed input/output generics for coerced/defaulted Zod queries.
+- RHF useWatch — https://react-hook-form.com/docs/usewatch — subscribe to action/date/slot in the small mutation leaf, not a client agenda/calendar tree.
+- MongoDB Node cursor ordering/pagination — https://www.mongodb.com/docs/drivers/node/current/crud/query/specify-documents-to-return/ — apply sort/skip/limit/project before iteration, deterministic _id tie-break, explicit caps rather than silently truncated calendars. The guessed /sort/ and /skip/ URLs returned 404 and were replaced by this actual documentation page.
+- MDN Intl.DateTimeFormat — https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat — explicit fa-IR/persian/Asia/Tehran; Persian month identity and bounded Gregorian-key walking, no additional date library/browser clock or locale default.
+- MongoDB $lookup research — https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/ — researched but not used; name-only bounded join and exact appointment-ID search avoid a new aggregation/abstraction.
+- Existing recorded Next Actions/data-security, Radix Sheet/cmdk, RHF resolver/Zod and Sonner references remain applicable: independent reader/repository/action authorization, minimal explicit DTOs, native mutation receipts and shared toast without a new notification system.
+
+### Data, interaction and safety contracts
+
+`/admin/appointments` and `/admin/clients` use request-time readers and independently authorized repositories. Appointment projection omits minute arrays and user credentials/contact; the name-only join is now bounded to 4000 IDs for calendars (the dashboard still requests only its own small candidate set). Client projection is restricted to account/contact metadata; search returns only ID/name or an appointment label/ID. DTOs validate stored enum/date/revision/identity fields; errors do not masquerade as empty results. Pages/components never query MongoDB.
+
+Table pages contain eight rows; client list pages eight accounts, each with at most six server-rendered appointment history entries. All use stable ID sort tie-breaks. Pagination is capped at 1000 pages with a visible narrowing instruction rather than claiming unlimited traversal. Name order is database character order, not promised Persian linguistic collation. Contact regex search uses the existing escape function. Counts, page rows, histories and shell statistics are separate reads, not a transaction; sizes/query latency are unmeasured. No synthetic rows or placeholder counts are used.
+
+The default table spans anchor date through +31 days; exact appointment ID removes only that table date constraint. Calendar ID search stays bounded. Calendar weeks start Saturday; a Persian month is found by comparing explicitly formatted year/month identities in a maximum 31-day scan. Date anchors are validated to Gregorian 2000–2100 and visible dates use Persian/Tehran. Calendar reads stop at 4001 as a detection sentinel; count>4000 or sentinel detection produces a dedicated unavailable-calendar message and table link, never a partial calendar with apparently empty days. The table has its own 32-day span; switching from a week/month intentionally changes the span and displays it. The exact-ID table copy explains the ignored date range.
+
+Command has two clear parts: local static shortcuts and submitted authorized record search. Clients match name/email/phone (max six); appointments match only a complete ID (max one), not an undocumented fuzzy/name search. The search expression is sent by native action, not appended to a URL; selecting a result uses a fixed internal destination with encoded ID. Closing/reopening/input changes invalidate superseded responses; no auto-search logs or persisted query store were added. URL filter forms disclose browser history/host log implications. Command's native POST fallback does not promise functional search without JavaScript.
+
+VisitSheet opens only on deliberate interaction and captures a revision snapshot. Refresh cannot replace form edits; changed revision blocks submission. Native changeStatus/moveAppointment retain server transition/time checks, revision CAS and unique-minute indexes. Completion is available only after end time and requires explicit staff confirmation; no automatic clinical outcome inference. Optimistic feedback is a labelled proposed operation/time while the Action is pending, not an acknowledged status update or row removal. Global Sonner receipt still works if native revalidation removes the filtered row first.
+
+Move-time reads independently require admin/current revision/future active appointment and use existing readSlots excluding the appointment's own reservation. The 32-day authorized rolling schedule is fetched only by explicit button, not eagerly for every row. Missing schedule is an error; disabled/no-capacity schedule returns no selectable times. Response tokens discard closed/superseded reads. checkedAt/revision changes invalidate options without resetting the selected date/time; explicit re-read is required. Selected scheduleRevision is taken from the freshly read matching option. Server writes recheck it; reads do not reserve time. The existing non-transactional schedule-revision limitation remains documented, not silently fixed or claimed safe under all races.
+
+Mutation/pending/uncertain state lives outside the Sheet Portal. Closing does not cancel a write or unlock an uncertain outcome. A confirmed success also requires an explicit full read before another operation. This local guard is not durable idempotency across tab closure/navigation. Ctrl/Cmd+Enter is scoped to the actual active form, composition/repeat/Alt guarded, and submits only when eligible; Escape uses the existing native dialog behavior. Only writing pauses ordinary live updates for the whole VisitSheet; input focus follows the existing subscriber rule. Security reset remains higher priority. Read-only ClientSheet has server children and stable account keys; URL history pagination is designed to preserve its open state, not browser-verified.
+
+AdminNav now links the real Phase 9 routes with pathname-correct aria-current; per-page server breadcrumbs identify the page. Dashboard quick links are real; Phase 10 entries remain disabled. No public header/second EventSource, auto-open modal, mount gate, random/render-time client clock or synthetic audit/clinical record was added.
+
+### Source acceptance and remaining verification
+
+**SEO checklist: met for the delivered Phase 9 private-page implementation**, not measured crawl/metadata output. All three admin routes have nonpersonal titles/descriptions/canonicals/OG/Twitter, noindex/nofollow, inherited admin robots exclusion and no sitemap inclusion. Private pages do not invent public Article/Review JSON-LD.
+
+**Zero-flicker check: not met for complete acceptance.** Same-resolved-DTO Suspense fallbacks preserve query/content geometry if used, but do not cover the initial database wait. CSS-first chrome/calendar breakpoints and explicit Sheet interaction avoid mount-gated views; variable rows/calendar height, chart measurement, history reconciliation and focus restoration remain unmeasured. No visual, AA, CLS, Core Vitals, timing or runtime correctness claim is made.
+
+Five added client files bring the complete register to 48. Form/query/model names and one/two-word kebab/Pascal files follow the established structure; no new any, unsafe nonnull, barrel, lint/type suppression or dependency/config/script was introduced. No unmet naming rule identified. ESLint initially rejected passing ref-reading event callbacks directly through RHF's render-time factory calls; submission factories are now invoked inside DOM submit events, and query invalidation runs in an input event, without suppression.
+
+### Completed Phase 9 acceptance ledger
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Ordered Phase 9 and role-only guarded readers/repos/actions | Met by source; no Phase 10/runtime invocation |
+| 2 | Cookie-first collapsed desktop sidebar | Met by part 1 source |
+| 3 | RTL drawer, breadcrumbs, theme/account | Met by source; focus unmeasured |
+| 4 | Command shortcuts and Ctrl/Cmd+K | Met by source |
+| 5 | Server-backed client/appointment search | Met; bounded client fields / exact appointment ID |
+| 6 | One SSE subscriber, transport indicator and notifications | Met by source; stream not run |
+| 7 | Greeting/photo, real stats/trends/counters | Met by part 1 source |
+| 8 | Today/upcoming/messages/recent versions/quick links | Met; actual Phase 9 destinations added |
+| 9 | Chart and Persian HTML data alternative | Met by part 1 source; rendering unmeasured |
+| 10 | Appointments table and URL filter/sort/page | Met by source |
+| 11 | Week/month calendar views | Met by source; no availability inference/truncation |
+| 12 | Detail Sheet, confirm/cancel/reschedule, optimistic preview/shortcuts | Met by source; existing authoritative CAS preserved |
+| 13 | Clients list and history Sheet | Met by source; read-only account/appointment history |
+| 14 | Private noindex, truthful loading/empty/error/pending/success | Met by source strategy, not universal geometry acceptance |
+| 15 | Naming/depth/register/official sources/documentation | Met; 48 entries, no unmet naming rule identified |
+| 16 | Permitted type/lint/build/audit/diff verification | Met; final exit 0, 27/27 build, audit zero |
+
+**Checklist: 16 of 16 met for implementation.** No Phase 9 implementation workstream remains pending; zero-flicker acceptance and owner-side operational/visual/security/interaction checks remain unmet/unperformed, not hidden inside the implementation count. **Deviations needing approval:** no new technical exception; existing dependency/build exceptions, single-process SSE restrictions and owner launch-policy approvals remain. The next phase is Phase 10, only after a fresh continuation.
+
+### Allowed verification
+
+Toolchain was restored once from the official SHA256-verified Node 24.21.0/npm 11.19.0 distribution; strict-peer/engine npm ci with ignored scripts installed 747 packages/audited 748, zero vulnerabilities (23.770 seconds). No version upgrade or package change. Intermediate typecheck/lint passed after event callback corrections; an intermediate approved Webpack build completed 27/27 with both new admin routes request-time. This is not database/application execution. Final comprehensive checks follow below.
+
+No DB connection/ping, seed/index/migration script, action/API/SSE/bus execution, app/dev server, test suite, browser/visual/accessibility/SEO/performance tool or operational scenario was run. Owner-side review instructions are in README; these are future instructions, not test results.
+
+Final post-review verification: `npm run typecheck && npm run lint && npm run build -- --webpack && npm audit && git diff --check` completed with **exit 0 in 53.254 seconds**, no lint warnings, **27/27** build progress, all three admin routes request-time, and **zero vulnerabilities**. Only documentation/static inventory/staging review followed. No runtime/DB/browser/test execution occurred.

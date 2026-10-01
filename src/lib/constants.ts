@@ -13,6 +13,8 @@ export const routes = {
   appointments: "/account/appointments",
   settings: "/account/settings",
   admin: "/admin",
+  agenda: "/admin/appointments",
+  clients: "/admin/clients",
   privacy: "/privacy",
   terms: "/terms",
   sitemap: "/sitemap.xml",

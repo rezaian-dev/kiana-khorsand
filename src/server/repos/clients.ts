@@ -1,4 +1,5 @@
 import "server-only";
+import { clientSchema, clientOrders } from "../../lib/clients";
 import { periodSchema } from "../../lib/admin";
 import { z } from "zod";
 import { ObjectId } from "mongodb";
@@ -41,7 +42,20 @@ export async function summarizeClients(input: unknown) {
 
 export async function listNames(input: unknown) {
   await requireAdmin();
-  const ids = z.array(idSchema).max(40).parse(input);
+  const ids = z.array(idSchema).max(4000).parse(input);
   return getDb().collection<Client>(collections.users).find({ _id: { $in: ids.map((id) => new ObjectId(id)) } })
-    .project<Pick<Client, "_id" | "name">>({ name: 1 }).limit(40).toArray();
+    .project<Pick<Client, "_id" | "name">>({ name: 1 }).limit(4000).toArray();
+}
+
+export async function browseClients(input: unknown) {
+  await requireAdmin();
+  const query = clientSchema.parse(input);
+  const search = { $regex: escapeSearch(query.q), $options: "i" };
+  const filter = { role: roles.client, ...(query.q ? { $or: [{ name: search }, { email: search }, { phone: search }, ...(idSchema.safeParse(query.q).success ? [{ _id: new ObjectId(query.q) }] : [])] } : {}) };
+  const collection = getDb().collection<Client>(collections.users);
+  const count = await collection.countDocuments(filter);
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 8)));
+  const page = Math.min(query.page, pageCount);
+  const entries = await collection.find(filter, { projection }).sort(query.sort === clientOrders.name ? { name: 1, _id: 1 } : { createdAt: -1, _id: -1 }).skip((page - 1) * 8).limit(8).toArray();
+  return { entries, count, pageCount, query: { ...query, page } };
 }

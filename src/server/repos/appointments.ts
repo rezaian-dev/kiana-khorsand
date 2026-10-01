@@ -1,4 +1,6 @@
 import "server-only";
+import { agendaSchema, agendaViews, agendaOrders, getRange } from "../../lib/agenda";
+import { historySchema } from "../../lib/clients";
 import { periodSchema } from "../../lib/admin";
 import { z } from "zod";
 import { bookingSchema, changeSchema, rescheduleSchema, statusSchema } from "../../lib/mutations";
@@ -19,6 +21,9 @@ import { idSchema, rangeSchema } from "../../lib/records.ts";
 import { getDb } from "../db.ts";
 import { requireAdmin, requireSession } from "../session.ts";
 import type { Appointment } from "../models.ts";
+
+const agendaProjection = { userId: 1, service: 1, date: 1, slot: 1, status: 1, startsAt: 1, endsAt: 1, updatedAt: 1, revision: 1 };
+type AgendaRecord = Pick<Appointment, "_id" | "userId" | "service" | "date" | "slot" | "status" | "startsAt" | "endsAt" | "updatedAt" | "revision">;
 
 export async function listAppointments(input: unknown = {}) {
   const session = await requireSession();
@@ -250,4 +255,49 @@ export async function summarizeAppointments(input: unknown) {
     ]).toArray(),
   ]);
   return { todayCount, pendingCount, requests, previousRequests, today, upcoming, activity, daily };
+}
+
+export async function browseAgenda(input: unknown) {
+  await requireAdmin();
+  const query = agendaSchema.parse(input);
+  const range = getRange(query);
+  const filter = {
+    ...(query.q ? { _id: new ObjectId(query.q) } : {}),
+    ...(query.client ? { userId: query.client } : {}),
+    ...(query.status !== "all" ? { status: query.status } : {}),
+    ...(query.service !== "all" ? { service: query.service } : {}),
+    ...(!(query.q && query.view === agendaViews.table) ? { date: { $gte: range.from, $lte: range.to } } : {}),
+  };
+  const collection = getDb().collection<Appointment>(collections.appointments);
+  const count = await collection.countDocuments(filter);
+  const pageCount = query.view === agendaViews.table ? Math.max(1, Math.min(1000, Math.ceil(count / 8))) : 1;
+  const page = Math.min(query.page, pageCount);
+  if (query.view !== agendaViews.table && count > 4000) return { entries: [] as AgendaRecord[], count, pageCount, query: { ...query, page }, range, isLimited: true };
+  const direction = query.sort === agendaOrders.descending ? -1 : 1;
+  const entries = await collection.find(filter).project<AgendaRecord>(agendaProjection)
+    .sort({ startsAt: direction, _id: direction }).skip(query.view === agendaViews.table ? (page - 1) * 8 : 0).limit(query.view === agendaViews.table ? 8 : 4001).toArray();
+  const isLimited = query.view !== agendaViews.table && entries.length > 4000;
+  return { entries: isLimited ? [] : entries, count, pageCount, query: { ...query, page }, range, isLimited };
+}
+
+export async function listHistory(input: unknown) {
+  await requireAdmin();
+  const query = historySchema.parse(input);
+  const collection = getDb().collection<Appointment>(collections.appointments);
+  const count = await collection.countDocuments({ userId: query.id });
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 6)));
+  const page = Math.min(query.page, pageCount);
+  const entries = await collection.find({ userId: query.id }).project<AgendaRecord>(agendaProjection)
+    .sort({ startsAt: -1, _id: -1 }).skip((page - 1) * 6).limit(6).toArray();
+  return { entries, page, count, pageCount };
+}
+
+export async function readMoveTimes(input: unknown) {
+  await requireAdmin();
+  const change = changeSchema.parse(input);
+  const current = await getDb().collection<Appointment>(collections.appointments).findOne({ _id: new ObjectId(change.id), revision: change.revision });
+  if (!current || current.startsAt <= new Date() || (current.status !== appointmentStates.pending && current.status !== appointmentStates.confirmed)) throw new MutationError(resultCodes.conflict, "نسخه یا امکان جابه‌جایی نوبت تغییر کرده است؛ نوبت را دوباره بررسی کنید.");
+  if (!(await getSchedule())) throw new MutationError(resultCodes.unavailable, "برنامهٔ زمان‌بندی راه‌اندازی نشده است.");
+  const today = getDay(new Date());
+  return readSlots({ from: today, to: addDays(today, 31) }, current._id);
 }
