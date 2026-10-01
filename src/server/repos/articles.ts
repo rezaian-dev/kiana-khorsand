@@ -15,20 +15,40 @@ import { requireAdmin } from "../session.ts";
 import { buildFilter } from "../query.ts";
 import type { Article } from "../models.ts";
 
+function getPublished() {
+  return { status: publicationStates.published, isReviewed: true, publishedAt: { $lte: new Date(), $type: "date" as const } };
+}
+
 export async function listArticles(input: unknown) {
   const query = catalogSchema.parse(input);
-  const filter = { ...buildFilter(query), status: publicationStates.published, isReviewed: true, publishedAt: { $lte: new Date(), $type: "date" as const } };
+  const filter = { ...buildFilter(query), ...getPublished() };
   const collection = getDb().collection<Article>(collections.articles);
   const count = await collection.countDocuments(filter, { collation: { locale: "fa" } });
-  const pageCount = Math.max(1, Math.ceil(count / 6));
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 6)));
   const page = Math.min(query.page, pageCount);
   const entries = await collection.find(filter, { collation: { locale: "fa" } })
     .sort(query.sort === "title" ? { title: 1, slug: 1 } : { publishedAt: -1, slug: 1 }).skip((page - 1) * 6).limit(6).toArray();
-  return { entries, count, pageCount, query: { ...query, page } };
+  const categories = await collection.distinct("category", getPublished());
+  return { entries, count, pageCount, query: { ...query, page }, categories };
 }
 
 export async function getArticle(slug: unknown) {
-  return getDb().collection<Article>(collections.articles).findOne({ slug: slugSchema.parse(slug), status: publicationStates.published, isReviewed: true, publishedAt: { $lte: new Date(), $type: "date" } });
+  return getDb().collection<Article>(collections.articles).findOne({ slug: slugSchema.parse(slug), ...getPublished() });
+}
+
+export async function listRelated(slug: string, category: Article["category"]) {
+  return getDb().collection<Article>(collections.articles).find({ ...getPublished(), slug: { $ne: slugSchema.parse(slug) }, category })
+    .sort({ publishedAt: -1, slug: 1 }).limit(2).toArray();
+}
+
+export async function listLinks() {
+  // Leave room for canonical public pages within the single-sitemap URL limit.
+  const limit = 49_990;
+  const entries = await getDb().collection<Article>(collections.articles).find(getPublished())
+    .project<Pick<Article, "slug" | "publishedAt" | "updatedAt">>({ _id: 0, slug: 1, publishedAt: 1, updatedAt: 1 })
+    .sort({ slug: 1 }).limit(limit + 1).toArray();
+  if (entries.length > limit) throw new Error("Published articles exceed the single-sitemap limit.");
+  return entries;
 }
 
 export async function listContent(input: unknown) {

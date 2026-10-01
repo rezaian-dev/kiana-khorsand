@@ -15,20 +15,25 @@ import { requireAdmin } from "../session.ts";
 import { buildFilter } from "../query.ts";
 import type { Course } from "../models.ts";
 
+function getPublished() {
+  return { status: publicationStates.published, isReviewed: true, publishedAt: { $lte: new Date(), $type: "date" as const } };
+}
+
 export async function listCourses(input: unknown) {
   const query = catalogSchema.parse(input);
-  const filter = { ...buildFilter(query), status: publicationStates.published, isReviewed: true, publishedAt: { $lte: new Date(), $type: "date" as const } };
+  const filter = { ...buildFilter(query), ...getPublished() };
   const collection = getDb().collection<Course>(collections.courses);
   const count = await collection.countDocuments(filter, { collation: { locale: "fa" } });
-  const pageCount = Math.max(1, Math.ceil(count / 6));
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 6)));
   const page = Math.min(query.page, pageCount);
   const entries = await collection.find(filter, { collation: { locale: "fa" } })
     .sort(query.sort === "title" ? { title: 1, slug: 1 } : { publishedAt: -1, slug: 1 }).skip((page - 1) * 6).limit(6).toArray();
-  return { entries, count, pageCount, query: { ...query, page } };
+  const categories = await collection.distinct("category", getPublished());
+  return { entries, count, pageCount, query: { ...query, page }, categories };
 }
 
 export async function getCourse(slug: unknown) {
-  return getDb().collection<Course>(collections.courses).findOne({ slug: slugSchema.parse(slug), status: publicationStates.published, isReviewed: true, publishedAt: { $lte: new Date(), $type: "date" } });
+  return getDb().collection<Course>(collections.courses).findOne({ slug: slugSchema.parse(slug), ...getPublished() });
 }
 
 export async function listContent(input: unknown) {

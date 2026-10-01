@@ -2,9 +2,11 @@ import { SectionSurface } from "@/components/shared/section-surface";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { SlideRail } from "@/components/shared/slide-rail";
 import { ReviewCard } from "@/components/shared/review-card";
-import { stories } from "@/content/stories";
+import type { Review } from "@/lib/published";
 import { routes } from "@/lib/constants";
 
-export function Testimonials() {
-  return <SectionSurface tone="mint-dew" aria-labelledby="testimonials-title"><SectionHeading id="testimonials-title" eyebrow="تجربهٔ همراهی" title="هر روایت، با اجازهٔ صاحب آن." description="حفظ حریم خصوصی مهم‌تر از انتشار یک تجربه است؛ اینجا تنها روایت‌های رضایت‌داده‌شده جای می‌گیرند." href={routes.testimonials} linkLabel="دربارهٔ تجربهٔ مراجعان" /><p className="section-disclosure">هنوز هیچ نظر واقعی منتشر نشده است. متن‌ها و چهره‌های زیر صرفاً نمونهٔ طراحی‌اند و نتیجهٔ درمان را نشان نمی‌دهند.</p><SlideRail label="جایگاه نمایشی تجربهٔ مراجعان؛ بدون نظر واقعی" slides={stories.map((story) => ({ key: story.key, content: <ReviewCard story={story} /> }))} /></SectionSurface>;
+type Props = { reviews: Review[] };
+
+export function Testimonials({ reviews }: Props) {
+  return <SectionSurface tone="mint-dew" aria-labelledby="testimonials-title"><SectionHeading id="testimonials-title" eyebrow="تجربهٔ همراهی" title="هر روایت، با اجازهٔ صاحب آن." description="حفظ حریم خصوصی مهم‌تر از انتشار یک تجربه است؛ اینجا تنها روایت‌های رضایت‌داده‌شده جای می‌گیرند." href={routes.testimonials} linkLabel="دربارهٔ تجربهٔ مراجعان" /><p className="section-disclosure">فقط روایت‌های تأییدشده با رضایت انتشار؛ تجربهٔ هر فرد، تضمینی برای نتیجهٔ دیگران نیست.</p>{reviews.length > 0 ? <SlideRail label="تجربه‌های منتشرشده" slides={reviews.map((review) => ({ key: review.id, content: <ReviewCard review={review} /> }))} /> : <div className="catalog-empty"><h3>هنوز روایتی برای نمایش منتشر نشده است.</h3><p>هیچ متن یا تصویر نمونه‌ای به‌جای تجربهٔ واقعی قرار نمی‌گیرد.</p></div>}</SectionSurface>;
 }

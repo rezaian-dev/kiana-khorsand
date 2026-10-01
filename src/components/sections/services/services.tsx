@@ -5,13 +5,13 @@ import { BookingPrompt } from "@/components/shared/booking-prompt";
 import { BookingBar } from "@/components/layout/booking-bar";
 import { JsonLd } from "@/components/shared/json-ld";
 import { services } from "@/content/services";
-import { profile } from "@/content/profile";
+import type { Profile } from "@/lib/published";
 import { routes } from "@/lib/constants";
 import { getEnv } from "@/lib/env";
 
-type Props = { isLoading?: boolean };
+type Props = { profile: Profile; isLoading?: boolean };
 
-export function Services({ isLoading = false }: Props) {
+export function Services({ profile, isLoading = false }: Props) {
   const origin = getEnv().NEXT_PUBLIC_SITE_URL;
   const url = `${origin}${routes.services}`;
   return <>

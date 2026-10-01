@@ -95,3 +95,7 @@ Inventory after Phase 5: 13 photographic subjects / 16 photo files, plus 3 shari
 ## Phase 6 reuse
 
 No image was added, generated, resized or replaced. Contact reuses the existing portrait in a reserved 4:5 frame with the same synthetic-identity disclosure; Testimonials reuses the three distinct rose/teal/indigo portraits only in clearly marked non-review layout samples. The typed manifest now records these additional placements. Original English prompts, provenance and all dimensions remain unchanged. Inventory remains 16 manifest entries / 19 image files (16 photo files plus 3 sharing graphics). No new full-bleed photograph, hotlink, SVG photo replacement or high-priority image was introduced.
+
+## Phase 7 publication boundary
+
+The three fictional testimonial portraits are retained design assets, not publicly rendered reviews. Approved reviews reject every `isSample` image; a null image uses a fixed-size initials avatar. The three title-bearing draft social cards are retained for seed/design reference. Published article OG/Twitter uses the stored cover photo instead, avoiding stale baked-in headlines after a database title edit. No new photo or real-person attribution was introduced in this phase.

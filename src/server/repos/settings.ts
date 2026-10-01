@@ -10,6 +10,12 @@ import { getDb } from "../db.ts";
 import { requireAdmin } from "../session.ts";
 import type { Settings } from "../models.ts";
 
+export async function getProfile() {
+  return getDb().collection<Settings>(collections.settings).findOne<Pick<Settings, "name" | "role" | "introduction" | "license" | "phone" | "whatsapp" | "instagram" | "telegram" | "address">>(
+    { _id: siteKey }, { projection: { _id: 0, name: 1, role: 1, introduction: 1, license: 1, phone: 1, whatsapp: 1, instagram: 1, telegram: 1, address: 1 } },
+  );
+}
+
 export async function getSettings() {
   await requireAdmin();
   return getDb().collection<Settings>(collections.settings).findOne({ _id: siteKey });

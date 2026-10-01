@@ -1,8 +1,10 @@
 import { Phone } from "lucide-react";
-import { profile } from "@/content/profile";
+import type { Profile } from "@/lib/published";
 import { SocialIcon } from "@/components/shared/social-icon";
 
-export function ContactLinks() {
+type Props = { profile: Profile };
+
+export function ContactLinks({ profile }: Props) {
   return (
     <div className="contact-links">
       {profile.phone ? <a href={`tel:${profile.phone}`}><Phone aria-hidden="true" />تماس تلفنی</a> : <span aria-disabled="true"><Phone aria-hidden="true" />تلفن، پس از تأیید</span>}

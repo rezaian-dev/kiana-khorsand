@@ -1414,3 +1414,6 @@
 .service-error { min-block-size: 65dvh; padding-block: 8rem 4rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1.5rem; }
 .service-error p { max-inline-size: 42rem; line-height: 2; }
 @media (min-width: 960px) { .login-grid { grid-template-columns: 1fr minmax(24rem, .95fr); } .login-copy { position: sticky; inset-block-start: 7rem; } }
+
+.review-initials { display: grid; place-items: center; background: var(--muted); color: var(--foreground); font-weight: 700; }
+.review-card blockquote { margin: 0; }

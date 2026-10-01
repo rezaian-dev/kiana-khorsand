@@ -33,19 +33,3 @@ export function buildHref(path: string, query: CatalogQuery) {
 export function normalizeSearch(value: string) {
   return value.normalize("NFKC").replace(/ي/g, "ی").replace(/ك/g, "ک").replace(/[\u064b-\u065f\u0670]/g, "").replace(/\u200c/g, " ").replace(/\s+/g, " ").trim().toLocaleLowerCase("fa-IR");
 }
-
-export function selectCatalog<T extends { title: string; description: string; category: keyof typeof topics; slug: string }>(entries: readonly T[], query: CatalogQuery) {
-  const terms = normalizeSearch(query.q).split(" ").filter(Boolean);
-  const matches = entries.filter((entry) => {
-    const text = normalizeSearch(`${entry.title} ${entry.description} ${topics[entry.category]}`);
-    return (query.category === "all" || query.category === entry.category) && terms.every((term) => text.includes(term));
-  });
-  if (query.sort === "title") {
-    const collator = new Intl.Collator("fa-IR");
-    matches.sort((a, b) => collator.compare(a.title, b.title) || a.slug.localeCompare(b.slug, "en"));
-  }
-  const pageSize = 6;
-  const pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
-  const page = Math.min(query.page, pageCount);
-  return { entries: matches.slice((page - 1) * pageSize, page * pageSize), count: matches.length, pageCount, query: { ...query, page } };
-}

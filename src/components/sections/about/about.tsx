@@ -5,13 +5,13 @@ import { Collaboration } from "./collaboration";
 import { BookingPrompt } from "@/components/shared/booking-prompt";
 import { BookingBar } from "@/components/layout/booking-bar";
 import { JsonLd } from "@/components/shared/json-ld";
-import { profile } from "@/content/profile";
+import type { Profile } from "@/lib/published";
 import { routes } from "@/lib/constants";
 import { getEnv } from "@/lib/env";
 
-type Props = { isLoading?: boolean };
+type Props = { profile: Profile; isLoading?: boolean };
 
-export function About({ isLoading = false }: Props) {
+export function About({ profile, isLoading = false }: Props) {
   const origin = getEnv().NEXT_PUBLIC_SITE_URL;
   const url = `${origin}${routes.about}`;
   return <>
@@ -25,7 +25,7 @@ export function About({ isLoading = false }: Props) {
           { "@type": "ListItem", position: 2, name: "درباره من", item: url },
         ] },
       ] }} />}
-      <Intro /><Approach /><Background /><Collaboration />
+      <Intro profile={profile} /><Approach /><Background profile={profile} /><Collaboration />
       <BookingPrompt tone="dream" title="لازم نیست نقطهٔ شروع، بی‌نقص باشد." description="اگر به گفت‌وگو فکر می‌کنید، می‌توانید ابتدا مسیرهای مشاوره را بشناسید و پرسش‌هایتان را برای شروع یادداشت کنید." secondaryHref={routes.services} secondaryLabel="مرور خدمات مشاوره" />
       <BookingBar />
     </main>

@@ -1,5 +1,8 @@
 import { Services } from "@/components/sections/services/services";
 
-export default function Loading() {
-  return <Services isLoading />;
+import { readProfile } from "@/server/published";
+
+export default async function Loading() {
+  const profile = await readProfile();
+  return <Services profile={profile} isLoading />;
 }

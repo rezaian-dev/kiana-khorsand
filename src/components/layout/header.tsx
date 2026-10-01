@@ -8,12 +8,13 @@ import { AccountMenu } from "@/components/layout/account-menu";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/lib/constants";
+import { readProfile } from "@/server/published";
 import { getViewer } from "@/server/viewer";
 import { canAuthenticate } from "@/server/auth";
 import { LiveRefresh } from "@/components/shared/live-refresh";
 
 export async function Header() {
-  const viewer = await getViewer();
+  const [viewer, profile] = await Promise.all([getViewer(), readProfile()]);
   return (
     <header className="site-header" id="page-top">
       <a className="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
@@ -25,7 +26,7 @@ export async function Header() {
           <div className="desktop-account">
             {viewer ? <AccountMenu viewer={viewer} /> : <Button asChild><Link href={routes.login} prefetch={false}>ورود / ثبت‌نام</Link></Button>}
           </div>
-          <MobileMenu viewer={viewer} brand={<Logo />} contacts={<ContactLinks />} />
+          <MobileMenu viewer={viewer} brand={<Logo />} contacts={<ContactLinks profile={profile} />} />
         </div>
       </div>
       <ScrollProgress /><LiveRefresh isEnabled={canAuthenticate()} viewer={viewer ? { id: viewer.id, role: viewer.role } : null} />

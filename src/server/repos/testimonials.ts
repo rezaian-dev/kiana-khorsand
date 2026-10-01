@@ -13,11 +13,14 @@ import type { Testimonial } from "../models.ts";
 
 export async function listTestimonials(input: unknown = {}) {
   const query = querySchema.parse(input);
-  return getDb().collection<Testimonial>(collections.testimonials).find({
-    status: reviewStates.approved, hasConsent: true, isSample: false, publishedAt: { $lte: new Date(), $type: "date" },
-  })
-    .sort({ publishedAt: -1, _id: -1 }).skip((query.page - 1) * query.size).limit(query.size)
+  const filter = { status: reviewStates.approved, hasConsent: true, isSample: false, publishedAt: { $lte: new Date(), $type: "date" as const } };
+  const collection = getDb().collection<Testimonial>(collections.testimonials);
+  const count = await collection.countDocuments(filter);
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / query.size)));
+  const page = Math.min(query.page, pageCount);
+  const entries = await collection.find(filter).sort({ publishedAt: -1, _id: -1 }).skip((page - 1) * query.size).limit(query.size)
     .project<Pick<Testimonial, "_id" | "name" | "quote" | "image" | "publishedAt">>({ name: 1, quote: 1, image: 1, publishedAt: 1 }).toArray();
+  return { entries, count, pageCount, page };
 }
 
 export async function listReviews(input: unknown = {}) {

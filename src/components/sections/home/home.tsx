@@ -10,14 +10,15 @@ import { Faq } from "./faq";
 import { Invitation } from "./invitation";
 import { BookingBar } from "@/components/layout/booking-bar";
 import { JsonLd } from "@/components/shared/json-ld";
-import { notices, profile } from "@/content/profile";
+import { notices } from "@/content/profile";
 import { services } from "@/content/services";
 import { routes } from "@/lib/constants";
+import type { Article, Course, Profile, Review } from "@/lib/published";
 import { getEnv } from "@/lib/env";
 
-type Props = { isLoading?: boolean };
+type Props = { profile: Profile; articles: Article[]; courses: Course[]; reviews: Review[]; isLoading?: boolean };
 
-export function Home({ isLoading = false }: Props) {
+export function Home({ profile, articles, courses, reviews, isLoading = false }: Props) {
   const origin = getEnv().NEXT_PUBLIC_SITE_URL;
   return <>
     {isLoading && <p role="status" className="load-status">در حال آماده‌سازی صفحه…</p>}
@@ -27,9 +28,9 @@ export function Home({ isLoading = false }: Props) {
         { "@type": "Person", "@id": `${origin}/#person`, name: profile.name, jobTitle: profile.role, url: `${origin}${routes.about}` },
         ...services.map((service) => ({ "@type": "Service", "@id": `${origin}/#${service.key}`, url: `${origin}${service.href}`, name: service.title, serviceType: service.title, description: service.description, provider: { "@id": `${origin}/#person` } })),
       ] }} />}
-      <Hero />
+      <Hero profile={profile} />
       <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحات عمومی و ورود آمادهٔ بازبینی‌اند؛ ورود نیازمند تنظیم میزبان است. رزرو، بخش شخصی حساب و ارسال واقعی پیام هنوز آماده نیستند و پیوند رزرو فعلاً به صفحهٔ ۴۰۴ می‌رسد.</p></div></div>
-      <About /><Services /><Steps /><Courses /><Articles /><Testimonials /><Faq /><Invitation />
+      <About profile={profile} /><Services /><Steps /><Courses courses={courses} /><Articles articles={articles} /><Testimonials reviews={reviews} /><Faq /><Invitation />
       <BookingBar />
     </main>
   </>;

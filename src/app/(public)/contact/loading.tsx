@@ -1,5 +1,8 @@
 import { Contact } from "@/components/sections/contact/contact";
 
-export default function Loading() {
-  return <Contact isLoading />;
+import { readProfile } from "@/server/published";
+
+export default async function Loading() {
+  const profile = await readProfile();
+  return <Contact profile={profile} isLoading />;
 }
