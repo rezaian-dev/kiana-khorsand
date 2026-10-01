@@ -75,6 +75,7 @@ export function Interactions() {
       if (element.matches(".button-primary")) {
         frame["--action-from"] = style.getPropertyValue(hasHover ? "--action-hover-from" : "--action-rest-from").trim();
         frame["--action-to"] = style.getPropertyValue(hasHover ? "--action-hover-to" : "--action-rest-to").trim();
+        frame["--action-mid"] = style.getPropertyValue(hasHover ? "--action-hover-mid" : "--action-rest-mid").trim();
       }
       return frame;
     }
