@@ -1,3 +1,5 @@
+import "server-only";
+
 type Props = { schema: Record<string, unknown> };
 
 export function JsonLd({ schema }: Props) {

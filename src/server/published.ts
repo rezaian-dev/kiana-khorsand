@@ -5,7 +5,7 @@ import { z } from "zod";
 import { images } from "@/content/images";
 import { articleSchema, courseSchema, settingsSchema, slugSchema, testimonialSchema } from "@/lib/records";
 import type { Article, Course, Profile, Review } from "@/lib/published";
-import { topics } from "@/lib/constants";
+import { setupMessage, topics } from "@/lib/constants";
 import type { CatalogQuery } from "@/lib/catalog";
 import { getArticle, listArticles, listLinks, listRelated } from "./repos/articles";
 import { listCourses } from "./repos/courses";
@@ -47,7 +47,7 @@ function mapCourse(input: unknown): Course {
 export const readProfile = cache(async (): Promise<Profile> => {
   await connection();
   const record = await getProfile();
-  if (!record) throw new Error("Site settings have not been initialized.");
+  if (!record) throw new Error(setupMessage);
   const profile = profileSchema.parse(record);
   return {
     ...profile, phone: profile.phone || null,

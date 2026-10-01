@@ -53,6 +53,7 @@ export const reviewStates = { pending: "pending", approved: "approved", rejected
 export const messageStates = { unread: "unread", read: "read", archived: "archived" } as const;
 export const serviceKeys = { individual: "individual", couples: "couples", family: "family", online: "online" } as const;
 export const siteKey = "site";
+export const setupMessage = "Missing settings document (_id: site). Confirm MONGODB_URI and MONGODB_DB in the project-root .env.local, then stop the app and manually run: node --env-file=.env.local scripts/setup-indexes.mts followed by node --env-file=.env.local scripts/seed.mts. Restart the app afterward. No automatic initialization was performed.";
 
 export const liveTopics = { content: "content", slots: "slots", appointments: "appointments", account: "account", admin: "admin" } as const;
 export const liveScopes = { public: "public", account: "account", admin: "admin" } as const;
