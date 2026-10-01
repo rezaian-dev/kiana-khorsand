@@ -46,11 +46,14 @@
 
 ## Client Component register
 
-Updated in Phase 9, appointments/clients completion (2026-10-01). **48 authored client entry files**, including two context-only modules and the required Next error boundary. The prior 43 remain; this part adds NavLink, AgendaFilter, VisitSheet, ClientFilter and ClientSheet and extends CommandMenu. Server pages/layout/readers/navigation frames/list/calendar/history templates still own private data access and composition. This counts authored directives, not vendor widgets or a claim of a JavaScript-free chart.
+Updated in Phase 10, article/course editor partial (2026-10-01). **51 authored client entry files**, including two context-only modules and the required Next error boundary. The previous 48 remain; this part adds ContentFilter, ContentForm and ArticleFields. List/card composition, editor chrome, pages, readers and repositories remain server-owned. ContentForm is the interactive editor boundary; ArticleFields isolates dynamic article arrays and is never mounted for courses.
 
 | File under `src/components` unless explicitly prefixed with `src/` | Client reason and boundary |
 | --- | --- |
-| `layout/nav-link.tsx` | NavLink — pathname-only active-link leaf with server-passed icon/label; no post-mount guard or rewritten paths. |
+| `sections/publishing/content-filter.tsx` | ContentFilter — RHF/Zod URL search/category/status/order, explicit router navigation, native GET fallback and dirty/pending live pause. |
+| `sections/publishing/content-form.tsx` | ContentForm — shared discriminated article/course form, RHF/Zod/useWatch/Controller, manifest-only cover choices, snapshot/CAS actions, pending/receipt/uncertain locks and explicit review consent; no autosave or reset from live props. |
+| `sections/publishing/article-fields.tsx` | ArticleFields — article-only RHF useFieldArray sections/sources with native stable keys, explicit reorder/removal and Controller paragraph/point arrays; passed client form methods, no server reads. |
+| `layout/nav-link.tsx` | NavLink — pathname-only current-page/current-location leaf for list/editor routes with server-passed icon/label; no post-mount guard or rewritten paths. |
 | `sections/agenda/agenda-filter.tsx` | AgendaFilter — RHF/Zod server query defaults, explicit URL navigation, dirty/pending live pause and native GET fallback; no client-side record filtering. |
 | `sections/agenda/visit-sheet.tsx` | VisitSheet — explicit snapshot/revision, RHF/Zod operation, native CAS actions and guarded availability read, bounded useOptimistic preview inside transition, pending/uncertain lock outside Portal, scoped Ctrl/Cmd+Enter. |
 | `sections/clients/client-filter.tsx` | ClientFilter — RHF/Zod search/sort URL navigation, dirty/pending live pause and explicit query privacy disclosure. |
@@ -1446,3 +1449,78 @@ Toolchain was restored once from the official SHA256-verified Node 24.21.0/npm 1
 No DB connection/ping, seed/index/migration script, action/API/SSE/bus execution, app/dev server, test suite, browser/visual/accessibility/SEO/performance tool or operational scenario was run. Owner-side review instructions are in README; these are future instructions, not test results.
 
 Final post-review verification: `npm run typecheck && npm run lint && npm run build -- --webpack && npm audit && git diff --check` completed with **exit 0 in 53.254 seconds**, no lint warnings, **27/27** build progress, all three admin routes request-time, and **zero vulnerabilities**. Only documentation/static inventory/staging review followed. No runtime/DB/browser/test execution occurred.
+
+
+## Phase 10 — article and course editors (part 1)
+
+Date: 2026-10-01. Authorized by continuation after Phase 9 commit c2e618a. This is a coherent Phase 10 partial: real article/course listing, creation, editing and publication. It does not start Phase 11 or pretend that review moderation, split inbox or settings editors are built.
+
+### Official sources and decisions
+
+- RHF useFieldArray — https://react-hook-form.com/docs/usefieldarray — fixed sections/sources names, complete append values and native field.id keys; article-only leaf, no unsupported flat field arrays or unregister-on-unmount. Reordering is explicit, not drag-library work.
+- RHF Controller — https://react-hook-form.com/docs/usecontroller/controller — controlled string-array textareas with stable defaults/ref/blur/change and no duplicate registration; blank line separates paragraphs, one line separates points/outline.
+- Zod API, discriminated unions — https://zod.dev/api#discriminated-unions — article/course discriminator selects the existing shared edit schema through safeExtend; repositories/actions retain their independent schemas and authorization. No custom validation library or codec package.
+- Next Forms — https://nextjs.org/docs/app/guides/forms — native Server Actions, independently verified auth/role and explicit validation/error/pending receipts. The old guessed /app/getting-started/updating-data URL returned 404; the current Forms guide above was used instead.
+- Next Server Actions configuration — https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions — keep default same-origin handling and 1 MB raw request cap; no experimental option, new allowlist or raised body-size setting. A 900,000-byte UTF-8 JSON preflight leaves conservative overhead room but is not a proof of final transport size.
+- MDN TextEncoder.encode — https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder/encode — event-time UTF-8 byte count, not character-count assumptions for Persian text; a too-large editor submission is rejected locally before calling the action.
+- MongoDB cursor ordering/pagination — https://www.mongodb.com/docs/drivers/node/current/crud/query/specify-documents-to-return/ — projection before cursor iteration, deterministic _id tie-break and bounded skip/limit; use the existing fa collation for title ordering.
+- MDN aria-current — https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current — exact list route is page, nested editor is current location; dashboard/home do not become falsely current for every descendant, CSS styles both states.
+- Previously recorded Next page/params/metadata/notFound/usePathname/data-security, React transitions and RHF useForm/useWatch references remain in force: await URL inputs, request barrier before DB, nonpersonal private metadata, no props-driven dirty-form reset, no browser clock/render branch.
+
+### Delivered source contracts
+
+Four route patterns are added: /admin/articles, /admin/articles/[id], /admin/courses and /admin/courses/[id]. The literal new ID produces empty form defaults, never a database insert. Existing IDs are validated before lookup; unauthorized users are resolved before missing-record notFound. Private metadata uses generic titles/descriptions and canonical route IDs only, not record text/query/author. Metadata does not read content or confirm record existence. List/card/editor-shell templates stay server components; only actual form/array interactions become new client boundaries.
+
+Each repository owns its collection queries and independently requires admin. List queries use the existing normalized title/description/topic search and escaped regex, status/category filters, fa title collation or updatedAt order, stable _id tie-break and eight-row pagination. There is a visible 1000-page cap. Summary projections omit article/course bodies. The single editor lookup is converted through shared schemas to an explicit serializable DTO; DB types and credentials never reach the client. Counts/page reads/shell summaries are not one transaction. No execution-time query cost or payload timing was measured.
+
+The shared editor discriminates the two existing models rather than introducing a storage model. Article fields cover title, slug, summary, author, category, cover/social image, introduction, sections (key/title/paragraphs/optional points), takeaway and source titles/HTTPS URLs. Course fields cover shared publication fields, audience, outline and boundary. Text remains plain, React-rendered text, not arbitrary HTML/Markdown. Paragraph textarea separators are blank lines; points/outline are line-separated. Editing those fields normalizes that textarea into the corresponding arrays; existing unchanged values are retained. All field limits/required minima still come from the existing shared record schema, even for drafts.
+
+useFieldArray is mounted only for articles and uses its native opaque keys only for reconciliation, not DOM IDs or persistent section slugs. useId provides DOM IDs; the author explicitly enters unique Latin section keys. Sections can be added/removed/reordered; sources can be added/removed. Local changes are persisted only on successful explicit save. There is no new permanent-delete UI, upload endpoint, file host, image generator, external rich editor, autosave, local draft store or generic navigation blocker. Existing server deletion actions are unchanged and not invoked.
+
+Cover/social selection uses the existing local image manifest; preview boxes are reserved at 4:3. All retained images are conceptual/sample, with their original truthful alt. Text-bearing social cards are not retitled; copy warns to choose a matching card or a text-free photo. No new asset or image-processing dependency was added.
+
+A form captures its initial DTO/revision once; the client key is kind/id, not revision. Live RSC cannot overwrite edits. A newer server revision blocks submit. The same existing writeArticle/writeCourse actions enforce full schema, admin, unique slug index and revision CAS, maintain server timestamps and publish/invalidate existing admin/public channels. The shared live subscriber is unchanged and no second stream is added. Ordinary refresh pauses while dirty/pending; security reset retains priority. Mutation receipts use the existing root Sonner even if RSC changes around the form.
+
+Confirmed save locks repeat submission until explicit full reload of the acknowledged ID. Uncertain create links back to the list, not a fresh duplicate insert; revision/access/unknown failures lock, while a specifically reported unique-slug field conflict allows local correction without losing text. Server record-group field errors are displayed in the form status rather than discarded. Synchronous event-only send guards prevent double-submit before render; they are not durable idempotency after navigation/tab closure. Native fallback is POST to the list, not a URL containing edited body, and is explicitly not advertised as working save without JavaScript.
+
+Any other field/array change clears the local isReviewed confirmation. Publishing requires explicit review and an actual author/instructor name through the existing server schema; the checkbox is not a clinical/legal audit record. Saving draft also withdraws a formerly published record; it is not a separate staged revision leaving the old version public. Slug changes have no automatic redirects and the UI says so. Existing publication-date semantics remain unchanged. No sample was published or configured as reviewed here.
+
+### Acceptance, limitations and owner review
+
+**SEO checklist: not met for full Phase 10.** The four delivered patterns are server-rendered private/noindex/nofollow with nonpersonal title/description/canonical/OG/Twitter, inherited admin robots exclusion and no sitemap entry. Review/message/settings routes remain absent. No SEO tool or metadata output inspection was run.
+
+**Zero-flicker check: not met for complete acceptance.** Same-DTO inert Suspense fallbacks do not cover initial DB latency; they avoid a guessed list/editor skeleton. Initial snapshots/IDs/dates and reserved image boxes follow the source strategy. Variable text, array/error heights, focus after reorder and live/navigation reconciliation are unmeasured. No CLS/AA/keyboard/visual/performance/response-time claim is made.
+
+Three client entries bring the complete register to 51. No new dependency, package/config change, collection, script, asset, any/unsafe nonnull/lint suppression or barrel. Short kebab/Pascal files and server/component depth are retained; no unmet naming rule identified. The new publishing schema/reader and shared editor are reused by the two requested content types, not a speculative framework.
+
+Owner-only future review: guest/client/admin and role revocation; invalid IDs and missing records; URL filters, title order, duplicates and Back/Forward; empty/draft/published lifecycle for both kinds; all article arrays/source URLs and course fields; slug collision, two admins with one revision, retained dirty input, response loss after write, unknown-create reconciliation; body limit and line endings; public/admin SSE and hidden-tab/reconnect; both themes, reduced motion, cold cache/throttled refresh, 320–1920+ widths and keyboard/focus. These are review instructions, not executed tests.
+
+### Phase 10 implementation ledger
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Ordered Phase 10 partial; independently guarded data/actions | Met by source; no Phase 11/runtime invocation |
+| 2 | Article/course server lists and thumbnails | Met by source |
+| 3 | URL search/category/status/sort/pagination | Met by source; bounded queries |
+| 4 | Complete article model creation/editing | Met by source; structured text/arrays/sources |
+| 5 | Complete course model creation/editing | Met by source; audience/outline/boundary |
+| 6 | Unique Latin slug and local cover/social selection | Met by source; no uploads or redirect claim |
+| 7 | Saved/dirty/pending/error/uncertain states and review/publication | Met by source; explicit saves, no autosave |
+| 8 | Existing live/invalidation path and preserved input/CAS | Met by source; no stream/action execution |
+| 9 | Testimonial review/moderation UI | **Not met; remaining Phase 10** |
+| 10 | Split message inbox | **Not met; remaining Phase 10** |
+| 11 | Professional profile settings editor | **Not met; remaining Phase 10** |
+| 12 | Visual hours/schedule editor | **Not met; remaining Phase 10** |
+| 13 | Settings social/contact tabs | **Not met; remaining Phase 10** |
+| 14 | Delivered private metadata/states/naming/register/docs | Met by source strategy; 51 entries, full SEO/flicker acceptance separate |
+| 15 | Permitted type/lint/build/audit/diff verification | Met; final exit 0, 29/29 build, audit zero |
+
+**Checklist: 10 of 15 met for implementation.** Remaining rows 9–13 are explicit, not replaced by disabled buttons or backend-only actions. Full-phase SEO and universal zero-flicker acceptance remain not met. **Deviations needing approval:** no new technical exception; earlier dependency/build exceptions and owner launch-policy prerequisites remain. The next continuation is still Phase 10, not Phase 11.
+
+### Allowed verification
+
+Snapshot toolchain was absent. Restored the official SHA256-verified Node 24.21.0 distribution and bundled npm 11.19.0; npm ci --strict-peer-deps --engine-strict --ignore-scripts installed 747/audited 748 with zero vulnerabilities, exit 0 in 24.640 seconds. Known approved ESLint 9 EOL warning remains; npm upgrade notice was not acted on. No dependency changed or install script ran.
+
+Intermediate TypeScript/ESLint and approved temporary Webpack build passed (29/29 progress; all four new route patterns dynamic). No DB connection/ping, manual seed/index/migration script, API/action/SSE/bus execution, dev/app server, browser, test suite or visual/accessibility/SEO/performance tool was run. Final verification is recorded below after the remaining source review.
+
+Final post-review verification: `npm run typecheck && npm run lint && npm run build -- --webpack && npm audit && git diff --check` completed with **exit 0 in 59.984 seconds**, no lint warnings, **29/29** build progress and **zero vulnerabilities**. Both lists and both dynamic editor routes are request-time. Only documentation/static inventory/staging followed; no runtime, database, browser or test operation was performed.

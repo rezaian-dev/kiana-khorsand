@@ -1,4 +1,6 @@
 import "server-only";
+import { contentSchema, contentOrders } from "../../lib/publishing";
+import { idSchema } from "../../lib/records";
 import { MongoServerError, ObjectId } from "mongodb";
 import { articleEditSchema, changeSchema } from "../../lib/mutations";
 import { liveTopics, resultCodes, topics } from "../../lib/constants";
@@ -99,4 +101,24 @@ export async function deleteArticle(input: unknown) {
   notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
   if (previous.status === publicationStates.published) notifyChange({ topic: liveTopics.content, id: collections.articles, audience: "public" });
   return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
+}
+
+
+export async function browseContent(input: unknown) {
+  await requireAdmin();
+  const query = contentSchema.parse(input);
+  const filter = { ...buildFilter({ ...query, sort: "featured" }), ...(query.status !== "all" ? { status: query.status } : {}) };
+  const collection = getDb().collection<Article>(collections.articles);
+  const count = await collection.countDocuments(filter, { collation: { locale: "fa" } });
+  const pageCount = Math.max(1, Math.min(1000, Math.ceil(count / 8)));
+  const page = Math.min(query.page, pageCount);
+  const entries = await collection.find(filter, { collation: { locale: "fa" } })
+    .project<Pick<Article, "_id" | "title" | "slug" | "image" | "category" | "status" | "updatedAt" | "revision">>({ title: 1, slug: 1, image: 1, category: 1, status: 1, updatedAt: 1, revision: 1 })
+    .sort(query.sort === contentOrders.title ? { title: 1, _id: 1 } : { updatedAt: -1, _id: -1 }).skip((page - 1) * 8).limit(8).toArray();
+  return { entries, count, pageCount, query: { ...query, page } };
+}
+
+export async function readDraft(input: unknown) {
+  await requireAdmin();
+  return getDb().collection<Article>(collections.articles).findOne({ _id: new ObjectId(idSchema.parse(input)) });
 }

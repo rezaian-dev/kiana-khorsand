@@ -15,6 +15,8 @@ export const routes = {
   admin: "/admin",
   agenda: "/admin/appointments",
   clients: "/admin/clients",
+  adminArticles: "/admin/articles",
+  adminCourses: "/admin/courses",
   privacy: "/privacy",
   terms: "/terms",
   sitemap: "/sitemap.xml",
