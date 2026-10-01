@@ -7,7 +7,7 @@ import type { messageStates, roles, siteKey } from "../lib/constants.ts";
 type Timestamps = { createdAt: Date; updatedAt: Date };
 export type Article = z.infer<typeof articleSchema> & Timestamps & { _id: ObjectId; search: string; revision: number; publishedAt: Date | null };
 export type Course = z.infer<typeof courseSchema> & Timestamps & { _id: ObjectId; search: string; revision: number; publishedAt: Date | null };
-export type Appointment = z.infer<typeof appointmentSchema> & Timestamps & { _id: ObjectId; revision: number };
+export type Appointment = z.infer<typeof appointmentSchema> & Timestamps & { _id: ObjectId; revision: number; minutes: number[]; scheduleRevision: number };
 export type Testimonial = z.infer<typeof testimonialSchema> & Timestamps & { _id: ObjectId; revision: number; publishedAt: Date | null };
 export type Message = z.infer<typeof messageSchema> & Timestamps & { _id: ObjectId; status: (typeof messageStates)[keyof typeof messageStates]; revision: number };
 export type Settings = z.infer<typeof settingsSchema> & Timestamps & { _id: typeof siteKey; revision: number };

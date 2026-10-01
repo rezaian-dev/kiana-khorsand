@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
-import { getMessage } from "@/lib/auth";
+import { logoutAccount } from "@/lib/account";
 import { CalendarDays, LayoutDashboard, LogOut, Settings, UserRound } from "lucide-react";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu-item";
 import { formatNumber } from "@/lib/format";
@@ -21,8 +20,8 @@ export function AccountLinks({ viewer, isDropdown = false, onChoose }: Props) {
     if (isPending) return;
     setPending(true); setMessage("");
     try {
-      const result = await authClient.signOut();
-      if (result.error) { setMessage(getMessage(result.error)); return; }
+      const result = await logoutAccount();
+      if (!result.isSuccess) { setMessage(result.message); return; }
       onChoose?.();
       router.refresh();
     } catch { setMessage("خروج انجام نشد؛ اتصال را بررسی و دوباره تلاش کنید."); }

@@ -8,8 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowUpLeft, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { credentialsSchema, signUpSchema, getMessage, type Credentials } from "@/lib/auth";
-import { authClient } from "@/lib/auth-client";
+import { credentialsSchema, signUpSchema, type Credentials } from "@/lib/auth";
+import { createAccount, loginAccount } from "@/lib/account";
 import { routes } from "@/lib/constants";
 import { notices } from "@/content/profile";
 
@@ -19,15 +19,21 @@ export function AuthForm({ isRegister, isReady }: Props) {
   const id = useId();
   const router = useRouter();
   const [message, setMessage] = useState("");
-  const { control, handleSubmit, resetField, formState: { errors, isSubmitting } } = useForm<Credentials>({ resolver: zodResolver(isRegister ? signUpSchema : credentialsSchema), defaultValues: { name: "", email: "", password: "" } });
+  const { control, handleSubmit, resetField, setError, formState: { errors, isSubmitting } } = useForm<Credentials>({ resolver: zodResolver(isRegister ? signUpSchema : credentialsSchema), defaultValues: { name: "", email: "", password: "" } });
   async function handleAuthenticate(value: Credentials) {
     if (!isReady) return;
     setMessage("");
     try {
-      const response = isRegister ? await authClient.signUp.email(value) : await authClient.signIn.email({ email: value.email, password: value.password });
-      if (response.error) { setMessage(getMessage(response.error)); return; }
-      const verified = await authClient.getSession();
-      if (verified.error || !verified.data?.user) { setMessage("نشست تأیید نشد؛ تنظیمات کوکی یا اتصال را بررسی کنید."); return; }
+      const response = isRegister ? await createAccount(value) : await loginAccount(value);
+      if (!response.isSuccess) {
+        setMessage(response.message);
+        const fields: Partial<Record<keyof Credentials, string[]>> = response.fieldErrors;
+        for (const field of ["name", "email", "password"] as const) {
+          const errors = fields[field];
+          if (errors?.[0]) setError(field, { message: errors[0] });
+        }
+        return;
+      }
       resetField("password");
       setMessage("ورود تأیید شد؛ صفحه در حال به‌روزرسانی است.");
       router.refresh();

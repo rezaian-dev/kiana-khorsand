@@ -1,4 +1,11 @@
 import "server-only";
+import { messageSchema } from "../../lib/message";
+import { messageEditSchema } from "../../lib/mutations";
+import { liveTopics, messageStates, resultCodes } from "../../lib/constants";
+import type { Receipt } from "../../lib/result";
+import { MutationError, requireWrite } from "../result";
+import { notifyChange } from "../changes";
+import { consumeRate } from "../rate";
 import { ObjectId } from "mongodb";
 import { collections } from "../../lib/constants.ts";
 import { idSchema, inboxSchema, querySchema } from "../../lib/records.ts";
@@ -16,4 +23,27 @@ export async function listMessages(input: unknown = {}) {
 export async function getMessage(id: unknown) {
   await requireAdmin();
   return getDb().collection<Message>(collections.messages).findOne({ _id: new ObjectId(idSchema.parse(id)) });
+}
+
+
+export async function createMessage(input: unknown) {
+  const value = messageSchema.parse(input);
+  // Shared single-node budget; never trust an arbitrary forwarded IP header.
+  consumeRate("messages:public", 10);
+  const now = new Date();
+  const id = new ObjectId();
+  const inserted = await getDb().collection<Message>(collections.messages).insertOne({ ...value, _id: id, createdAt: now, updatedAt: now, status: messageStates.unread, revision: 0 });
+  requireWrite(inserted);
+  notifyChange({ topic: liveTopics.admin, id: id.toHexString(), audience: "admin" });
+  return { id: id.toHexString(), revision: 0 } satisfies Receipt;
+}
+
+export async function updateMessage(input: unknown) {
+  await requireAdmin();
+  const change = messageEditSchema.parse(input);
+  const updated = await getDb().collection<Message>(collections.messages).updateOne({ _id: new ObjectId(change.id), revision: change.revision }, { $set: { status: change.status, updatedAt: new Date() }, $inc: { revision: 1 } });
+  requireWrite(updated);
+  if (!updated.matchedCount) throw new MutationError(resultCodes.conflict, "این پیام تغییر کرده است؛ نسخهٔ تازه را بررسی کنید.");
+  notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
+  return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
 }

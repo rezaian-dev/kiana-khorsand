@@ -50,3 +50,6 @@ export const siteKey = "site";
 export const liveTopics = { content: "content", slots: "slots", appointments: "appointments", account: "account", admin: "admin" } as const;
 export const liveScopes = { public: "public", account: "account", admin: "admin" } as const;
 export const authPaths = { signIn: "/sign-in/email", signUp: "/sign-up/email", profile: "/update-user", password: "/change-password", signOut: "/sign-out" } as const;
+
+export const resultCodes = { invalid: "invalid", unauthorized: "unauthorized", forbidden: "forbidden", conflict: "conflict", unavailable: "unavailable", limited: "limited", occupied: "occupied" } as const;
+export const indexes = { slot: "appointment_slot", minutes: "appointment_minutes" } as const;

@@ -46,11 +46,11 @@
 
 ## Client Component register
 
-Updated in Phase 7, authentication/live partial (2026-10-01). **32 authored client entry files**, including two context-only modules and the required Next error boundary. This partial adds AuthForm, AuthTabs, LiveRefresh and app/error.tsx; Phase 6 added MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 7, typed-operations/write partial (2026-10-01). **32 authored client entry files**, including two context-only modules and the required Next error boundary. Part 2 added AuthForm, AuthTabs, LiveRefresh and app/error.tsx; Part 3 adds no client directive and routes existing login/logout through typed native operations; Phase 6 added MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` unless explicitly prefixed with `src/` | Client reason and boundary |
 | --- | --- |
-| `layout/account-links.tsx` | AccountLinks — native HTTP logout, pending/error status and router refresh; identity/role/count supplied by the server, no browser-derived initial session. |
+| `layout/account-links.tsx` | AccountLinks — typed native HTTP logout result, pending/error status and router refresh; identity/role/count supplied by the server, no browser-derived initial session. |
 | `layout/account-menu.tsx` | AccountMenu — controlled Dropdown/Sheet; CSS-first breakpoint choice, no viewport render branch. |
 | `layout/mobile-menu.tsx` | MobileMenu — controlled fullscreen Sheet, user-triggered Motion stagger, close events. |
 | `layout/nav-links.tsx` | NavLinks — usePathname for the five active-link states; no rewrites or render-time browser reads. |
@@ -60,7 +60,7 @@ Updated in Phase 7, authentication/live partial (2026-10-01). **32 authored clie
 | `motion/motion.tsx` | Motion — strict LazyMotion/domAnimation and system-reduced MotionConfig; passes server children. |
 | `motion/scroll-progress.tsx` | ScrollProgress — useScroll; fixed transform-based track, no scroll writes. |
 | `sections/contact/message-form.tsx` | MessageForm — RHF Controller/resolver/Zod, useId and local checked-state; no request, persistence or server action; unnamed native fields prevent no-JS GET of entered values. |
-| `sections/login/auth-form.tsx` | AuthForm — RHF/Zod Controllers, native same-origin sign-in/sign-up and verified-session confirmation; unnamed DOM fields, reserved status/errors, no mounted gate. |
+| `sections/login/auth-form.tsx` | AuthForm — RHF/Zod Controllers, typed native same-origin sign-in/sign-up, Persian server field errors and verified-session confirmation; unnamed DOM fields, reserved status/errors, no mounted gate. |
 | `sections/login/auth-tabs.tsx` | AuthTabs — RTL native Tabs and two preserved form instances; CSS hides inactive force-mounted content before hydration. |
 | `shared/live-refresh.tsx` | LiveRefresh — one native EventSource, authorized server-selected scope, visibility lifecycle/debounced transitions and accessible connection status; no first-render browser session. |
 | `src/app/error.tsx` | Next error convention — safe Persian retry boundary using reset; never fabricates a guest session or an empty result on failure. |
@@ -85,7 +85,7 @@ Updated in Phase 7, authentication/live partial (2026-10-01). **32 authored clie
 
 Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults, Testimonials, Faq, Contact, PolicyPage, BreadcrumbSchema, Login and the content sections/cards, pages, loading, layouts and metadata conventions remain server files; the explicitly listed interactive forms and Next error boundary are the exceptions. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-Header and login now resolve a verified server Viewer; native Auth/SSE routes and a visibility-aware subscriber exist. There is no client session provider, fake session or post-mount guest replacement. Public content/metadata still use fixtures and business mutations remain unfinished. This register and the latest Phase 7 section supersede historical statuses. The user's «ادامه» after the Phase 6 decision request is treated as approval of the explicitly proposed temporary development-only ESLint 9 exception. ESLint remains EOL; this does not restore upstream support or authorize other deprecated packages.
+Header and login now resolve a verified server Viewer; native Auth/SSE routes and a visibility-aware subscriber exist. There is no client session provider, fake session or post-mount guest replacement. Public content/metadata still use fixtures. Business mutation repositories/actions now exist but are not wired to new booking/contact/admin interfaces; that UI remains in its ordered phases. This register and the latest Phase 7 section supersede historical statuses. The user's «ادامه» after the Phase 6 decision request is treated as approval of the explicitly proposed temporary development-only ESLint 9 exception. ESLint remains EOL; this does not restore upstream support or authorize other deprecated packages.
 
 ## Version selection and compatibility
 
@@ -880,6 +880,8 @@ Pinned typecheck and lint passed with the final 1.7.7 pair; DB-independent Next 
 
 ## Phase 7 — Authentication and live foundation (Part 2)
 
+Historical Part 2 record; current status, build caveat and acceptance are in Part 3 below.
+
 ### Scope and official sources
 
 The user's «ادامه» authorized the remaining Phase 7 work, not Phase 8. This is a second coherent partial: native authentication, a combined login/register page, verified first-HTML account chrome and the authorized live transport. The three remaining workstreams below are not relabeled as complete. No new dependency, config flag, bundler switch, default credential, third script or backend infrastructure was added.
@@ -948,3 +950,103 @@ The SHA256-verified Node 24.21.0/npm 11.19.0 toolchain was restored; strict npm 
 Initial static checks found a nullable captured release function and two prefer-const timer declarations; these were fixed without non-null assertions or lint suppression. The first default compile timed out while using an unnecessary client-plugin barrel; the lingering build process was stopped. After removing that unused import, the **unchanged default Turbopack build succeeded**, followed by another successful build. No alternative bundler/configuration/experimental flag was applied. The generated route report marks all HTML pages dynamic via the server Viewer request barrier; metadata assets stay static. That is not a claim that public content now comes from DB.
 
 Final permitted checks after the implementation/documentation update passed: tsc --noEmit, ESLint, default Next 16.3.8 Turbopack build (generation stage 22/22), npm audit (zero vulnerabilities), source inventory (32 client directives) and git diff --check. No database, auth HTTP request, SSE handler, event bus, manual script, browser, test suite, SEO or performance tool was executed for verification. No environment secret was generated/printed; .env.local remains ignored. Review README, this section, the /login implementation, native API routes and server/live.ts. Continue within the three remaining Phase 7 workstreams only.
+
+
+## Phase 7 — Typed operations and repository writes (Part 3)
+
+### Scope and verified sources
+
+This continuation stays in Phase 7. It implements the two pending operation/write workstreams; request-time public content/metadata/sitemap remain pending. No Phase 8 page/contact wiring, Phase 9/10 editor, new runtime package, third executable script, database collection, transaction infrastructure or application config flag was added. The default build did not complete in this constrained environment; the diagnostic Webpack success is separately recorded and is not used to silently mark default-build verification complete.
+
+- Native updateUser and changePassword own the account/password mutation. Client HTTP calls preserve Better Auth's HTTP rate limiting/cookie behavior; revokeOtherSessions remains enforced by the server hook. Additional phone is sent as a validated object through the standard SDK; no unused client-plugin barrel or server import is introduced. Tokens are not returned to UI form state — https://www.better-auth.com/docs/concepts/users-accounts ; https://www.better-auth.com/docs/concepts/typescript
+- The existing native before-hook now includes structured fieldErrors in APIError; local and server validation share the schema. The installed official @better-auth/core 1.7.7 error codes confirm INVALID_PASSWORD, mapped to currentPassword rather than printing a raw exception — https://www.better-auth.com/docs/concepts/hooks ; installed @better-auth/core/dist/error/codes.mjs
+- Zod safe parsing and flattenError shape the typed top-level field map; nested editor errors belong to the record group. English default library messages and submitted values are not echoed to UI. Optional current/native schema fields remain stripped/validated rather than mass-assigned — https://zod.dev/error-formatting ; https://zod.dev/api#safeextend
+- Dedicated use-server modules export only async Server Functions. Inputs are untrusted, the DAL rechecks authorization/validation, and returns only UI-required receipts. Default Next Origin/Host protection and 1MB body limit are unchanged; unused actions without consumers may be eliminated and are not claimed as active endpoints — https://nextjs.org/docs/app/api-reference/directives/use-server ; https://nextjs.org/docs/app/guides/server-actions ; https://nextjs.org/docs/app/guides/data-security
+- Single-document atomic writes use _id plus expected revision, with $set and $inc. No stale-edit upsert, transaction on standalone Mongo, application retry loop or read-then-unconditional overwrite — https://www.mongodb.com/docs/manual/core/write-operations-atomicity/ ; https://www.mongodb.com/docs/drivers/node/current/crud/update/modify/
+- Typed insertOne and deleteOne use acknowledgment/matched/deleted checks; new ObjectIds are generated by the official driver constructor, not supplied by the caller for new records. Deletes filter the expected revision, and write errors are returned as bounded Persian outcomes — https://www.mongodb.com/docs/drivers/node/current/crud/insert/ ; https://www.mongodb.com/docs/drivers/node/current/crud/delete/
+- A unique multikey index prohibits a minute key from occurring in two different reserved appointment documents; repeated keys within one document are not a substitute for deriving a correct interval. The array is generated from minute-aligned server times, not accepted from browser input — https://www.mongodb.com/docs/manual/core/indexes/index-types/index-multikey/
+- Partial uniqueness applies only to isReserved:true. Changing status/reservation/interval keys within one document atomically releases or replaces its coverage. The requested date+slot uniqueness is retained as a separate constraint — https://www.mongodb.com/docs/manual/core/index-partial/ ; https://www.mongodb.com/docs/manual/core/write-operations-atomicity/
+- Intl formatToParts with explicit Asia/Tehran, gregory/latn and h23 converts storage keys with a round-trip check. No fixed Tehran offset, host-local timezone arithmetic or extra date dependency. Visible presentation remains the existing fa-IR/Persian formatter — https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatToParts
+- notifyChange centralizes post-acknowledgment bus publishing and root-layout invalidation. Each signal is best effort; its failure cannot change a confirmed mutation into a false failed-save response. The existing source for revalidatePath/refresh still applies — https://nextjs.org/docs/app/api-reference/functions/revalidatePath
+- Build diagnostics use the documented stable Next --webpack CLI, not an experimental flag or custom bundler package. npm passes it with a double dash; default scripts/config remain untouched — https://nextjs.org/docs/app/api-reference/cli/next
+- The official memory guide was reviewed. No experimental memory option, disabled TypeScript check, inspector, heap profile, analyzer or browser tool was used. A one-command V8 heap cap did not resolve the stalled default compile and was not persisted — https://nextjs.org/docs/app/guides/memory-usage
+
+### Operation contracts and authorization
+
+lib/result.ts defines Result<Value, Field>, safe Failure, minimal Receipt and public Slot. Validation results have a schema-derived key union; nested content fields flatten to record. Access failures remain distinct from stale-version conflicts, occupied slots, limits and unavailable/uncertain results. Unknown database/network errors contain no raw driver exception, URI, submitted text, token or stack. Unavailable does not prove a write was rolled back: the UI must re-read before offering a retry. There is no automatic resubmission. requireWrite rejects unacknowledged write results before notifications or a success receipt; failed expected-revision filters cannot claim a save.
+
+lib/account.ts provides createAccount, loginAccount, logoutAccount, updateProfile and changePassword through the same-origin native SDK. The existing login form and account links now consume typed results; server field errors populate the existing reserved error slots. Login/signup still confirm the native session before success; profile/password wrappers discard native returned session/token data. These are native HTTP operations rather than server actions that would bypass native HTTP rate limits. Better Auth retains its own profile concurrency semantics; no fictional auth revision column was invented. Account editing UI is explicitly Phase 8.
+
+server/actions contains only content, appointments and messages action boundaries. Each delegates to a collection-specific repository with its own guard and schema recheck. There is no generic CRUD repository, component query, caller-selected role, caller-selected booking owner, raw Mongo document return, storage of credentials outside Better Auth or new account/admin page. Default action origin/body protections are not relaxed. Booking/contact/editor actions have no UI consumers yet; existing Contact remains local-only validation, so its disclosure remains accurate.
+
+| Collection | Write/read boundary delivered |
+| --- | --- |
+| articles | Admin create/edit/delete; unique slug precondition, normalized search, reviewed/attributed publication, first actual publication timestamp and revision-filtered writes |
+| courses | Separate typed admin create/edit/delete repository with the same publication/slug safeguards, not a generic content collection |
+| testimonials | Admin create/edit/delete/moderation; approved requires real/non-sample/consented record, and a generated portrait cannot be presented as that real person's photo |
+| messages | Public validated creation with a shared single-process rate budget; admin-only versioned status changes; no public inbox read or unrequested deletion policy |
+| settings | Admin versioned update of the manual-seeded singleton, no upsert or reset; enabling booking requires the booking indexes |
+| appointments | Verified-user creation/own future cancellation; admin-only confirmation/cancellation/completion/rescheduling; minute coverage, revision guards and bounded real alternatives |
+| users / native auth | Client repository remains a guarded business projection; self name/phone/password updates go through native Auth, never handcrafted credential writes |
+
+Publishing is after a confirmed write. Content drafts send only an admin event; a publish/unpublish/published edit/delete signals the public content collection rather than exposing a private draft ID. Appointment public events contain only a validated day key, while owner/admin notices carry appointment ID. Inbox notifications are admin-only. Root invalidation covers old/new slugs and the future sitemap without interpolating untrusted routes. Notification/cache exceptions do not erase or falsify a committed result.
+
+### Booking consistency and operational limits
+
+The input accepts only service/date/slot/scheduleRevision; userId comes from the verified native session, and status/startsAt/endsAt/minutes are server-derived. Slots use only validated configured hours/duration in a bounded 32-calendar-day rolling window, excluding started slots and overlapping occupied intervals. Day numbers use Sunday=0 through Saturday=6; future Persian week UI must map to this storage convention. No hours, price, payment, clinical retention, email delivery or cancellation fee was invented. Slot output is ISO/public time data, not an appointment identity or status.
+
+A reservation's minutes array is the half-open UTC minute interval from start inclusive to end exclusive. It is bounded to 15–180 entries and does not use a second collection. A unique partial minutes index therefore protects different start times/durations that overlap, not merely identical date+slot keys. Cancellation changes status and isReserved in one revision-filtered update. Rescheduling replaces start/end/date/slot/minutes in one update, so a duplicate-key rejection preserves the previous interval by Mongo's single-document contract. Concurrent changes to the same appointment fail the revision filter. This is implementation grounded in the documented database contract, not a tested concurrency claim.
+
+The existing manual setup-indexes script now preflights reserved records for matching Tehran date/slot and canonical minute coverage before DDL. Missing/legacy/inconsistent minute arrays cause a failure, not a silent migration/drop/backfill. Existing real data must be independently reconciled by the owner after backup. Fresh seed creates no appointments. Runtime requireIndexes only inspects definitions and fails closed on missing slot/minute or slug prerequisites; it never creates indexes and does not globally cache an assumption about them. Running neither script here remains an absolute constraint.
+
+A request validates the selected schedule revision and stores it with the appointment. Settings changes do not automatically move existing appointments. Because standalone Mongo does not provide a cross-document transaction here, an already-in-flight reservation may finish with the earlier settings snapshot; disabling booking is not claimed as a global serializable barrier for requests already accepted. The independent unique minute constraint still protects overlap. There is no unsupported lease/fencing scheme or hidden replica-set requirement.
+
+Up to three nearest future alternatives are re-read after a duplicate-key conflict, sorted by absolute time distance within the current rolling window. They are offers, not holds; submission must validate again. A failed suggestion read preserves a known occupied-slot error. Unknown write outcomes instead return unavailable and ask for a fresh state check. Admin rescheduling can exclude only its already-authorized current document from availability; the public reader has no caller-controlled exclusion ID.
+
+Users cancel only their own future pending/confirmed record. Admin transitions are pending to confirmed/cancelled, confirmed to cancelled/completed, with completion only after the interval ends; terminal states are not reopened. These are technical backend rules, not an owner-approved financial cancellation policy. The source contains no invented cancellation charge/deadline; owner decisions remain required before Phase 8's real public acceptance.
+
+The shared single-node limiter bounds active buckets to 512, with one-minute expiry; public messages share ten requests/minute, authenticated creation ten/user/minute and own cancellation twenty/user/minute. It does not trust arbitrary forwarding headers, impersonate a reliable per-IP limiter, survive process restart or coordinate multiple workers. Auth keeps its existing separate native DB-backed rate limiter. No distributed-abuse-proof claim is made.
+
+### SEO, zero-flicker and naming
+
+No new page/layout/loading, CSS, photo, font, mounted guard or client directive was introduced. The register remains 32 entries. Existing forms use deterministic defaults/useId and reserved feedback; failed operations do not reset inputs. The existing live subscriber defers refresh while editing/submitting. Optimistic UI state/rollback and admin/client screens still belong to their ordered page phases; this partial delivers the receipt/revision/error contracts for them, not a fabricated visual verification.
+
+**SEO checklist: not met for complete Phase 7.** Public reads, metadata and sitemap remain fixture-based/unimplemented as previously listed. **Zero-flicker check: not met for complete Phase 7.** The current auth code preserves the earlier strategy, but public database presentation and its loading/error/empty contracts remain pending. No browser, visual, accessibility, SEO or performance tool was run.
+
+Names remain short/domain-specific, components retain one export/file, and Next server-action modules contain only async functions. New server files stay within two folder levels; exactly two scripts remain. All added authored booleans use is/has/can, handlers use handle, code/comments are English and user-facing outcomes Persian. No barrel, ORM, any, non-null assertion, lint suppression, extra package or collection was added. No unmet naming rule was identified by source review/type/lint; this is not an automated all-project naming-certification claim.
+
+### Current Phase 7 acceptance
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Ordered coherent partial; no Phase 8 or database execution | Met |
+| 2 | Exact compatible pins / limited prior support exceptions | Met under existing ESLint 9 exception; no pin changed |
+| 3 | Lazy hot-reload-safe native Mongo foundation | Met by code; no connection |
+| 4 | Shared models/schemas/role-status-topic/result constants | Met for delivered boundaries |
+| 5 | Seven typed read repos/projections/guards and bounded access | Met by code; no query execution |
+| 6 | Native Better Auth account/cookie/password/role/rate setup | Met by code; not exercised |
+| 7 | Native verified-session/role checks near private access | Met by code; no session exercise |
+| 8 | Manual unique/auth/expiry indexes, now overlap minute constraint | Met as source; script never executed |
+| 9 | Manual draft-only idempotent seed/native import graph | Met as source; unchanged and unexecuted |
+| 10 | Naming/depth/no-any, 32-entry client register and docs | Met; no unmet naming rule identified |
+| 11 | Type/lint/audit plus agreed default DB-independent build verification | **Not met in full: type/lint/audit and diagnostic stable Webpack build pass; default Turbopack compile did not finish** |
+| 12 | Native Auth routes, combined form, SEO and resolved-state fallback | Met by source; native form behavior not exercised |
+| 13 | First-HTML verified account/count and native logout | Met by source; no DB/session exercise |
+| 14 | Typed account/profile/password results and shared field validation | Met by source; account editing UI remains Phase 8 |
+| 15 | Business writes/actions, optimistic revisions, publish/invalidate | Met as backend contracts; no live mutation/concurrency exercise |
+| 16 | Authorized native SSE/bus and visibility-aware refresh leaf | Met by source; publisher wiring extended, never executed |
+| 17 | Request-time published DB content/metadata/sitemap | **Not met; next Phase 7 implementation boundary** |
+
+**Checklist: 15 of 17 met.** Two implementation workstreams advanced, but default-build verification is now explicitly incomplete rather than borrowing Part 2's successful result. The only unmet workstreams are 11 and 17. No Phase 8 work follows automatically.
+
+**Deviations needing approval:** the smallest proposal is temporary use of the official stable `npm run build -- --webpack` for subsequent build verification in this constrained workspace. Diagnostic executions succeeded, but acceptance of that temporary alternative is requested rather than changing the project's default command. No permanent bundler switch, new configuration, dependency, experimental optimization or ignored type check was applied. Prior ESLint 9 development-only approval remains unchanged.
+
+### Allowed verification and limitations
+
+SHA256-verified Node 24.21.0/npm 11.19.0 were restored. Strict npm ci with strict engines/peers and ignored scripts installed 747 packages, audited 748 and reported zero vulnerabilities. The known ESLint EOL warning and npm's optional update notice did not trigger unapproved package/toolchain changes. package.json, package-lock.json and next.config.ts remain unchanged.
+
+Static checks caught one ZodError union-inference error in the native hook; an explicit unknown error type at the serialized HTTP error boundary fixed it without any/non-null assertions. Repeated tsc --noEmit and ESLint checks then passed. The default Turbopack build stalled at compilation, including a diagnostic attempt with a temporary 768MB V8 old-space cap. Around 1953MB used out of 1984MB total system memory was observed, but no heap profile or definitive root-cause diagnosis was produced. Timed-out next-build processes were stopped; no app server was started.
+
+The documented stable `npm run build -- --webpack` subsequently completed twice with generation 22/22, followed by a successful final run of tsc --noEmit, ESLint, the same Webpack build (22/22), npm audit (zero vulnerabilities) and git diff --check. That validates this alternative compiler/build path, not the default Turbopack path, DB connectivity or mutation behavior. All HTML routes remain request-time because of the existing Viewer connection barrier; static metadata assets remain static. No public fixture was silently connected to Mongo during build.
+
+No DB, ping, seed/index script, API/Server Action, bus, browser, test suite, profiler or SEO/Core Web Vitals tool was executed. No secret was generated/printed, no default admin was created, and .env.local remains ignored. Review README, shared results/account operations, the action/repository files and the manual index diff. Continue only within the remaining Phase 7 work after the limited build decision.

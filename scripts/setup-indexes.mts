@@ -1,9 +1,17 @@
-import { collections } from "../src/lib/constants.ts";
+import { buildMinutes, getInstant } from "../src/lib/slots.ts";
+import type { Appointment } from "../src/server/models.ts";
+import { collections, indexes } from "../src/lib/constants.ts";
 import { getDb, closeDb } from "../src/server/db.ts";
 
 // MANUAL ONLY. Do not import from the app, build hooks or seed script.
 try {
   const db = getDb();
+  // Refuse legacy/inconsistent reservations; never silently migrate or delete them.
+  const reservations = db.collection<Appointment>(collections.appointments).find({ isReserved: true });
+  for await (const entry of reservations) {
+    const minutes = buildMinutes(entry.startsAt, entry.endsAt);
+    if (getInstant(entry.date, entry.slot).getTime() !== entry.startsAt.getTime() || !Array.isArray(entry.minutes) || minutes.length !== entry.minutes.length || minutes.some((minute, index) => minute !== entry.minutes[index])) throw new Error("Reserved appointments require consistent minute keys before index setup.");
+  }
   await db.collection(collections.users).createIndex({ email: 1 }, { name: "users_email_uidx", unique: true });
   await db.collection(collections.users).createIndex({ role: 1, createdAt: -1, _id: -1 }, { name: "clients_created" });
   await db.collection(collections.sessions).createIndex({ token: 1 }, { name: "sessions_token_uidx", unique: true });
@@ -15,7 +23,8 @@ try {
   await db.collection(collections.verification).createIndex({ expiresAt: 1 }, { name: "verification_expiry", expireAfterSeconds: 0 });
   // Better Auth lastRequest is a number, not a BSON Date: do not attach TTL.
   await db.collection(collections.rateLimit).createIndex({ key: 1 }, { name: "rateLimit_key_uidx", unique: true });
-  await db.collection(collections.appointments).createIndex({ date: 1, slot: 1 }, { name: "appointment_slot", unique: true, partialFilterExpression: { isReserved: true } });
+  await db.collection(collections.appointments).createIndex({ date: 1, slot: 1 }, { name: indexes.slot, unique: true, partialFilterExpression: { isReserved: true } });
+  await db.collection(collections.appointments).createIndex({ minutes: 1 }, { name: indexes.minutes, unique: true, partialFilterExpression: { isReserved: true } });
   await db.collection(collections.appointments).createIndex({ userId: 1, startsAt: -1, _id: -1 }, { name: "appointment_user" });
   await db.collection(collections.appointments).createIndex({ date: 1, startsAt: 1, _id: 1 }, { name: "appointment_calendar" });
   for (const name of [collections.articles, collections.courses]) {

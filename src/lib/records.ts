@@ -51,7 +51,7 @@ export const testimonialSchema = z.object({
   name: z.string().trim().min(1).max(60), quote: z.string().trim().min(20).max(1000),
   image: z.enum(imageKeys).nullable(), hasConsent: z.boolean(), isSample: z.boolean(),
   status: z.enum(reviewStates),
-}).refine((value) => value.status !== reviewStates.approved || (value.hasConsent && !value.isSample), { path: ["status"], error: "فقط نظر واقعی با رضایت انتشار قابل تأیید است." });
+}).refine((value) => value.status !== reviewStates.approved || (value.hasConsent && !value.isSample), { path: ["status"], error: "فقط نظر واقعی با رضایت انتشار قابل تأیید است." }).refine((value) => value.status !== reviewStates.approved || value.image === null || !images[value.image].isSample, { path: ["image"], error: "عکس نمونه را به نظر واقعی نسبت ندهید؛ فعلاً بدون عکس منتشر کنید." });
 
 const hoursSchema = z.object({
   day: z.number().int().min(0).max(6),

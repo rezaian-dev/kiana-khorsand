@@ -3,10 +3,10 @@ import { betterAuth } from "better-auth/minimal";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { z } from "zod";
 import { APIError, createAuthMiddleware } from "better-auth/api";
-import { revalidatePath } from "next/cache";
+import { getFields } from "../lib/result";
+import { notifyChange } from "./changes";
 import { signInSchema, signUpSchema, profileSchema, passwordChangeSchema } from "../lib/auth";
-import { authPaths, collections, liveTopics, roles, routes } from "../lib/constants.ts";
-import { publishChange } from "./live";
+import { authPaths, collections, liveTopics, roles } from "../lib/constants.ts";
 import { getEnv } from "../lib/env.ts";
 import { phoneSchema } from "../lib/records.ts";
 import { getDb } from "./db.ts";
@@ -50,7 +50,7 @@ function createAuth() {
         const schema = ctx.path === authPaths.signIn ? signInSchema : ctx.path === authPaths.signUp ? signUpSchema : ctx.path === authPaths.profile ? profileSchema : ctx.path === authPaths.password ? passwordChangeSchema : null;
         if (!schema) return;
         const parsed = schema.safeParse(ctx.body);
-        if (!parsed.success) throw new APIError("BAD_REQUEST", { code: "INVALID_FIELDS", message: "اطلاعات واردشده معتبر نیست." });
+        if (!parsed.success) throw new APIError("BAD_REQUEST", { code: "INVALID_FIELDS", message: "اطلاعات واردشده معتبر نیست.", fieldErrors: getFields<unknown>(parsed.error) });
         return { context: { ...ctx, body: { ...parsed.data, ...(ctx.path === authPaths.password ? { revokeOtherSessions: true } : {}) } } };
       }),
       after: createAuthMiddleware(async (ctx) => {
@@ -58,13 +58,8 @@ function createAuth() {
         if (![authPaths.signIn, authPaths.signUp, authPaths.profile, authPaths.password, authPaths.signOut].some((path) => path === ctx.path)) return;
         const userId = ctx.context.newSession?.user.id ?? ctx.context.session?.user.id;
         if (!userId) return;
-        // A successful native mutation must not be reported as failed if a
-        // best-effort UI invalidation fails after the database committed.
-        try {
-          publishChange({ topic: liveTopics.account, id: userId, audience: `user:${userId}` });
-          if (ctx.path === authPaths.signUp || ctx.path === authPaths.profile) publishChange({ topic: liveTopics.admin, id: userId, audience: "admin" });
-          revalidatePath(routes.home, "layout");
-        } catch { /* Reconnect refresh is the recovery path; no sensitive logs. */ }
+        notifyChange({ topic: liveTopics.account, id: userId, audience: `user:${userId}` });
+        if (ctx.path === authPaths.signUp || ctx.path === authPaths.profile) notifyChange({ topic: liveTopics.admin, id: userId, audience: "admin" });
       }),
     },
     emailAndPassword: { enabled: true, minPasswordLength: 8, maxPasswordLength: 128 },
