@@ -53,15 +53,6 @@ export async function getAppointment(id: unknown) {
   });
 }
 
-export async function listSchedule(input: unknown) {
-  await requireAdmin();
-  const range = rangeSchema.parse(input);
-  const entries = await getDb().collection<Appointment>(collections.appointments).find({ date: { $gte: range.from, $lte: range.to } })
-    .sort({ startsAt: 1, _id: 1 }).limit(4001).toArray();
-  if (entries.length > 4000) throw new Error("بازهٔ انتخابی بیش از حد بزرگ است؛ بازه را کوتاه‌تر کنید.");
-  return entries;
-}
-
 async function readOccupied(range: z.infer<typeof rangeSchema>, excludedId?: ObjectId) {
   const entries = await getDb().collection<Appointment>(collections.appointments).find({
     date: { $gte: range.from, $lte: range.to }, isReserved: true, ...(excludedId ? { _id: { $ne: excludedId } } : {}),
@@ -74,18 +65,12 @@ async function readOccupied(range: z.infer<typeof rangeSchema>, excludedId?: Obj
   return entries;
 }
 
-export async function listOccupied(input: unknown) {
-  // Public projection: only occupied time intervals, never identity/status/IDs.
-  return readOccupied(rangeSchema.parse(input));
-}
-
 export async function countAppointments() {
   const session = await requireSession();
   return getDb().collection<Appointment>(collections.appointments).countDocuments({
     userId: session.user.id, status: { $in: [appointmentStates.pending, appointmentStates.confirmed] }, startsAt: { $gte: new Date() },
   });
 }
-
 
 const scheduleSchema = z.object({ isBookingEnabled: z.boolean(), slotMinutes: settingsSchema.shape.slotMinutes, hours: settingsSchema.shape.hours, revision: z.number().int().nonnegative() });
 

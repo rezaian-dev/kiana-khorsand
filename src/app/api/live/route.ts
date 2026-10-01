@@ -56,8 +56,8 @@ export async function GET(request: Request) {
         try {
           const current = await readSession();
           if (current?.user.id === userId && current.user.role === role) return true;
-          sendEvent("event: reset\ndata: {}\n\n");
         } catch { /* Never retain private access on an unverifiable session. */ }
+        sendEvent("event: reset\ndata: {}\n\n");
         closeStream(); return false;
       }
       unsubscribe = subscribeChanges((notice) => {

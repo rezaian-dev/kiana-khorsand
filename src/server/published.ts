@@ -28,7 +28,7 @@ function mapArticle(input: unknown): Article {
   const dates = datesSchema.parse(input);
   return {
     slug: value.slug, title: value.title, description: value.description, category: value.category, author: value.author,
-    image: images[value.image], introduction: value.introduction, sections: value.sections, takeaway: value.takeaway, sources: value.sources,
+    image: images[value.image], social: images[value.social], introduction: value.introduction, sections: value.sections, takeaway: value.takeaway, sources: value.sources,
     publishedAt: dates.publishedAt.toISOString(), updatedAt: dates.updatedAt.toISOString(),
   };
 }

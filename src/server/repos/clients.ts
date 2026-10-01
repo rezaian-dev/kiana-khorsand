@@ -22,11 +22,6 @@ export async function listClients(input: unknown = {}) {
   }, { projection }).sort({ createdAt: -1, _id: -1 }).skip((query.page - 1) * query.size).limit(query.size).toArray();
 }
 
-export async function getClient(id: unknown) {
-  await requireAdmin();
-  return getDb().collection<Client>(collections.users).findOne({ _id: new ObjectId(idSchema.parse(id)), role: roles.client }, { projection });
-}
-
 export async function summarizeClients(input: unknown) {
   await requireAdmin();
   const period = periodSchema.parse(input);

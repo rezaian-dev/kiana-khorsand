@@ -25,6 +25,7 @@ export function LiveRefresh({ isEnabled, viewer, isVisible = false }: Props) {
     let hasReset = false;
     let isDisposed = false;
     let hasFailed = false;
+    let isChecking = false;
     function refreshPage() {
       if (!hasChanges || document.hidden || isDisposed) return;
       if (!hasReset && (document.activeElement?.matches("input,textarea,select,[contenteditable=true]") || document.querySelector('form[aria-busy="true"],[data-live-pause="true"]'))) {
@@ -40,6 +41,25 @@ export function LiveRefresh({ isEnabled, viewer, isVisible = false }: Props) {
       if (timer) clearTimeout(timer);
       timer = setTimeout(refreshPage, 400);
     }
+    async function refreshSession(canRefresh = true) {
+      if (!userId) { if (canRefresh) queueRefresh(); return; }
+      if (isChecking) return;
+      isChecking = true;
+      try {
+        // Native HTTP renews cookies. EventSource errors do not expose HTTP status,
+        // so a rejected reconnect must also recheck identity and role.
+        const response = await authClient.getSession();
+        if (isDisposed) return;
+        if (response.error) { if (canRefresh) queueRefresh(true); return; }
+        const current = response.data?.user;
+        const hasChanged = !current || current.id !== userId || !("role" in current) || current.role !== role;
+        if (hasChanged || canRefresh) queueRefresh(hasChanged);
+      } catch {
+        // Ask the guarded server page to resolve uncertainty once per outage;
+        // do not interpret a transport failure as a confirmed sign-out.
+        if (!isDisposed && canRefresh) queueRefresh(true);
+      } finally { isChecking = false; }
+    }
     function openStream() {
       if (document.hidden || isDisposed || source) return;
       if (reconnect) clearTimeout(reconnect);
@@ -50,9 +70,7 @@ export function LiveRefresh({ isEnabled, viewer, isVisible = false }: Props) {
         if (source !== stream || isDisposed || document.hidden) return;
         hasFailed = false;
         updateStatus("به‌روزرسانی خودکار متصل است.", true);
-        // Refresh native session cookies through the real HTTP endpoint, not RSC.
-        if (userId) void authClient.getSession().then((response) => { if (!isDisposed) queueRefresh(response.data?.user.id !== userId); }).catch(() => { if (!isDisposed) queueRefresh(); });
-        else queueRefresh();
+        void refreshSession();
       };
       stream.addEventListener("change", (event: MessageEvent<string>) => {
         if (source !== stream || isDisposed || document.hidden) return;
@@ -69,7 +87,7 @@ export function LiveRefresh({ isEnabled, viewer, isVisible = false }: Props) {
         if (source !== stream || isDisposed || document.hidden) return;
         stream.close(); source = null;
         updateStatus("اتصال به‌روزرسانی موقتاً قطع است؛ اطلاعات ممکن است قدیمی باشند.");
-        if (!hasFailed) queueRefresh();
+        void refreshSession(!hasFailed);
         hasFailed = true;
         if (!document.hidden && !isDisposed) reconnect = setTimeout(openStream, 30_000);
       };

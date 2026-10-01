@@ -2,7 +2,7 @@ import "server-only";
 import { contentSchema, contentOrders } from "../../lib/publishing";
 import { idSchema } from "../../lib/records";
 import { MongoServerError, ObjectId } from "mongodb";
-import { courseEditSchema, changeSchema } from "../../lib/mutations";
+import { courseEditSchema } from "../../lib/mutations";
 import { liveTopics, resultCodes, topics } from "../../lib/constants";
 import { normalizeSearch } from "../../lib/catalog";
 import type { Receipt } from "../../lib/result";
@@ -11,7 +11,6 @@ import { requireIndexes } from "../indexes";
 import { notifyChange } from "../changes";
 import { collections, publicationStates } from "../../lib/constants.ts";
 import { catalogSchema } from "../../lib/catalog.ts";
-import { slugSchema } from "../../lib/records.ts";
 import { getDb } from "../db.ts";
 import { requireAdmin } from "../session.ts";
 import { buildFilter } from "../query.ts";
@@ -33,17 +32,6 @@ export async function listCourses(input: unknown) {
   const categories = await collection.distinct("category", getPublished());
   return { entries, count, pageCount, query: { ...query, page }, categories };
 }
-
-export async function getCourse(slug: unknown) {
-  return getDb().collection<Course>(collections.courses).findOne({ slug: slugSchema.parse(slug), ...getPublished() });
-}
-
-export async function listContent(input: unknown) {
-  await requireAdmin();
-  const query = catalogSchema.parse(input);
-  return getDb().collection<Course>(collections.courses).find(buildFilter(query)).sort({ updatedAt: -1, _id: -1 }).skip((query.page - 1) * 12).limit(12).toArray();
-}
-
 
 export async function saveCourse(input: unknown) {
   await requireAdmin();
@@ -73,21 +61,6 @@ export async function saveCourse(input: unknown) {
   if (previous?.status === publicationStates.published || change.record.status === publicationStates.published) notifyChange({ topic: liveTopics.content, id: collections.courses, audience: "public" });
   return { id: id.toHexString(), revision: change.id ? change.revision + 1 : 0 } satisfies Receipt;
 }
-
-export async function deleteCourse(input: unknown) {
-  await requireAdmin();
-  const change = changeSchema.parse(input);
-  const collection = getDb().collection<Course>(collections.courses);
-  const previous = await collection.findOne({ _id: new ObjectId(change.id), revision: change.revision });
-  if (!previous) throw new MutationError(resultCodes.conflict, "این رکورد تغییر کرده یا قبلاً حذف شده است؛ فهرست را تازه کنید.");
-  const deleted = await collection.deleteOne({ _id: new ObjectId(change.id), revision: change.revision });
-  requireWrite(deleted);
-  if (!deleted.deletedCount) throw new MutationError(resultCodes.conflict, "این نوشته تغییر کرده یا قبلاً حذف شده است؛ فهرست را تازه کنید.");
-  notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
-  if (previous.status === publicationStates.published) notifyChange({ topic: liveTopics.content, id: collections.courses, audience: "public" });
-  return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
-}
-
 
 export async function browseContent(input: unknown) {
   await requireAdmin();

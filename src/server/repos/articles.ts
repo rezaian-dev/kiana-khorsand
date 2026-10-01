@@ -2,7 +2,7 @@ import "server-only";
 import { contentSchema, contentOrders } from "../../lib/publishing";
 import { idSchema } from "../../lib/records";
 import { MongoServerError, ObjectId } from "mongodb";
-import { articleEditSchema, changeSchema } from "../../lib/mutations";
+import { articleEditSchema } from "../../lib/mutations";
 import { liveTopics, resultCodes, topics } from "../../lib/constants";
 import { normalizeSearch } from "../../lib/catalog";
 import type { Receipt } from "../../lib/result";
@@ -53,13 +53,6 @@ export async function listLinks() {
   return entries;
 }
 
-export async function listContent(input: unknown) {
-  await requireAdmin();
-  const query = catalogSchema.parse(input);
-  return getDb().collection<Article>(collections.articles).find(buildFilter(query)).sort({ updatedAt: -1, _id: -1 }).skip((query.page - 1) * 12).limit(12).toArray();
-}
-
-
 export async function saveArticle(input: unknown) {
   await requireAdmin();
   const change = articleEditSchema.parse(input);
@@ -88,21 +81,6 @@ export async function saveArticle(input: unknown) {
   if (previous?.status === publicationStates.published || change.record.status === publicationStates.published) notifyChange({ topic: liveTopics.content, id: collections.articles, audience: "public" });
   return { id: id.toHexString(), revision: change.id ? change.revision + 1 : 0 } satisfies Receipt;
 }
-
-export async function deleteArticle(input: unknown) {
-  await requireAdmin();
-  const change = changeSchema.parse(input);
-  const collection = getDb().collection<Article>(collections.articles);
-  const previous = await collection.findOne({ _id: new ObjectId(change.id), revision: change.revision });
-  if (!previous) throw new MutationError(resultCodes.conflict, "این رکورد تغییر کرده یا قبلاً حذف شده است؛ فهرست را تازه کنید.");
-  const deleted = await collection.deleteOne({ _id: new ObjectId(change.id), revision: change.revision });
-  requireWrite(deleted);
-  if (!deleted.deletedCount) throw new MutationError(resultCodes.conflict, "این نوشته تغییر کرده یا قبلاً حذف شده است؛ فهرست را تازه کنید.");
-  notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
-  if (previous.status === publicationStates.published) notifyChange({ topic: liveTopics.content, id: collections.articles, audience: "public" });
-  return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
-}
-
 
 export async function browseContent(input: unknown) {
   await requireAdmin();

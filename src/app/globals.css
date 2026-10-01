@@ -869,18 +869,13 @@
 .carousel-viewport { overflow: hidden; padding-block: 0.75rem 1rem; }
 .carousel-track { display: flex; margin-inline-start: -1rem; touch-action: pan-y pinch-zoom; }
 .carousel-slide { min-inline-size: 0; flex: 0 0 86%; padding-inline-start: 1rem; }
-.card-lift, .sample-card { block-size: 100%; }
-.sample-card { background: var(--card); border: 1px solid var(--border); border-radius: 1.5rem; overflow: hidden; box-shadow: var(--elevation-soft); }
-.sample-body { padding: 1.25rem; min-block-size: 14rem; }
-.sample-body h3 { margin-block: 0.7rem 0.5rem; font-size: 1.25rem; font-weight: 750; }
-.sample-body p { color: var(--muted-foreground); }
+.card-lift { block-size: 100%; }
 .carousel-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; margin-block-start: 0.75rem; min-block-size: 2.75rem; }
 .control-group, .carousel-dots { display: flex; gap: 0.4rem; align-items: center; }
 .carousel-dots { gap: 0; }
 .carousel-dots button { display: grid; place-items: center; inline-size: 2.75rem; block-size: 2.75rem; border-radius: 50%; }
 .carousel-dots span { inline-size: 0.5rem; block-size: 0.5rem; border-radius: 50%; background: var(--input); }
 .carousel-dots [aria-current="true"] span { inline-size: 1.4rem; border-radius: 1rem; background: var(--primary); }
-.skeleton-photo { aspect-ratio: 4 / 3; border-radius: 0; }
 .toaster { font-family: var(--font-vazirmatn), Arial, sans-serif !important; }
 .brand-toast { font-size: 1rem !important; line-height: 1.8 !important; box-shadow: var(--elevation-float) !important; }
 .brand-toast, .brand-toast * { transition: none !important; animation: none !important; }
@@ -952,17 +947,12 @@
   @keyframes soft-reveal { from { transform: translateY(16px); } to { transform: translateY(0); } }
   .scroll-reveal { animation: soft-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
 }
-.sample-body { block-size: 20rem; min-block-size: 20rem; }
-.sample-body h3, .sample-body p { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
-.sample-body h3 { -webkit-line-clamp: 2; }
-.sample-body p { -webkit-line-clamp: 3; }
 .command-search { display: flex; align-items: center; gap: 0.75rem; min-block-size: 3rem; margin: 0.5rem; padding-inline: 0.75rem; border: 1px solid var(--input); border-radius: 0.75rem; background: var(--card); }
 .command-search:focus-within { box-shadow: var(--focus-shadow); }
 .command-search > svg { inline-size: 1.2rem; block-size: 1.2rem; flex-shrink: 0; color: var(--muted-foreground); }
 .command-field { inline-size: 100%; min-inline-size: 0; min-block-size: 2.75rem; background: transparent; outline: none; }
 .command-field::placeholder { color: var(--muted-foreground); }
 .load-status { position: fixed; z-index: 70; inset-block-end: 1rem; inset-inline-start: 1rem; margin-inline-end: 1rem; padding: 0.75rem 1rem; color: var(--foreground); background: var(--card); border: 1px solid var(--input); border-radius: 1rem; box-shadow: var(--elevation-float); }
-@media (min-width: 40rem) { .sample-body { block-size: 17rem; min-block-size: 17rem; } }
 .count-badge { inline-size: 2.25rem; flex-shrink: 0; }
 @media (prefers-reduced-motion: reduce) { .photo img { opacity: 1 !important; } .card-lift { transform: none !important; } }
 
@@ -998,7 +988,6 @@
 .chart-value { display: flex; align-items: center; gap: 0.5rem; }
 .chart-value strong { margin-inline-start: auto; font-variant-numeric: tabular-nums; }
 .chart-key { display: inline-block; inline-size: 0.75rem; block-size: 0.75rem; flex-shrink: 0; border-radius: 0.25rem; }
-.chart-legend, .chart-legend > span { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; }
 
 /* Home. All first-paint geometry is CSS-driven in both themes. */
 .home-page { overflow-wrap: anywhere; }

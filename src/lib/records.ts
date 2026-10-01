@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { images } from "../content/images.ts";
-import { appointmentStates, messageStates, publicationStates, reviewStates, serviceKeys, topics } from "./constants.ts";
+import { appointmentStates, publicationStates, reviewStates, serviceKeys, topics } from "./constants.ts";
 
 const imageKeys = Object.keys(images) as (keyof typeof images)[];
 const topicKeys = Object.keys(topics) as (keyof typeof topics)[];
@@ -69,7 +69,6 @@ export const settingsSchema = z.object({
   hours: z.array(hoursSchema).max(14).refine((hours) => hours.every((a, i) => hours.every((b, j) => i === j || a.day !== b.day || a.end <= b.start || b.end <= a.start)), "بازه‌های یک روز نباید هم‌پوشانی داشته باشند."),
 }).refine((value) => !value.isBookingEnabled || (value.slotMinutes !== null && value.hours.length > 0), { path: ["isBookingEnabled"], error: "مدت جلسه و ساعات تأییدشده را ابتدا تعیین کنید." });
 
-export const inboxSchema = z.object({ status: z.enum(messageStates).optional() });
 export const querySchema = z.object({
   q: z.string().trim().max(80).default(""), page: z.coerce.number().int().min(1).max(1000).default(1),
   size: z.coerce.number().int().min(1).max(50).default(12),

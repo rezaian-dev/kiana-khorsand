@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!article) notFound();
   const url = `${routes.articles}/${article.slug}`;
   const title = `${article.title} | دکتر کیانا خرسند`;
-  const social = { url: article.image.path, width: article.image.width, height: article.image.height, alt: article.image.alt };
+  const social = { url: article.social.path, width: article.social.width, height: article.social.height, alt: article.social.alt };
   return {
     title: article.title, description: article.description, authors: [{ name: article.author }],
     alternates: { canonical: url }, robots: { index: true, follow: true },

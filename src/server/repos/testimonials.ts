@@ -3,7 +3,7 @@ import { z } from "zod";
 import { queueSchema, queueOrders, moderationSchema } from "../../lib/queue";
 import { escapeSearch } from "../query";
 import { ObjectId } from "mongodb";
-import { changeSchema, reviewEditSchema } from "../../lib/mutations";
+import { reviewEditSchema } from "../../lib/mutations";
 import { liveTopics, resultCodes } from "../../lib/constants";
 import type { Receipt } from "../../lib/result";
 import { MutationError, requireWrite } from "../result";
@@ -25,14 +25,6 @@ export async function listTestimonials(input: unknown = {}) {
     .project<Pick<Testimonial, "_id" | "name" | "quote" | "image" | "publishedAt">>({ name: 1, quote: 1, image: 1, publishedAt: 1 }).toArray();
   return { entries, count, pageCount, page };
 }
-
-export async function listReviews(input: unknown = {}) {
-  await requireAdmin();
-  const query = querySchema.parse(input);
-  return getDb().collection<Testimonial>(collections.testimonials).find({}).sort({ updatedAt: -1, _id: -1 })
-    .skip((query.page - 1) * query.size).limit(query.size).toArray();
-}
-
 
 export async function saveReview(input: unknown) {
   await requireAdmin();
@@ -56,21 +48,6 @@ export async function saveReview(input: unknown) {
   if (previous?.status === reviewStates.approved || change.record.status === reviewStates.approved) notifyChange({ topic: liveTopics.content, id: collections.testimonials, audience: "public" });
   return { id: id.toHexString(), revision: change.id ? change.revision + 1 : 0 } satisfies Receipt;
 }
-
-export async function deleteReview(input: unknown) {
-  await requireAdmin();
-  const change = changeSchema.parse(input);
-  const collection = getDb().collection<Testimonial>(collections.testimonials);
-  const previous = await collection.findOne({ _id: new ObjectId(change.id), revision: change.revision });
-  if (!previous) throw new MutationError(resultCodes.conflict, "این رکورد تغییر کرده یا قبلاً حذف شده است؛ فهرست را تازه کنید.");
-  const deleted = await collection.deleteOne({ _id: new ObjectId(change.id), revision: change.revision });
-  requireWrite(deleted);
-  if (!deleted.deletedCount) throw new MutationError(resultCodes.conflict, "این روایت تغییر کرده یا قبلاً حذف شده است؛ فهرست را تازه کنید.");
-  notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
-  if (previous.status === reviewStates.approved) notifyChange({ topic: liveTopics.content, id: collections.testimonials, audience: "public" });
-  return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
-}
-
 
 export async function browseQueue(input: unknown) {
   await requireAdmin();
