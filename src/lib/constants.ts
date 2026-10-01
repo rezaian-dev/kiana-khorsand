@@ -28,7 +28,7 @@ export const routes = {
 
 export const roles = { client: "client", admin: "admin" } as const;
 
-export const themeColors = { light: "#faf8ff", dark: "#100c25" } as const;
+export const themeColors = { light: "#fffcf8", dark: "#100c25" } as const;
 
 export const topics = {
   start: "شروع مشاوره",

@@ -6,6 +6,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowUpLeft, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { requestLive } from "@/lib/live-client";
+import { DraftNotice } from "@/components/shared/draft-notice";
 import { Button } from "@/components/ui/button";
 import { credentialsSchema, signUpSchema, type Credentials } from "@/lib/auth";
 import { createAccount, loginAccount } from "@/lib/account";
@@ -18,7 +20,7 @@ export function AuthForm({ isRegister, isReady, returnTo }: Props) {
   const id = useId();
   const [message, setMessage] = useState("");
   const [hasSession, setHasSession] = useState(false);
-  const { control, handleSubmit, resetField, setError, formState: { errors, isSubmitting } } = useForm<Credentials>({ resolver: zodResolver(isRegister ? signUpSchema : credentialsSchema), defaultValues: { name: "", email: "", password: "" } });
+  const { control, handleSubmit, reset, resetField, setError, formState: { errors, isSubmitting, isDirty } } = useForm<Credentials>({ resolver: zodResolver(isRegister ? signUpSchema : credentialsSchema), defaultValues: { name: "", email: "", password: "" } });
   async function handleAuthenticate(value: Credentials) {
     if (!isReady || hasSession) return;
     setMessage("");
@@ -40,7 +42,7 @@ export function AuthForm({ isRegister, isReady, returnTo }: Props) {
       catch { setMessage("ورود تأیید شد؛ برای ادامه پیوند زیر را انتخاب کنید."); }
     } catch { setMessage("اتصال برقرار نشد؛ کمی بعد دوباره تلاش کنید."); }
   }
-  return <form className="auth-form" action={routes.login} method="get" noValidate aria-busy={isSubmitting} aria-describedby={`${id}-privacy ${id}-status`} onSubmit={handleSubmit(handleAuthenticate)}>
+  return <form className="auth-form" action={routes.login} method="get" noValidate aria-busy={isSubmitting} data-live-pause={isSubmitting || (isDirty && !hasSession)} aria-describedby={`${id}-privacy ${id}-status`} onSubmit={handleSubmit(handleAuthenticate)}>
     <fieldset disabled={!isReady || isSubmitting || hasSession} className="auth-fields">
       <legend className="sr-only">{isRegister ? "ساخت حساب" : "ورود به حساب"}</legend>
       <div className="auth-name-slot">{isRegister ? <><label htmlFor={`${id}-name`}>نام</label><Controller name="name" control={control} render={({ field }) => <Input id={`${id}-name`} ref={field.ref} value={field.value} onChange={field.onChange} onBlur={field.onBlur} autoComplete="name" maxLength={80} aria-required="true" aria-invalid={!!errors.name} aria-describedby={`${id}-name-error`} />} /><p id={`${id}-name-error`} className="field-error" aria-live="polite">{errors.name?.message}</p></> : <div className="auth-reminder"><ShieldCheck aria-hidden="true" /><div><strong>حساب شخصی، نه پروندهٔ درمانی</strong><p>برای ورود فقط ایمیل و رمزتان لازم است؛ شرح‌حال یا اطلاعات حساس ننویسید.</p></div></div>}</div>
@@ -52,5 +54,6 @@ export function AuthForm({ isRegister, isReady, returnTo }: Props) {
     {hasSession && <a className="quiet-link" href={returnTo}>ادامه پس از ورود</a>}
     <div className="message-privacy" id={`${id}-privacy`}><ShieldCheck aria-hidden="true" /><p>{notices.confidentiality} <Link href={routes.privacy}>حریم خصوصی</Link> و <Link href={routes.terms}>شرایط استفاده</Link> را پیش از ادامه بخوانید.</p></div>
     <noscript><p className="query-notice">برای ورود، جاوااسکریپت مرورگر را فعال کنید. با بازشدن دوبارهٔ صفحه، اطلاعات این فرم در نشانی صفحه فرستاده نمی‌شوند.</p></noscript>
+    <DraftNotice isDisabled={isSubmitting} onDiscard={() => { reset(); requestLive(); }} />
   </form>;
 }

@@ -16,7 +16,7 @@ export function About({ profile, isLoading = false }: Props) {
   const url = `${origin}${routes.about}`;
   return <>
     {isLoading && <p role="status" className="load-status">در حال آماده‌سازی صفحهٔ دربارهٔ من…</p>}
-    <main id="main-content" className="about-page booking-page" inert={isLoading} aria-busy={isLoading}>
+    <main id="main-content" className="public-page about-page booking-page" inert={isLoading} aria-busy={isLoading}>
       {!isLoading && <JsonLd schema={{ "@context": "https://schema.org", "@graph": [
         { "@type": "AboutPage", "@id": `${url}#page`, url, name: "درباره من", inLanguage: "fa-IR", mainEntity: { "@id": `${origin}/#person` }, isPartOf: { "@id": `${origin}/#website` }, breadcrumb: { "@id": `${url}#breadcrumb` } },
         { "@type": "Person", "@id": `${origin}/#person`, name: profile.name, jobTitle: profile.role, description: profile.introduction, url },
@@ -26,7 +26,7 @@ export function About({ profile, isLoading = false }: Props) {
         ] },
       ] }} />}
       <Intro profile={profile} /><Approach /><Background profile={profile} /><Collaboration />
-      <BookingPrompt tone="dream" title="لازم نیست نقطهٔ شروع، بی‌نقص باشد." description="اگر به گفت‌وگو فکر می‌کنید، می‌توانید ابتدا مسیرهای مشاوره را بشناسید و پرسش‌هایتان را برای شروع یادداشت کنید." secondaryHref={routes.services} secondaryLabel="مرور خدمات مشاوره" />
+      <BookingPrompt tone="lagoon" title="لازم نیست نقطهٔ شروع، بی‌نقص باشد." description="اگر به گفت‌وگو فکر می‌کنید، می‌توانید ابتدا مسیرهای مشاوره را بشناسید و پرسش‌هایتان را برای شروع یادداشت کنید." secondaryHref={routes.services} secondaryLabel="مرور خدمات مشاوره" />
       <BookingBar />
     </main>
   </>;

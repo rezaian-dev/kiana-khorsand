@@ -1,4 +1,3 @@
-import { ShieldCheck } from "lucide-react";
 import { Hero } from "./hero";
 import { About } from "./about";
 import { Services } from "./services";
@@ -10,7 +9,6 @@ import { Faq } from "./faq";
 import { Invitation } from "./invitation";
 import { BookingBar } from "@/components/layout/booking-bar";
 import { JsonLd } from "@/components/shared/json-ld";
-import { notices } from "@/content/profile";
 import { services } from "@/content/services";
 import { routes } from "@/lib/constants";
 import type { Article, Course, Profile, Review } from "@/lib/published";
@@ -29,7 +27,6 @@ export function Home({ profile, articles, courses, reviews, isLoading = false }:
         ...services.map((service) => ({ "@type": "Service", "@id": `${origin}/#${service.key}`, url: `${origin}${service.href}`, name: service.title, serviceType: service.title, description: service.description, provider: { "@id": `${origin}/#person` } })),
       ] }} />}
       <Hero profile={profile} />
-      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} حساب، ثبت درخواست نوبت و ارسال پیام به سرور متصل‌اند و به راه‌اندازی میزبان نیاز دارند. پذیرش واقعی به تأیید اطلاعات حرفه‌ای، شرایط جلسه و حریم خصوصی وابسته است؛ برای بازبینی از دادهٔ آزمایشی استفاده کنید.</p></div></div>
       <About profile={profile} /><Services /><Steps /><Courses courses={courses} /><Articles articles={articles} /><Testimonials reviews={reviews} /><Faq /><Invitation />
       <BookingBar />
     </main>

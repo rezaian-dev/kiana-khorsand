@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { announceSession } from "./live-client";
 import { authClient } from "./auth-client";
 import { getMessage, passwordChangeSchema, profileSchema, signInSchema, signUpSchema } from "./auth";
 import { resultCodes } from "./constants";
@@ -23,6 +24,7 @@ async function sendAccount<S extends z.ZodType>(schema: S, input: unknown, opera
       const verified = await authClient.getSession();
       if (verified.error || !verified.data?.user) return { ...readFailure(verified.error), message: "نشست تأیید نشد؛ اتصال یا تنظیمات کوکی را بررسی کنید." };
     }
+    announceSession();
     // Do not return native password/session tokens to form state.
     return { isSuccess: true, value: null, message: "درخواست تأیید شد." };
   } catch { return readFailure(null); }
@@ -45,6 +47,7 @@ export async function changePassword(input: unknown) {
 export async function logoutAccount(): Promise<Result<null>> {
   try {
     const response = await authClient.signOut();
+    if (!response.error) announceSession();
     return response.error ? readFailure(response.error) : { isSuccess: true, value: null, message: "از حساب خارج شدید." };
   } catch { return readFailure(null); }
 }

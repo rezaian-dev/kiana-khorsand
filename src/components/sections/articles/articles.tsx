@@ -17,7 +17,7 @@ type Props = { result: Catalog<Article>; hasError: boolean; isLoading?: boolean 
 
 export function Articles({ result, hasError, isLoading = false }: Props) {
   const origin = getEnv().NEXT_PUBLIC_SITE_URL;
-  return <>{isLoading && <p className="load-status" role="status">در حال آماده‌سازی مقاله‌ها…</p>}<main id="main-content" className="catalog-page booking-page" inert={isLoading} aria-busy={isLoading}>
+  return <>{isLoading && <p className="load-status" role="status">در حال آماده‌سازی مقاله‌ها…</p>}<main id="main-content" className="public-page catalog-page booking-page" inert={isLoading} aria-busy={isLoading}>
     {!isLoading && <JsonLd schema={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
       { "@type": "ListItem", position: 1, name: "صفحه اصلی", item: `${origin}${routes.home}` },
       { "@type": "ListItem", position: 2, name: "مقالات", item: `${origin}${routes.articles}` },

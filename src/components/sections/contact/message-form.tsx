@@ -6,6 +6,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { ShieldCheck, Check } from "lucide-react";
+import { requestLive } from "@/lib/live-client";
+import { DraftNotice } from "@/components/shared/draft-notice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,7 +23,7 @@ export function MessageForm() {
   const [isSent, setIsSent] = useState(false);
   const [isUncertain, setIsUncertain] = useState(false);
   const [message, setMessage] = useState("");
-  const { control, handleSubmit, setError, formState: { errors, isSubmitting, isDirty } } = useForm<Message>({ resolver: zodResolver(messageSchema), defaultValues: { name: "", email: "", message: "" } });
+  const { control, reset, handleSubmit, setError, formState: { errors, isSubmitting, isDirty } } = useForm<Message>({ resolver: zodResolver(messageSchema), defaultValues: { name: "", email: "", message: "" } });
   const isBusy = isSubmitting || isPending;
   const isLocked = isBusy || isSent || isUncertain;
   function handleSend(value: Message) {
@@ -48,7 +50,7 @@ export function MessageForm() {
         setIsUncertain(true);
         toast.error("نتیجهٔ ارسال روشن نیست؛ ارسال دوباره متوقف شد.");
         setMessage("نتیجهٔ ارسال روشن نیست؛ ممکن است پیام ذخیره شده باشد. برای جلوگیری از ارسال تکراری، ارسال دوباره متوقف شد.");
-      } finally { hasRequest.current = false; }
+      } finally { hasRequest.current = false; requestLive(); }
     });
   }
   return <form action={routes.contact} method="get" noValidate autoComplete="off" className="message-form" aria-busy={isBusy} data-live-pause={isBusy || (isDirty && !isSent)} aria-labelledby={`${id}-title`} aria-describedby={`${id}-notice ${id}-privacy`} onSubmit={(event) => { void handleSubmit(handleSend)(event); }}>
@@ -60,5 +62,6 @@ export function MessageForm() {
     <div><label htmlFor={`${id}-message`}>پیام کوتاه <span className="muted">(ضروری)</span></label><Controller name="message" control={control} render={({ field }) => <Textarea id={`${id}-message`} ref={field.ref} value={field.value} onChange={field.onChange} onBlur={field.onBlur} rows={5} maxLength={1200} aria-required="true" aria-invalid={!!errors.message} aria-describedby={`${id}-message-error ${id}-privacy`} placeholder="فقط یک پرسش عمومی؛ بدون شرح‌حال یا اطلاعات حساس" />} /><p id={`${id}-message-error`} className="field-error" aria-live="polite">{errors.message?.message}</p></div></div>
     </fieldset><div className="message-privacy" id={`${id}-privacy`}><ShieldCheck aria-hidden="true" /><p>{notices.confidentiality} <Link href={routes.privacy}>حریم خصوصی این نسخه</Link></p></div>
     <Button type="submit" size="lg" disabled={isLocked}><Check aria-hidden="true" />{isBusy ? "در حال ارسال…" : isSent ? "ذخیرهٔ پیام تأیید شد" : isUncertain ? "نتیجه نیاز به پیگیری دارد" : "ارسال پیام"}</Button><div className="message-status" data-checked={isSent}><strong role="status">{isBusy ? "خروج از صفحه، ارسال در حال انجام را متوقف نمی‌کند." : message || "اطلاعات فقط با انتخاب دکمه ارسال می‌شوند."}</strong><p>{isUncertain ? "این فرم امکان استعلام عمومی ندارد. بدون ارسال دوباره، از راه تماس تأییدشدهٔ صاحب خدمت پیگیری کنید؛ بارگذاری دوباره نتیجهٔ قبلی را مشخص نمی‌کند." : "ثبت پیام، تعهدی برای پاسخ یا شروع رابطهٔ درمانی ایجاد نمی‌کند. از نوشتن اطلاعات حساس خود یا دیگران خودداری کنید."}</p></div><noscript><p className="query-notice">ارسال فرم به جاوااسکریپت نیاز دارد. بدون آن فقط همین صفحه دوباره باز می‌شود و مقادیر واردشده ارسال نمی‌شوند.</p></noscript>
+    <DraftNotice isDisabled={isBusy} onDiscard={() => { reset(); requestLive(); }} />
   </form>;
 }

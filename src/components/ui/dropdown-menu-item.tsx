@@ -14,6 +14,7 @@ export function DropdownMenuItem({
   return (
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-item"
+      data-interact="control"
       data-inset={inset}
       data-variant={variant}
       className={cn(

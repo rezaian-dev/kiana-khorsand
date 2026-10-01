@@ -19,10 +19,10 @@ export function DropdownMenuContent({ isOpen, className, children, align = "end"
             <m.div
               className={cn("account-dropdown", className)}
               data-slot="dropdown-menu-content"
-              initial={{ opacity: 0, y: isReduced ? 0 : -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: isReduced ? 0 : -8 }}
-              transition={{ duration: isReduced ? 0 : motionTokens.quick }}
+              initial={{ opacity: 0, y: isReduced ? 0 : -motionTokens.travel, scale: isReduced ? 1 : .98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: isReduced ? 0 : -motionTokens.travel, scale: isReduced ? 1 : .98, transition: { duration: isReduced ? 0 : motionTokens.fast } }}
+              transition={{ duration: isReduced ? 0 : motionTokens.quick, ease: motionTokens.ease }}
             >{children}</m.div>
           </DropdownMenuPrimitive.Content>
         )}

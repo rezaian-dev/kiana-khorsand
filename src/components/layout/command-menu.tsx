@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useTransition } from "react";
+import { useEffect, useEffectEvent, useId, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +21,7 @@ import { CommandList } from "@/components/ui/command-list";
 import { CommandGroup } from "@/components/ui/command-group";
 import { CommandItem } from "@/components/ui/command-item";
 import { CommandEmpty } from "@/components/ui/command-empty";
+import { liveEvents } from "@/lib/live-client";
 import { routes } from "@/lib/constants";
 
 const destinations = [
@@ -35,27 +36,41 @@ export function CommandMenu() {
   const router = useRouter();
   const id = useId();
   const request = useRef(0);
+  const searched = useRef("");
+  const isReading = useRef(false);
+  const needsRead = useRef(false);
   const [isPending, startTransition] = useTransition();
   const [hits, setHits] = useState<RecordHits | null>(null);
   const [message, setMessage] = useState("");
   const { register, handleSubmit, reset, formState: { errors } } = useForm<{ q: string }>({ resolver: zodResolver(recordSearchSchema), defaultValues: { q: "" } });
-  function handleSearch(value: { q: string }) {
+  function handleSearch(value: { q: string }, isLive = false) {
+    searched.current = value.q;
     const token = ++request.current;
-    setHits(null); setMessage("");
-    startTransition(async () => {
+    if (!isLive) { setHits(null); setMessage(""); }
+    async function readHits() {
+      isReading.current = true;
       try {
         const result = await findRecords(value);
         if (request.current !== token) return;
         if (result.isSuccess) { setHits(result.value); setMessage("حداکثر شش حساب و یک نوبت با شناسهٔ کامل؛ انتخاب نتیجه، فهرست مربوط را باز می‌کند."); }
         else setMessage(result.message);
       } catch { if (request.current === token) setMessage("جست‌وجو دریافت نشد؛ دوباره تلاش کنید. هیچ تغییری ارسال نشده است."); }
-    });
+      finally {
+        if (request.current === token) {
+          isReading.current = false;
+          if (needsRead.current) { needsRead.current = false; handleSearch(value, true); }
+        }
+      }
+    }
+    if (isLive) void readHits(); else startTransition(readHits);
   }
   function handleOpen(isNext: boolean) {
-    request.current += 1;
+    request.current += 1; isReading.current = false; needsRead.current = false;
     setHits(null); setMessage(""); reset({ q: "" }); setIsOpen(isNext);
   }
   const [isOpen, setIsOpen] = useState(false);
+  const handleApplied = useEffectEvent(() => { if (!isOpen || !hits) return; if (isPending || isReading.current) needsRead.current = true; else handleSearch({ q: searched.current }, true); });
+  useEffect(() => { window.addEventListener(liveEvents.applied, handleApplied); return () => window.removeEventListener(liveEvents.applied, handleApplied); }, []);
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
       if (event.defaultPrevented || event.isComposing || event.altKey || event.repeat) return;
@@ -68,5 +83,5 @@ export function CommandMenu() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, reset]);
   function handleNavigate(href: string) { handleOpen(false); router.push(href); }
-  return <Sheet open={isOpen} onOpenChange={handleOpen}><SheetTrigger asChild><Button variant="outline" className="command-trigger" aria-label="فرمان‌های سریع؛ کنترل یا فرمان به‌همراه کی"><Search aria-hidden="true" /><span>دسترسی سریع</span><kbd dir="ltr">⌘ / Ctrl K</kbd></Button></SheetTrigger><SheetContent isOpen={isOpen} side="top" className="admin-command" data-live-pause={isOpen}><SheetHeader><SheetTitle>کجا می‌خواهید بروید؟</SheetTitle><SheetDescription>میان‌برها یا جست‌وجوی واقعی حساب و نوبت؛ فقط برای هماهنگی ضروری.</SheetDescription></SheetHeader><Command label="فرمان‌های مدیریت" loop><CommandInput placeholder="نام بخش را بنویسید…" aria-label="جست‌وجوی میان‌بر" maxLength={80} /><CommandList><CommandEmpty>میان‌بری با این عبارت پیدا نشد.</CommandEmpty><CommandGroup heading="بخش‌های آماده">{destinations.map((entry) => <CommandItem key={entry.href} value={entry.label} onSelect={() => handleNavigate(entry.href)}>{entry.label}</CommandItem>)}</CommandGroup></CommandList></Command><form className="command-search" action={routes.admin} method="post" noValidate onSubmit={(event) => { void handleSubmit(handleSearch)(event); }} aria-busy={isPending} aria-describedby={`${id}-privacy ${id}-status`}><label htmlFor={`${id}-q`}>نام، ایمیل، شمارهٔ مراجع یا شناسهٔ کامل نوبت</label><Input id={`${id}-q`} {...register("q")} onInput={() => { request.current += 1; setHits(null); setMessage(""); }} type="search" autoComplete="off" maxLength={80} aria-invalid={!!errors.q} disabled={isPending} /><Button type="submit" disabled={isPending}>{isPending ? "در حال جست‌وجو…" : "جست‌وجوی رکوردها"}</Button><p className="field-error" role="status">{errors.q?.message}</p><p className="search-privacy" id={`${id}-privacy`}>حریم خصوصی: عبارت با درخواست خصوصی ارسال می‌شود، نه در نشانی. شرح‌حال ننویسید. انتخاب نتیجه، شناسه را در نشانی فهرست قرار می‌دهد.</p></form><p id={`${id}-status`} role="status" className="member-feedback">{message}</p>{hits && <Command label="نتیجهٔ جست‌وجوی رکوردها" shouldFilter={false}><CommandList>{!hits.clients.length && !hits.appointments.length && <p className="dashboard-empty">حساب یا نوبتی پیدا نشد. نوبت فقط با شناسهٔ کامل جست‌وجو می‌شود.</p>}{hits.clients.length > 0 && <CommandGroup heading="حساب‌های مراجعان">{hits.clients.map((client) => <CommandItem key={client.id} value={client.id} onSelect={() => handleNavigate(`${routes.clients}?q=${encodeURIComponent(client.id)}`)}>{client.name}</CommandItem>)}</CommandGroup>}{hits.appointments.length > 0 && <CommandGroup heading="نوبت">{hits.appointments.map((entry) => <CommandItem key={entry.id} value={entry.id} onSelect={() => handleNavigate(`${routes.agenda}?q=${encodeURIComponent(entry.id)}`)}>{entry.label}</CommandItem>)}</CommandGroup>}</CommandList></Command>}</SheetContent></Sheet>;
+  return <Sheet open={isOpen} onOpenChange={handleOpen}><SheetTrigger asChild><Button variant="outline" className="command-trigger" aria-label="فرمان‌های سریع؛ کنترل یا فرمان به‌همراه کی"><Search aria-hidden="true" /><span>دسترسی سریع</span><kbd dir="ltr">⌘ / Ctrl K</kbd></Button></SheetTrigger><SheetContent isOpen={isOpen} side="top" className="admin-command"><SheetHeader><SheetTitle>کجا می‌خواهید بروید؟</SheetTitle><SheetDescription>میان‌برها یا جست‌وجوی واقعی حساب و نوبت؛ فقط برای هماهنگی ضروری.</SheetDescription></SheetHeader><Command label="فرمان‌های مدیریت" loop><CommandInput placeholder="نام بخش را بنویسید…" aria-label="جست‌وجوی میان‌بر" maxLength={80} /><CommandList><CommandEmpty>میان‌بری با این عبارت پیدا نشد.</CommandEmpty><CommandGroup heading="بخش‌های آماده">{destinations.map((entry) => <CommandItem key={entry.href} value={entry.label} onSelect={() => handleNavigate(entry.href)}>{entry.label}</CommandItem>)}</CommandGroup></CommandList></Command><form className="command-search" action={routes.admin} method="post" noValidate onSubmit={(event) => { void handleSubmit((value) => handleSearch(value))(event); }} aria-busy={isPending} aria-describedby={`${id}-privacy ${id}-status`}><label htmlFor={`${id}-q`}>نام، ایمیل، شمارهٔ مراجع یا شناسهٔ کامل نوبت</label><Input id={`${id}-q`} {...register("q")} onInput={() => { request.current += 1; setHits(null); setMessage(""); }} type="search" autoComplete="off" maxLength={80} aria-invalid={!!errors.q} disabled={isPending} /><Button type="submit" disabled={isPending}>{isPending ? "در حال جست‌وجو…" : "جست‌وجوی رکوردها"}</Button><p className="field-error" role="status">{errors.q?.message}</p><p className="search-privacy" id={`${id}-privacy`}>حریم خصوصی: عبارت با درخواست خصوصی ارسال می‌شود، نه در نشانی. شرح‌حال ننویسید. انتخاب نتیجه، شناسه را در نشانی فهرست قرار می‌دهد.</p></form><p id={`${id}-status`} role="status" className="member-feedback">{message}</p>{hits && <Command label="نتیجهٔ جست‌وجوی رکوردها" shouldFilter={false}><CommandList>{!hits.clients.length && !hits.appointments.length && <p className="dashboard-empty">حساب یا نوبتی پیدا نشد. نوبت فقط با شناسهٔ کامل جست‌وجو می‌شود.</p>}{hits.clients.length > 0 && <CommandGroup heading="حساب‌های مراجعان">{hits.clients.map((client) => <CommandItem key={client.id} value={client.id} onSelect={() => handleNavigate(`${routes.clients}?q=${encodeURIComponent(client.id)}`)}>{client.name}</CommandItem>)}</CommandGroup>}{hits.appointments.length > 0 && <CommandGroup heading="نوبت">{hits.appointments.map((entry) => <CommandItem key={entry.id} value={entry.id} onSelect={() => handleNavigate(`${routes.agenda}?q=${encodeURIComponent(entry.id)}`)}>{entry.label}</CommandItem>)}</CommandGroup>}</CommandList></Command>}</SheetContent></Sheet>;
 }

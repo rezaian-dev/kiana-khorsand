@@ -2,7 +2,8 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { requestLive } from "@/lib/live-client";
+import { DraftNotice } from "@/components/shared/draft-notice";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShieldCheck } from "lucide-react";
@@ -15,7 +16,6 @@ import { notices } from "@/content/profile";
 
 export function PasswordForm() {
   const id = useId();
-  const router = useRouter();
   const [message, setMessage] = useState("");
   const [isBlocked, setBlocked] = useState(false);
   const { control, handleSubmit, reset, setError, formState: { errors, isDirty, isSubmitting } } = useForm<PasswordChange>({ resolver: zodResolver(passwordChangeSchema), defaultValues: { currentPassword: "", newPassword: "" } });
@@ -30,11 +30,12 @@ export function PasswordForm() {
         const message = result.fieldErrors[field]?.[0];
         if (message) setError(field, { message });
       }
+      requestLive();
       return;
     }
     reset({ currentPassword: "", newPassword: "" });
     setMessage("درخواست تغییر رمز و پایان‌دادن به نشست‌های دیگر تأیید شد.");
-    router.refresh();
+    requestLive();
   }
   return <form className="member-form" action={routes.settings} method="get" noValidate onSubmit={handleSubmit(handleSave)} aria-busy={isSubmitting} data-live-pause={isDirty || isSubmitting} aria-describedby={`${id}-privacy ${id}-status`}>
     <fieldset disabled={isSubmitting || isBlocked}><legend className="sr-only">تغییر رمز عبور</legend>
@@ -43,7 +44,7 @@ export function PasswordForm() {
       <Button type="submit">{isSubmitting ? "در حال تغییر رمز…" : "ذخیرهٔ رمز تازه"}</Button>
     </fieldset>
     <p className="member-feedback" id={`${id}-status`} role="status">{message || "رمز فعلی برای تأیید این تغییر لازم است."}</p>
-    {isBlocked && <a className="quiet-link" href={routes.settings}>بازخوانی و بررسی پیش از تکرار؛ رمزهای واردشده پاک می‌شوند</a>}
+    <DraftNotice isDisabled={isSubmitting} onDiscard={() => { reset({ currentPassword: "", newPassword: "" }); requestLive(); }} />
     <div className="message-privacy" id={`${id}-privacy`}><ShieldCheck aria-hidden="true" /><p>{notices.confidentiality} رمزتان را با دیگران به اشتراک نگذارید. <Link href={routes.privacy}>حریم خصوصی</Link></p></div>
     <noscript><p className="query-notice">برای تغییر رمز، جاوااسکریپت لازم است؛ رمز در نشانی صفحه فرستاده نمی‌شود.</p></noscript>
   </form>;

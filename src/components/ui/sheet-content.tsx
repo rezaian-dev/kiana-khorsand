@@ -26,7 +26,7 @@ export function SheetContent({ isOpen, side = "right", showCloseButton = true, c
       <AnimatePresence initial={false}>
         {isOpen && (
           <SheetOverlay key="overlay" forceMount asChild>
-            <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: isReduced ? 0 : motionTokens.ui }} />
+            <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: isReduced ? 0 : motionTokens.fast } }} transition={{ duration: isReduced ? 0 : motionTokens.quick, ease: motionTokens.ease }} />
           </SheetOverlay>
         )}
         {isOpen && (
@@ -35,10 +35,10 @@ export function SheetContent({ isOpen, side = "right", showCloseButton = true, c
               data-slot="sheet-content"
               data-side={side}
               className={cn("brand-sheet", className)}
-              initial={{ opacity: 0, x: side === "right" ? getTravel(offset) : side === "left" ? -getTravel(offset) : 0, y: side === "bottom" ? offset : 0 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              exit={{ opacity: 0, y: side === "bottom" ? offset : 0 }}
-              transition={{ duration: isReduced ? 0 : motionTokens.ui }}
+              initial={{ opacity: 0, x: side === "right" ? -getTravel(offset) : side === "left" ? getTravel(offset) : 0, y: side === "bottom" ? offset : side === "top" ? -offset : 0, scale: isReduced ? 1 : .99 }}
+              animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+              exit={{ opacity: 0, x: side === "right" ? -getTravel(offset) : side === "left" ? getTravel(offset) : 0, y: side === "bottom" ? offset : side === "top" ? -offset : 0, scale: isReduced ? 1 : .99, transition: { duration: isReduced ? 0 : motionTokens.fast } }}
+              transition={{ duration: isReduced ? 0 : motionTokens.ui, ease: motionTokens.ease }}
             >
               {children}
               {showCloseButton && (

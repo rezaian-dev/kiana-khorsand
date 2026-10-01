@@ -1,11 +1,14 @@
 export const motionTokens = {
-  quick: 0.2,
-  ui: 0.25,
-  scene: 0.5,
-  stagger: 0.08,
-  travel: 16,
-  ease: [0.2, 0.7, 0.2, 1],
-  spring: { type: "spring", stiffness: 280, damping: 28, mass: 0.7 },
+  fast: 0.12,
+  quick: 0.18,
+  ui: 0.26,
+  scene: 0.42,
+  slow: 0.7,
+  stagger: 0.06,
+  travel: 8,
+  ease: [0.22, 1, 0.36, 1],
+  easeInOut: [0.65, 0, 0.35, 1],
+  spring: { type: "spring", stiffness: 300, damping: 38, mass: 0.8 },
 } as const;
 
 export function getTravel(distance: number, direction: "rtl" | "ltr" = "rtl") {

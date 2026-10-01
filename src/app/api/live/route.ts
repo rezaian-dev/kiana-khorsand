@@ -76,8 +76,8 @@ export async function GET(request: Request) {
         isChecking = true;
         void verifySession().then((isValid) => { if (isValid) sendEvent(": heartbeat\n\n"); }).finally(() => { isChecking = false; });
       }, 20_000);
-      const lifetime = setTimeout(closeStream, 5 * 60_000);
-      sendEvent("retry: 5000\n: connected\n\n");
+      const lifetime = setTimeout(() => { sendEvent("event: renew\ndata: {}\n\n"); closeStream(); }, 5 * 60_000);
+      sendEvent("retry: 1000\n: connected\n\n");
       if (request.signal.aborted) closeStream();
     },
     cancel() { handleClose(); },

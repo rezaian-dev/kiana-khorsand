@@ -99,3 +99,7 @@ No image was added, generated, resized or replaced. Contact reuses the existing 
 ## Phase 7 publication boundary
 
 The three fictional testimonial portraits are retained design assets, not publicly rendered reviews. Approved reviews reject every `isSample` image; a null image uses a fixed-size initials avatar. The three title-bearing draft social cards are retained for seed/design reference. Published article OG/Twitter uses the stored cover photo instead, avoiding stale baked-in headlines after a database title edit. No new photo or real-person attribution was introduced in this phase.
+
+## Owner-requested visual revision
+
+The hero now reuses hero.jpg/hero-mobile.jpg inside a reserved arched portrait frame, with subject-biased desktop object positioning and the original mobile art direction; no image was regenerated or upscaled again. The hero's over-image sample badge and the development banner were removed at the owner's request. A concise visible footer credit still states that person imagery is AI-generated, not real clinician/patient photography; truthful alt text and the other page-specific disclosures remain. Frame/crop positioning has been source-reviewed, not browser-verified.

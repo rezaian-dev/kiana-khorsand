@@ -41,26 +41,24 @@ function createAuth() {
     database: mongodbAdapter(getDb()),
     hooks: {
       before: createAuthMiddleware(async (ctx) => {
-        if (ctx.path === authPaths.signOut && ctx.headers) {
-          // Native sign-out does not populate context.session itself. Capture
-          // the verified identity before deletion so the after hook can notify.
-          ctx.context.session = await getAuth().api.getSession({ headers: ctx.headers, query: { disableCookieCache: true, disableRefresh: true } });
-          return { context: ctx };
-        }
         const schema = ctx.path === authPaths.signIn ? signInSchema : ctx.path === authPaths.signUp ? signUpSchema : ctx.path === authPaths.profile ? profileSchema : ctx.path === authPaths.password ? passwordChangeSchema : null;
         if (!schema) return;
         const parsed = schema.safeParse(ctx.body);
         if (!parsed.success) throw new APIError("BAD_REQUEST", { code: "INVALID_FIELDS", message: "اطلاعات واردشده معتبر نیست.", fieldErrors: getFields<unknown>(parsed.error) });
         return { context: { ...ctx, body: { ...parsed.data, ...(ctx.path === authPaths.password ? { revokeOtherSessions: true } : {}) } } };
       }),
-      after: createAuthMiddleware(async (ctx) => {
-        if (ctx.context.returned instanceof Error || (ctx.context.returned instanceof Response && !ctx.context.returned.ok)) return;
-        if (![authPaths.signIn, authPaths.signUp, authPaths.profile, authPaths.password, authPaths.signOut].some((path) => path === ctx.path)) return;
-        const userId = ctx.context.newSession?.user.id ?? ctx.context.session?.user.id;
-        if (!userId) return;
-        notifyChange({ topic: liveTopics.account, id: userId, audience: `user:${userId}` });
-        if (ctx.path === authPaths.signUp || ctx.path === authPaths.profile) notifyChange({ topic: liveTopics.admin, id: userId, audience: "admin" });
-      }),
+    },
+    databaseHooks: {
+      user: {
+        create: { after: async (user) => { notifyChange({ topic: liveTopics.account, id: user.id, audience: `user:${user.id}` }, { topic: liveTopics.admin, id: user.id, audience: "admin" }); } },
+        update: { after: async (user) => { notifyChange({ topic: liveTopics.account, id: user.id, audience: `user:${user.id}` }, { topic: liveTopics.admin, id: user.id, audience: "admin" }); } },
+        delete: { after: async (user) => { notifyChange({ topic: liveTopics.account, id: user.id, audience: `user:${user.id}` }, { topic: liveTopics.admin, id: user.id, audience: "admin" }); } },
+      },
+      account: { update: { after: async (account) => { notifyChange({ topic: liveTopics.account, id: account.userId, audience: `user:${account.userId}` }); } } },
+      session: {
+        create: { after: async (session) => { notifyChange({ topic: liveTopics.account, id: session.userId, audience: `user:${session.userId}` }); } },
+        delete: { after: async (session) => { notifyChange({ topic: liveTopics.account, id: session.userId, audience: `user:${session.userId}` }); } },
+      },
     },
     emailAndPassword: { enabled: true, minPasswordLength: 8, maxPasswordLength: 128 },
     user: {
