@@ -47,3 +47,16 @@ export async function updateMessage(input: unknown) {
   notifyChange({ topic: liveTopics.admin, id: change.id, audience: "admin" });
   return { id: change.id, revision: change.revision + 1 } satisfies Receipt;
 }
+
+export async function summarizeMessages() {
+  await requireAdmin();
+  const collection = getDb().collection<Message>(collections.messages);
+  type Preview = Pick<Message, "_id" | "name" | "status" | "createdAt" | "updatedAt">;
+  const projection = { name: 1, status: 1, createdAt: 1, updatedAt: 1 };
+  const [unread, entries, activity] = await Promise.all([
+    collection.countDocuments({ status: messageStates.unread }),
+    collection.find({ status: messageStates.unread }).project<Preview>(projection).sort({ createdAt: -1, _id: -1 }).limit(4).toArray(),
+    collection.find({}).project<Preview>(projection).sort({ updatedAt: -1, _id: -1 }).limit(6).toArray(),
+  ]);
+  return { unread, entries, activity };
+}

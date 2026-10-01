@@ -28,7 +28,7 @@ export function AccountMenu({ viewer }: Props) {
     <>
       <div className="account-wide">
         <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen} dir="rtl">
-          <DropdownMenuTrigger asChild><Button variant="outline" className="account-trigger">{trigger}</Button></DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild><Button variant="outline" className="account-trigger" aria-label="منوی حساب من">{trigger}</Button></DropdownMenuTrigger>
           <DropdownMenuContent isOpen={isDropdownOpen}>
             <DropdownMenuLabel className="account-identity"><strong>{viewer.name}</strong><span dir="ltr">{viewer.email}</span></DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -38,7 +38,7 @@ export function AccountMenu({ viewer }: Props) {
       </div>
       <div className="account-narrow">
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-          <SheetTrigger asChild><Button variant="outline" className="account-trigger">{trigger}</Button></SheetTrigger>
+          <SheetTrigger asChild><Button variant="outline" className="account-trigger" aria-label="منوی حساب من">{trigger}</Button></SheetTrigger>
           <SheetContent isOpen={isSheetOpen} side="bottom">
             <SheetHeader><SheetTitle>{viewer.name}</SheetTitle><SheetDescription><span dir="ltr">{viewer.email}</span></SheetDescription></SheetHeader>
             <AccountLinks viewer={viewer} onChoose={() => setIsSheetOpen(false)} />

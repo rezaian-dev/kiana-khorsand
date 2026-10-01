@@ -1,4 +1,5 @@
 import "server-only";
+import { periodSchema } from "../../lib/admin";
 import { z } from "zod";
 import { bookingSchema, changeSchema, rescheduleSchema, statusSchema } from "../../lib/mutations";
 import { appointmentSchema, settingsSchema } from "../../lib/records";
@@ -225,4 +226,28 @@ export async function rescheduleAppointment(input: unknown): Promise<Receipt> {
   } catch (error) { return reportConflict(error, change.date, change.slot, current._id); }
   announceAppointment(change.id, current.userId, current.date, selected.date);
   return { id: change.id, revision: change.revision + 1 };
+}
+
+export async function summarizeAppointments(input: unknown) {
+  await requireAdmin();
+  const period = periodSchema.parse(input);
+  const collection = getDb().collection<Appointment>(collections.appointments);
+  const active = { status: { $in: [appointmentStates.pending, appointmentStates.confirmed] } };
+  const projection = { userId: 1, service: 1, status: 1, startsAt: 1, endsAt: 1, updatedAt: 1 };
+  type Summary = Pick<Appointment, "_id" | "userId" | "service" | "status" | "startsAt" | "endsAt" | "updatedAt">;
+  const [todayCount, pendingCount, requests, previousRequests, today, upcoming, activity, daily] = await Promise.all([
+    collection.countDocuments({ ...active, date: period.today }),
+    collection.countDocuments({ status: appointmentStates.pending, startsAt: { $gt: period.now } }),
+    collection.countDocuments({ createdAt: { $gte: period.start, $lte: period.now } }),
+    collection.countDocuments({ createdAt: { $gte: period.previous, $lt: period.start } }),
+    collection.find({ ...active, date: period.today }).project<Summary>(projection).sort({ startsAt: 1, _id: 1 }).limit(6).toArray(),
+    collection.find({ ...active, date: { $gt: period.today }, startsAt: { $gt: period.now } }).project<Summary>(projection).sort({ startsAt: 1, _id: 1 }).limit(5).toArray(),
+    collection.find({}).project<Summary>(projection).sort({ updatedAt: -1, _id: -1 }).limit(6).toArray(),
+    collection.aggregate<{ _id: string; count: number }>([
+      { $match: { date: { $gte: getDay(period.start), $lte: period.today } } },
+      { $group: { _id: "$date", count: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ]).toArray(),
+  ]);
+  return { todayCount, pendingCount, requests, previousRequests, today, upcoming, activity, daily };
 }
