@@ -10,10 +10,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@better-auth/mongo-adapter": "1.7.6",
+    "@better-auth/mongo-adapter": "1.7.7",
     "@daypicker/persian": "10.0.2",
     "@hookform/resolvers": "5.9.1",
-    "better-auth": "1.7.6",
+    "better-auth": "1.7.7",
     "class-variance-authority": "0.7.1",
     "cmdk": "1.1.1",
     "cn": "0.4.0",
@@ -48,5 +48,6 @@
   },
   "engines": {
     "node": "24.21.0"
-  }
+  },
+  "type": "module"
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sortOrders, topics } from "./constants";
+import { sortOrders, topics } from "./constants.ts";
 
 export type SearchParams = Record<string, string | string[] | undefined>;
 const topicKeys = Object.keys(topics) as (keyof typeof topics)[];
@@ -30,7 +30,7 @@ export function buildHref(path: string, query: CatalogQuery) {
   return suffix ? `${path}?${suffix}` : path;
 }
 
-function normalizeSearch(value: string) {
+export function normalizeSearch(value: string) {
   return value.normalize("NFKC").replace(/ي/g, "ی").replace(/ك/g, "ک").replace(/[\u064b-\u065f\u0670]/g, "").replace(/\u200c/g, " ").replace(/\s+/g, " ").trim().toLocaleLowerCase("fa-IR");
 }
 

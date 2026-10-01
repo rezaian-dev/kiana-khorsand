@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { getEnv } from "./src/lib/env";
+import { getEnv } from "./src/lib/env.ts";
 
 const env = getEnv();
 const siteHost = new URL(env.NEXT_PUBLIC_SITE_URL).hostname.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

@@ -1,5 +1,5 @@
-import { images, type ImageAsset } from "@/content/images";
-import type { topics } from "@/lib/constants";
+import { images, type ImageAsset } from "./images.ts";
+import type { topics } from "../lib/constants.ts";
 
 export type Course = Readonly<{
   slug: string;

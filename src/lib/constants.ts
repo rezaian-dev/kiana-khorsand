@@ -32,3 +32,16 @@ export const topics = {
 } as const;
 
 export const sortOrders = { featured: "ترتیب پیشنهادی", title: "عنوان، الفبایی" } as const;
+
+export const collections = {
+  users: "users", sessions: "sessions", accounts: "accounts", verification: "verification",
+  rateLimit: "rateLimit", appointments: "appointments", articles: "articles", courses: "courses",
+  testimonials: "testimonials", messages: "messages", settings: "settings",
+} as const;
+
+export const publicationStates = { draft: "draft", published: "published" } as const;
+export const appointmentStates = { pending: "pending", confirmed: "confirmed", cancelled: "cancelled", completed: "completed" } as const;
+export const reviewStates = { pending: "pending", approved: "approved", rejected: "rejected" } as const;
+export const messageStates = { unread: "unread", read: "read", archived: "archived" } as const;
+export const serviceKeys = { individual: "individual", couples: "couples", family: "family", online: "online" } as const;
+export const siteKey = "site";

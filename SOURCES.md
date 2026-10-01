@@ -5,12 +5,12 @@
 | Node.js (Active LTS) | 24.21.0 | https://nodejs.org/dist/index.json ; https://github.com/nodejs/Release/blob/main/schedule.json |
 | npm (bundled with Node) | 11.19.0 | https://nodejs.org/dist/index.json |
 | create-next-app (one-off scaffolder) | 16.3.8 | https://registry.npmjs.org/create-next-app/16.3.8 |
-| `@better-auth/mongo-adapter` | 1.7.6 | https://registry.npmjs.org/@better-auth/mongo-adapter/1.7.6 |
+| `@better-auth/mongo-adapter` | 1.7.7 | https://registry.npmjs.org/@better-auth/mongo-adapter/1.7.7 |
 | `@daypicker/persian` (Phase 2 approved calendar add-on) | 10.0.2 | https://registry.npmjs.org/@daypicker/persian/10.0.2 |
 | `@daypicker/react` (transitive compatibility facade) | 10.0.2 | https://registry.npmjs.org/@daypicker/react/10.0.2 |
 | `date-fns-jalali` (approved transitive runtime prerelease exception) | 4.1.0-0 | https://registry.npmjs.org/date-fns-jalali/4.1.0-0 |
 | `@hookform/resolvers` | 5.9.1 | https://registry.npmjs.org/@hookform/resolvers/5.9.1 |
-| `better-auth` | 1.7.6 | https://registry.npmjs.org/better-auth/1.7.6 |
+| `better-auth` | 1.7.7 | https://registry.npmjs.org/better-auth/1.7.7 |
 | `class-variance-authority` | 0.7.1 | https://registry.npmjs.org/class-variance-authority/0.7.1 |
 | `cmdk` | 1.1.1 | https://registry.npmjs.org/cmdk/1.1.1 |
 | `cn` | 0.4.0 | https://registry.npmjs.org/cn/0.4.0 |
@@ -46,7 +46,7 @@
 
 ## Client Component register
 
-Updated in Phase 6 (2026-10-01). **28 authored client entry files**, including two context-only modules. Phase 6 adds only MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 7, data-foundation partial (2026-10-01). **28 authored client entry files**, including two context-only modules. This partial adds no client file or component; Phase 6 added MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
 | File under `src/components` | Client reason and boundary |
 | --- | --- |
@@ -81,7 +81,7 @@ Updated in Phase 6 (2026-10-01). **28 authored client entry files**, including t
 
 Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults, Testimonials, Faq, Contact, PolicyPage, BreadcrumbSchema and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-No auth provider, session lookup, DB module, live subscriber or live handler exists. Historical Phase 0/1/part-1 records below describe their state at that time; this register and the Phase 6 delivery record supersede those statuses. The newly confirmed ESLint EOL/peer conflict below supersedes earlier broad compatibility/no-deprecation assurances; it has not been silently waived.
+A lazy server Mongo/Auth foundation and private-repository session checks now exist, but no page, metadata function or route imports them yet. No auth route, client auth provider, live subscriber or live handler exists. This register and the current Phase 7 partial supersede historical statuses. The user’s «ادامه» after the Phase 6 decision request is treated as approval of the explicitly proposed temporary development-only ESLint 9 exception. ESLint remains EOL; this does not restore upstream support or authorize other deprecated packages.
 
 ## Version selection and compatibility
 
@@ -777,3 +777,96 @@ Six new component files: Testimonials, Faq, Contact, MessageForm, BreadcrumbSche
 Pinned Node 24.21.0/npm 11.19.0 were restored with approved exact manifests and scripts disabled. TypeScript, ESLint and DB-independent Next 16.3.8 build passed; generation reported 21/21 including the five new static pages. npm audit reports zero vulnerabilities. The EOL warning remains a support-policy failure despite these passing checks. No browser, UI/network interaction test, test suite, DB connection/ping/seed/script, live handler/bus, SEO validator or Core Web Vitals measurement ran. No source artwork was visually reopened in this phase.
 
 Next, only after the pending tooling decision and phase approval: Phase 7 repositories, Better Auth/session/actions/SSE, the two manual DB scripts and request-time database sitemap. MongoDB remains exclusively on the user's machine and will not be contacted here.
+
+
+## Phase 7 — Data foundation (partial)
+
+### Scope and approval boundary
+
+The user's «ادامه» following the Phase 6 handoff is treated as acceptance of that review and the smallest explicitly proposed temporary development-only ESLint 9 retention. Latest 10.11.0 still conflicts with the latest react 7.37.5, jsx-a11y 6.10.2 and import 2.32.0 plugin peers. No force, overrides or dropped lint rules. This supersedes the historical “pending approval” text in the Phase 6 record; EOL is not relabeled as upstream support.
+
+This is a coherent **partial delivery of Phase 7**, using the user's permission to split large phases: database read foundation, native-auth configuration/access guards and the two manual setup scripts. No Phase 8 work. The implementation has not activated database-backed website behavior. The remaining six workstreams below must be completed before Phase 7 is considered delivered. In particular there is no fake successful login, mock session or placeholder API standing in for real auth.
+
+### Current stable dependencies and restoration
+
+The snapshot again lacked dependencies/toolchain binaries. Restored Node 24.21.0 using its official tarball and verified SHASUMS256; npm remains bundled 11.19.0. Restored the old lock with strict engines/peers and scripts disabled before checking current official manifests — https://nodejs.org/dist/v24.21.0/SHASUMS256.txt ; https://nodejs.org/dist/v24.21.0/node-v24.21.0-linux-x64.tar.xz
+
+Current registry latest is **Better Auth 1.7.7**, not the previous 1.7.6. Its release fixes the critical Magic Link/OAuth-state issue GHSA-965c-763c-88jm, plus other auth fixes. This app has never enabled Magic Link/social OAuth, so the documented exploit prerequisites do not describe an enabled feature here; nevertheless the paired packages were upgraded to the current patched release. No migration or provider was added — https://github.com/better-auth/better-auth/releases/tag/v1.7.7 ; https://github.com/better-auth/better-auth/security/advisories/GHSA-965c-763c-88jm
+
+Before installation, checked exact/latest package engines, dependencies, peerDependencies and optional-peer metadata. Better Auth 1.7.7 accepts Next 16, React/React DOM 19 and MongoDB 7; the matching Mongo adapter requires core ^1.7.7 and utils 0.4.2. Utils latest 0.5.0 is not that compatible peer, so the required transitive 0.4.2 remains. MongoDB 7.7.0 requires Node >=20.19.0, satisfied by 24.21.0. No optional framework/ORM/provider peers were newly installed — https://registry.npmjs.org/better-auth/1.7.7 ; https://registry.npmjs.org/@better-auth/mongo-adapter/1.7.7 ; https://registry.npmjs.org/@better-auth/core/1.7.7 ; https://registry.npmjs.org/@better-auth/utils/0.4.2 ; https://registry.npmjs.org/mongodb/7.7.0
+
+The first strict in-place install and targeted npm update refused the stale 1.7.6 peer tree. No suggested peer bypass was used. Saved the prior lock/install in ignored workspace cache, set both direct exact pins to 1.7.7, and generated a fresh lock with normal `npm install --strict-peer-deps --engine-strict --ignore-scripts`. It succeeded with 747 packages/748 audited and zero reported vulnerabilities. Lock version comparison shows **only eight existing Better Auth-family nodes changed 1.7.6→1.7.7**: better-auth, core, mongo-adapter, telemetry, drizzle-adapter, kysely-adapter, memory-adapter and prisma-adapter. The latter adapters are existing upstream dependencies, not application ORM use. Direct dependency sets are unchanged; integrity/resolution and peer requirements in the lock are updated. The only deprecated node remains the approved temporary ESLint; pre-existing approved prereleases are unchanged — https://docs.npmjs.com/cli/v11/commands/npm-update ; https://registry.npmjs.org/@better-auth/telemetry/1.7.7 ; https://registry.npmjs.org/eslint/latest ; https://registry.npmjs.org/eslint-plugin-react/latest ; https://registry.npmjs.org/eslint-plugin-jsx-a11y/latest ; https://registry.npmjs.org/eslint-plugin-import/latest
+
+### Official APIs and design decisions
+
+- `server/db.ts` caches one MongoClient on globalThis across HMR. Neither import nor client.db() opens the DB; the driver automatically connects on the first operation. No connect/ping/init call, eager promise, import-time auth instance, watcher or startup index hook. Bounded pool and selection/connect timeouts avoid unbounded waiting; they are configuration, not evidence of successful access — https://www.mongodb.com/docs/drivers/node/current/connect/mongoclient/ ; https://www.mongodb.com/docs/drivers/node/current/connect/connection-options/
+- `server/auth.ts` is a lazy `betterAuth` factory using the official Mongo adapter and the documented `better-auth/minimal` entry because the adapter is supplied. No ORM configuration, custom hash/signature/token code, social provider, magic link, joins flag or extra plugin. Omitting adapter client leaves transactions disabled for the user's standalone MongoDB — https://www.better-auth.com/docs/installation ; https://www.better-auth.com/docs/adapters/mongo
+- Secret validation is deferred until auth is actually requested; minimum 32 characters is a length check, not proof of entropy. Base URL is an exact origin: HTTPS except explicit local loopback HTTP. trustedOrigins contains only that origin. Native cookie protections/CSRF remain enabled; cookie caching is off. No auth secret was created here or added to .env.local — https://www.better-auth.com/docs/installation ; https://www.better-auth.com/docs/concepts/cookies
+- Email/password enablement and native password length bounds are configured. Role is a native additional field with `input:false`, `defaultValue:client`; phone is an optional additional field with Zod input validation and no implied ownership verification. Account/password/profile endpoints and first-admin bootstrap are not connected yet — https://www.better-auth.com/docs/authentication/email-password ; https://www.better-auth.com/docs/concepts/database#extending-core-schema
+- Rate limiting uses Better Auth's database storage, including development, with stricter sign-in/sign-up/password paths. Important: native `auth.api` server calls **bypass** this limiter, so the later auth UI must use native request handling or explicitly preserve its limits rather than claim server actions are automatically covered. IP limits also require a trustworthy sanitized proxy header/origin firewall at deployment; no permissive proxy trust was added — https://www.better-auth.com/docs/concepts/rate-limit
+- `server/session.ts` uses the official native cookie-presence helper only as an anonymous fast path, then Better Auth's actual getSession with cookie-cache bypass and no RSC refresh. Cookie presence is never proof of identity/role. requireSession/requireAdmin sit beside private repository operations; records are constrained by session.user.id, not caller-supplied ownership. No app-owned auth-token query — https://www.better-auth.com/docs/integrations/next ; https://www.better-auth.com/docs/concepts/session-management ; official installed 1.7.7 `better-auth/dist/cookies/index.d.mts` and `api/routes/session.d.mts`
+- React cache wraps a function without executing it and scopes results to an RSC request; session data is not placed on globalThis or shared between users. Global caching is limited to the connection/auth configuration, not identities — https://react.dev/reference/react/cache
+- Next's native `server-only` poison imports guard auth/session/query/repository entry points, with **no new package**: installation is optional and Next handles/types these imports. The driver module remains usable by the two native scripts, which cannot import Next's poison module outside a React-server context. It imports Node-only MongoDB, never a client component — https://nextjs.org/docs/app/getting-started/server-and-client-components#preventing-environment-poisoning
+- Read repositories use the native collection generics, find/findOne/countDocuments, explicit projections, bounded skip/limit, escaped literal search terms and stable tie-break sort. Public catalog strings use MongoDB's Persian collation; indexes for that publication query use the same locale. No regex supplied by a user, arbitrary query document or client-selected projection is accepted — https://www.mongodb.com/docs/drivers/node/current/crud/query/retrieve/ ; https://www.mongodb.com/docs/drivers/node/current/crud/configure/#collation ; https://www.mongodb.com/docs/drivers/node/current/indexes/
+- Shared Zod schemas define models/inputs and validate seeded source content. Enum values come from the shared constants, not duplicated magic role/status strings. Publication requires professional review and a real nonempty author/instructor; approved reviews require consent and non-sample status. These checks are data constraints, not a claim that any record has been reviewed — https://zod.dev/api
+- Native Node TypeScript is stable on the pinned 24.21.0 (stable since 24.12.0). The two `.mts` entry points and their import graph use explicit relative `.ts` extensions and type-only imports, with no alias rewriting, runner or experimental flag. `allowImportingTsExtensions` permits tsc to check those imports. Package `type:module` makes transitive .ts files explicit ESM; next.config.ts's env import now has its real extension. No CommonJS config file needed conversion — https://nodejs.org/api/typescript.html ; https://nodejs.org/docs/latest-v24.x/api/cli.html#--env-filefile ; https://nextjs.org/docs/app/api-reference/config/typescript#using-nodejs-native-typescript-resolver-for-nextconfigts
+
+### Collection ownership and read boundaries
+
+| Repository | Collection / current behavior |
+| --- | --- |
+| clients.ts | users; admin-only business projection and escaped name/email/phone search; never credentials/tokens |
+| appointments.ts | appointments; current-user list, owner-or-admin detail, admin calendar window; public occupied date/slot projection only |
+| articles.ts | articles; published/reviewed/due-date public list and slug lookup, separate guarded administrative listing |
+| courses.ts | courses; same visibility boundary, separate typed collection, not a generic repository |
+| testimonials.ts | testimonials; public approved/consented/non-sample/due-date projection, guarded moderation listing |
+| messages.ts | messages; admin-only status-filtered list and detail; no public inbox read or send operation |
+| settings.ts | settings; admin full document and separately projected public schedule |
+
+Better Auth owns its sessions/accounts/verification/rateLimit collections through the official adapter; separate handwritten auth repositories would duplicate its security implementation and were not added. Users are read only through a minimal business projection or the native session API. These repositories currently implement **reads only**, not completed CRUD. Write paths, action results, optimistic revision checks, event publishing and cache invalidation are explicitly pending. Existing `revision` fields are preparation for those checks, not an implemented conflict protocol.
+
+Public catalog reads require status=published, isReviewed=true and an actual BSON Date publishedAt <= request time; null, draft and future records do not qualify. There are no build-time DB lookups or DB static params. Read results stay server-side (ObjectIds are not claimed to be client-serializable DTOs); later action/presentation boundaries must explicitly pick/serialize fields. Count and page reads are not a transactional snapshot. Time keys are intended as Gregorian YYYY-MM-DD / HH:mm for Asia/Tehran storage; visible dates remain Intl Persian. The actual schedule/slot-generation, startsAt/key consistency, race-safe booking action and nearest-offer selection belong to the upcoming action/booking work, not to these read methods.
+
+Private reads authenticate before querying their business collection. Public occupied-time queries reveal neither user ID nor appointment ID/note/status. Date windows are bounded to at most 32 inclusive calendar days; over 4000 matching appointment rows fail closed rather than silently presenting truncated availability. Page sizes are capped at 50; catalog public pages remain six records. No sensitive information is logged by authored repository code. Database exceptions are not swallowed as an empty list; Persian typed action/UI errors still need the remaining boundary implementation.
+
+### Manual indexes and seed — written, never executed here
+
+Exactly two executable scripts exist, neither referenced by npm lifecycle hooks. `setup-indexes.mts` creates unique user email, session token, provider/account identity, rate-limit key, article/course slug and **date+slot only for isReserved:true**. Cancellation will release that unique slot by changing the same document's reservation state; the future write must change status and isReserved atomically. An active unique index prevents duplicate exact slot keys, not all possible overlaps between differently aligned sessions. The later schedule grid must enforce that distinction — https://www.mongodb.com/docs/manual/core/index-partial/ ; https://www.mongodb.com/docs/manual/core/write-operations-atomicity/
+
+TTL is only on native BSON-Date expiresAt for sessions/verification, with expireAfterSeconds=0. TTL deletion is asynchronous, not an authorization check or a policy for retaining clinical/user/message records. Rate-limit lastRequest is numeric, so no ineffective TTL was attached. Manual setup can fail on duplicates or existing incompatible definitions; the script does not drop indexes, erase conflicting records, repair data silently or seed automatically. Existing expired auth documents may be purged after TTL creation, and the README warns of that — https://www.mongodb.com/docs/manual/core/index-ttl/
+
+The adapter's official published source was read for ObjectId conversion, transaction defaults and index behavior: `@better-auth/mongo-adapter/dist/index.mjs`, `dist/index.d.mts`; core's `db/get-tables.mjs` and `db/database-index.mjs`, now all 1.7.7. Names/types align with configured collection names. The adapter has a native lazy table-index ensure mechanism when schema indexes exist; it was not invoked here. No application-owned startup migration/index hook was written. Framework-owned index enforcement must not be confused with execution of the manual scripts.
+
+`seed.mts` first requires nonpartial/nonsparse unique slug indexes, then performs only $setOnInsert upserts. Three existing article drafts, three existing course proposals and singleton site settings are the entire seed. Existing edits/statuses are never overwritten, there is no truncate/drop/reset command, and timestamps represent actual insertion time rather than invented publication dates. publishedAt remains null; author empty; isReviewed false; booking disabled; hours empty; duration null; contact/license remain unknown. No default admin, password, clients, appointments, messages or real reviews are invented. Both scripts close their process-owned pool in finally and report a generic Persian failure without URI/document/secret dumps — https://www.mongodb.com/docs/manual/reference/operator/update/setOnInsert/ ; https://www.mongodb.com/docs/drivers/node/current/indexes/
+
+`content/seed.ts` reuses the existing content modules and image manifest through plain relative imports. Only their import spelling changed; no page text, photo, metadata, timestamp, fake author or sample-review promotion was introduced. Sources remain the Phase 5/6 documented drafts. No script, seed-module runtime import, client factory, session lookup, collection operation, schema migration or auth handler was executed as a verification method.
+
+### Phase 7 acceptance — overall, not just this partial
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Ordered coherent partial; no Phase 8 or database execution | Met |
+| 2 | Current compatible auth/security pins and explicit limited dependency exceptions | Met within approved exceptions; ESLint 9 remains EOL |
+| 3 | Lazy, hot-reload-safe native Mongo connection foundation | Met by code; no connection test |
+| 4 | Typed models, shared validation and collection/status constants | Met for the read/seed foundation |
+| 5 | Seven typed read repositories, projections, bounds and private guards | Met by code; no query test |
+| 6 | Native Better Auth email/password/role/phone/cookie/rate configuration | Met as dormant server configuration only |
+| 7 | Verified-session/role guard foundation near private data access | Met by code; no real session tested |
+| 8 | Manual unique/auth/query/expiry index script | Met as delivered source, unexecuted |
+| 9 | Manual idempotent draft-only seed and alias-free native import graph | Met as delivered source, unexecuted |
+| 10 | Naming/depth/no-any, 28-entry client register, source/README records | Met; no unmet naming rule |
+| 11 | Permitted typecheck/lint/DB-free build/audit | Met |
+| 12 | Auth routes and combined RHF/Zod Login/Register with route SEO/loading | **Not met — next partial** |
+| 13 | Real first-HTML header session, account controls and logout | **Not met — next partial** |
+| 14 | Account/password/profile operations with shared validation and typed action errors | **Not met — next partial** |
+| 15 | Repository mutations/actions, optimistic revisions, publish/invalidate | **Not met — next partial** |
+| 16 | Native authorized SSE route/bus and debounced visibility-aware subscriber | **Not met — next partial** |
+| 17 | Request-time DB content/metadata and published database sitemap | **Not met — next partial** |
+
+**Checklist: 11 of 17 met.** All six unmet items are listed, not hidden by declaring the whole phase finished. **Deviations needing approval: none new.** The previously proposed ESLint exception is treated as approved by the continuation, not widened. Splitting the phase follows the already-authorized partial-delivery rule.
+
+**SEO checklist: not met for completed Phase 7.** Existing public pages/metadata are unchanged; new login metadata/noindex and request-time content/sitemap remain unfinished. No publication/DB/SEO-validator claim.
+
+**Zero-flicker check: not met for Phase 7's authenticated path.** That path and server-resolved account chrome are not connected yet. For existing public pages, this partial adds no JSX, client module, CSS, image or mount-time state and preserves the previous code strategy, but it is not visual proof. The only app content changes are equivalent module import paths and exposing the existing normalization function for seed/search reuse. Signed-in cache-disabled hard-refresh review remains required after integration.
+
+Pinned typecheck and lint passed with the final 1.7.7 pair; DB-independent Next 16.3.8 build generated the same 21/21 pages. npm audit reports zero. No browser/test suite/database/ping/script execution/auth/live handler or SEO/Core Web Vitals tool ran. No secret was printed or fabricated, and .env.local was left unchanged. Continue only within the remaining Phase 7 scope; do not start Phase 8 from this partial delivery.
