@@ -1476,3 +1476,76 @@
 .member-actions > button { flex: 1; min-inline-size: 10rem; }
 @media (max-width: 1023px) { .member-overview { grid-template-columns: minmax(0, 1fr); } .member-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 767px) { .member-greeting { gap: 1rem; align-items: flex-start; } .member-avatar { inline-size: 3.5rem; block-size: 3.5rem; flex-basis: 3.5rem; border-radius: 1.2rem; font-size: 1.1rem; } .visit-grid, .settings-grid, .member-sidebar, .member-exit { grid-template-columns: minmax(0, 1fr); } .member-nav a { flex: 1 1 8.5rem; padding-inline: .75rem; } }
+
+/* Booking: compact date choices keep 44px targets at 320px, including scrollbar space. */
+.reservation-page { overflow-wrap: anywhere; }
+.reservation-intro .section-content, .reservation-care .section-content { padding-block: 2.5rem; }
+.booking-steps { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-block-start: 1.5rem; }
+.booking-steps li { display: flex; align-items: center; gap: 0.5rem; }
+.booking-steps span, .booking-choices legend span { display: inline-grid; place-items: center; inline-size: 2.75rem; block-size: 2.75rem; background: var(--muted); color: var(--primary); border: 1px solid var(--border); border-radius: 50%; }
+.booking-layout > .site-width { inline-size: min(calc(100% - 0.5rem), var(--content-width)); padding-block: 1.5rem 3rem; }
+.reservation-form, .booking-choices, .booking-when { display: grid; gap: 1.5rem; min-inline-size: 0; align-items: start; }
+.booking-choices { border: 1px solid var(--border); border-radius: 1.25rem; background: var(--card); padding: 0; box-shadow: var(--elevation-soft); }
+.booking-choices fieldset, .message-entry { min-inline-size: 0; border: 0; padding: 0; margin: 0; }
+.booking-choices legend { font-size: 1.2rem; font-weight: 750; margin-block-end: 1rem; }
+.booking-services, .booking-times { padding: 0.75rem !important; }
+.booking-calendar { min-inline-size: 19.25rem; }
+.booking-calendar legend, .booking-calendar > .field-error { margin-inline: 0.75rem; }
+.service-options, .slot-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+.service-options .brand-button { white-space: normal; min-block-size: 3.5rem; }
+.slot-options { margin-block: 1rem; }
+.service-options [aria-pressed="true"], .slot-options [aria-pressed="true"] { color: var(--primary-foreground); background: var(--primary); border-color: var(--primary); }
+.slot-notice { min-block-size: 6rem; color: var(--muted-foreground); }
+.booking-summary { min-inline-size: 0; margin-inline: 0.75rem; border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.25rem; background: var(--card); box-shadow: var(--elevation-raised); }
+.booking-summary h2 { font-size: 1.55rem; font-weight: 800; margin-block: 0.5rem 1rem; }
+.booking-summary dl { display: grid; gap: 0.5rem; margin-block-end: 1rem; }
+.booking-summary dl > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding-block: 0.5rem; border-block-end: 1px solid var(--border); }
+.booking-summary dt, .booking-privacy { color: var(--muted-foreground); }
+.booking-summary dd { font-weight: 700; }
+.booking-privacy { margin-block: 1rem; }
+.booking-privacy a { text-decoration: underline; text-underline-offset: 0.25em; }
+.booking-submit > .brand-button { inline-size: 100%; white-space: normal; }
+.booking-result { min-block-size: 10rem; padding-block: 1rem; }
+.booking-alternatives { display: grid; gap: 0.75rem; margin-block-start: 1rem; }
+.booking-alternatives h3 { font-weight: 750; }
+.booking-alternatives .brand-button { white-space: normal; }
+.booking-care { display: flex; align-items: start; gap: 1rem; max-inline-size: 54rem; margin-inline: auto; }
+.booking-care > svg { flex-shrink: 0; inline-size: 1.75rem; block-size: 1.75rem; color: var(--primary); margin-block-start: 0.25rem; }
+.booking-care h2 { font-size: 1.25rem; font-weight: 750; }
+.booking-care p { margin-block-start: 0.75rem; color: var(--muted-foreground); }
+@media (min-width: 380px) {
+  .booking-layout > .site-width { inline-size: min(calc(100% - 2rem), var(--content-width)); }
+  .booking-choices { padding: 0.5rem; }
+  .booking-summary { margin-inline: 0; }
+}
+@media (min-width: 720px) {
+  .booking-when { grid-template-columns: minmax(19.25rem, 1.2fr) minmax(0, 1fr); }
+  .booking-choices { padding: 1.25rem; }
+  .service-options { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  .reservation-form { grid-template-columns: minmax(0, 1.85fr) minmax(19rem, 1fr); }
+  .booking-summary { position: sticky; inset-block-start: calc(var(--header-height) + 1.5rem); }
+}
+.booking-update { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem; margin-block-end: 1.25rem; color: var(--muted-foreground); }
+
+/* The fixed action stays within the form; no portal, duplicate submit or viewport JS. */
+.booking-layout { z-index: 2; }
+.booking-submit { position: fixed; z-index: 20; inset-inline: 0; inset-block-end: 0; padding: 0.65rem max(1rem, env(safe-area-inset-right)) max(0.65rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); background: var(--card); border-block-start: 1px solid var(--input); box-shadow: var(--elevation-float); }
+@media (min-width: 1024px) {
+  .booking-submit { position: static; padding: 0; border: 0; background: transparent; box-shadow: none; }
+}
+
+.booking-submit > p { font-size: 1rem; text-align: center; color: var(--muted-foreground); margin-block-end: 0.4rem; }
+.booking-dates { display: none; }
+@media (max-width: 359px) {
+  .booking-calendar { min-inline-size: 0; }
+  .booking-calendar > .brand-calendar { display: none; }
+  .booking-dates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; block-size: 21rem; overflow-y: auto; padding: 0.5rem; align-content: start; }
+  .booking-dates .brand-button { white-space: normal; min-block-size: 2.75rem; }
+  .booking-dates [aria-pressed="true"] { color: var(--primary-foreground); background: var(--primary); border-color: var(--primary); }
+}
+
+@media (max-width: 1023px) {
+  .reservation-page + .site-footer { padding-block-end: calc(8rem + env(safe-area-inset-bottom)); }
+}

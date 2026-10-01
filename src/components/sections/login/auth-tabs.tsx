@@ -6,8 +6,8 @@ import { TabsTrigger } from "@/components/ui/tabs-trigger";
 import { TabsContent } from "@/components/ui/tabs-content";
 import { AuthForm } from "./auth-form";
 
-type Props = { isReady: boolean };
+type Props = { isReady: boolean; returnTo: string };
 
-export function AuthTabs({ isReady }: Props) {
-  return <Tabs defaultValue="login" dir="rtl" className="auth-tabs"><TabsList aria-label="ورود یا ساخت حساب"><TabsTrigger value="login">ورود</TabsTrigger><TabsTrigger value="register">ثبت‌نام</TabsTrigger></TabsList><TabsContent value="login" forceMount><AuthForm isRegister={false} isReady={isReady} /></TabsContent><TabsContent value="register" forceMount><AuthForm isRegister isReady={isReady} /></TabsContent></Tabs>;
+export function AuthTabs({ isReady, returnTo }: Props) {
+  return <Tabs defaultValue="login" dir="rtl" className="auth-tabs"><TabsList aria-label="ورود یا ساخت حساب"><TabsTrigger value="login">ورود</TabsTrigger><TabsTrigger value="register">ثبت‌نام</TabsTrigger></TabsList><TabsContent value="login" forceMount><AuthForm isRegister={false} isReady={isReady} returnTo={returnTo} /></TabsContent><TabsContent value="register" forceMount><AuthForm isRegister isReady={isReady} returnTo={returnTo} /></TabsContent></Tabs>;
 }

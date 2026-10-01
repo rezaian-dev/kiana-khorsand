@@ -8,7 +8,7 @@ const shareTitle = `${title} | دکتر کیانا خرسند`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await readProfile();
-  const description = `راه‌های ارتباط ثبت‌شده با ${profile.name}؛ فرم پیام در این نسخه فقط بررسی محلی دارد. این سایت برای کمک اورژانسی نیست.`;
+  const description = `راه‌های ارتباط ثبت‌شده با ${profile.name}؛ ارسال پرسش عمومی بدون شرح‌حال؛ ذخیرهٔ پیام به معنی وعدهٔ پاسخ نیست. این سایت برای کمک اورژانسی نیست.`;
   return {
     title, description, alternates: { canonical: routes.contact },
     robots: { index: true, follow: true },
