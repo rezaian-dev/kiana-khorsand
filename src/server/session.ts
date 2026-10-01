@@ -3,7 +3,7 @@ import { cache } from "react";
 import { headers } from "next/headers";
 import { getSessionCookie } from "better-auth/cookies";
 import { roles } from "../lib/constants.ts";
-import { getAuth } from "./auth.ts";
+import { canAuthenticate, getAuth } from "./auth.ts";
 
 export class AccessError extends Error {
   readonly code: "unauthorized" | "forbidden";
@@ -18,6 +18,7 @@ export class AccessError extends Error {
 export const getSession = cache(async function readSession() {
   const requestHeaders = await headers();
   if (!getSessionCookie(requestHeaders)) return null;
+  if (!canAuthenticate()) throw new Error("Authentication is unavailable; the existing session cannot be verified.");
   return getAuth().api.getSession({
     headers: requestHeaders,
     query: { disableCookieCache: true, disableRefresh: true },

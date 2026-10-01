@@ -2,7 +2,11 @@ import "server-only";
 import { betterAuth } from "better-auth/minimal";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { z } from "zod";
-import { collections, roles } from "../lib/constants.ts";
+import { APIError, createAuthMiddleware } from "better-auth/api";
+import { revalidatePath } from "next/cache";
+import { signInSchema, signUpSchema, profileSchema, passwordChangeSchema } from "../lib/auth";
+import { authPaths, collections, liveTopics, roles, routes } from "../lib/constants.ts";
+import { publishChange } from "./live";
 import { getEnv } from "../lib/env.ts";
 import { phoneSchema } from "../lib/records.ts";
 import { getDb } from "./db.ts";
@@ -16,11 +20,17 @@ const authEnvSchema = z.object({
   }),
 });
 
-function createAuth() {
-  const parsed = authEnvSchema.safeParse({
+function readConfig() {
+  return authEnvSchema.safeParse({
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || getEnv().NEXT_PUBLIC_SITE_URL,
   });
+}
+
+export function canAuthenticate() { return readConfig().success; }
+
+function createAuth() {
+  const parsed = readConfig();
   if (!parsed.success) throw new Error("Authentication environment is incomplete; configure the secret and origin locally.");
   const env = parsed.data;
   return betterAuth({
@@ -29,6 +39,34 @@ function createAuth() {
     trustedOrigins: [new URL(env.BETTER_AUTH_URL).origin],
     // Omit client: the user's standalone MongoDB must not require transactions.
     database: mongodbAdapter(getDb()),
+    hooks: {
+      before: createAuthMiddleware(async (ctx) => {
+        if (ctx.path === authPaths.signOut && ctx.headers) {
+          // Native sign-out does not populate context.session itself. Capture
+          // the verified identity before deletion so the after hook can notify.
+          ctx.context.session = await getAuth().api.getSession({ headers: ctx.headers, query: { disableCookieCache: true, disableRefresh: true } });
+          return { context: ctx };
+        }
+        const schema = ctx.path === authPaths.signIn ? signInSchema : ctx.path === authPaths.signUp ? signUpSchema : ctx.path === authPaths.profile ? profileSchema : ctx.path === authPaths.password ? passwordChangeSchema : null;
+        if (!schema) return;
+        const parsed = schema.safeParse(ctx.body);
+        if (!parsed.success) throw new APIError("BAD_REQUEST", { code: "INVALID_FIELDS", message: "اطلاعات واردشده معتبر نیست." });
+        return { context: { ...ctx, body: { ...parsed.data, ...(ctx.path === authPaths.password ? { revokeOtherSessions: true } : {}) } } };
+      }),
+      after: createAuthMiddleware(async (ctx) => {
+        if (ctx.context.returned instanceof Error || (ctx.context.returned instanceof Response && !ctx.context.returned.ok)) return;
+        if (![authPaths.signIn, authPaths.signUp, authPaths.profile, authPaths.password, authPaths.signOut].some((path) => path === ctx.path)) return;
+        const userId = ctx.context.newSession?.user.id ?? ctx.context.session?.user.id;
+        if (!userId) return;
+        // A successful native mutation must not be reported as failed if a
+        // best-effort UI invalidation fails after the database committed.
+        try {
+          publishChange({ topic: liveTopics.account, id: userId, audience: `user:${userId}` });
+          if (ctx.path === authPaths.signUp || ctx.path === authPaths.profile) publishChange({ topic: liveTopics.admin, id: userId, audience: "admin" });
+          revalidatePath(routes.home, "layout");
+        } catch { /* Reconnect refresh is the recovery path; no sensitive logs. */ }
+      }),
+    },
     emailAndPassword: { enabled: true, minPasswordLength: 8, maxPasswordLength: 128 },
     user: {
       modelName: collections.users,
@@ -43,9 +81,9 @@ function createAuth() {
     rateLimit: {
       enabled: true, storage: "database", modelName: collections.rateLimit, window: 60, max: 100,
       customRules: {
-        "/sign-in/email": { window: 60, max: 5 },
-        "/sign-up/email": { window: 60, max: 3 },
-        "/change-password": { window: 60, max: 5 },
+        [authPaths.signIn]: { window: 60, max: 5 },
+        [authPaths.signUp]: { window: 60, max: 3 },
+        [authPaths.password]: { window: 60, max: 5 },
       },
     },
   });

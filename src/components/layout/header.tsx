@@ -8,11 +8,12 @@ import { AccountMenu } from "@/components/layout/account-menu";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/lib/constants";
-import type { Viewer } from "@/lib/viewer";
+import { getViewer } from "@/server/viewer";
+import { canAuthenticate } from "@/server/auth";
+import { LiveRefresh } from "@/components/shared/live-refresh";
 
-type Props = { viewer?: Viewer | null };
-
-export function Header({ viewer = null }: Props) {
+export async function Header() {
+  const viewer = await getViewer();
   return (
     <header className="site-header" id="page-top">
       <a className="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
@@ -27,7 +28,7 @@ export function Header({ viewer = null }: Props) {
           <MobileMenu viewer={viewer} brand={<Logo />} contacts={<ContactLinks />} />
         </div>
       </div>
-      <ScrollProgress />
+      <ScrollProgress /><LiveRefresh isEnabled={canAuthenticate()} viewer={viewer ? { id: viewer.id, role: viewer.role } : null} />
     </header>
   );
 }

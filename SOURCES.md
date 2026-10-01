@@ -46,11 +46,11 @@
 
 ## Client Component register
 
-Updated in Phase 7, data-foundation partial (2026-10-01). **28 authored client entry files**, including two context-only modules. This partial adds no client file or component; Phase 6 added MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
+Updated in Phase 7, authentication/live partial (2026-10-01). **32 authored client entry files**, including two context-only modules and the required Next error boundary. This partial adds AuthForm, AuthTabs, LiveRefresh and app/error.tsx; Phase 6 added MessageForm for local validation; the five showcase-only entries were removed in Phase 3. Retained foundation entries are listed even when the current pages do not mount them. This lists directives, not a claim that imported dependency code is server-only.
 
-| File under `src/components` | Client reason and boundary |
+| File under `src/components` unless explicitly prefixed with `src/` | Client reason and boundary |
 | --- | --- |
-| `layout/account-links.tsx` | AccountLinks — menu selection/logout callbacks; supplied Viewer only, no auth or data access. |
+| `layout/account-links.tsx` | AccountLinks — native HTTP logout, pending/error status and router refresh; identity/role/count supplied by the server, no browser-derived initial session. |
 | `layout/account-menu.tsx` | AccountMenu — controlled Dropdown/Sheet; CSS-first breakpoint choice, no viewport render branch. |
 | `layout/mobile-menu.tsx` | MobileMenu — controlled fullscreen Sheet, user-triggered Motion stagger, close events. |
 | `layout/nav-links.tsx` | NavLinks — usePathname for the five active-link states; no rewrites or render-time browser reads. |
@@ -60,6 +60,10 @@ Updated in Phase 7, data-foundation partial (2026-10-01). **28 authored client e
 | `motion/motion.tsx` | Motion — strict LazyMotion/domAnimation and system-reduced MotionConfig; passes server children. |
 | `motion/scroll-progress.tsx` | ScrollProgress — useScroll; fixed transform-based track, no scroll writes. |
 | `sections/contact/message-form.tsx` | MessageForm — RHF Controller/resolver/Zod, useId and local checked-state; no request, persistence or server action; unnamed native fields prevent no-JS GET of entered values. |
+| `sections/login/auth-form.tsx` | AuthForm — RHF/Zod Controllers, native same-origin sign-in/sign-up and verified-session confirmation; unnamed DOM fields, reserved status/errors, no mounted gate. |
+| `sections/login/auth-tabs.tsx` | AuthTabs — RTL native Tabs and two preserved form instances; CSS hides inactive force-mounted content before hydration. |
+| `shared/live-refresh.tsx` | LiveRefresh — one native EventSource, authorized server-selected scope, visibility lifecycle/debounced transitions and accessible connection status; no first-render browser session. |
+| `src/app/error.tsx` | Next error convention — safe Persian retry boundary using reset; never fabricates a guest session or an empty result on failure. |
 | `shared/search-form.tsx` | SearchForm — RHF/Zod query validation, useId, pending transition and safe router navigation; server defaultValue, native GET fallback, no client filtering or data fetch. |
 | `shared/photo.tsx` | Photo — scoped useAnimate load fade and local error state; getImageProps/native picture, reserved geometry. |
 | `shared/slide-rail.tsx` | SlideRail — Embla/autoplay lifecycle, external-store selected/snap-count snapshots, reInit eligibility, viewport/reduced/focus/hover/visibility gates, pause and dots. |
@@ -79,9 +83,9 @@ Updated in Phase 7, data-foundation partial (2026-10-01). **28 authored client e
 | `ui/chart-tooltip-content.tsx` | ChartTooltipContent — native chart context and active payload, safe type narrowing and Intl numeric formatting; no raw vendor payload read. |
 | `ui/chart-legend-content.tsx` | ChartLegendContent — native chart context for authored Persian labels/colors. |
 
-Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults, Testimonials, Faq, Contact, PolicyPage, BreadcrumbSchema and every page section/card, pages, loading, layouts and metadata conventions remain server files. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
+Header, Footer, Logo, ContactLinks, BookingBar, SocialIcon, PageHeading, SectionHeading, SectionSurface, JsonLd, CardSkeleton, BookingPrompt, Home/About/Services/Articles/Article/Courses, CatalogFilters, CatalogResults, Testimonials, Faq, Contact, PolicyPage, BreadcrumbSchema, Login and the content sections/cards, pages, loading, layouts and metadata conventions remain server files; the explicitly listed interactive forms and Next error boundary are the exceptions. The retained Calendar/Chart foundations are not mounted by Home. The showcase and all seven specimen-section files were deleted, along with their local messageSchema. The pure CLI Sheet/Dropdown/Accordion/Tabs/Command/Label wrappers no longer carry redundant client directives: their native Radix/cmdk controls retain vendor client boundaries, and wrappers enter the client graph when imported by an interactive leaf. CalendarChevron, ChartStyle, ChartTooltip and ChartLegend are directive-free native leaves consumed within their client parents; CarouselItem, Button, Input, Textarea, Skeleton and Badge are also directive-free. These are not claims that native widgets execute without JavaScript. Server content is passed through interactive leaves as children rather than imported by a top-level client page.
 
-A lazy server Mongo/Auth foundation and private-repository session checks now exist, but no page, metadata function or route imports them yet. No auth route, client auth provider, live subscriber or live handler exists. This register and the current Phase 7 partial supersede historical statuses. The user’s «ادامه» after the Phase 6 decision request is treated as approval of the explicitly proposed temporary development-only ESLint 9 exception. ESLint remains EOL; this does not restore upstream support or authorize other deprecated packages.
+Header and login now resolve a verified server Viewer; native Auth/SSE routes and a visibility-aware subscriber exist. There is no client session provider, fake session or post-mount guest replacement. Public content/metadata still use fixtures and business mutations remain unfinished. This register and the latest Phase 7 section supersede historical statuses. The user's «ادامه» after the Phase 6 decision request is treated as approval of the explicitly proposed temporary development-only ESLint 9 exception. ESLint remains EOL; this does not restore upstream support or authorize other deprecated packages.
 
 ## Version selection and compatibility
 
@@ -781,6 +785,8 @@ Next, only after the pending tooling decision and phase approval: Phase 7 reposi
 
 ## Phase 7 — Data foundation (partial)
 
+Historical Part 1 record; current status and acceptance are in the Part 2 section below.
+
 ### Scope and approval boundary
 
 The user's «ادامه» following the Phase 6 handoff is treated as acceptance of that review and the smallest explicitly proposed temporary development-only ESLint 9 retention. Latest 10.11.0 still conflicts with the latest react 7.37.5, jsx-a11y 6.10.2 and import 2.32.0 plugin peers. No force, overrides or dropped lint rules. This supersedes the historical “pending approval” text in the Phase 6 record; EOL is not relabeled as upstream support.
@@ -870,3 +876,75 @@ The adapter's official published source was read for ObjectId conversion, transa
 **Zero-flicker check: not met for Phase 7's authenticated path.** That path and server-resolved account chrome are not connected yet. For existing public pages, this partial adds no JSX, client module, CSS, image or mount-time state and preserves the previous code strategy, but it is not visual proof. The only app content changes are equivalent module import paths and exposing the existing normalization function for seed/search reuse. Signed-in cache-disabled hard-refresh review remains required after integration.
 
 Pinned typecheck and lint passed with the final 1.7.7 pair; DB-independent Next 16.3.8 build generated the same 21/21 pages. npm audit reports zero. No browser/test suite/database/ping/script execution/auth/live handler or SEO/Core Web Vitals tool ran. No secret was printed or fabricated, and .env.local was left unchanged. Continue only within the remaining Phase 7 scope; do not start Phase 8 from this partial delivery.
+
+
+## Phase 7 — Authentication and live foundation (Part 2)
+
+### Scope and official sources
+
+The user's «ادامه» authorized the remaining Phase 7 work, not Phase 8. This is a second coherent partial: native authentication, a combined login/register page, verified first-HTML account chrome and the authorized live transport. The three remaining workstreams below are not relabeled as complete. No new dependency, config flag, bundler switch, default credential, third script or backend infrastructure was added.
+
+- Native Next integration: toNextJsHandler mounts GET/POST at api/auth/[...all]; the same-origin createAuthClient performs real HTTP sign-in/sign-up/sign-out. Direct server auth.api calls bypass HTTP rate limiting and are used here only for verified session reads, not user mutations — https://www.better-auth.com/docs/integrations/next
+- Hooks: shared Zod validation strips unexpected input; invalid fields raise APIError rather than trusting the browser. Supported mutation after-hooks publish/invalidate only after non-error results. Sign-out captures a native verified session before deletion because its endpoint does not set context.session itself; the hook explicitly returns the updated context. No cookie parsing, password hashing or custom auth protocol was authored — https://www.better-auth.com/docs/concepts/hooks ; official installed better-auth 1.7.7 dist/api/routes/sign-out.mjs
+- Profile/password boundaries use native update-user/change-password with shared schemas; change-password forces revokeOtherSessions:true. A complete typed field-error operation layer is still pending; no account UI, recovery flow or email verification sender was invented — https://www.better-auth.com/docs/concepts/users-accounts ; https://www.better-auth.com/docs/authentication/email-password
+- The optional inferAdditionalFields client plugin was reviewed but is **not used**: this partial's browser calls require only built-in fields. Removing that unnecessary client-plugin barrel preceded a successful default build after an earlier compilation timeout. This observation is not a general diagnosis of Better Auth or Turbopack. The SDK stays minimal and no server module is imported into it — https://www.better-auth.com/docs/concepts/typescript ; https://www.better-auth.com/docs/guides/optimizing-for-performance
+- connection() is the stable request-time barrier before Viewer reads. React cache memoizes only within the RSC request; native sessions disable cookie cache and RSC refresh writes. A cookie is a fast absence check, never authorization. A present cookie plus invalid Auth configuration raises an unavailable error rather than pretending the visitor is a guest — https://nextjs.org/docs/app/api-reference/functions/connection ; https://www.better-auth.com/docs/concepts/session-management
+- Native mutation hooks invalidate the root layout; best-effort notification failure cannot retroactively turn a committed native mutation into a reported failure. router.refresh merges RSC without deliberately resetting unaffected client state or scrolling — https://nextjs.org/docs/app/api-reference/functions/revalidatePath ; https://nextjs.org/docs/app/api-reference/functions/use-router
+- The documented stable serverExternalPackages option was reviewed during build troubleshooting but **not configured**; no exception or alternative build script was needed — https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
+- RHF Controller binds value/ref/onChange/onBlur explicitly; no native input name can leak credentials through the pre-hydration GET fallback. Both forms start with the same deterministic empty defaults; schema errors are Persian and password is cleared only after a verified success — https://react-hook-form.com/docs/usecontroller/controller ; prior Phase 6 native form/name sources
+- Native RTL Tabs use forceMount with explicit inactive-panel CSS, preserving typed values when switching tabs rather than hydrating a different tree. All decorative surfaces use existing server components/tokens — https://www.radix-ui.com/primitives/docs/components/tabs
+- Native EventSource handles named change/reset events, SSE framing, close/reconnect and heartbeat comments. Response headers prevent caching/transformation and request no proxy buffering; upstream streaming support must still be configured by the owner — https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+- Visibilitychange closes hidden-tab streams/timers and reconnects once visible. Refresh is debounced and deferred while editing/submitting, not driven by server polling — https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+- The Node EventEmitter uses on/off/emit/setMaxListeners behind a lazy globalThis instance. Subscriptions, identity admission counts and idempotent releases survive HMR together, but not process restart — https://nodejs.org/docs/latest-v24.x/api/events.html
+
+### Account, privacy and transport boundaries
+
+Missing/invalid secret or origin disables the login form and returns native-wrapper 503 without constructing Auth or reaching Mongo. No secret was generated here. Read failures after configuration are not converted into null/zero; the new required Next client error boundary shows a safe Persian retry state without raw exception details. getViewer resolves id/name/email/normalized role and the count of the current user's upcoming pending/confirmed appointments through the guarded appointment repository. No component contains a DB query. Account links and role-only admin link use that server projection; destinations remain future phases, not fake account/admin pages.
+
+Login's header and page share request-local session/Viewer reads. Sign-in/register success is announced only after the native getSession response confirms a user, then the router refreshes. Logout is a native HTTP mutation with a reserved failure/pending area. HTTP rate limits retain the existing database storage and defaults; reverse-proxy IP trust and operational rate behavior require owner-side validation before publication. The single-node bus publishes only minimal topic/id payloads. Current mutation hooks cover sign-in, sign-up, sign-out, update-user and change-password, not every automatic native session refresh. That exclusion avoids an invalidation feedback loop.
+
+Notice is discriminated so public audiences can only carry content/slots topics, user audiences account/appointments, and admin audience admin. Scope is schema-validated; account requires a native verified session and admin requires its actual server role. Origins are compared with validated configured Auth origin, not an arbitrary forwarded Host; cross-site Fetch Metadata is rejected. Private messages reverify identity/role before sending; the 20-second heartbeat also checks revocation. Limits are 4 per authenticated user, 64 shared anonymous streams, 256 process-wide, 32 queued messages per stream. Slow-reader backpressure closes rather than growing an unbounded buffer; abort/cancel/lifetime cleanup removes listeners, timers and admission exactly once. Maximum lifetime is five minutes.
+
+Client reconnection is bounded to a 30-second delay after errors. Only the first error of a continuous failure queues an RSC refresh; successful reconnect queues a catch-up refresh. A reset has its own five-second reconnect, covering native session changes that retain the same user ID. Stale EventSource callbacks are ignored after replacement/visibility/disposal. Timers checking editing state are local DOM checks, not network polling. Refresh has a 400ms debounce and does not push routes or force scroll. Delivery is not durable/replayed; reconnect refresh is recovery. All this is source implementation, not a security/runtime/load-test claim.
+
+Home/FAQ/Privacy/Terms no longer falsely state that /login is a 404 or sessions are unimplemented. Privacy now describes configured account submission, native password hashing, necessary session cookie, seven-day lifetime/day-based renewal, possible IP/user-agent and rate counters, and the absence of email verification/recovery. No retention duration, legal approval, contact channel, clinician credential or guarantee was invented. Services cannot accept real data responsibly before those owner decisions. README includes owner-only local bootstrap guidance: create a normal account, independently verify the exact identity, manually change only that users record's application role, then sign out/in. No bootstrap script/default admin or live database command was run.
+
+### SEO, loading and zero-flicker reasoning
+
+Login has independent Persian title/description/canonical, fa_IR OG/Twitter, noindex/nofollow, one h1 and matching breadcrumb JSON-LD. Robots already blocks login/private/API routes. It uses the existing Phase 5 resolved-context Suspense pattern: first resolve the server Viewer, then use the same Login template/Viewer as the inert loading fallback. An auth-blind loading.tsx would risk rendering a guest form before a signed-in panel, so none was added; an immediate loading skeleton before auth resolution is not promised. Public content/metadata/sitemap are **not** database-backed yet.
+
+The fixed server header never starts with a browser-derived guest guess. No useSession provider, mounted guard, hidden initial content or extra suppressHydrationWarning was introduced. Existing prepaint theme/font-optional strategy is unchanged. Form name/reminder slots, field errors and statuses reserve CSS space, tabs are hidden with server-delivered CSS, and controlled values persist across unaffected RSC refreshes. Long real names wrap; the account badge has a fixed slot and caps its visible count at 99+ while retaining an exact accessible count. These are code-level precautions, not visual confirmation or a universal pixel/CLS claim. The README retains cache-disabled/throttled hard-refresh instructions in both themes and both auth states.
+
+**SEO checklist: met for the new login implementation, not met for completed Phase 7** because request-time DB content/metadata/sitemap remain. **Zero-flicker check: met for the scoped auth code strategy, not met for completed Phase 7** because the remaining data/action paths have not been implemented or reviewed. No browser, SEO validator or Core Web Vitals tool ran.
+
+### Current Phase 7 acceptance
+
+| # | Workstream | Result |
+| --- | --- | --- |
+| 1 | Ordered coherent partial; no Phase 8 or DB execution | Met |
+| 2 | Compatible exact dependency/security pins and limited approved exceptions | Met within prior exceptions; ESLint 9 remains EOL |
+| 3 | Lazy HMR-safe native Mongo foundation | Met by code; not connected |
+| 4 | Typed models/shared schemas/collection-role-status-topic constants | Met for delivered boundaries |
+| 5 | Seven typed read repos, projections, bounded queries/private guards | Met by code; not queried |
+| 6 | Native Better Auth email/password/role/phone/cookie/rate configuration | Met by code; real HTTP handler now mounted, not executed here |
+| 7 | Native verified-session/role guards near private data access | Met by code; no real session tested |
+| 8 | Manual unique/auth/query/expiry index script | Met as unexecuted source |
+| 9 | Manual idempotent draft-only seed/native import graph | Met as unexecuted source |
+| 10 | Naming/depth/no-any, complete 32-entry client register and docs | Met; no unmet naming rule identified |
+| 11 | Permitted typecheck/lint/DB-independent default build/audit | Met |
+| 12 | Native Auth routes, combined RHF/Zod Login/Register, SEO/resolved-state fallback | Met by code; no login/browser exercise |
+| 13 | First-HTML verified account header/count and native logout | Met by code; no real session exercise |
+| 14 | Complete typed account/profile/password operation/field-error layer | **Not met; shared native-hook schemas are only partial preparation** |
+| 15 | Business repository mutations/actions, optimistic revisions, publish/invalidate | **Not met; auth notifications do not complete business writes** |
+| 16 | Authorized native SSE/bus/debounced visibility-aware subscriber | Met by code; no handler/bus/browser exercise |
+| 17 | Request-time published DB content/metadata/sitemap | **Not met; local fixtures still used** |
+
+**Checklist: 14 of 17 met. Deviations needing approval: none new.** All three unmet items remain within Phase 7; no Phase 8 work is authorized by this partial's completion.
+
+### Allowed verification
+
+The SHA256-verified Node 24.21.0/npm 11.19.0 toolchain was restored; strict npm ci with strict peers/engines and ignored scripts installed 747 packages, audited 748 and reported zero vulnerabilities. Current official registry latest for Next/Better Auth/Mongo adapter was rechecked as 16.3.8/1.7.7/1.7.7. No package or lockfile pin changed. The known ESLint EOL warning remains accurately disclosed under the prior limited exception.
+
+Initial static checks found a nullable captured release function and two prefer-const timer declarations; these were fixed without non-null assertions or lint suppression. The first default compile timed out while using an unnecessary client-plugin barrel; the lingering build process was stopped. After removing that unused import, the **unchanged default Turbopack build succeeded**, followed by another successful build. No alternative bundler/configuration/experimental flag was applied. The generated route report marks all HTML pages dynamic via the server Viewer request barrier; metadata assets stay static. That is not a claim that public content now comes from DB.
+
+Final permitted checks after the implementation/documentation update passed: tsc --noEmit, ESLint, default Next 16.3.8 Turbopack build (generation stage 22/22), npm audit (zero vulnerabilities), source inventory (32 client directives) and git diff --check. No database, auth HTTP request, SSE handler, event bus, manual script, browser, test suite, SEO or performance tool was executed for verification. No environment secret was generated/printed; .env.local remains ignored. Review README, this section, the /login implementation, native API routes and server/live.ts. Continue within the three remaining Phase 7 workstreams only.

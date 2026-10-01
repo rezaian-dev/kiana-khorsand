@@ -16,6 +16,7 @@ export const routes = {
   privacy: "/privacy",
   terms: "/terms",
   sitemap: "/sitemap.xml",
+  live: "/api/live",
 } as const;
 
 export const roles = { client: "client", admin: "admin" } as const;
@@ -45,3 +46,7 @@ export const reviewStates = { pending: "pending", approved: "approved", rejected
 export const messageStates = { unread: "unread", read: "read", archived: "archived" } as const;
 export const serviceKeys = { individual: "individual", couples: "couples", family: "family", online: "online" } as const;
 export const siteKey = "site";
+
+export const liveTopics = { content: "content", slots: "slots", appointments: "appointments", account: "account", admin: "admin" } as const;
+export const liveScopes = { public: "public", account: "account", admin: "admin" } as const;
+export const authPaths = { signIn: "/sign-in/email", signUp: "/sign-up/email", profile: "/update-user", password: "/change-password", signOut: "/sign-out" } as const;

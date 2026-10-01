@@ -28,7 +28,7 @@ export function Home({ isLoading = false }: Props) {
         ...services.map((service) => ({ "@type": "Service", "@id": `${origin}/#${service.key}`, url: `${origin}${service.href}`, name: service.title, serviceType: service.title, description: service.description, provider: { "@id": `${origin}/#person` } })),
       ] }} />}
       <Hero />
-      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحات عمومی آمادهٔ بازبینی‌اند؛ رزرو، حساب و ارسال واقعی پیام هنوز فعال نیستند. پیوند رزرو و ورود فعلاً به صفحهٔ ۴۰۴ می‌رسد.</p></div></div>
+      <div className="home-disclosure"><div className="site-width"><ShieldCheck aria-hidden="true" /><p>{notices.sample} صفحات عمومی و ورود آمادهٔ بازبینی‌اند؛ ورود نیازمند تنظیم میزبان است. رزرو، بخش شخصی حساب و ارسال واقعی پیام هنوز آماده نیستند و پیوند رزرو فعلاً به صفحهٔ ۴۰۴ می‌رسد.</p></div></div>
       <About /><Services /><Steps /><Courses /><Articles /><Testimonials /><Faq /><Invitation />
       <BookingBar />
     </main>
