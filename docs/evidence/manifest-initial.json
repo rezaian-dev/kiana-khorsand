@@ -1,0 +1,2571 @@
+{
+  "date": "2026-10-03",
+  "baseline": "ef426ad",
+  "total": 366,
+  "doneVerified": 0,
+  "sourceExists": 140,
+  "items": [
+    {
+      "id": "P0-MANIFEST",
+      "item": "Phase 0 manifest",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/MANIFEST.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-DOCS",
+      "item": "Phase 0 docs",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/DOCS_LOG.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-BRIEF",
+      "item": "Phase 0 brief",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/PRODUCT_BRIEF.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-ROUTES",
+      "item": "Phase 0 routes",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/ROUTES.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-DATA",
+      "item": "Phase 0 data",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/DATA_MODEL.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-STATE",
+      "item": "Phase 0 state",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/APPOINTMENT_STATES.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-LIVE",
+      "item": "Phase 0 live",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/REALTIME_COVERAGE.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-CHOICES",
+      "item": "Phase 0 choices",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/CONTROLS.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-FONT",
+      "item": "Phase 0 font",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/FONT_PLAN.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-DECISIONS",
+      "item": "Phase 0 decisions",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/OWNER_DECISIONS.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-GAPS",
+      "item": "Phase 0 gaps",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/GAP_AUDIT.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-VERSIONS",
+      "item": "Phase 0 versions",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/evidence/stack-versions.json` — source exists; v2 gate not run"
+    },
+    {
+      "id": "P0-ADRS",
+      "item": "Phase 0 adrs",
+      "phase": 0,
+      "status": "in-progress",
+      "evidence": "`docs/ADRS.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-001",
+      "item": "(account)/account/appointments/page.tsx",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/app/(account)/account/appointments/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-002",
+      "item": "(account)/account/page.tsx",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/app/(account)/account/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-003",
+      "item": "(account)/account/settings/page.tsx",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/app/(account)/account/settings/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-004",
+      "item": "(account)/layout.tsx",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/app/(account)/layout.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-005",
+      "item": "(admin)/admin/appointments/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/appointments/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-006",
+      "item": "(admin)/admin/articles/[id]/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/articles/[id]/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-007",
+      "item": "(admin)/admin/articles/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/articles/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-008",
+      "item": "(admin)/admin/clients/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/clients/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-009",
+      "item": "(admin)/admin/courses/[id]/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/courses/[id]/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-010",
+      "item": "(admin)/admin/courses/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/courses/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-011",
+      "item": "(admin)/admin/messages/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/messages/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-012",
+      "item": "(admin)/admin/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-013",
+      "item": "(admin)/admin/reviews/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/reviews/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-014",
+      "item": "(admin)/admin/settings/page.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/admin/settings/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-015",
+      "item": "(admin)/layout.tsx",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/app/(admin)/layout.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-016",
+      "item": "(auth)/layout.tsx",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/app/(auth)/layout.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-017",
+      "item": "(auth)/login/page.tsx",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/app/(auth)/login/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-018",
+      "item": "(public)/about/loading.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/about/loading.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-019",
+      "item": "(public)/about/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/about/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-020",
+      "item": "(public)/articles/[slug]/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/articles/[slug]/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-021",
+      "item": "(public)/articles/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/articles/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-022",
+      "item": "(public)/booking/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/booking/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-023",
+      "item": "(public)/contact/loading.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/contact/loading.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-024",
+      "item": "(public)/contact/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/contact/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-025",
+      "item": "(public)/courses/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/courses/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-026",
+      "item": "(public)/faq/loading.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/faq/loading.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-027",
+      "item": "(public)/faq/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/faq/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-028",
+      "item": "(public)/layout.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/layout.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-029",
+      "item": "(public)/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-030",
+      "item": "(public)/privacy/loading.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/privacy/loading.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-031",
+      "item": "(public)/privacy/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/privacy/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-032",
+      "item": "(public)/services/loading.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/services/loading.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-033",
+      "item": "(public)/services/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/services/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-034",
+      "item": "(public)/terms/loading.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/terms/loading.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-035",
+      "item": "(public)/terms/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/terms/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-036",
+      "item": "(public)/testimonials/page.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/(public)/testimonials/page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-037",
+      "item": "error.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/error.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-038",
+      "item": "layout.tsx",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/app/layout.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-039",
+      "item": "not-found.tsx",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/not-found.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "ROUTE-040",
+      "item": "/services/[slug]",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `src/app/(public)/services/[slug]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-041",
+      "item": "/courses/[slug]",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `src/app/(public)/courses/[slug]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-042",
+      "item": "/articles/category/[category]",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `src/app/(public)/articles/category/[category]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-043",
+      "item": "/register",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/register/page.tsx`"
+    },
+    {
+      "id": "ROUTE-044",
+      "item": "/verify",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/verify/page.tsx`"
+    },
+    {
+      "id": "ROUTE-045",
+      "item": "/recovery",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/recovery/page.tsx`"
+    },
+    {
+      "id": "ROUTE-046",
+      "item": "/recovery/reset",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/recovery/reset/page.tsx`"
+    },
+    {
+      "id": "ROUTE-047",
+      "item": "/logout",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/logout/page.tsx`"
+    },
+    {
+      "id": "ROUTE-048",
+      "item": "/account/appointments/[id]",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/appointments/[id]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-049",
+      "item": "/account/preferences",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/preferences/page.tsx`"
+    },
+    {
+      "id": "ROUTE-050",
+      "item": "/account/messages",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/messages/page.tsx`"
+    },
+    {
+      "id": "ROUTE-051",
+      "item": "/account/reviews",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/reviews/page.tsx`"
+    },
+    {
+      "id": "ROUTE-052",
+      "item": "/account/reviews/[id]",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/reviews/[id]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-053",
+      "item": "/account/sessions",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/sessions/page.tsx`"
+    },
+    {
+      "id": "ROUTE-054",
+      "item": "/account/data",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/account/data/page.tsx`"
+    },
+    {
+      "id": "ROUTE-055",
+      "item": "/admin/queue",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/queue/page.tsx`"
+    },
+    {
+      "id": "ROUTE-056",
+      "item": "/admin/agenda",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/agenda/page.tsx`"
+    },
+    {
+      "id": "ROUTE-057",
+      "item": "/admin/availability",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/availability/page.tsx`"
+    },
+    {
+      "id": "ROUTE-058",
+      "item": "/admin/services",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/services/page.tsx`"
+    },
+    {
+      "id": "ROUTE-059",
+      "item": "/admin/services/[id]",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/services/[id]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-060",
+      "item": "/admin/faq",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/faq/page.tsx`"
+    },
+    {
+      "id": "ROUTE-061",
+      "item": "/admin/faq/[id]",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/faq/[id]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-062",
+      "item": "/admin/users",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/users/page.tsx`"
+    },
+    {
+      "id": "ROUTE-063",
+      "item": "/admin/users/[id]",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/users/[id]/page.tsx`"
+    },
+    {
+      "id": "ROUTE-064",
+      "item": "/admin/audit",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/admin/audit/page.tsx`"
+    },
+    {
+      "id": "STATES-EX-001",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (account)/account/appointments/page.tsx",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-002",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (account)/account/page.tsx",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-003",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (account)/account/settings/page.tsx",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-005",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/appointments/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-006",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/articles/[id]/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-007",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/articles/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-008",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/clients/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-009",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/courses/[id]/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-010",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/courses/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-011",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/messages/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-012",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-013",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/reviews/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-014",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (admin)/admin/settings/page.tsx",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-017",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (auth)/login/page.tsx",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-019",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/about/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-020",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/articles/[slug]/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-021",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/articles/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-022",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/booking/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-024",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/contact/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-025",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/courses/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-027",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/faq/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-029",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-031",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/privacy/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-033",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/services/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-035",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/terms/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-EX-036",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for (public)/testimonials/page.tsx",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-040",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /services/[slug]",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-041",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /courses/[slug]",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-042",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /articles/category/[category]",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-043",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /register",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-044",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /verify",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-045",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /recovery",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-046",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /recovery/reset",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-047",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /logout",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-048",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/appointments/[id]",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-049",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/preferences",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-050",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/messages",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-051",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/reviews",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-052",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/reviews/[id]",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-053",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/sessions",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-054",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /account/data",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-055",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/queue",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-056",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/agenda",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-057",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/availability",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-058",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/services",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-059",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/services/[id]",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-060",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/faq",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-061",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/faq/[id]",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-062",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/users",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-063",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/users/[id]",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "STATES-ROUTE-064",
+      "item": "Loading/empty/error/success, 320–1440 RTL/light/dark/keyboard for /admin/audit",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run; Wired state evidence and a runtime test required; static-page empty state may be documented not applicable"
+    },
+    {
+      "id": "BOUNDARY-public-loading",
+      "item": "public shared loading boundary",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `src/app/(public)/loading.tsx`"
+    },
+    {
+      "id": "BOUNDARY-public-error",
+      "item": "public shared error boundary",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `src/app/(public)/error.tsx`"
+    },
+    {
+      "id": "BOUNDARY-auth-loading",
+      "item": "auth shared loading boundary",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/loading.tsx`"
+    },
+    {
+      "id": "BOUNDARY-auth-error",
+      "item": "auth shared error boundary",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `src/app/(auth)/error.tsx`"
+    },
+    {
+      "id": "BOUNDARY-account-loading",
+      "item": "account shared loading boundary",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/loading.tsx`"
+    },
+    {
+      "id": "BOUNDARY-account-error",
+      "item": "account shared error boundary",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `src/app/(account)/error.tsx`"
+    },
+    {
+      "id": "BOUNDARY-admin-loading",
+      "item": "admin shared loading boundary",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/loading.tsx`"
+    },
+    {
+      "id": "BOUNDARY-admin-error",
+      "item": "admin shared error boundary",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/(admin)/error.tsx`"
+    },
+    {
+      "id": "GLOBAL-ERROR",
+      "item": "Global root error fallback",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `src/app/global-error.tsx`"
+    },
+    {
+      "id": "EX-API-1",
+      "item": "src/app/api/auth/[...all]/route.ts",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/app/api/auth/[...all]/route.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-API-2",
+      "item": "src/app/api/live/route.ts",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/app/api/live/route.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "API-health",
+      "item": "health endpoint and authorization",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `src/app/api/health/route.ts`"
+    },
+    {
+      "id": "API-media",
+      "item": "media endpoint and authorization",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `src/app/api/media/route.ts`"
+    },
+    {
+      "id": "API-delivery-webhook",
+      "item": "delivery-webhook endpoint and authorization",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `src/app/api/notifications/[provider]/route.ts`"
+    },
+    {
+      "id": "API-metrics",
+      "item": "metrics endpoint and authorization",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `src/app/api/metrics/route.ts`"
+    },
+    {
+      "id": "F1-ENV",
+      "item": "Central validated env and tracked template",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`src/lib/env.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F1-NODE",
+      "item": "Node runtime and reproducible pinned install",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`package.json` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F1-TS",
+      "item": "Strict TypeScript and aliases",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`tsconfig.json` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F1-LINT",
+      "item": "ESLint and justified suppressions",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`eslint.config.mjs` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F1-FORMAT",
+      "item": "Prettier check/configuration",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F1-VERIFY",
+      "item": "Full verification orchestrator",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `scripts/verify.mjs`"
+    },
+    {
+      "id": "F1-AUDIT",
+      "item": "Manifest/source/link/font/content executable audit",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `scripts/audit.mjs`"
+    },
+    {
+      "id": "F1-UNIT",
+      "item": "Vitest unit harness",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `vitest.config.ts`"
+    },
+    {
+      "id": "F1-E2E",
+      "item": "Real-app Playwright harness",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `playwright.config.ts`"
+    },
+    {
+      "id": "F1-CI",
+      "item": "CI verification gate",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `.github/workflows/verify.yml`"
+    },
+    {
+      "id": "F1-LOCALDB",
+      "item": "Own disposable local/dev/test DB boundary",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F1-FONT",
+      "item": "Local variable Vazirmatn/OFL/swap/fallback/Tailwind",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`src/fonts/vazirmatn.woff2` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F1-DIGITS",
+      "item": "Persian digits/Jalali/Tehran; UTC persistence",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`src/lib/format.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-TOKENS",
+      "item": "Six-hue light/dark design tokens",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/app/globals.css` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-BUTTONS",
+      "item": "Button/link/icon hover-focus-active",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/button.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-FIELDS",
+      "item": "44px fields/labels/errors/checkbox/radios",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/input.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-SELECT",
+      "item": "Select form/reset/portal semantics",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/select.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-COMBO",
+      "item": "Searchable Combobox",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/combobox.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-RADIOS",
+      "item": "Segmented/radio/date/time chips",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/segmented-control.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-DIALOG",
+      "item": "Dialog/Sheet keyboard/focus/dismissal",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/sheet.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-MENUS",
+      "item": "RTL accessible menus",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/dropdown-menu.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-TABS",
+      "item": "Tabs and animated indicator",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/tabs.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-ACCORDION",
+      "item": "Accordion semantics/reduced motion",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/accordion.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-CALENDAR",
+      "item": "Jalali calendar",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/calendar.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-COMMAND",
+      "item": "Search list semantics",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/command.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-TOAST",
+      "item": "Sonner accessible notifications",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/ui/sonner.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-CARDS",
+      "item": "Hand-crafted card/chip/stat/empty/avatar shapes",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/shared/service-card.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-MOTION",
+      "item": "CSS-first motion, fine pointer, reserved space",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/motion/motion.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-HEADER",
+      "item": "All-page header/settings-only social/single entry",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/layout/header.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-MOBILE",
+      "item": "Full-height Sheet navigation",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/layout/mobile-menu.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-FOOTER",
+      "item": "Three-column minimal footer",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/layout/footer-content.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F2-THEME",
+      "item": "Pre-hydration theme stability",
+      "phase": 2,
+      "status": "in-progress",
+      "evidence": "`src/components/layout/theme.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-HOME",
+      "item": "Full Home composition; absent real sections collapse",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/home/home.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-SERVICES",
+      "item": "Admin-backed list/detail, not static catalog",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/services/details.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-COURSES",
+      "item": "Approved course list/detail/teacher/outline",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/courses/courses.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-ARTICLES",
+      "item": "Category/list/detail/reading time/related",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/article/article.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-REVIEWS",
+      "item": "Genuine consented approved reviews only",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/server/published.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-FAQ",
+      "item": "Admin-backed FAQ and truthful schema",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/faq/faq.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-CONTACT",
+      "item": "Minimized contact with anti-abuse",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/contact/message-form.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-LEGAL",
+      "item": "Settings-backed privacy/terms and admin legal review",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/components/shared/policy-page.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-METADATA",
+      "item": "Every public route title/canonical/OG/Twitter",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/layout.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-OG",
+      "item": "Per-page Persian shaping with local font",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F3-SITEMAP",
+      "item": "Published-content sitemap",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/sitemap.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-ROBOTS",
+      "item": "Robots indexing policy",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/app/robots.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F3-SCHEMA",
+      "item": "Real Article/Person/Breadcrumb/FAQ schema, no ratings",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-OTP",
+      "item": "Hashed expiring single-use phone OTP",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-PRIMARY",
+      "item": "Documented email/password secondary auth",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/auth.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F4-SIGNUP",
+      "item": "Verified signup/onboarding without invented identity",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-RECOVERY",
+      "item": "Recovery and credential reset",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-RATE",
+      "item": "IP and phone attempt/resend/brute-force limits",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/rate.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F4-SESSION",
+      "item": "Secure cookies/rotation/revocation/session list",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/session.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F4-RBAC",
+      "item": "Server role/owner check on every action/API/stream",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/viewer.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F4-AVAILABILITY",
+      "item": "Hours/exceptions/reservations Tehran/UTC",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/booking.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F4-REQUEST",
+      "item": "Conflict-safe idempotent booking",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/repos/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F4-PROPOSE",
+      "item": "Alternative-time proposal/acceptance",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-STATUSES",
+      "item": "requested/proposed/confirmed/completed/cancelled/declined",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-RULES",
+      "item": "Configurable cancellation/rescheduling, no invented fees",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F4-GUEST",
+      "item": "Owner-selected account/guest policy",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F5-DASH",
+      "item": "Real client dashboard",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/account/account.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F5-APPTS",
+      "item": "List/detail/cancel/reschedule request",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F5-PROFILE",
+      "item": "Minimum profile and verified phone update",
+      "phase": 5,
+      "status": "in-progress",
+      "evidence": "`src/server/member.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F5-PREFS",
+      "item": "Persist notification preferences",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F5-MESSAGES",
+      "item": "Private two-way doctor conversation",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F5-REVIEWS",
+      "item": "Own submit/edit/withdraw and consent",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F5-EXPORT",
+      "item": "Own authenticated export, exclude credentials/third parties",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F5-DELETE",
+      "item": "Authenticated deletion/withdrawal, retention-aware",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F6-DASH",
+      "item": "Real today/pending/quick actions",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/admin.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-QUEUE",
+      "item": "Confirm/propose/decline queue",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F6-AGENDA",
+      "item": "Day/week and preserve /admin/appointments",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/agenda.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-CLIENTS",
+      "item": "Minimum directory/history",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/clients.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-HOURS",
+      "item": "Working hours plus exceptions",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/preferences.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-PUBLISH",
+      "item": "Article/course/service/FAQ CRUD/publish",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/publishing.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-RICHTEXT",
+      "item": "Validated sanitized rich-text editing",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F6-MEDIA",
+      "item": "Authorized upload type/size/storage controls",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F6-MODERATE",
+      "item": "Consent/immutable testimony moderation",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/components/sections/queue/review-form.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-MESSAGES",
+      "item": "Private replies/unread real-time",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F6-SETTINGS",
+      "item": "Name/role/bio/contact/social/SEO/approvals",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/repos/settings.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F6-ROLES",
+      "item": "Protected role management/revocation",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F6-AUDIT",
+      "item": "Append-only redacted audit events",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F7-TRANSPORT",
+      "item": "Appropriate cross-instance transport",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/server/live-transport.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F7-SSE",
+      "item": "Origin/session/role/caps/heartbeat/close",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/app/api/live/route.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F7-WRITERS",
+      "item": "Confirmed-only coverage including new jobs",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/server/changes.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F7-CLIENT",
+      "item": "250ms/coalesced/single-flight/renew/backoff",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/components/shared/live-refresh.tsx` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F7-STATE",
+      "item": "Dirty/scroll/focus/menu/Sheet/tab/slide protection",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/lib/use-draft.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F7-FRESH",
+      "item": "Documented fresh reads/cache invalidation",
+      "phase": 7,
+      "status": "in-progress",
+      "evidence": "`src/server/published.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F7-ROWS",
+      "item": "Stable persisted keys/soft insert-remove",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F7-PROVIDER",
+      "item": "SMS/email provider interfaces and production binding",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F7-DEV",
+      "item": "Explicit development-only notification adapter, never production",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F7-OUTBOX",
+      "item": "Idempotent retry/delivery, no PII logs",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F7-JOBS",
+      "item": "Preference-aware UTC reminders",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F8-CSP",
+      "item": "Tested strict CSP/security headers",
+      "phase": 8,
+      "status": "in-progress",
+      "evidence": "`next.config.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F8-VALIDATE",
+      "item": "Server/client Zod checks",
+      "phase": 8,
+      "status": "in-progress",
+      "evidence": "`src/lib/records.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F8-SANITIZE",
+      "item": "Rich-text sanitization tests",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F8-SECRETS",
+      "item": "No client-bundle/log secrets",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F8-ABUSE",
+      "item": "Accessible honeypot/rate controls",
+      "phase": 8,
+      "status": "in-progress",
+      "evidence": "`src/server/rate.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F8-PRIVACY",
+      "item": "Minimization/soft delete/retention",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F8-INDEXES",
+      "item": "Justified unique/TTL/query indexes",
+      "phase": 8,
+      "status": "in-progress",
+      "evidence": "`src/server/indexes.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F8-METRICS",
+      "item": "Private aggregate conversion/completion/CWV/admin-task metrics",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F9-ENV",
+      "item": "Production env/readiness checklist",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Planned `docs/LAUNCH.md`"
+    },
+    {
+      "id": "F9-BACKUPS",
+      "item": "Backup/restore and access/retention proposal",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F9-MONITOR",
+      "item": "Non-PII health/errors/monitoring suggestions",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F9-ANALYTICS",
+      "item": "Owner analytics choice; no unapproved external runtime",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "F9-CONTENT",
+      "item": "Real owner content/credential/consent/URL supply",
+      "phase": 9,
+      "status": "in-progress",
+      "evidence": "`docs/OWNER_DECISIONS.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F9-README",
+      "item": "Truthful setup/scripts/architecture/deployment",
+      "phase": 9,
+      "status": "in-progress",
+      "evidence": "`README.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F9-ADR",
+      "item": "Decision records",
+      "phase": 9,
+      "status": "in-progress",
+      "evidence": "`docs/ADRS.md` — source exists; v2 gate not run"
+    },
+    {
+      "id": "F9-GUIDE",
+      "item": "Doctor-facing admin guide",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Planned `docs/ADMIN_GUIDE.md`"
+    },
+    {
+      "id": "F9-FINAL",
+      "item": "Full manifest versus files/routes/tests completeness audit",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "EX-ACT-bookAppointment",
+      "item": "Existing action bookAppointment",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-cancelBooking",
+      "item": "Existing action cancelBooking",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-moveAppointment",
+      "item": "Existing action moveAppointment",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-changeStatus",
+      "item": "Existing action changeStatus",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-getMoveTimes",
+      "item": "Existing action getMoveTimes",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/appointments.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-writeArticle",
+      "item": "Existing action writeArticle",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/content.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-writeCourse",
+      "item": "Existing action writeCourse",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/content.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-writeSettings",
+      "item": "Existing action writeSettings",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/content.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-moderateTestimonial",
+      "item": "Existing action moderateTestimonial",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/content.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-sendMessage",
+      "item": "Existing action sendMessage",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/messages.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-changeMessage",
+      "item": "Existing action changeMessage",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/messages.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-findRecords",
+      "item": "Existing action findRecords",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/search.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "EX-ACT-saveSidebar",
+      "item": "Existing action saveSidebar",
+      "phase": 6,
+      "status": "in-progress",
+      "evidence": "`src/server/actions/sidebar.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "NEW-ACT-sendPhoneCode",
+      "item": "Action/service sendPhoneCode",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-verifyPhoneCode",
+      "item": "Action/service verifyPhoneCode",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-requestRecovery",
+      "item": "Action/service requestRecovery",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-resetCredential",
+      "item": "Action/service resetCredential",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-acceptAppointmentProposal",
+      "item": "Action/service acceptAppointmentProposal",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-requestReschedule",
+      "item": "Action/service requestReschedule",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-saveNotificationPreferences",
+      "item": "Action/service saveNotificationPreferences",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-sendPrivateMessage",
+      "item": "Action/service sendPrivateMessage",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-submitOwnReview",
+      "item": "Action/service submitOwnReview",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-editOwnReview",
+      "item": "Action/service editOwnReview",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-withdrawOwnReview",
+      "item": "Action/service withdrawOwnReview",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-exportOwnData",
+      "item": "Action/service exportOwnData",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-requestOwnDeletion",
+      "item": "Action/service requestOwnDeletion",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-proposeAppointment",
+      "item": "Action/service proposeAppointment",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-declineAppointment",
+      "item": "Action/service declineAppointment",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-replyPrivateMessage",
+      "item": "Action/service replyPrivateMessage",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-saveService",
+      "item": "Action/service saveService",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-saveFaq",
+      "item": "Action/service saveFaq",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-uploadMedia",
+      "item": "Action/service uploadMedia",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-changeUserRole",
+      "item": "Action/service changeUserRole",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-saveDateException",
+      "item": "Action/service saveDateException",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-saveSeoDefaults",
+      "item": "Action/service saveSeoDefaults",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "NEW-ACT-appendAuditEvent",
+      "item": "Action/service appendAuditEvent",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-settings",
+      "item": "Collection/schema/index/privacy: settings",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/server/models.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "DB-articles",
+      "item": "Collection/schema/index/privacy: articles",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/server/models.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "DB-courses",
+      "item": "Collection/schema/index/privacy: courses",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/server/models.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "DB-testimonials",
+      "item": "Collection/schema/index/privacy: testimonials",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/server/models.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "DB-publicMessages",
+      "item": "Collection/schema/index/privacy: publicMessages",
+      "phase": 3,
+      "status": "in-progress",
+      "evidence": "`src/server/models.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "DB-services",
+      "item": "Collection/schema/index/privacy: services",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-faq",
+      "item": "Collection/schema/index/privacy: faq",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-users",
+      "item": "Collection/schema/index/privacy: users",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-sessions",
+      "item": "Collection/schema/index/privacy: sessions",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-accounts",
+      "item": "Collection/schema/index/privacy: accounts",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-verification",
+      "item": "Collection/schema/index/privacy: verification",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-authRateLimit",
+      "item": "Collection/schema/index/privacy: authRateLimit",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-appRateBuckets",
+      "item": "Collection/schema/index/privacy: appRateBuckets",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-appointments",
+      "item": "Collection/schema/index/privacy: appointments",
+      "phase": 4,
+      "status": "in-progress",
+      "evidence": "`src/server/models.ts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "DB-availabilityExceptions",
+      "item": "Collection/schema/index/privacy: availabilityExceptions",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-appointmentChanges",
+      "item": "Collection/schema/index/privacy: appointmentChanges",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-messageThreads",
+      "item": "Collection/schema/index/privacy: messageThreads",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-privateMessages",
+      "item": "Collection/schema/index/privacy: privateMessages",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-notificationPreferences",
+      "item": "Collection/schema/index/privacy: notificationPreferences",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-dataRequests",
+      "item": "Collection/schema/index/privacy: dataRequests",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-auditEvents",
+      "item": "Collection/schema/index/privacy: auditEvents",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-mediaAssets",
+      "item": "Collection/schema/index/privacy: mediaAssets",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-notificationOutbox",
+      "item": "Collection/schema/index/privacy: notificationOutbox",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "DB-aggregateMetrics",
+      "item": "Collection/schema/index/privacy: aggregateMetrics",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-otp",
+      "item": "sms otp template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-recovery",
+      "item": "sms recovery template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-request-received",
+      "item": "sms request-received template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-proposed",
+      "item": "sms proposed template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-confirmed",
+      "item": "sms confirmed template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-cancelled",
+      "item": "sms cancelled template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-reminder",
+      "item": "sms reminder template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-sms-private-message-notice",
+      "item": "sms private-message-notice template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-otp",
+      "item": "email otp template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-recovery",
+      "item": "email recovery template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-request-received",
+      "item": "email request-received template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-proposed",
+      "item": "email proposed template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-confirmed",
+      "item": "email confirmed template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-cancelled",
+      "item": "email cancelled template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-reminder",
+      "item": "email reminder template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "TPL-email-private-message-notice",
+      "item": "email private-message-notice template, no clinical detail",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "SCRIPT-SEED",
+      "item": "Explicit script scripts/seed.mts",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`scripts/seed.mts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "SCRIPT-INDEX",
+      "item": "Explicit script scripts/setup-indexes.mts",
+      "phase": 1,
+      "status": "in-progress",
+      "evidence": "`scripts/setup-indexes.mts` — source exists; v2 gate not run"
+    },
+    {
+      "id": "SCRIPT-MIGRATE",
+      "item": "Explicit script scripts/migrate.mts",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `scripts/migrate.mts`"
+    },
+    {
+      "id": "SCRIPT-REMINDERS",
+      "item": "Explicit script scripts/reminders.mts",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `scripts/reminders.mts`"
+    },
+    {
+      "id": "SCRIPT-RETENTION",
+      "item": "Explicit script scripts/retention.mts",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `scripts/retention.mts`"
+    },
+    {
+      "id": "SCRIPT-OG",
+      "item": "Explicit script scripts/render-og.mjs",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Planned `scripts/render-og.mjs`"
+    },
+    {
+      "id": "SCRIPT-LAUNCH",
+      "item": "Explicit script scripts/launch-audit.mjs",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Planned `scripts/launch-audit.mjs`"
+    },
+    {
+      "id": "TEST-UNIT",
+      "item": "schema/status/time/availability/rate/OTP/redaction",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `tests/unit`"
+    },
+    {
+      "id": "TEST-REPO",
+      "item": "Own local DB repositories and conflict constraints",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `tests/integration`"
+    },
+    {
+      "id": "TEST-SMOKE",
+      "item": "All due real app routes and roles, 320px, console/hydration",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/smoke.spec.ts`"
+    },
+    {
+      "id": "TEST-AUTH",
+      "item": "Phone/signup/recovery/session/RBAC",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/auth.spec.ts`"
+    },
+    {
+      "id": "TEST-BOOK",
+      "item": "Conflict/idempotency/propose/accept/decline/cancel",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/booking.spec.ts`"
+    },
+    {
+      "id": "TEST-ACCOUNT",
+      "item": "Prefs/messages/reviews/export/delete",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/account.spec.ts`"
+    },
+    {
+      "id": "TEST-ADMIN",
+      "item": "Publishing/media/roles/audit/tasks",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/admin.spec.ts`"
+    },
+    {
+      "id": "TEST-A11Y",
+      "item": "Axe/keyboard/focus/contrast",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/accessibility.spec.ts`"
+    },
+    {
+      "id": "TEST-FONT",
+      "item": "Own-origin/load/style/digits/Persian OG",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/fonts.spec.ts`"
+    },
+    {
+      "id": "TEST-CLS",
+      "item": "Load/theme/live/reduced/coarse stability",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/stability.spec.ts`"
+    },
+    {
+      "id": "TEST-PERF",
+      "item": "LHCI home+booking mobile LCP/INP/CLS",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `lighthouserc.cjs`"
+    },
+    {
+      "id": "TEST-SEC",
+      "item": "CSRF/origin/role/ownership/CSP/secrets/rate",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/security.spec.ts`"
+    },
+    {
+      "id": "TEST-LIVE",
+      "item": "Actual persisted-writer live/state proof",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "TEST-WORDS",
+      "item": "Rendered text/alt/aria/meta/links/native selects/CDN",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/content-audit.spec.ts`"
+    },
+    {
+      "id": "R7-1",
+      "item": "Client booking updates queue/agenda/own list",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-2",
+      "item": "Admin confirm/move updates owner",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-3",
+      "item": "Anonymous content publish/edit/unpublish",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-4",
+      "item": "Settings/name/social all shells",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-5",
+      "item": "Two-way message delivery",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-6",
+      "item": "Revoked role loses access",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-7",
+      "item": "Native hidden tab catches up within 1s",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-8",
+      "item": "Native offline/online recovery",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "R7-9",
+      "item": "Dirty typing/layout/state protection",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Planned `tests/e2e/realtime.spec.ts`"
+    },
+    {
+      "id": "GATE-0",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 0,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-1",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 1,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-2",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 2,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-3",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 3,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-4",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 4,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-5",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 5,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-6",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 6,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-7",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 7,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-8",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 8,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    },
+    {
+      "id": "GATE-9",
+      "item": "verify + evidence + Handoff + verified slice commit",
+      "phase": 9,
+      "status": "todo",
+      "evidence": "Not implemented / not run"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "file": "src/fonts/vazirmatn.woff2",
+  "family": [
+    "Vazirmatn"
+  ],
+  "version": [
+    "Version 33.003"
+  ],
+  "axes": [
+    {
+      "tag": "wght",
+      "min": 100.0,
+      "max": 900.0,
+      "default": 400.0
+    }
+  ],
+  "coverage": {
+    "ک": true,
+    "ی": true,
+    "ا": true,
+    "ن": true,
+    " ": true,
+    "خ": true,
+    "ر": true,
+    "س": true,
+    "د": true,
+    "پ": true,
+    "ژ": true,
+    "گ": true,
+    "چ": true,
+    "،": true,
+    "؛": true,
+    "؟": true,
+    "۱": true,
+    "۲": true,
+    "۳": true,
+    "۴": true,
+    "۵": true,
+    "۰": true,
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "9": true,
+    "A": true,
+    "B": true,
+    "C": true,
+    "x": true,
+    "y": true,
+    "z": true,
+    "‌": true
+  },
+  "licensePresent": true,
+  "sha256": "4e3fa217d38fdafc1fea4414ceb58ca5e662cf0ab5fa735a8c8c20e8b42cad92",
+  "officialFile": "https://raw.githubusercontent.com/rastikerdar/vazirmatn/v33.003/fonts/webfonts/Vazirmatn%5Bwght%5D.woff2",
+  "officialSha256": "4e3fa217d38fdafc1fea4414ceb58ca5e662cf0ab5fa735a8c8c20e8b42cad92",
+  "matchesOfficial": true
+}

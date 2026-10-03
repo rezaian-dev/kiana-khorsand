@@ -1,0 +1,18 @@
+{
+  "phase": 0,
+  "status": "planning-written; product gate blocked",
+  "manifestRows": 366,
+  "doneVerified": 0,
+  "verifyExit": 1,
+  "verifyReason": "Missing script: verify",
+  "productCodeChanged": false,
+  "dbOperations": false,
+  "committed": false,
+  "pushed": false,
+  "ownerDecisionsRecorded": true,
+  "next": [
+    "Exact version/API review",
+    "Gate bootstrap and conservative dev tooling",
+    "Owned local test DB harness before real app verification"
+  ]
+}

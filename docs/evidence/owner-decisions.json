@@ -1,0 +1,32 @@
+{
+  "recordedAt": "2026-10-03",
+  "askedOnce": true,
+  "scope": "Extend existing repo; preserve v5 design, do not restart",
+  "smsProvider": "undecided",
+  "emailProvider": "not supplied; no production send",
+  "deployment": "one permanent Node process on VPS",
+  "domain": null,
+  "approvedPublicFacts": [
+    "دکتر کیانا خرسند",
+    "روان‌شناس بالینی و مشاور خانواده"
+  ],
+  "realPortrait": null,
+  "bioCredentials": null,
+  "license": null,
+  "hours": null,
+  "sessionTypesDurations": null,
+  "pricingPolicy": "hidden until owner-approved data",
+  "socials": {
+    "telegram": null,
+    "instagram": null,
+    "whatsapp": null
+  },
+  "guestBooking": false,
+  "bookingEnabled": false,
+  "safeDefaults": [
+    "No invented provider/keys/domain/facts/prices/slots/URLs",
+    "No public generated person represented as real identity",
+    "Account required for booking",
+    "Actual provider binding and real launch content remain blockers"
+  ]
+}

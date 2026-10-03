@@ -1,0 +1,505 @@
+{
+  "date": "2026-10-03",
+  "nodeEngine": "24.21.0",
+  "dependenciesInstalled": false,
+  "existing": [
+    {
+      "package": "@better-auth/mongo-adapter",
+      "declared": "1.7.7",
+      "locked": "1.7.7",
+      "registry": "https://registry.npmjs.org/@better-auth%2Fmongo-adapter/latest",
+      "latestStable": "1.7.7",
+      "latestPrerelease": false,
+      "officialHomepage": "https://www.better-auth.com/docs/adapters/mongodb",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@daypicker/persian",
+      "declared": "10.0.2",
+      "locked": "10.0.2",
+      "registry": "https://registry.npmjs.org/@daypicker%2Fpersian/latest",
+      "latestStable": "10.0.2",
+      "latestPrerelease": false,
+      "officialHomepage": "https://daypicker.dev",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@hookform/resolvers",
+      "declared": "5.9.1",
+      "locked": "5.9.1",
+      "registry": "https://registry.npmjs.org/@hookform%2Fresolvers/latest",
+      "latestStable": "5.9.1",
+      "latestPrerelease": false,
+      "officialHomepage": "https://react-hook-form.com",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "better-auth",
+      "declared": "1.7.7",
+      "locked": "1.7.7",
+      "registry": "https://registry.npmjs.org/better-auth/latest",
+      "latestStable": "1.7.7",
+      "latestPrerelease": false,
+      "officialHomepage": "https://better-auth.com",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "class-variance-authority",
+      "declared": "0.7.1",
+      "locked": "0.7.1",
+      "registry": "https://registry.npmjs.org/class-variance-authority/latest",
+      "latestStable": "0.7.1",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/joe-bell/cva#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "cmdk",
+      "declared": "1.1.1",
+      "locked": "1.1.1",
+      "registry": "https://registry.npmjs.org/cmdk/latest",
+      "latestStable": "1.1.1",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/pacocoursey/cmdk#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "cn",
+      "declared": "0.4.0",
+      "locked": "0.4.0",
+      "registry": "https://registry.npmjs.org/cn/latest",
+      "latestStable": "0.4.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/shadcn-ui/cn#readme",
+      "engines": {
+        "node": ">=20"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "date-fns",
+      "declared": "4.4.0",
+      "locked": "4.4.0",
+      "registry": "https://registry.npmjs.org/date-fns/latest",
+      "latestStable": "4.4.0",
+      "latestPrerelease": false,
+      "officialHomepage": null,
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "embla-carousel-autoplay",
+      "declared": "8.6.0",
+      "locked": "8.6.0",
+      "registry": "https://registry.npmjs.org/embla-carousel-autoplay/latest",
+      "latestStable": "8.6.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://www.embla-carousel.com",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "embla-carousel-react",
+      "declared": "8.6.0",
+      "locked": "8.6.0",
+      "registry": "https://registry.npmjs.org/embla-carousel-react/latest",
+      "latestStable": "8.6.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://www.embla-carousel.com",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "lucide-react",
+      "declared": "1.49.0",
+      "locked": "1.49.0",
+      "registry": "https://registry.npmjs.org/lucide-react/latest",
+      "latestStable": "1.51.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://lucide.dev",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": true
+    },
+    {
+      "package": "mongodb",
+      "declared": "7.7.0",
+      "locked": "7.7.0",
+      "registry": "https://registry.npmjs.org/mongodb/latest",
+      "latestStable": "7.7.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/mongodb/node-mongodb-native",
+      "engines": {
+        "node": ">=20.19.0"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "motion",
+      "declared": "13.5.0",
+      "locked": "13.5.0",
+      "registry": "https://registry.npmjs.org/motion/latest",
+      "latestStable": "14.0.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/motiondivision/motion#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": true
+    },
+    {
+      "package": "next",
+      "declared": "16.3.8",
+      "locked": "16.3.8",
+      "registry": "https://registry.npmjs.org/next/latest",
+      "latestStable": "16.3.8",
+      "latestPrerelease": false,
+      "officialHomepage": "https://nextjs.org",
+      "engines": {
+        "node": ">=20.9.0"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "next-themes",
+      "declared": "0.4.6",
+      "locked": "0.4.6",
+      "registry": "https://registry.npmjs.org/next-themes/latest",
+      "latestStable": "0.4.6",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/pacocoursey/next-themes#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "radix-ui",
+      "declared": "1.6.7",
+      "locked": "1.6.7",
+      "registry": "https://registry.npmjs.org/radix-ui/latest",
+      "latestStable": "1.6.7",
+      "latestPrerelease": false,
+      "officialHomepage": "https://radix-ui.com/primitives",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "react",
+      "declared": "19.3.0",
+      "locked": "19.3.0",
+      "registry": "https://registry.npmjs.org/react/latest",
+      "latestStable": "19.3.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://react.dev/",
+      "engines": {
+        "node": ">=0.10.0"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "react-day-picker",
+      "declared": "10.0.2",
+      "locked": "10.0.2",
+      "registry": "https://registry.npmjs.org/react-day-picker/latest",
+      "latestStable": "10.0.2",
+      "latestPrerelease": false,
+      "officialHomepage": "https://daypicker.dev",
+      "engines": {
+        "node": ">=18"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "react-dom",
+      "declared": "19.3.0",
+      "locked": "19.3.0",
+      "registry": "https://registry.npmjs.org/react-dom/latest",
+      "latestStable": "19.3.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://react.dev/",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "react-hook-form",
+      "declared": "7.89.0",
+      "locked": "7.89.0",
+      "registry": "https://registry.npmjs.org/react-hook-form/latest",
+      "latestStable": "7.89.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://react-hook-form.com",
+      "engines": {
+        "node": ">=18.0.0"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "recharts",
+      "declared": "3.10.1",
+      "locked": "3.10.1",
+      "registry": "https://registry.npmjs.org/recharts/latest",
+      "latestStable": "3.10.1",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/recharts/recharts",
+      "engines": {
+        "node": ">=18"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "sonner",
+      "declared": "2.0.8",
+      "locked": "2.0.8",
+      "registry": "https://registry.npmjs.org/sonner/latest",
+      "latestStable": "2.0.8",
+      "latestPrerelease": false,
+      "officialHomepage": "https://sonner.emilkowal.ski/",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "zod",
+      "declared": "4.6.5",
+      "locked": "4.6.5",
+      "registry": "https://registry.npmjs.org/zod/latest",
+      "latestStable": "4.6.5",
+      "latestPrerelease": false,
+      "officialHomepage": "https://zod.dev",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@tailwindcss/postcss",
+      "declared": "4.3.3",
+      "locked": "4.3.3",
+      "registry": "https://registry.npmjs.org/@tailwindcss%2Fpostcss/latest",
+      "latestStable": "4.3.3",
+      "latestPrerelease": false,
+      "officialHomepage": "https://tailwindcss.com",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@types/node",
+      "declared": "26.6.3",
+      "locked": "26.6.3",
+      "registry": "https://registry.npmjs.org/@types%2Fnode/latest",
+      "latestStable": "26.6.4",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": true
+    },
+    {
+      "package": "@types/react",
+      "declared": "19.3.0",
+      "locked": "19.3.0",
+      "registry": "https://registry.npmjs.org/@types%2Freact/latest",
+      "latestStable": "19.3.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@types/react-dom",
+      "declared": "19.3.0",
+      "locked": "19.3.0",
+      "registry": "https://registry.npmjs.org/@types%2Freact-dom/latest",
+      "latestStable": "19.3.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "eslint",
+      "declared": "9.39.5",
+      "locked": "9.39.5",
+      "registry": "https://registry.npmjs.org/eslint/latest",
+      "latestStable": "10.12.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://eslint.org",
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "registryStatus": "read",
+      "changed": true
+    },
+    {
+      "package": "eslint-config-next",
+      "declared": "16.3.8",
+      "locked": "16.3.8",
+      "registry": "https://registry.npmjs.org/eslint-config-next/latest",
+      "latestStable": "16.3.8",
+      "latestPrerelease": false,
+      "officialHomepage": "https://nextjs.org/docs/app/api-reference/config/eslint",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "shadcn",
+      "declared": "4.21.1",
+      "locked": "4.21.1",
+      "registry": "https://registry.npmjs.org/shadcn/latest",
+      "latestStable": "4.21.1",
+      "latestPrerelease": false,
+      "officialHomepage": "https://ui.shadcn.com",
+      "engines": {
+        "node": ">=20.18.1"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "tailwindcss",
+      "declared": "4.3.3",
+      "locked": "4.3.3",
+      "registry": "https://registry.npmjs.org/tailwindcss/latest",
+      "latestStable": "4.3.3",
+      "latestPrerelease": false,
+      "officialHomepage": "https://tailwindcss.com",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "tw-animate-css",
+      "declared": "1.4.0",
+      "locked": "1.4.0",
+      "registry": "https://registry.npmjs.org/tw-animate-css/latest",
+      "latestStable": "1.4.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/Wombosvideo/tw-animate-css#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "typescript",
+      "declared": "6.0.3",
+      "locked": "6.0.3",
+      "registry": "https://registry.npmjs.org/typescript/latest",
+      "latestStable": "7.0.2",
+      "latestPrerelease": false,
+      "officialHomepage": "https://www.typescriptlang.org/",
+      "engines": {
+        "node": ">=16.20.0"
+      },
+      "registryStatus": "read",
+      "changed": true
+    }
+  ],
+  "proposedDevTools": [
+    {
+      "package": "vitest",
+      "declared": null,
+      "locked": null,
+      "registry": "https://registry.npmjs.org/vitest/latest",
+      "latestStable": "5.0.3",
+      "latestPrerelease": false,
+      "officialHomepage": "https://vitest.dev",
+      "engines": {
+        "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@playwright/test",
+      "declared": null,
+      "locked": null,
+      "registry": "https://registry.npmjs.org/@playwright%2Ftest/latest",
+      "latestStable": "1.63.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://playwright.dev",
+      "engines": {
+        "node": ">=20"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "prettier",
+      "declared": null,
+      "locked": null,
+      "registry": "https://registry.npmjs.org/prettier/latest",
+      "latestStable": "3.9.9",
+      "latestPrerelease": false,
+      "officialHomepage": "https://prettier.io",
+      "engines": {
+        "node": ">=14"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "axe-core",
+      "declared": null,
+      "locked": "4.13.0",
+      "registry": "https://registry.npmjs.org/axe-core/latest",
+      "latestStable": "4.13.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://www.deque.com/axe/",
+      "engines": {
+        "node": ">=4"
+      },
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@axe-core/playwright",
+      "declared": null,
+      "locked": null,
+      "registry": "https://registry.npmjs.org/@axe-core%2Fplaywright/latest",
+      "latestStable": "4.13.0",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/dequelabs/axe-core-npm#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    },
+    {
+      "package": "@lhci/cli",
+      "declared": null,
+      "locked": null,
+      "registry": "https://registry.npmjs.org/@lhci%2Fcli/latest",
+      "latestStable": "0.15.1",
+      "latestPrerelease": false,
+      "officialHomepage": "https://github.com/GoogleChrome/lighthouse-ci#readme",
+      "engines": null,
+      "registryStatus": "read",
+      "changed": false
+    }
+  ]
+}
