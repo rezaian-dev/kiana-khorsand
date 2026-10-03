@@ -6,6 +6,7 @@ const siteHost = new URL(env.NEXT_PUBLIC_SITE_URL).hostname.replace(/[.*+?^${}()
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  outputFileTracingExcludes: { "*": ["./design-reference/**/*", "./verification/**/*", "./reports/**/*"] },
   async headers() {
     return [
       {

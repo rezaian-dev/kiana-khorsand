@@ -1,0 +1,62 @@
+
+> kiana-khorsand@0.1.0 build
+> next build --webpack
+
+▲ Next.js 16.3.8 (webpack)
+✓ Running next.config.ts took 443ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 11.7s
+  Running TypeScript ...
+  Finished TypeScript in 4.3s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/32) ...
+  Generating static pages using 1 worker (8/32) 
+  Generating static pages using 1 worker (16/32) 
+  Generating static pages using 1 worker (24/32) 
+✓ Generating static pages using 1 worker (32/32) in 520ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /about
+├ ƒ /account
+├ ƒ /account/appointments
+├ ƒ /account/settings
+├ ƒ /admin
+├ ƒ /admin/appointments
+├ ƒ /admin/articles
+├ ƒ /admin/articles/[id]
+├ ƒ /admin/clients
+├ ƒ /admin/courses
+├ ƒ /admin/courses/[id]
+├ ƒ /admin/messages
+├ ƒ /admin/reviews
+├ ƒ /admin/settings
+├ ƒ /api/auth/[...all]
+├ ƒ /api/live
+├ ○ /apple-icon.png
+├ ƒ /articles
+├ ƒ /articles/[slug]
+├ ƒ /booking
+├ ƒ /contact
+├ ƒ /courses
+├ ƒ /faq
+├ ○ /icon.svg
+├ ƒ /login
+├ ○ /manifest.webmanifest
+├ ○ /opengraph-image.png
+├ ƒ /privacy
+├ ○ /robots.txt
+├ ƒ /services
+├ ƒ /sitemap.xml
+├ ƒ /terms
+├ ƒ /testimonials
+└ ○ /twitter-image.png
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

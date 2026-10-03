@@ -1,0 +1,8 @@
+
+> kiana-khorsand@0.1.0 typecheck
+> tsc --noEmit
+
+
+> kiana-khorsand@0.1.0 lint
+> eslint
+

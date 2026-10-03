@@ -3,7 +3,7 @@ import { Faq } from "@/components/sections/faq/faq";
 import { routes } from "@/lib/constants";
 
 const title = "پرسش‌های متداول";
-const description = "پاسخ به پرسش‌های شروع مشاوره، رزرو، هزینه، حریم خصوصی و آموزش در وب‌سایت دکتر کیانا خرسند؛ همراه با توضیح روشن دربارهٔ امکانات غیرفعال این نسخه.";
+const description = "پاسخ به پرسش‌های شروع مشاوره، رزرو، هزینه، حریم خصوصی و آموزش در وب‌سایت دکتر کیانا خرسند.";
 const shareTitle = `${title} | دکتر کیانا خرسند`;
 
 export const metadata: Metadata = {

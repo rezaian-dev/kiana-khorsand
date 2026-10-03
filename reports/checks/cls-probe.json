@@ -1,0 +1,44 @@
+[
+  {
+    "shifts": [],
+    "font": "font, \"font Fallback\", Arial, sans-serif",
+    "fonts": [
+      {
+        "family": "font",
+        "status": "loaded"
+      },
+      {
+        "family": "font Fallback",
+        "status": "unloaded"
+      }
+    ]
+  },
+  {
+    "shifts": [],
+    "font": "font, \"font Fallback\", Arial, sans-serif",
+    "fonts": [
+      {
+        "family": "font",
+        "status": "loaded"
+      },
+      {
+        "family": "font Fallback",
+        "status": "unloaded"
+      }
+    ]
+  },
+  {
+    "shifts": [],
+    "font": "font, \"font Fallback\", Arial, sans-serif",
+    "fonts": [
+      {
+        "family": "font",
+        "status": "loaded"
+      },
+      {
+        "family": "font Fallback",
+        "status": "unloaded"
+      }
+    ]
+  }
+]

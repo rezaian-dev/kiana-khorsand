@@ -1,0 +1,196 @@
+{
+  "hits": [
+    {
+      "file": "src/app/globals.css",
+      "line": 637,
+      "text": ".command-field::placeholder { color: var(--muted-foreground); }",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/content/profile.ts",
+      "line": 26,
+      "text": "sample: \"نسخهٔ در حال تکمیل؛ تصاویر معرفی سایت، مقاله‌ها و دوره‌ها نمونه‌های مفهومی ساخته‌شده با هوش مصنوعی‌اند، نه عکس واقعی دکتر یا کلاس‌ها.\",",
+      "classification": "Retained unrendered notices constant"
+    },
+    {
+      "file": "src/content/questions.ts",
+      "line": 20,
+      "text": "{ key: \"stories\", group: \"learning\", question: \"چهره‌ها و تجربه‌های نمایش‌داده‌شده واقعی‌اند؟\", answer: \"تصاویر معرفی سایت و مطالب، مفهومی و ساخته‌شده با هوش مصنوعی‌اند، نه عکس واقعی دکتر یا کلاس‌ها. روایت‌ها فقط با تأیید و رضایت انتشار نمایش داده می‌شوند؛ چهرهٔ ساختگی به نظر واقعی نسبت داده نمی‌شود و در نبود عکس مجاز، حروف نام نمایش داده می‌شود. اگر روایتی منتشر نشده باشد، بخش خالی می‌ماند.\" },",
+      "classification": "Retained data; explicitly excluded by Home and FAQ renderers"
+    },
+    {
+      "file": "src/lib/records.ts",
+      "line": 54,
+      "text": "}).refine((value) => value.status !== reviewStates.approved || (value.hasConsent && !value.isSample), { path: [\"status\"], error: \"فقط نظر واقعی با رضایت انتشار قابل تأیید است.\" }).refine((value) => value.status !== reviewStates.approved || value.image === null || !images[value.image].isSample, { path: [\"image\"], error: \"عکس نمونه را به نظر واقعی نسبت ندهید؛ فعلاً بدون عکس منتشر کنید.\" });",
+      "classification": "Unchanged integrity schema; admin moderation validation only; explicitly preserved"
+    },
+    {
+      "file": "src/server/published.ts",
+      "line": 89,
+      "text": "if (image?.isSample) throw new Error(\"A sample image cannot represent an approved review.\");",
+      "classification": "Unchanged integrity exception; public error UI does not expose it"
+    },
+    {
+      "file": "src/server/repos/testimonials.ts",
+      "line": 79,
+      "text": "// Moderation cannot rewrite testimony or relabel a sample as genuine.",
+      "classification": "Unchanged guard comment"
+    },
+    {
+      "file": "src/components/layout/command-menu.tsx",
+      "line": 86,
+      "text": "return <Sheet open={isOpen} onOpenChange={handleOpen}><SheetTrigger asChild><Button variant=\"outline\" className=\"command-trigger\" aria-label=\"فرمان‌های سریع؛ کنترل یا فرمان به‌همراه کی\"><Search aria-hidden=\"true\" /><span>دسترسی سریع</span><kbd dir=\"ltr\">⌘ / Ctrl K</kbd></Button></SheetTrigger><SheetContent isOpen={isOpen} side=\"top\" className=\"admin-command\"><SheetHeader><SheetTitle>کجا می‌خواهید بروید؟</SheetTitle><SheetDescription>میان‌برها یا جست‌وجوی واقعی حساب و نوبت؛ فقط برای هماهنگی ضروری.</SheetDescription></SheetHeader><Command label=\"فرمان‌های مدیریت\" loop><CommandInput placeholder=\"نام بخش را بنویسید…\" aria-label=\"جست‌وجوی میان‌بر\" maxLength={80} /><CommandList><CommandEmpty>میان‌بری با این عبارت پیدا نشد.</CommandEmpty><CommandGroup heading=\"بخش‌های آماده\">{destinations.map((entry) => <CommandItem key={entry.href} value={entry.label} onSelect={() => handleNavigate(entry.href)}>{entry.label}</CommandItem>)}</CommandGroup></CommandList></Command><form className=\"command-search\" action={routes.admin} method=\"post\" noValidate onSubmit={(event) => { void handleSubmit((value) => handleSearch(value))(event); }} aria-busy={isPending} aria-describedby={`${id}-privacy ${id}-status`}><label htmlFor={`${id}-q`}>نام، ایمیل، شمارهٔ مراجع یا شناسهٔ کامل نوبت</label><Input id={`${id}-q`} {...register(\"q\")} onInput={() => { request.current += 1; setHits(null); setMessage(\"\"); }} type=\"search\" autoComplete=\"off\" maxLength={80} aria-invalid={!!errors.q} disabled={isPending} /><Button type=\"submit\" disabled={isPending}>{isPending ? \"در حال جست‌وجو…\" : \"جست‌وجوی رکوردها\"}</Button><p className=\"field-error\" role=\"status\">{errors.q?.message}</p><p className=\"search-privacy\" id={`${id}-privacy`}>حریم خصوصی: عبارت با درخواست خصوصی ارسال می‌شود، نه در نشانی. شرح‌حال ننویسید. انتخاب نتیجه، شناسه را در نشانی فهرست قرار می‌دهد.</p></form><p id={`${id}-status`} role=\"status\" className=\"member-feedback\">{message}</p>{hits && <Command label=\"نتیجهٔ جست‌وجوی رکوردها\" shouldFilter={false}><CommandList>{!hits.clients.length && !hits.appointments.length && <p className=\"dashboard-empty\">حساب یا نوبتی پیدا نشد. نوبت فقط با شناسهٔ کامل جست‌وجو می‌شود.</p>}{hits.clients.length > 0 && <CommandGroup heading=\"حساب‌های مراجعان\">{hits.clients.map((client) => <CommandItem key={client.id} value={client.id} onSelect={() => handleNavigate(`${routes.clients}?q=${encodeURIComponent(client.id)}`)}>{client.name}</CommandItem>)}</CommandGroup>}{hits.appointments.length > 0 && <CommandGroup heading=\"نوبت\">{hits.appointments.map((entry) => <CommandItem key={entry.id} value={entry.id} onSelect={() => handleNavigate(`${routes.agenda}?q=${encodeURIComponent(entry.id)}`)}>{entry.label}</CommandItem>)}</CommandGroup>}</CommandList></Command>}</SheetContent></Sheet>;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/shared/search-form.tsx",
+      "line": 28,
+      "text": "<label htmlFor={`${id}-query`}>جست‌وجو در عنوان و توضیح</label><div className=\"search-row\"><Input {...register(\"q\")} id={`${id}-query`} type=\"search\" defaultValue={query.q} maxLength={80} placeholder=\"مثلاً استرس یا گفت‌وگو\" autoComplete=\"off\" aria-invalid={!!errors.q} aria-describedby={`${id}-privacy ${id}-status`} disabled={isPending} /><Button type=\"submit\" disabled={isPending}><SearchIcon aria-hidden=\"true\" />جست‌وجو</Button></div>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/shared/choice-field.tsx",
+      "line": 13,
+      "text": "placeholder?: string; describedBy?: string; onValueChange?: (value: string) => void;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/shared/choice-field.tsx",
+      "line": 18,
+      "text": "export function ChoiceField<T extends FieldValues>({ control, name, id, label, options, disabled, required, kind = \"select\", placeholder, describedBy, onValueChange }: Props<T>) {",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/shared/choice-field.tsx",
+      "line": 23,
+      "text": "return <Component {...shared} placeholder={placeholder} ref={field.ref} />;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/input.tsx",
+      "line": 11,
+      "text": "\"h-11 w-full min-w-0 rounded-[var(--radius-control)] border border-input bg-card px-3.5 py-0 text-base outline-none file:inline-flex file:h-6 file:border-0 file:bg-card file:text-base file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed aria-invalid:border-destructive\",",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/textarea.tsx",
+      "line": 10,
+      "text": "\"flex field-sizing-fixed min-h-11 w-full min-w-0 rounded-[var(--radius-control)] border border-input bg-card px-3.5 py-2 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed aria-invalid:border-destructive\",",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/choice-fallback.tsx",
+      "line": 16,
+      "text": "label?: string; placeholder?: string; disabled?: boolean; required?: boolean;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/choice-fallback.tsx",
+      "line": 20,
+      "text": "export function ChoiceFallback({ id, name, value, options, label, placeholder = \"انتخاب کنید\", disabled, required, ...aria }: Props) {",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/choice-fallback.tsx",
+      "line": 24,
+      "text": "<span>{options.find((option) => option.value === value)?.label ?? placeholder}</span><ChevronDown aria-hidden=\"true\" />",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/choice-fallback.tsx",
+      "line": 26,
+      "text": "<div className=\"choice-panel fallback-panel\"><fieldset disabled={disabled}><legend className=\"sr-only\">{label || placeholder}</legend>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/select.tsx",
+      "line": 12,
+      "text": "placeholder?: string; label?: string; ref?: Ref<HTMLButtonElement>;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/select.tsx",
+      "line": 15,
+      "text": "export function Select({ options, value, defaultValue = \"\", onValueChange, name, required, disabled, id, label, placeholder = \"انتخاب کنید\", className, ref, ...props }: SelectProps) {",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/select.tsx",
+      "line": 48,
+      "text": "if (!enhanced) return <ChoiceFallback id={id} name={name} value={selected} options={options} label={label} placeholder={placeholder} disabled={disabled} required={required} aria-describedby={props[\"aria-describedby\"]} aria-invalid={props[\"aria-invalid\"] === \"grammar\" || props[\"aria-invalid\"] === \"spelling\" ? true : props[\"aria-invalid\"]} />;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/select.tsx",
+      "line": 52,
+      "text": "<Primitive.Value placeholder={placeholder}>{options.find((option) => option.value === selected)?.label}</Primitive.Value>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/combobox.tsx",
+      "line": 15,
+      "text": "export function Combobox({ options, value, defaultValue = \"\", onValueChange, name, required, disabled, id, label, placeholder = \"انتخاب کنید\", className, ref, onBlur, ...props }: SelectProps) {",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/combobox.tsx",
+      "line": 37,
+      "text": "if (!enhanced) return <ChoiceFallback id={id} name={name} value={selected} options={options} label={label} placeholder={placeholder} disabled={disabled} required={required} aria-describedby={props[\"aria-describedby\"]} aria-invalid={props[\"aria-invalid\"] === \"grammar\" || props[\"aria-invalid\"] === \"spelling\" ? true : props[\"aria-invalid\"]} />;",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/combobox.tsx",
+      "line": 44,
+      "text": "<span>{options.find((option) => option.value === selected)?.label ?? placeholder}</span><ChevronDown className=\"choice-chevron\" aria-hidden=\"true\" />",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/combobox.tsx",
+      "line": 47,
+      "text": "<PopoverContent container={container} className=\"combobox-panel\" aria-label={label || placeholder}>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/combobox.tsx",
+      "line": 48,
+      "text": "<Command loop label={label || placeholder}>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/ui/combobox.tsx",
+      "line": 49,
+      "text": "<CommandInput placeholder=\"جست‌وجو…\" aria-label={label ? `جست‌وجوی ${label}` : \"جست‌وجوی گزینه‌ها\"} />",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/sections/contact/message-form.tsx",
+      "line": 62,
+      "text": "<div><label htmlFor={`${id}-message`}>پیام کوتاه <span className=\"muted\">(ضروری)</span></label><Controller name=\"message\" control={control} render={({ field }) => <Textarea id={`${id}-message`} ref={field.ref} value={field.value} onChange={field.onChange} onBlur={field.onBlur} rows={5} maxLength={1200} aria-required=\"true\" aria-invalid={!!errors.message} aria-describedby={`${id}-message-error ${id}-privacy`} placeholder=\"فقط یک پرسش عمومی؛ بدون شرح‌حال یا اطلاعات حساس\" />} /><p id={`${id}-message-error`} className=\"field-error\" aria-live=\"polite\">{errors.message?.message}</p></div></div>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    },
+    {
+      "file": "src/components/sections/queue/review-detail.tsx",
+      "line": 10,
+      "text": "return <article><h2>{record.name}</h2><p>وضعیت ثبت‌شده: {queueLabels[record.status]} · {record.isSample ? \"برچسب داخلی: نمونه\" : \"نیازمند بررسی اصالت\"}</p><p><time dateTime={record.createdAt}>{formatDate(new Date(record.createdAt), { dateStyle: \"medium\", timeStyle: \"short\" })}</time></p><blockquote className=\"private-text\">{record.quote}</blockquote>{record.image && <div className=\"review-photo\"><Photo image={images[record.image]} sizes=\"160px\" /></div>}<p className=\"panel-note\">تصمیم فقط دربارهٔ همین متن و نام است؛ این پنجره شرح‌حال، امتیاز درمان یا گزارش تاریخچهٔ رضایت نیست.</p><ReviewForm key={record.id} value={{ id: record.id, revision: record.revision, status: record.status, hasConsent: record.hasConsent, isImageRemoved: record.image === null }} isSample={record.isSample} /></article>;",
+      "classification": "Permitted admin-only internal moderation label"
+    },
+    {
+      "file": "src/components/sections/settings/profile-form.tsx",
+      "line": 47,
+      "text": "<div className=\"auth-field\"><label htmlFor={`${id}-phone`}>شمارهٔ همراه <span className=\"muted\">(اختیاری)</span></label><Controller name=\"phone\" control={control} render={({ field }) => <Input id={`${id}-phone`} ref={field.ref} value={field.value} onBlur={field.onBlur} onChange={field.onChange} type=\"tel\" inputMode=\"tel\" dir=\"ltr\" maxLength={13} autoComplete=\"tel\" placeholder=\"09…\" aria-invalid={!!errors.phone} aria-describedby={`${id}-phone-error ${id}-phone-hint`} />} /><p id={`${id}-phone-error`} className=\"field-error\" aria-live=\"polite\">{errors.phone?.message}</p><p className=\"section-disclosure\" id={`${id}-phone-hint`}>با رقم انگلیسی و ۰۹ یا ‎+۹۸ بنویسید؛ ذخیرهٔ شماره، تأیید مالکیت آن نیست.</p></div>",
+      "classification": "Input placeholder/API/CSS selector; not a disclosure"
+    }
+  ],
+  "unclassified": [],
+  "unchangedGuards": [
+    "package.json",
+    "package-lock.json",
+    "src/lib/records.ts",
+    "src/server/auth.ts",
+    "src/server/published.ts",
+    "src/server/repos/published.ts",
+    "src/server/repos/testimonials.ts",
+    "src/server/records.ts",
+    "src/server/mutations.ts"
+  ]
+}

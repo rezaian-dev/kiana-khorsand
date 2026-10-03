@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "environment": "Actual 5-minute timer, anonymous SSE, isolated memory counter; no DB or authenticated session",
+  "stream": [
+    {
+      "kind": "construct",
+      "time": 536.4000000003725
+    },
+    {
+      "kind": "open",
+      "trusted": true,
+      "time": 611.4000000003725
+    },
+    {
+      "kind": "renew",
+      "trusted": true,
+      "time": 300607.10000000056
+    },
+    {
+      "kind": "construct",
+      "time": 300757.4000000004
+    },
+    {
+      "kind": "open",
+      "trusted": true,
+      "time": 300762.10000000056
+    }
+  ],
+  "connection": [
+    {
+      "value": "true",
+      "time": 641.6000000005588
+    }
+  ],
+  "focus": "live-draft"
+}

@@ -1,0 +1,93 @@
+{
+  "environment": "Actual production SSE GET + LiveRefresh + Next RSC; memory-only counter; null-session fixture; NO BUSINESS DB/AUTH PROOF",
+  "checks": [
+    {
+      "name": "Anonymous real SSE → Next production RSC snapshot, focused pristine field does not pause",
+      "passed": true,
+      "detail": {
+        "latencyMs": [
+          301,
+          301,
+          287
+        ]
+      }
+    },
+    {
+      "name": "20 confirmed memory notices coalesce and one refresh flight",
+      "passed": true,
+      "detail": {
+        "refreshes": 1,
+        "maxFlight": 1
+      }
+    },
+    {
+      "name": "Active tab and carousel selection survive incoming RSC update",
+      "passed": true,
+      "detail": {
+        "slide": [
+          null,
+          "true",
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "name": "Open dropdown remains open across live update",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "Open sheet and pristine focus survive live update",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "Dirty typing, caret, scroll protected; stale notice; automatic discard catch-up",
+      "passed": true,
+      "detail": {
+        "catchupMs": 302,
+        "scroll": 150
+      }
+    },
+    {
+      "name": "Native online/offline recovery catches up without a reload",
+      "passed": true,
+      "detail": {
+        "catchupMs": 283
+      }
+    },
+    {
+      "name": "Native hidden tab catches up ≤1s on visibility restoration",
+      "passed": false,
+      "error": "page.waitForFunction: Timeout 12000ms exceeded."
+    },
+    {
+      "name": "Origin/cross-site/invalid scope and private guest SSE denied, without DB",
+      "passed": true,
+      "detail": [
+        {
+          "path": "/api/live?scope=public",
+          "status": 403
+        },
+        {
+          "path": "/api/live?scope=public",
+          "status": 403
+        },
+        {
+          "path": "/api/live?scope=invalid",
+          "status": 400
+        },
+        {
+          "path": "/api/live?scope=account",
+          "status": 401
+        },
+        {
+          "path": "/api/live?scope=admin",
+          "status": 401
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

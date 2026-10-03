@@ -1,0 +1,70 @@
+{
+  "environment": "Actual component harness; Chromium; no DB",
+  "checks": [
+    {
+      "name": "Fine-pointer card hover lifts 4px; primary hover/active; focus ring",
+      "passed": true,
+      "detail": {
+        "lift": "matrix(1, 0, 0, 1, 0, -4)",
+        "hover": {
+          "transform": "matrix(1, 0, 0, 1, 0, -1)",
+          "filter": "brightness(1.025)"
+        },
+        "active": "matrix(0.98, 0, 0, 0.98, 0, 0)",
+        "focus": {
+          "border": "rgb(106, 85, 216)",
+          "shadow": "rgba(106, 85, 216, 0.18) 0px 0px 0px 3px, rgba(255, 255, 255, 0.7) 0px 1px 0px 0px inset, rgba(20, 25, 40, 0.04) 0px 2px 6px 0px"
+        }
+      }
+    },
+    {
+      "name": "Reduced-motion keeps manual controls while preventing card/image lift and mesh drift",
+      "passed": true,
+      "detail": {
+        "card": "none",
+        "mesh": "none",
+        "connectors": [
+          "flex",
+          "flex",
+          "flex",
+          "flex",
+          "flex",
+          "flex",
+          "flex",
+          "flex"
+        ]
+      }
+    },
+    {
+      "name": "Coarse-pointer emulation does not trigger fine-pointer hover lift",
+      "passed": true,
+      "detail": {
+        "fine": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "name": "Theme toggle retains header/hero geometry",
+      "passed": true,
+      "detail": {
+        "unchanged": true
+      }
+    },
+    {
+      "name": "Cold delayed self-hosted font: light",
+      "passed": true,
+      "detail": {
+        "cls": 0,
+        "fontDelayMs": 1200
+      }
+    },
+    {
+      "name": "Cold delayed self-hosted font: dark",
+      "passed": true,
+      "detail": {
+        "cls": 0,
+        "fontDelayMs": 1200
+      }
+    }
+  ]
+}

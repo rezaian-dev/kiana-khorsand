@@ -1,0 +1,13 @@
+{
+  "environment": "Pure process-local transport; no database or application session",
+  "passed": [
+    "publish/subscribe",
+    "unsubscribe/idempotent cleanup",
+    "reject active transport reconfiguration",
+    "4 user streams",
+    "64 anonymous streams",
+    "256 total streams",
+    "asynchronous publish failure closes registered streams"
+  ],
+  "failed": []
+}

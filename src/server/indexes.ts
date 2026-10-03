@@ -15,5 +15,5 @@ export async function requireIndexes(name: Collection) {
   }
   const hasSlot = entries.some((entry) => entry.name === indexes.slot && entry.unique && entry.key?.date === 1 && entry.key.slot === 1 && Object.keys(entry.key).length === 2 && entry.partialFilterExpression?.isReserved === true && Object.keys(entry.partialFilterExpression).length === 1);
   const hasMinutes = entries.some((entry) => entry.name === indexes.minutes && entry.unique && entry.key?.minutes === 1 && Object.keys(entry.key).length === 1 && entry.partialFilterExpression?.isReserved === true && Object.keys(entry.partialFilterExpression).length === 1);
-  if (!hasSlot || !hasMinutes) throw new MutationError(resultCodes.unavailable, "نمایه‌های ایمن رزرو هنوز آماده نیستند؛ راه‌اندازی باید روی میزبان کامل شود.");
+  if (!hasSlot || !hasMinutes) throw new MutationError(resultCodes.unavailable, "ثبت درخواست در حال حاضر در دسترس نیست.");
 }

@@ -4,7 +4,7 @@ import { privacy } from "@/content/policies";
 import { routes } from "@/lib/constants";
 
 const title = "حریم خصوصی";
-const description = "پیش‌نویس حریم خصوصی وب‌سایت دکتر کیانا خرسند؛ توضیح پردازش فعلی فرم، جست‌وجو، تنظیم تم و اطلاعات فنی، همراه با موارد نیازمند تأیید پیش از انتشار.";
+const description = "حریم خصوصی وب‌سایت دکتر کیانا خرسند؛ توضیح پردازش فرم، جست‌وجو، تنظیم تم و اطلاعات فنی.";
 const shareTitle = `${title} | دکتر کیانا خرسند`;
 
 export const metadata: Metadata = {

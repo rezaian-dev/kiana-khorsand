@@ -1,0 +1,38 @@
+{
+  "method": "Computed sRGB endpoints / exact 50% interpolation; measured browser hover brightness(1.025); foreground white clamped; WCAG luminance",
+  "midpoint": [
+    74.5,
+    100.0,
+    196.0
+  ],
+  "midpointRatio": 5.363810156993598,
+  "hoverPairs": [
+    {
+      "name": "start",
+      "rgb": [
+        108.64999999999999,
+        87.12499999999999,
+        221.39999999999998
+      ],
+      "ratio": 5.170500491583861
+    },
+    {
+      "name": "50% midpoint",
+      "rgb": [
+        76.3625,
+        102.49999999999999,
+        200.89999999999998
+      ],
+      "ratio": 5.155891310374074
+    },
+    {
+      "name": "end",
+      "rgb": [
+        44.074999999999996,
+        117.87499999999999,
+        180.39999999999998
+      ],
+      "ratio": 4.821778957225018
+    }
+  ]
+}

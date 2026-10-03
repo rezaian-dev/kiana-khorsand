@@ -1,0 +1,632 @@
+[
+  {
+    "file": "src/app/globals.css",
+    "line": 1198,
+    "word": "placeholder",
+    "context": ".command-field::placeholder { color: var(--muted-foreground); }"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 11,
+    "word": "Sample",
+    "context": "  isSample: boolean;"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 15,
+    "word": "نمونه",
+    "context": "ro-mobile.jpg\", width: 2400, height: 1350, alt: \"تصویر نمونهٔ یک روان‌شناس زن ایرانی با روسری یاسی، نشسته در اتاقی روشن\", subject: \"Fictional Iranian psychologist, seated, lavender hija"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 15,
+    "word": "Sample",
+    "context": ": \"16/9\", section: \"Home hero arched portrait crop\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 16,
+    "word": "نمایشی",
+    "context": "portrait.jpg\", width: 1280, height: 1600, alt: \"پرترهٔ نمایشیِ زن جوان ایرانی با پوشش حرفه‌ای و روسری یاسی؛ تصویر واقعی دکتر نیست\", subject: \"Matching fictional portrait\", aspectRatio: \""
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 16,
+    "word": "Sample",
+    "context": "section: \"Home teaser / About and Contact portrait\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 17,
+    "word": "نمونه",
+    "context": "le.jpg\", width: 2400, height: 1350, alt: \"اتاق مشاورهٔ نمونه با صندلی یاسی، گیاه و نور آرام عصر\", subject: \"Fictional sunlit counseling room\", aspectRatio: \"16/9\", section: \"Home final "
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 17,
+    "word": "Sample",
+    "context": "om\", aspectRatio: \"16/9\", section: \"Home final CTA\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 18,
+    "word": "نمونه",
+    "context": "-mobile.jpg\", width: 2400, height: 1350, alt: \"میز کار نمونه با دفتر یاسی، فنجان چای و شاخهٔ سبز\", subject: \"Fictional therapist workspace\", aspectRatio: \"16/9\", section: \"Admin greetin"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 18,
+    "word": "Sample",
+    "context": "ce\", aspectRatio: \"16/9\", section: \"Admin greeting\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 19,
+    "word": "ساختگی",
+    "context": " 1200, height: 900, alt: \"گفت‌وگوی آرام دو فرد ایرانیِ ساختگی در خانه؛ تصویر نمونه\", subject: \"Fictional Iranian adults in attentive conversation\", aspectRatio: \"4/3\", section: \"Home and"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 19,
+    "word": "نمونه",
+    "context": "t: \"گفت‌وگوی آرام دو فرد ایرانیِ ساختگی در خانه؛ تصویر نمونه\", subject: \"Fictional Iranian adults in attentive conversation\", aspectRatio: \"4/3\", section: \"Home and Services couples / c"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 19,
+    "word": "Sample",
+    "context": " \"Home and Services couples / communication course\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 20,
+    "word": "ساختگی",
+    "context": ".jpg\", width: 1200, height: 900, alt: \"خانوادهٔ ایرانی ساختگی در حال شنیدن صحبت یکدیگر؛ تصویر نمونه\", subject: \"Fictional Iranian family conversation\", aspectRatio: \"4/3\", section: \"Home"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 20,
+    "word": "نمونه",
+    "context": "خانوادهٔ ایرانی ساختگی در حال شنیدن صحبت یکدیگر؛ تصویر نمونه\", subject: \"Fictional Iranian family conversation\", aspectRatio: \"4/3\", section: \"Home and Services family / family course\","
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 20,
+    "word": "Sample",
+    "context": "section: \"Home and Services family / family course\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 21,
+    "word": "نمونه",
+    "context": "تر بدون نوشته، خودکار و فنجان یاسی روی میز روشن؛ تصویر نمونه\", subject: \"Blank journal and tea, generated still life\", aspectRatio: \"4/3\", section: \"Home and Services individual / stres"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 21,
+    "word": "Sample",
+    "context": "rvices individual / stress course / Articles intro\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 22,
+    "word": "نمونه",
+    "context": "\"چراغ گرم و کتاب بسته کنار تخت در فضای آرام عصر؛ تصویر نمونه\", subject: \"Generated quiet bedroom and evening routine\", aspectRatio: \"4/3\", section: \"Home / Articles / evening detail\", i"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 22,
+    "word": "Sample",
+    "context": " \"4/3\", section: \"Home / Articles / evening detail\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 23,
+    "word": "ساختگی",
+    "context": "s/walk.jpg\", width: 1200, height: 900, alt: \"زن ایرانی ساختگی با روسری یاسی در مسیر سبز پارک؛ تصویر نمونه\", subject: \"Fictional Iranian woman on a morning walk\", aspectRatio: \"4/3\", sect"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 23,
+    "word": "نمونه",
+    "context": "زن ایرانی ساختگی با روسری یاسی در مسیر سبز پارک؛ تصویر نمونه\", subject: \"Fictional Iranian woman on a morning walk\", aspectRatio: \"4/3\", section: \"Home / Articles / stress detail\", isSa"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 23,
+    "word": "Sample",
+    "context": ": \"4/3\", section: \"Home / Articles / stress detail\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 24,
+    "word": "نمونه",
+    "context": "لپ‌تاپ با صفحهٔ خالی و هدفون در محیط خصوصی خانه؛ تصویر نمونه\", subject: \"Generated private online conversation workspace\", aspectRatio: \"4/3\", section: \"Home and Services online / first"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 24,
+    "word": "Sample",
+    "context": ": \"Home and Services online / first-session detail\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 25,
+    "word": "ساختگی",
+    "context": "se-portrait.jpg\", width: 640, height: 640, alt: \"چهرهٔ ساختگی زن ایرانی با روسری رز؛ مراجع واقعی نیست\", subject: \"Fictional Iranian woman, rose hijab\", aspectRatio: \"1/1\", section: \"Reta"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 25,
+    "word": "واقعی نیست",
+    "context": ": 640, alt: \"چهرهٔ ساختگی زن ایرانی با روسری رز؛ مراجع واقعی نیست\", subject: \"Fictional Iranian woman, rose hijab\", aspectRatio: \"1/1\", section: \"Retained design portrait one; not a public r"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 25,
+    "word": "Sample",
+    "context": "\"Retained design portrait one; not a public review\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 26,
+    "word": "ساختگی",
+    "context": "al-portrait.jpg\", width: 640, height: 640, alt: \"چهرهٔ ساختگی مرد ایرانی با پیراهن سبزآبی؛ مراجع واقعی نیست\", subject: \"Fictional Iranian man, teal shirt\", aspectRatio: \"1/1\", section: \""
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 26,
+    "word": "واقعی نیست",
+    "context": " alt: \"چهرهٔ ساختگی مرد ایرانی با پیراهن سبزآبی؛ مراجع واقعی نیست\", subject: \"Fictional Iranian man, teal shirt\", aspectRatio: \"1/1\", section: \"Retained design portrait two; not a public rev"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 26,
+    "word": "Sample",
+    "context": "\"Retained design portrait two; not a public review\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 27,
+    "word": "ساختگی",
+    "context": "go-portrait.jpg\", width: 640, height: 640, alt: \"چهرهٔ ساختگی زن ایرانی با روسری نیلی؛ مراجع واقعی نیست\", subject: \"Fictional Iranian woman, indigo hijab\", aspectRatio: \"1/1\", section: \""
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 27,
+    "word": "واقعی نیست",
+    "context": "640, alt: \"چهرهٔ ساختگی زن ایرانی با روسری نیلی؛ مراجع واقعی نیست\", subject: \"Fictional Iranian woman, indigo hijab\", aspectRatio: \"1/1\", section: \"Retained design portrait three; not a publ"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 27,
+    "word": "Sample",
+    "context": "etained design portrait three; not a public review\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 28,
+    "word": "Sample",
+    "context": ": \"40/21\", section: \"First-session article sharing\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 29,
+    "word": "Sample",
+    "context": "\"40/21\", section: \"Everyday-stress article sharing\", isSample: true },"
+  },
+  {
+    "file": "src/content/images.ts",
+    "line": 30,
+    "word": "Sample",
+    "context": "\"40/21\", section: \"Evening-routine article sharing\", isSample: true },"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 16,
+    "word": "آزمایشی",
+    "context": "تا تأیید راه تماس و این سیاست، برای بازبینی از اطلاعات آزمایشی استفاده کنید.\"] },"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 17,
+    "word": "آزمایشی",
+    "context": "؛ فرم امکان استعلام عمومی ندارد. برای بازبینی از دادهٔ آزمایشی استفاده کنید؛ نگهداری احتمالی اطلاعات توسط خود مرورگر رفتاری جداگانه است.\", \"برای ادامهٔ رزرو پس از ورود، فقط نوع خدمت، روز "
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 20,
+    "word": "نمونه",
+    "context": "فعال ندارند.\", \"روایت عمومی فقط از رکورد تأییدشده و غیرنمونه با رضایت انتشار خوانده می‌شود؛ متن یا چهرهٔ ساختگی به‌جای نظر واقعی نمایش داده نمی‌شود. برای انتشار آیندهٔ یک روایت، رضایت م"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 20,
+    "word": "ساختگی",
+    "context": "و غیرنمونه با رضایت انتشار خوانده می‌شود؛ متن یا چهرهٔ ساختگی به‌جای نظر واقعی نمایش داده نمی‌شود. برای انتشار آیندهٔ یک روایت، رضایت مشخص نسبت به متن و اطلاعات قابل‌شناسایی لازم است؛ در"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 21,
+    "word": "فرضی",
+    "context": "یط نسخهٔ پشتیبان تعیین و اعلام شوند؛ مدت یا تضمین حذفِ فرضی درج نمی‌شود.\", \"هیچ سامانه‌ای را نباید با وعدهٔ امنیت یا محرمانگی مطلق معرفی کرد. حدود قانونی محرمانگی و شرایط مربوط به ایمن"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 28,
+    "word": "فرضی",
+    "context": "ات در نسخهٔ فعلی؛ بدون شرایط مالی، درمانی یا قراردادیِ فرضی.\","
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 33,
+    "word": "فرضی",
+    "context": "ش درخواست اعلام شوند. این متن زمان پاسخ یا ظرفیت پذیرش فرضی تعیین نمی‌کند.\"] },"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 34,
+    "word": "فرضی",
+    "context": "وب نمی‌شود.\", \"برای بازپرداخت یا دیرکرد، مهلت و جریمهٔ فرضی درج نمی‌شود. این موارد نیاز به تصمیم صاحب خدمت و بازبینی حقوقی متناسب با مقررات مرتبط دارند؛ پیش‌نویس طراحی جایگزین اعلام شف"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 34,
+    "word": "واقعی نیست",
+    "context": "ت مرتبط دارند؛ پیش‌نویس طراحی جایگزین اعلام شفاف شرایط واقعی نیست.\"] },"
+  },
+  {
+    "file": "src/content/policies.ts",
+    "line": 35,
+    "word": "نمونه",
+    "context": " نیز جایگزین ارزیابی و مشاورهٔ فردی نمی‌شود.\", \"محتوای نمونه را به‌عنوان نوشته یا تأیید حرفه‌ای دکتر بازنشر نکنید. برای استفاده از متن، عکس، فونت یا نشان، مجوز و شرایط صاحب حقِ همان دار"
+  },
+  {
+    "file": "src/content/profile.ts",
+    "line": 26,
+    "word": "sample",
+    "context": "  sample: \"نسخهٔ در حال تکمیل؛ تصاویر معرفی سایت، مقاله‌ها و دوره‌ها نمونه‌های مفهومی ساخته‌شده با هوش مصنوعی‌اند، نه عکس واقعی دکتر "
+  },
+  {
+    "file": "src/content/profile.ts",
+    "line": 26,
+    "word": "در حال تکمیل",
+    "context": "  sample: \"نسخهٔ در حال تکمیل؛ تصاویر معرفی سایت، مقاله‌ها و دوره‌ها نمونه‌های مفهومی ساخته‌شده با هوش مصنوعی‌اند، نه عکس واقعی دکتر یا کلاس‌ها.\","
+  },
+  {
+    "file": "src/content/profile.ts",
+    "line": 26,
+    "word": "نمونه",
+    "context": "هٔ در حال تکمیل؛ تصاویر معرفی سایت، مقاله‌ها و دوره‌ها نمونه‌های مفهومی ساخته‌شده با هوش مصنوعی‌اند، نه عکس واقعی دکتر یا کلاس‌ها.\","
+  },
+  {
+    "file": "src/content/questions.ts",
+    "line": 3,
+    "word": "فرضی",
+    "context": " \"وضعیت فعلی نوبت، هزینه و شیوهٔ برگزاری؛ بدون اطلاعات فرضی.\", tone: \"lagoon\" },"
+  },
+  {
+    "file": "src/content/questions.ts",
+    "line": 5,
+    "word": "نمونه",
+    "context": " title: \"محتوا و آموزش\", description: \"مرز میان محتوای نمونه، آموزش عمومی و همکاری حرفه‌ای.\", tone: \"orchid\" },"
+  },
+  {
+    "file": "src/content/questions.ts",
+    "line": 14,
+    "word": "فرضی",
+    "context": "اقعی باید روشن شوند. در این نسخه پرداخت یا تعداد جلسهٔ فرضی نداریم.\" },"
+  },
+  {
+    "file": "src/content/questions.ts",
+    "line": 16,
+    "word": "آزمایشی",
+    "context": "یدشده پیگیری کنید. تا تأیید شرایط بهره‌برداری از دادهٔ آزمایشی استفاده کنید.\" },"
+  },
+  {
+    "file": "src/content/questions.ts",
+    "line": 20,
+    "word": "ساختگی",
+    "context": " فقط با تأیید و رضایت انتشار نمایش داده می‌شوند؛ چهرهٔ ساختگی به نظر واقعی نسبت داده نمی‌شود و در نبود عکس مجاز، حروف نام نمایش داده می‌شود. اگر روایتی منتشر نشده باشد، بخش خالی می‌ماند."
+  },
+  {
+    "file": "src/lib/records.ts",
+    "line": 52,
+    "word": "Sample",
+    "context": "enum(imageKeys).nullable(), hasConsent: z.boolean(), isSample: z.boolean(),"
+  },
+  {
+    "file": "src/lib/records.ts",
+    "line": 54,
+    "word": "Sample",
+    "context": "reviewStates.approved || (value.hasConsent && !value.isSample), { path: [\"status\"], error: \"فقط نظر واقعی با رضایت انتشار قابل تأیید است.\" }).refine((value) => value.status !== reviewSta"
+  },
+  {
+    "file": "src/lib/records.ts",
+    "line": 54,
+    "word": "Sample",
+    "context": "oved || value.image === null || !images[value.image].isSample, { path: [\"image\"], error: \"عکس نمونه را به نظر واقعی نسبت ندهید؛ فعلاً بدون عکس منتشر کنید.\" });"
+  },
+  {
+    "file": "src/lib/records.ts",
+    "line": 54,
+    "word": "نمونه",
+    "context": "[value.image].isSample, { path: [\"image\"], error: \"عکس نمونه را به نظر واقعی نسبت ندهید؛ فعلاً بدون عکس منتشر کنید.\" });"
+  },
+  {
+    "file": "src/server/published.ts",
+    "line": 89,
+    "word": "Sample",
+    "context": "    if (image?.isSample) throw new Error(\"A sample image cannot represent an approved review.\");"
+  },
+  {
+    "file": "src/server/published.ts",
+    "line": 89,
+    "word": "sample",
+    "context": "    if (image?.isSample) throw new Error(\"A sample image cannot represent an approved review.\");"
+  },
+  {
+    "file": "src/server/repos/testimonials.ts",
+    "line": 19,
+    "word": "Sample",
+    "context": "= { status: reviewStates.approved, hasConsent: true, isSample: false, publishedAt: { $lte: new Date(), $type: \"date\" as const } };"
+  },
+  {
+    "file": "src/server/repos/testimonials.ts",
+    "line": 79,
+    "word": "sample",
+    "context": "  // Moderation cannot rewrite testimony or relabel a sample as genuine."
+  },
+  {
+    "file": "src/components/layout/command-menu.tsx",
+    "line": 86,
+    "word": "placeholder",
+    "context": "r><Command label=\"فرمان‌های مدیریت\" loop><CommandInput placeholder=\"نام بخش را بنویسید…\" aria-label=\"جست‌وجوی میان‌بر\" maxLength={80} /><CommandList><CommandEmpty>میان‌بری با این عبارت پیدا ن"
+  },
+  {
+    "file": "src/components/shared/search-form.tsx",
+    "line": 28,
+    "word": "placeholder",
+    "context": "`} type=\"search\" defaultValue={query.q} maxLength={80} placeholder=\"مثلاً استرس یا گفت‌وگو\" autoComplete=\"off\" aria-invalid={!!errors.q} aria-describedby={`${id}-privacy ${id}-status`} disabl"
+  },
+  {
+    "file": "src/components/ui/input.tsx",
+    "line": 11,
+    "word": "placeholder",
+    "context": "d file:text-base file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed aria-invalid:border-destructive\","
+  },
+  {
+    "file": "src/components/ui/textarea.tsx",
+    "line": 10,
+    "word": "placeholder",
+    "context": "order-input bg-card px-3.5 py-2 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed aria-invalid:border-destructive\","
+  },
+  {
+    "file": "src/components/sections/about/background.tsx",
+    "line": 8,
+    "word": "فرضی",
+    "context": "losure\">هیچ مدرک، دانشگاه، سابقهٔ زمانی یا گواهی تخصصی فرضی درج نشده است. صحت اطلاعات حرفه‌ای باید پیش از شروع همکاری بررسی شود.</p></div></div></SectionSurface>;"
+  },
+  {
+    "file": "src/components/sections/article/article.tsx",
+    "line": 30,
+    "word": "Sample",
+    "context": "es=\"(min-width: 1024px) 40vw, 90vw\" />{article.image.isSample && <figcaption>تصویر مفهومی ساخته‌شده با هوش مصنوعی</figcaption>}</figure></div></SectionSurface><SectionSurface tone=\"mint-"
+  },
+  {
+    "file": "src/components/sections/articles/articles.tsx",
+    "line": 25,
+    "word": "نمونه",
+    "context": "90vw\" /><figcaption>جایی برای خواندن و فکرکردن · تصویر نمونهٔ هوش مصنوعی</figcaption></figure></div></SectionSurface>"
+  },
+  {
+    "file": "src/components/sections/booking/booking.tsx",
+    "line": 19,
+    "word": "در حال تکمیل",
+    "context": "s.emergency}</p><p className=\"section-disclosure\">نسخه در حال تکمیل است؛ راه‌اندازی فنی، تأیید حرفه‌ای یا حقوقی و آمادگی پذیرش واقعی نیست.</p></div></div></SectionSurface>"
+  },
+  {
+    "file": "src/components/sections/booking/booking.tsx",
+    "line": 19,
+    "word": "واقعی نیست",
+    "context": " راه‌اندازی فنی، تأیید حرفه‌ای یا حقوقی و آمادگی پذیرش واقعی نیست.</p></div></div></SectionSurface>"
+  },
+  {
+    "file": "src/components/sections/contact/contact.tsx",
+    "line": 24,
+    "word": "فرضی",
+    "context": "ن، پیش از تماس</h2><p className=\"muted\">شماره یا نشانی فرضی درج نمی‌کنیم. فقط راه‌های ارتباط ثبت‌شده قابل‌استفاده‌اند؛ پیش از مراجعه هماهنگ کنید.</p><ContactLinks profile={profile} /><"
+  },
+  {
+    "file": "src/components/sections/contact/message-form.tsx",
+    "line": 62,
+    "word": "placeholder",
+    "context": "aria-describedby={`${id}-message-error ${id}-privacy`} placeholder=\"فقط یک پرسش عمومی؛ بدون شرح‌حال یا اطلاعات حساس\" />} /><p id={`${id}-message-error`} className=\"field-error\" aria-live=\"pol"
+  },
+  {
+    "file": "src/components/sections/courses/course-outline.tsx",
+    "line": 11,
+    "word": "Sample",
+    "context": "zes=\"(min-width: 1024px) 36vw, 90vw\" />{course.image.isSample && <figcaption>تصویر مفهومیِ هوش مصنوعی؛ نمایش کلاس واقعی نیست.</figcaption>}</figure><div className=\"outline-body\"><div cla"
+  },
+  {
+    "file": "src/components/sections/courses/course-outline.tsx",
+    "line": 11,
+    "word": "واقعی نیست",
+    "context": "le && <figcaption>تصویر مفهومیِ هوش مصنوعی؛ نمایش کلاس واقعی نیست.</figcaption>}</figure><div className=\"outline-body\"><div className=\"outline-badges\"><Badge variant=\"secondary\">{topics[cour"
+  },
+  {
+    "file": "src/components/sections/home/about.tsx",
+    "line": 14,
+    "word": "نمونه",
+    "context": "a-hidden=\"true\" /><span>فضایی برای خودتان<small>پرترهٔ نمونهٔ هوش مصنوعی</small></span></figcaption></figure>"
+  },
+  {
+    "file": "src/components/sections/home/invitation.tsx",
+    "line": 9,
+    "word": "نمونه",
+    "context": "pan></div></div><span className=\"visual-caption\">تصویر نمونهٔ فضای مشاوره</span></section>;"
+  },
+  {
+    "file": "src/components/sections/home/testimonials.tsx",
+    "line": 11,
+    "word": "نمونه",
+    "context": "یتی برای نمایش منتشر نشده است.</h3><p>هیچ متن یا تصویر نمونه‌ای به‌جای تجربهٔ واقعی قرار نمی‌گیرد.</p></div>}</SectionSurface>;"
+  },
+  {
+    "file": "src/components/sections/preferences/hours-editor.tsx",
+    "line": 22,
+    "word": "فرضی",
+    "context": " همان روز. زمان شروع/پایان را خودتان تعیین کنید؛ ساعات فرضی ذخیره نمی‌شود.</p>{fields.map((field, index) => <div className=\"hours-fields\" key={field.id}><Controller control={control} n"
+  },
+  {
+    "file": "src/components/sections/publishing/content-form.tsx",
+    "line": 65,
+    "word": "نمونه",
+    "context": " 360px, 90vw\" /><p className=\"panel-note\">تصاویر موجود نمونه/مفهومی‌اند؛ تصویر واقعی مراجع یا دکتر نیستند. بارگذاری فایل یا نشانی خارجی در این ویرایشگر نداریم.</p>{kind === contentKinds"
+  },
+  {
+    "file": "src/components/sections/publishing/content-list.tsx",
+    "line": 15,
+    "word": "نمونه",
+    "context": "board-empty\">محتوایی مطابق این فیلتر وجود ندارد؛ دادهٔ نمونه جای آن نمایش داده نمی‌شود.</p>}<nav className=\"record-pagination\" aria-label=\"صفحه‌های محتوا\">{query.page > 1 && <Link prefe"
+  },
+  {
+    "file": "src/components/sections/queue/queue-filter.tsx",
+    "line": 24,
+    "word": "نمایشی",
+    "context": "== queueKinds.messages ? \"نام یا ایمیل فرستنده\" : \"نام نمایشی دیدگاه\"}</label><Input id={`${id}-q`} {...register(\"q\")} defaultValue={query.q} maxLength={80} type=\"search\" autoComplete=\"o"
+  },
+  {
+    "file": "src/components/sections/queue/queue.tsx",
+    "line": 13,
+    "word": "نمونه",
+    "context": "id ? \"ممکن است حذف شده باشد؛ فهرست را تازه کنید. دادهٔ نمونه جای آن نمایش داده نمی‌شود.\" : \"جزئیات فقط پس از انتخاب شما از سرور خوانده می‌شود. بازکردن، وضعیت را تغییر نمی‌دهد.\"}</p></di"
+  },
+  {
+    "file": "src/components/sections/queue/review-detail.tsx",
+    "line": 10,
+    "word": "Sample",
+    "context": "ضعیت ثبت‌شده: {queueLabels[record.status]} · {record.isSample ? \"روایت نمونه، نه نظر واقعی\" : \"رکورد با برچسب غیرنمونه؛ نیازمند بررسی اصالت\"}</p><p><time dateTime={record.createdAt}>{for"
+  },
+  {
+    "file": "src/components/sections/queue/review-detail.tsx",
+    "line": 10,
+    "word": "نمونه",
+    "context": "ueueLabels[record.status]} · {record.isSample ? \"روایت نمونه، نه نظر واقعی\" : \"رکورد با برچسب غیرنمونه؛ نیازمند بررسی اصالت\"}</p><p><time dateTime={record.createdAt}>{formatDate(new Dat"
+  },
+  {
+    "file": "src/components/sections/queue/review-detail.tsx",
+    "line": 10,
+    "word": "نمونه",
+    "context": "ple ? \"روایت نمونه، نه نظر واقعی\" : \"رکورد با برچسب غیرنمونه؛ نیازمند بررسی اصالت\"}</p><p><time dateTime={record.createdAt}>{formatDate(new Date(record.createdAt), { dateStyle: \"medium\""
+  },
+  {
+    "file": "src/components/sections/queue/review-detail.tsx",
+    "line": 10,
+    "word": "Sample",
+    "context": "hasConsent, isImageRemoved: record.image === null }} isSample={record.isSample} /></article>;"
+  },
+  {
+    "file": "src/components/sections/queue/review-detail.tsx",
+    "line": 10,
+    "word": "Sample",
+    "context": "geRemoved: record.image === null }} isSample={record.isSample} /></article>;"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 15,
+    "word": "Sample",
+    "context": "type Props = { value: Moderation; isSample: boolean };"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 17,
+    "word": "Sample",
+    "context": "export function ReviewForm({ value, isSample }: Props) {"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "Sample",
+    "context": "us) => <option key={status} value={status} disabled={isSample && status === reviewStates.approved}>{queueLabels[status]}</option>)}</select><label className=\"review-check\"><input type=\"c"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "نمایشی",
+    "context": "t.hasConsent} />رضایت معتبر برای انتشار همین متن و نام نمایشی وجود دارد.</label><label className=\"review-check\"><input type=\"checkbox\" {...register(\"isImageRemoved\")} defaultChecked={sna"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "نمونه",
+    "context": "د فقط برای روایت واقعی با رضایت انتشار ممکن است؛ تصویر نمونه قابل انتشار همراه روایت واقعی نیست. این ابزار متن یا برچسب نمونه را تغییر نمی‌دهد.</p><p className=\"field-error\">{errors.sta"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "واقعی نیست",
+    "context": "ت انتشار ممکن است؛ تصویر نمونه قابل انتشار همراه روایت واقعی نیست. این ابزار متن یا برچسب نمونه را تغییر نمی‌دهد.</p><p className=\"field-error\">{errors.status?.message && /[\\u0600-\\u06ff]/.t"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "نمونه",
+    "context": " انتشار همراه روایت واقعی نیست. این ابزار متن یا برچسب نمونه را تغییر نمی‌دهد.</p><p className=\"field-error\">{errors.status?.message && /[\\u0600-\\u06ff]/.test(errors.status.message) ? e"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "Sample",
+    "context": "\"نسخهٔ دیدگاه تغییر کرده؛ انتخاب شما حفظ شده است.\" : isSample ? \"این دیدگاه نمونه است؛ انتشار آن به‌عنوان نظر واقعی بسته است.\" : \"انتخاب تأییدشده پس از ذخیره، این روایت را عمومی می‌کند.\""
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "word": "نمونه",
+    "context": "رده؛ انتخاب شما حفظ شده است.\" : isSample ? \"این دیدگاه نمونه است؛ انتشار آن به‌عنوان نظر واقعی بسته است.\" : \"انتخاب تأییدشده پس از ذخیره، این روایت را عمومی می‌کند.\")}</p><DraftNotice h"
+  },
+  {
+    "file": "src/components/sections/services/details.tsx",
+    "line": 10,
+    "word": "واقعی نیست",
+    "context": "یر مفهومی ساخته‌شده با هوش مصنوعی؛ نمایش جلسه یا مراجع واقعی نیست.</figcaption></figure></div></SectionSurface>);"
+  },
+  {
+    "file": "src/components/sections/services/intro.tsx",
+    "line": 9,
+    "word": "sample",
+    "context": "-notice\"><ShieldCheck aria-hidden=\"true\" /><p>{notices.sample}</p></div></SectionSurface>;"
+  },
+  {
+    "file": "src/components/sections/settings/profile-form.tsx",
+    "line": 47,
+    "word": "placeholder",
+    "context": "Mode=\"tel\" dir=\"ltr\" maxLength={13} autoComplete=\"tel\" placeholder=\"09…\" aria-invalid={!!errors.phone} aria-describedby={`${id}-phone-error ${id}-phone-hint`} />} /><p id={`${id}-phone-error`"
+  },
+  {
+    "file": "src/components/sections/testimonials/testimonials.tsx",
+    "line": 24,
+    "word": "نمونه",
+    "context": "ییدشده با رضایت انتشار نمایش داده می‌شود؛ متن یا تصویر نمونه جایگزین تجربهٔ واقعی نمی‌شود.</p></div></div>}</SectionSurface>"
+  },
+  {
+    "file": "src/components/sections/testimonials/testimonials.tsx",
+    "line": 26,
+    "word": "نمایشی",
+    "context": "صی\" title=\"روایت‌های منتشرشده\" description=\"انتخاب نام نمایشی و انتشار متن با رضایت صاحب تجربه است؛ هیچ روایت یا امتیاز نمونه‌ای نمایش داده نمی‌شود.\" />"
+  },
+  {
+    "file": "src/components/sections/testimonials/testimonials.tsx",
+    "line": 26,
+    "word": "نمونه",
+    "context": "نتشار متن با رضایت صاحب تجربه است؛ هیچ روایت یا امتیاز نمونه‌ای نمایش داده نمی‌شود.\" />"
+  },
+  {
+    "file": "src/app/(public)/testimonials/page.tsx",
+    "line": 11,
+    "word": "نمونه",
+    "context": " یکسان برای دیگران را تضمین نمی‌کند. هیچ نظر یا امتیاز نمونه‌ای نمایش داده نمی‌شود.\";"
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "file": "src/components/sections/agenda/agenda-filter.tsx",
+    "line": 25,
+    "control": "<select {...register(\"status\")} defaultValue={query.status} id={`${id}-status`} className=\"admin-select\"><option value=\"all\">همهٔ وضعیت‌ها</option>{Object.entries(appointmentLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/agenda/agenda-filter.tsx",
+    "line": 25,
+    "control": "<select {...register(\"service\")} defaultValue={query.service} id={`${id}-service`} className=\"admin-select\"><option value=\"all\">همهٔ خدمات</option>{services.map((service) => <option key={service.key} value={service.key}>{service.title}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/agenda/agenda-filter.tsx",
+    "line": 25,
+    "control": "<select {...register(\"sort\")} defaultValue={query.sort} id={`${id}-sort`} className=\"admin-select\"><option value=\"ascending\">قدیمی‌تر به تازه‌تر</option><option value=\"descending\">تازه‌تر به قدیمی‌تر</option></select>"
+  },
+  {
+    "file": "src/components/sections/agenda/visit-sheet.tsx",
+    "line": 111,
+    "control": "<select {...register(\"action\")} id={`${id}-action`} className=\"admin-select\"><option value={visitActions.confirm} disabled={!entry.canConfirm}>{actionLabels.confirm}</option><option value={visitActions.cancel} disabled={!entry.canCancel}>{actionLabels.cancel}</option><option value={visitActions.complete} disabled={!entry.canComplete}>{actionLabels.complete}</option><option value={visitActions.move} disabled={!entry.canMove}>{actionLabels.move}</option></select>"
+  },
+  {
+    "file": "src/components/sections/agenda/visit-sheet.tsx",
+    "line": 112,
+    "control": "<select {...register(\"date\", { onChange: () => { setValue(\"slot\", \"\"); setValue(\"scheduleRevision\", 0); } })} className=\"admin-select\" id={`${id}-date`} disabled={!isFresh || isReading}><option value=\"\">روز را انتخاب کنید</option>{date && !days.includes(date) && <option value={date} disabled>{formatDate(getInstant(date, \"12:00\"))}؛ دیگر قابل انتخاب نیست</option>}{days.map((day) => <option value={day} key={day}>{formatDate(getInstant(day, \"12:00\"), { weekday: \"long\", day: \"numeric\", month: \"long\" })}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/agenda/visit-sheet.tsx",
+    "line": 112,
+    "control": "<select {...register(\"slot\", { onChange: (event: { target: { value: string } }) => { const next = availability?.slots.find((value) => value.date === date && value.slot === event.target.value); setValue(\"scheduleRevision\", next?.scheduleRevision ?? 0); } })} className=\"admin-select\" id={`${id}-slot`} disabled={!isFresh || !date || isReading}><option value=\"\">ساعت را انتخاب کنید</option>{slot && !availability?.slots.some((value) => value.date === date && value.slot === slot) && <option value={slot} disabled>انتخاب قبلی؛ دیگر قابل انتخاب نیست</option>}{availability?.slots.filter((value) => value.date === date).map((value) => <option value={value.slot} key={value.slot}>{formatDate(new Date(value.startsAt), { hour: \"2-digit\", minute: \"2-digit\" })}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/clients/client-filter.tsx",
+    "line": 24,
+    "control": "<select id={`${id}-sort`} {...register(\"sort\")} defaultValue={query.sort} className=\"admin-select\"><option value=\"newest\">تازه‌ترین ثبت‌نام</option><option value=\"name\">نام، الفبایی</option></select>"
+  },
+  {
+    "file": "src/components/sections/preferences/hours-editor.tsx",
+    "line": 22,
+    "control": "<select ref={value.ref} name={value.name} id={`${id}-day-${index}`} value={value.value} onBlur={value.onBlur} onChange={(event) => value.onChange(Number(event.target.value))} className=\"admin-select\" aria-invalid={fieldState.invalid}>{weekdays.map((weekday) => <option key={weekday.day} value={weekday.day}>{weekday.label}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-filter.tsx",
+    "line": 24,
+    "control": "<select id={`${id}-category`} {...register(\"category\")} defaultValue={query.category} className=\"admin-select\"><option value=\"all\">همهٔ موضوع‌ها</option>{Object.entries(topics).map(([key, title]) => <option key={key} value={key}>{title}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-filter.tsx",
+    "line": 24,
+    "control": "<select id={`${id}-status`} {...register(\"status\")} defaultValue={query.status} className=\"admin-select\"><option value=\"all\">همه</option><option value=\"draft\">پیش‌نویس</option><option value=\"published\">منتشرشده</option></select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-filter.tsx",
+    "line": 24,
+    "control": "<select id={`${id}-sort`} {...register(\"sort\")} defaultValue={query.sort} className=\"admin-select\"><option value=\"updated\">آخرین ویرایش</option><option value=\"title\">عنوان، الفبایی</option></select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-form.tsx",
+    "line": 65,
+    "control": "<select id={`${id}-category`} {...register(\"record.category\")} defaultValue={form.getValues(\"record.category\")} className=\"admin-select\">{Object.entries(topics).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-form.tsx",
+    "line": 65,
+    "control": "<select id={`${id}-image`} {...register(\"record.image\")} defaultValue={form.getValues(\"record.image\")} className=\"admin-select\">{imageKeys.map((key) => <option key={key} value={key}>{images[key].alt}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-form.tsx",
+    "line": 65,
+    "control": "<select id={`${id}-social`} {...register(\"record.social\")} defaultValue={form.getValues(\"record.social\")} className=\"admin-select\">{imageKeys.map((key) => <option key={key} value={key}>{images[key].alt}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/publishing/content-form.tsx",
+    "line": 67,
+    "control": "<select id={`${id}-status-select`} {...register(\"record.status\")} defaultValue={form.getValues(\"record.status\")} className=\"admin-select\"><option value={publicationStates.draft}>پیش‌نویس؛ در سایت عمومی نمایش داده نشود</option><option value={publicationStates.published}>منتشرشده؛ در سایت عمومی نمایش داده شود</option></select>"
+  },
+  {
+    "file": "src/components/sections/queue/message-state.tsx",
+    "line": 42,
+    "control": "<select id={`${id}-value`} {...register(\"status\")} defaultValue={snapshot.status} className=\"admin-select\">{Object.values(messageStates).map((status) => <option key={status} value={status}>{queueLabels[status]}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/queue/queue-filter.tsx",
+    "line": 24,
+    "control": "<select id={`${id}-status`} {...register(\"status\")} defaultValue={query.status} className=\"admin-select\"><option value=\"all\">همه</option>{Object.values(query.kind === queueKinds.messages ? messageStates : reviewStates).map((status) => <option value={status} key={status}>{queueLabels[status]}</option>)}</select>"
+  },
+  {
+    "file": "src/components/sections/queue/queue-filter.tsx",
+    "line": 24,
+    "control": "<select id={`${id}-sort`} {...register(\"sort\")} defaultValue={query.sort} className=\"admin-select\"><option value=\"newest\">تازه‌ترین</option><option value=\"oldest\">قدیمی‌ترین</option></select>"
+  },
+  {
+    "file": "src/components/sections/queue/review-form.tsx",
+    "line": 39,
+    "control": "<select id={`${id}-value`} {...register(\"status\")} defaultValue={snapshot.status} className=\"admin-select\">{Object.values(reviewStates).map((status) => <option key={status} value={status} disabled={isSample && status === reviewStates.approved}>{queueLabels[status]}</option>)}</select>"
+  }
+]

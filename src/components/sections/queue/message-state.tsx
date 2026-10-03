@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useDraft } from "@/lib/use-draft";
 import { requestLive } from "@/lib/live-client";
 import { DraftNotice } from "@/components/shared/draft-notice";
+import { ChoiceField } from "@/components/shared/choice-field";
 import { Button } from "@/components/ui/button";
 import { messageEditSchema } from "@/lib/mutations";
 import { messageStates, resultCodes, routes } from "@/lib/constants";
@@ -24,8 +25,8 @@ export function MessageState({ value }: Props) {
   const [isSaved, setIsSaved] = useState(false);
   const [isPending, startTransition] = useTransition();
   const isSending = useRef(false);
-  const { register, handleSubmit, reset, formState: { isDirty, errors } } = useForm<Change>({ resolver: zodResolver(messageEditSchema), defaultValues: value });
-  const { snapshot, hasChanged, discard } = useDraft({ value, version: value.revision, isPaused: isPending || (isDirty && !isSaved), onApply(next) { reset(next); setIsSaved(false); setIsBlocked(false); } });
+  const { control, handleSubmit, reset, formState: { isDirty, errors } } = useForm<Change>({ resolver: zodResolver(messageEditSchema), defaultValues: value });
+  const { hasChanged, discard } = useDraft({ value, version: value.revision, isPaused: isPending || (isDirty && !isSaved), onApply(next) { reset(next); setIsSaved(false); setIsBlocked(false); } });
   const canSave = !isBlocked && !isSaved && !isPending && !hasChanged;
   function handleSave(change: Change) {
     if (!canSave || isSending.current) return;
@@ -39,5 +40,5 @@ export function MessageState({ value }: Props) {
       finally { isSending.current = false; requestLive(); }
     });
   }
-  return <form action={routes.inbox} method="post" noValidate aria-busy={isPending} data-live-pause={isPending || (isDirty && !isSaved)} onSubmit={(event) => { void handleSubmit(handleSave)(event); }} aria-describedby={`${id}-status ${id}-privacy`}><fieldset disabled={!canSave}><legend>تغییر وضعیت، با انتخاب صریح</legend><label htmlFor={`${id}-value`}>وضعیت تازه</label><select id={`${id}-value`} {...register("status")} defaultValue={snapshot.status} className="admin-select">{Object.values(messageStates).map((status) => <option key={status} value={status}>{queueLabels[status]}</option>)}</select><p className="field-error">{Object.keys(errors).length ? "وضعیت معتبر انتخاب کنید." : ""}</p><Button type="submit" disabled={!canSave}>{isPending ? "در حال ثبت…" : "ثبت وضعیت پیام"}</Button></fieldset><p className="member-feedback" role="status" id={`${id}-status`}>{message || (hasChanged ? "نسخهٔ پیام تغییر کرده؛ انتخاب شما خودکار جایگزین نشده است." : "بازکردن پیام، آن را خودکار خوانده‌شده نمی‌کند.")}</p><DraftNotice hasChanged={hasChanged} isDisabled={isPending} onDiscard={discard} /><p className="search-privacy" id={`${id}-privacy`}>اطلاعات خصوصی است؛ وضعیت فقط برای پیگیری داخلی است. بایگانی، حذف پیام یا سیاست نگهداری داده نیست. ذخیره به JavaScript نیاز دارد.</p></form>;
+  return <form action={routes.inbox} method="post" noValidate aria-busy={isPending} data-live-pause={isPending || (isDirty && !isSaved)} onSubmit={(event) => { void handleSubmit(handleSave)(event); }} aria-describedby={`${id}-status ${id}-privacy`}><fieldset disabled={!canSave}><legend>تغییر وضعیت، با انتخاب صریح</legend><label htmlFor={`${id}-value`}>وضعیت تازه</label><ChoiceField control={control} name="status" id={`${id}-value`} kind="segmented" label="وضعیت تازه" options={Object.values(messageStates).map((value) => ({ value, label: queueLabels[value] }))} disabled={!canSave} /><p className="field-error">{Object.keys(errors).length ? "وضعیت معتبر انتخاب کنید." : ""}</p><Button type="submit" disabled={!canSave}>{isPending ? "در حال ثبت…" : "ثبت وضعیت پیام"}</Button></fieldset><p className="member-feedback" role="status" id={`${id}-status`}>{message || (hasChanged ? "نسخهٔ پیام تغییر کرده؛ انتخاب شما خودکار جایگزین نشده است." : "بازکردن پیام، آن را خودکار خوانده‌شده نمی‌کند.")}</p><DraftNotice hasChanged={hasChanged} isDisabled={isPending} onDiscard={discard} /><p className="search-privacy" id={`${id}-privacy`}>اطلاعات خصوصی است؛ وضعیت فقط برای پیگیری داخلی است. بایگانی، حذف پیام یا سیاست نگهداری داده نیست. ذخیره به JavaScript نیاز دارد.</p></form>;
 }

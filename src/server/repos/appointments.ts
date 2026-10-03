@@ -167,7 +167,7 @@ export async function cancelAppointment(input: unknown): Promise<Receipt> {
   const change = changeSchema.parse(input);
   const collection = getDb().collection<Appointment>(collections.appointments);
   const current = await collection.findOne({ _id: new ObjectId(change.id), userId: session.user.id, revision: change.revision });
-  if (!current) throw new MutationError(resultCodes.conflict, "نوبت متعلق به حساب شما پیدا نشد یا تغییر کرده است؛ فهرست را تازه کنید.");
+  if (!current) throw new MutationError(resultCodes.conflict, "نوبت متعلق به حساب شما پیدا نشد یا تغییر کرده است؛ وضعیت فعلی نوبت را بررسی کنید.");
   const now = new Date();
   const updated = await collection.updateOne({ _id: current._id, userId: session.user.id, revision: change.revision, status: { $in: [appointmentStates.pending, appointmentStates.confirmed] }, startsAt: { $gt: now } }, { $set: { status: appointmentStates.cancelled, isReserved: false, updatedAt: now }, $inc: { revision: 1 } });
   requireWrite(updated);

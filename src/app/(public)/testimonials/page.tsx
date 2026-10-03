@@ -8,7 +8,7 @@ import { readReviews } from "@/server/published";
 
 type Props = { searchParams: Promise<SearchParams> };
 const title = "تجربهٔ مراجعان";
-const description = "روایت‌های تأییدشده با رضایت انتشار و احترام به حریم خصوصی؛ تجربهٔ هر فرد نتیجهٔ یکسان برای دیگران را تضمین نمی‌کند. هیچ نظر یا امتیاز نمونه‌ای نمایش داده نمی‌شود.";
+const description = "روایت‌های تأییدشده با رضایت انتشار و احترام به حریم خصوصی؛ تجربهٔ هر فرد نتیجهٔ یکسان برای دیگران را تضمین نمی‌کند.";
 const shareTitle = `${title} | دکتر کیانا خرسند`;
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {

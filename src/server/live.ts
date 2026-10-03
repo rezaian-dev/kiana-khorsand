@@ -1,31 +1,50 @@
 import "server-only";
-import { EventEmitter } from "node:events";
-import { liveTopics } from "../lib/constants";
-import type { LiveNotice } from "../lib/live";
+import { createProcessTransport, type LiveChange, type LiveTransport } from "./live-transport.ts";
 
-type Notice = LiveNotice & (
-  { topic: typeof liveTopics.content | typeof liveTopics.slots; audience: "public" } |
-  { topic: typeof liveTopics.account | typeof liveTopics.appointments; audience: `user:${string}` } |
-  { topic: typeof liveTopics.admin; audience: "admin" }
-);
-type Bus = { emitter: EventEmitter<{ change: [Notice] }>; counts: Map<string, number>; total: number };
-const scope = globalThis as typeof globalThis & { kianaLive?: Bus };
+type Bus = { transport: LiveTransport; failures: Set<() => void>; counts: Map<string, number>; total: number };
+const scope = globalThis as typeof globalThis & { kianaLiveV5?: Bus };
 
 function getBus() {
-  scope.kianaLive ??= { emitter: new EventEmitter<{ change: [Notice] }>().setMaxListeners(256), counts: new Map(), total: 0 };
-  return scope.kianaLive;
+  scope.kianaLiveV5 ??= { transport: createProcessTransport(), failures: new Set(), counts: new Map(), total: 0 };
+  return scope.kianaLiveV5;
 }
 
-export function publishChange(notice: Notice) {
-  getBus().emitter.emit("change", notice);
-}
-
-export function subscribeChanges(onChange: (notice: Notice) => void) {
+// Bootstrap seam only. No backend/env/infrastructure is provisioned here.
+// Choose and initialize a shared adapter before accepting SSE requests.
+export function configureLiveTransport(transport: LiveTransport) {
   const bus = getBus();
-  bus.emitter.on("change", onChange);
-  return () => { bus.emitter.off("change", onChange); };
+  if (bus.total || bus.failures.size) throw new Error("Configure live transport before opening streams.");
+  bus.transport = transport;
 }
 
+export function publishChange(notice: LiveChange) {
+  const bus = getBus();
+  try {
+    const published = bus.transport.publish(notice);
+    if (published) void published.catch(() => { bus.failures.forEach((notify) => notify()); });
+  } catch {
+    // A confirmed database write is never turned into a failed action by a
+    // best-effort hint. Closing streams prompts reconnect + a fresh snapshot.
+    bus.failures.forEach((notify) => notify());
+  }
+}
+
+export function subscribeChanges(onChange: (notice: LiveChange) => void, onUnavailable: () => void = () => {}) {
+  const bus = getBus();
+  let active = true;
+  const notify = () => { if (active) onUnavailable(); };
+  const unsubscribe = bus.transport.subscribe(onChange, notify);
+  bus.failures.add(notify);
+  return () => {
+    if (!active) return;
+    active = false;
+    bus.failures.delete(notify);
+    unsubscribe();
+  };
+}
+
+// Caps remain exactly as before and are process-local. A future multi-worker
+// deployment also needs a shared reservation/lease strategy (see R5 report).
 export function reserveStream(userId: string | null) {
   const bus = getBus();
   const key = userId ? `user:${userId}` : "anonymous";

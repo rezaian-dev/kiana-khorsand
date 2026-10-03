@@ -36,12 +36,14 @@ export async function GET(request: Request) {
       let pending = 0;
       let queue = Promise.resolve();
       let unsubscribe = () => {};
+      const timers: { heartbeat?: ReturnType<typeof setInterval>; lifetime?: ReturnType<typeof setTimeout> } = {};
       function closeStream() {
         if (isClosed) return;
         isClosed = true;
-        if (heartbeat) clearInterval(heartbeat);
-        if (lifetime) clearTimeout(lifetime);
-        unsubscribe(); releaseStream();
+        if (timers.heartbeat) clearInterval(timers.heartbeat);
+        if (timers.lifetime) clearTimeout(timers.lifetime);
+        try { unsubscribe(); } catch { /* Cleanup failure must not leak caps. */ }
+        releaseStream();
         request.signal.removeEventListener("abort", closeStream);
         try { controller.close(); } catch { /* Already cancelled by the consumer. */ }
       }
@@ -60,7 +62,7 @@ export async function GET(request: Request) {
         sendEvent("event: reset\ndata: {}\n\n");
         closeStream(); return false;
       }
-      unsubscribe = subscribeChanges((notice) => {
+      try { unsubscribe = subscribeChanges((notice) => {
         const isPublic = notice.audience === "public";
         const canReceive = isPublic || (parsed.data !== liveScopes.public && (notice.audience === `user:${userId}` || (parsed.data === liveScopes.admin && notice.audience === "admin")));
         if (!canReceive || isClosed) return;
@@ -69,14 +71,15 @@ export async function GET(request: Request) {
         queue = queue.then(async () => {
           if (!isClosed && (isPublic || await verifySession())) sendEvent(`event: change\ndata: ${JSON.stringify({ topic: notice.topic, id: notice.id })}\n\n`);
         }).catch(closeStream).finally(() => { pending -= 1; });
-      });
+      }, closeStream); } catch { closeStream(); return; }
+      if (isClosed) { try { unsubscribe(); } catch { /* Already closed. */ } return; }
       request.signal.addEventListener("abort", closeStream, { once: true });
-      const heartbeat = setInterval(() => {
+      timers.heartbeat = setInterval(() => {
         if (isChecking || isClosed) return;
         isChecking = true;
         void verifySession().then((isValid) => { if (isValid) sendEvent(": heartbeat\n\n"); }).finally(() => { isChecking = false; });
       }, 20_000);
-      const lifetime = setTimeout(() => { sendEvent("event: renew\ndata: {}\n\n"); closeStream(); }, 5 * 60_000);
+      timers.lifetime = setTimeout(() => { sendEvent("event: renew\ndata: {}\n\n"); closeStream(); }, 5 * 60_000);
       sendEvent("retry: 1000\n: connected\n\n");
       if (request.signal.aborted) closeStream();
     },

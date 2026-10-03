@@ -1,0 +1,11 @@
+{
+  "note": "The single preserved admin description refers to publication drafts, not site WIP. Static site-readiness clauses removed only; dynamic descriptions require owner DB-content audit, not read this turn.",
+  "preservedOperationalDrafts": [
+    {
+      "file": "src/app/(admin)/admin/courses/page.tsx",
+      "line": 9,
+      "text": "const description = \"فهرست خصوصی دوره‌ها؛ بررسی پیش‌نویس‌ها، موضوع‌ها و وضعیت انتشار طرح‌های آموزشی.\";"
+    }
+  ],
+  "forbiddenStaticClauses": []
+}

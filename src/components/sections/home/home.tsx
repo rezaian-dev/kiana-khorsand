@@ -1,3 +1,4 @@
+import { SectionConnector } from "@/components/shared/section-connector";
 import { Hero } from "./hero";
 import { About } from "./about";
 import { Services } from "./services";
@@ -27,8 +28,8 @@ export function Home({ profile, articles, courses, reviews, isLoading = false }:
         ...services.map((service) => ({ "@type": "Service", "@id": `${origin}/#${service.key}`, url: `${origin}${service.href}`, name: service.title, serviceType: service.title, description: service.description, provider: { "@id": `${origin}/#person` } })),
       ] }} />}
       <Hero profile={profile} />
-      <About profile={profile} /><Services /><Steps /><Courses courses={courses} /><Articles articles={articles} /><Testimonials reviews={reviews} /><Faq /><Invitation />
-      <BookingBar />
+      <SectionConnector /><Services /><SectionConnector /><About profile={profile} /><SectionConnector /><Steps /><SectionConnector /><Courses courses={courses} /><SectionConnector /><Articles articles={articles} /><SectionConnector /><Testimonials reviews={reviews} /><SectionConnector /><Faq /><Invitation />
+      <BookingBar isHeroPage />
     </main>
   </>;
 }

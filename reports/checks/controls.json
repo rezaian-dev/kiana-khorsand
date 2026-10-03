@@ -1,0 +1,107 @@
+{
+  "environment": "Isolated component harness; no DB or actions executed",
+  "checks": [
+    {
+      "name": "Select keyboard selection, original form name and ≥44px rows",
+      "passed": true,
+      "detail": {
+        "rows": [
+          45.59375,
+          45.59375,
+          45.59375,
+          45.59375,
+          45.59375
+        ]
+      }
+    },
+    {
+      "name": "Combobox search, keyboard Enter/Escape and form value",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "Uncontrolled Select/Combobox/native radios reset together",
+      "passed": true,
+      "detail": {
+        "status": "all",
+        "image": "",
+        "sort": "newest",
+        "day": "6",
+        "note": ""
+      }
+    },
+    {
+      "name": "Required combobox stops native submit and focuses visible trigger",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "Select portal stays inside sheet; first Escape does not close sheet",
+      "passed": true,
+      "detail": {
+        "sheetLocal": true
+      }
+    },
+    {
+      "name": "Combobox portal/search/focus inside sheet",
+      "passed": true,
+      "detail": {
+        "sheetLocal": true
+      }
+    },
+    {
+      "name": "RHF content choices preserve dirty state and clear review flag",
+      "passed": true,
+      "detail": {
+        "category": "awareness"
+      }
+    },
+    {
+      "name": "RHF weekly weekday retains numeric controller and tab state",
+      "passed": true,
+      "detail": {
+        "day": "4"
+      }
+    },
+    {
+      "name": "Required Select native invalid event focuses its visible trigger",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "Controlled Select/Combobox are not overwritten by a native reset",
+      "passed": true,
+      "detail": {
+        "status": "confirmed",
+        "image": "desk",
+        "sort": "newest",
+        "day": "6",
+        "note": ""
+      }
+    },
+    {
+      "name": "Cancelled reset preserves both uncontrolled choice values",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "Disabled choices are excluded from native submission",
+      "passed": true,
+      "detail": {
+        "note": ""
+      }
+    },
+    {
+      "name": "Without-JS radio disclosures preserve native GET submission",
+      "passed": true,
+      "detail": {
+        "status": "confirmed",
+        "image": "desk",
+        "sort": "oldest",
+        "day": "6",
+        "note": ""
+      }
+    }
+  ],
+  "errors": []
+}

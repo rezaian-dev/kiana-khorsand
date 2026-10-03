@@ -1,0 +1,35 @@
+{
+  "environment": "Production component harness; no DB",
+  "checks": [
+    {
+      "name": "Mobile booking bar hidden/inert while Hero is visible; shown after Hero leaves",
+      "passed": true
+    },
+    {
+      "name": "Stories omitted from FAQ DOM (including mounted closed answers) and emitted JSON-LD",
+      "passed": true,
+      "jsonLd": [
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "name": "Three-column footer, no unconfigured social links/emergency paragraph, 44px quick links",
+      "passed": true,
+      "columns": 3,
+      "socials": 0,
+      "minLinkHeight": 44,
+      "emergency": false
+    },
+    {
+      "name": "Native POST form data keeps original choice name/value; no request/write sent",
+      "passed": true,
+      "values": {
+        "status": "confirmed",
+        "image": "desk",
+        "sort": "newest",
+        "day": "6",
+        "note": ""
+      }
+    }
+  ]
+}

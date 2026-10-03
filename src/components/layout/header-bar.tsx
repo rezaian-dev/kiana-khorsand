@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button";
 import { routes } from "@/lib/constants";
 import type { Viewer } from "@/lib/viewer";
 
-type Props = { viewer: Viewer | null; menu: ReactNode; children: ReactNode; className?: string };
+type Props = { viewer: Viewer | null; menu: ReactNode; children: ReactNode; socials?: ReactNode; className?: string };
 
-export function HeaderBar({ viewer, menu, children, className }: Props) {
+export function HeaderBar({ viewer, menu, children, socials, className }: Props) {
   return (
     <>
       <span className="page-top" id="page-top" aria-hidden="true" />
@@ -21,13 +21,14 @@ export function HeaderBar({ viewer, menu, children, className }: Props) {
         <div className="site-width header-row">
           <Logo />
           <NavLinks />
-          {menu}
+          {socials}
           <div className="header-actions">
             <ThemeToggle />
             <div className="header-account">
               {viewer ? <AccountMenu viewer={viewer} /> : <Button asChild><Link href={routes.login} prefetch={false}>ورود / ثبت‌نام</Link></Button>}
             </div>
           </div>
+          {menu}
         </div>
         {children}
         <ScrollProgress />

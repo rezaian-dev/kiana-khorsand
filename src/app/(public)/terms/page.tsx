@@ -4,7 +4,7 @@ import { terms } from "@/content/policies";
 import { routes } from "@/lib/constants";
 
 const title = "شرایط استفاده";
-const description = "پیش‌نویس شرایط استفاده از وب‌سایت دکتر کیانا خرسند؛ حدود محتوای آموزشی، وضعیت رزرو و دوره‌ها و جزئیات مالی و حقوقیِ نیازمند تأیید.";
+const description = "شرایط استفاده از وب‌سایت دکتر کیانا خرسند؛ حدود محتوای آموزشی، وضعیت رزرو و دوره‌ها.";
 const shareTitle = `${title} | دکتر کیانا خرسند`;
 
 export const metadata: Metadata = {
