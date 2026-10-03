@@ -20,8 +20,8 @@ export function AccountMenu({ viewer }: Props) {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="account-trigger" aria-label="منوی حساب من"><span>حساب من</span><ChevronDown aria-hidden="true" /></Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent isOpen={isOpen}>
-        <DropdownMenuLabel className="account-identity"><strong>{viewer.name}</strong><span dir="ltr">{viewer.email}</span></DropdownMenuLabel>
+      <DropdownMenuContent isOpen={isOpen} className="account-menu-panel" sideOffset={12}>
+        <DropdownMenuLabel className="account-identity"><strong>{viewer.name}</strong>{viewer.email && <span dir="ltr" title={viewer.email}>{viewer.email}</span>}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <AccountLinks viewer={viewer} isDropdown />
       </DropdownMenuContent>
