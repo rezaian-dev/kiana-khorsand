@@ -25,12 +25,21 @@ const publicPaths = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [articles, areas, assessments, workshops] = await Promise.all([
-    listArticles(),
-    listAreas(),
-    listAssessments(),
-    listWorkshops(),
-  ]);
+  let articles: Awaited<ReturnType<typeof listArticles>> = [];
+  let areas: Awaited<ReturnType<typeof listAreas>> = [];
+  let assessments: Awaited<ReturnType<typeof listAssessments>> = [];
+  let workshops: Awaited<ReturnType<typeof listWorkshops>> = [];
+  try {
+    [articles, areas, assessments, workshops] = await Promise.all([
+      listArticles(),
+      listAreas(),
+      listAssessments(),
+      listWorkshops(),
+    ]);
+  } catch (error) {
+    // Build on Vercel without DB — return static routes only
+    console.warn("[sitemap] DB unavailable during build, using static routes only", error);
+  }
   const pages: MetadataRoute.Sitemap = publicPaths.map((path) => ({
     url: absoluteUrl(path),
   }));

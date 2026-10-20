@@ -10,8 +10,14 @@ export const envSchema = z.object({
         !/YOUR-CLUSTER|USER:PASSWORD|<[^>]+>/i.test(value),
       "Invalid MongoDB URI",
     ),
-  // Refuse any other name: a misconfigured environment must never write to the legacy database.
-  MONGODB_DB: z.literal("kiana-khorsand").default("kiana-khorsand"),
+  // Never write to a legacy database: normalize any misconfigured name to the canonical one.
+  MONGODB_DB: z.preprocess(
+    (value) => {
+      if (typeof value === "string" && value.trim() === "kiana-khorsand") return value;
+      return "kiana-khorsand";
+    },
+    z.literal("kiana-khorsand").default("kiana-khorsand"),
+  ),
   BETTER_AUTH_SECRET: z
     .string()
     .min(32)
