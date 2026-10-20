@@ -1,0 +1,21 @@
+import { requireUser } from "@/lib/session";
+import { PanelFrame } from "@/components/panels/panel-frame";
+
+export const metadata = { robots: { index: false, follow: false } };
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await requireUser();
+  return (
+    <PanelFrame
+      name={session.user.name}
+      role={session.user.role}
+      image={session.user.image}
+      userId={session.user.id}
+    >
+      {children}
+    </PanelFrame>
+  );
+}
