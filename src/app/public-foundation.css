@@ -1,0 +1,115 @@
+/* Styles grouped by route/domain. New motion uses Tailwind @theme utilities in globals.css. */
+
+/* --- public-reference.css --- */
+/* Public design reconstruction: latest shared index.html; scoped to the public layout. */
+body:has(.site-shell),
+.site-shell {
+  --bg: #fbfafd;
+  --surface: #fff;
+  --fg: #191731;
+  --muted: #55536e;
+  --line: #ece9f5;
+  --glass: rgb(255 255 255 / 74%);
+  --glass-strong: rgb(255 255 255 / 93%);
+  --site-ink: var(--fg);
+  --site-muted: var(--muted);
+  --site-surface: var(--surface);
+  --site-canvas: var(--bg);
+  --site-violet: var(--c-violet);
+  --site-plum: var(--c-plum);
+  --site-line: var(--line);
+}
+.dark body:has(.site-shell),
+.dark .site-shell {
+  --bg: #0e0d18;
+  --surface: #181628;
+  --fg: #f2f0fa;
+  --muted: #aeacc8;
+  --line: #2a2743;
+  --glass: rgb(24 22 40 / 76%);
+  --glass-strong: rgb(24 22 40 / 95%);
+}
+/* --- reference-html.css --- */
+/* Port of the LAST shared index.html CSS. See docs/visual-reconstruction.md. */
+@theme inline {
+  --color-bg: var(--bg, var(--background));
+  --color-surface: var(--surface, var(--card));
+  --color-fg: var(--fg, var(--foreground));
+  --color-muted: var(--muted, var(--muted-foreground));
+  --color-line: var(--line, var(--border));
+  --color-accent-violet: var(--c-violet);
+  --color-accent-plum: var(--c-plum);
+  --color-accent-rose: var(--c-rose);
+  --color-accent-amber: var(--c-amber);
+  --color-accent-teal: var(--c-teal);
+  --color-accent-indigo: var(--c-indigo);
+}
+.reference-home {
+  --surface: #ffffff;
+  --glass: rgba(255, 255, 255, 0.74);
+  --glass-strong: rgba(255, 255, 255, 0.93);
+  --hover: rgba(25, 23, 49, 0.055);
+}
+.dark .reference-home {
+  --glass: rgba(24, 22, 40, 0.76);
+  --glass-strong: rgba(24, 22, 40, 0.95);
+  --hover: rgba(242, 240, 250, 0.075);
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+/* A registered numeric variable lets Motion interpolate the decorative overlay. */
+@property --spot-opacity {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: true;
+}
+/* The quote-card accent remains a pseudo-element; Motion drives its values. */
+@property --testimonial-accent-scale {
+  syntax: "<number>";
+  initial-value: 0.35;
+  inherits: true;
+}
+@property --testimonial-accent-opacity {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: true;
+}
+/* Radix portal: reproduce the HTML menu shell without inheriting page-scoped CSS. */
+/* Exact structure of the extracted about.html design, kept as real JSX. */
+/* --- public-polish.css --- */
+/* A restrained bright palette: ocean blue, jade, warm coral and a little amber. */
+body:has(.site-shell),
+.site-shell.reference-home {
+  --c-violet: #346eaf;
+  --c-plum: #c05d73;
+  --c-rose: #d96873;
+  --c-amber: #de9b40;
+  --c-teal: #148b80;
+  --c-indigo: #5270b0;
+  --grad-sunset: linear-gradient(90deg, #356fb0, #14988c, #e69e55, #c05d73);
+  --grad-text: linear-gradient(90deg, #315e9c, #118277, #b75c73);
+  --cta-from: #167b80;
+  --cta-to: #3764a0;
+  --cta-fg: #fff;
+  --shadow-soft:
+    0 1px 2px rgb(29 70 89 / 5%), 0 12px 30px -15px rgb(28 99 113 / 20%);
+  --shadow-lift:
+    0 2px 8px rgb(29 70 89 / 6%), 0 24px 48px -22px rgb(22 112 110 / 26%);
+}
+.dark body:has(.site-shell),
+.dark .site-shell.reference-home {
+  --c-violet: #83bbf4;
+  --c-plum: #f59dad;
+  --c-rose: #ffa09b;
+  --c-amber: #ffd080;
+  --c-teal: #65d7c7;
+  --c-indigo: #a1b8f2;
+  --grad-sunset: linear-gradient(90deg, #91c3f1, #6ed8c5, #f5b774, #f09cad);
+  --grad-text: linear-gradient(90deg, #a8d4f5, #8ce3ce, #ffb8ba);
+  --cta-from: #72d7c5;
+  --cta-to: #a9c2f7;
+  --cta-fg: #14252e;
+}
