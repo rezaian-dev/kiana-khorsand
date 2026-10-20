@@ -13,10 +13,6 @@
   <img src="https://img.shields.io/badge/RTL-fa_IR-teal?style=for-the-badge" alt="RTL">
 </p>
 
-<p align="center">
-  <img src="public/og-image.png" alt="Kiana Khorsand Preview" width="800" style="border-radius:24px"/>
-</p>
-
 > **فارسی RTL** وب‌سایت درمانی مدرن با Next.js 16 App Router، MongoDB و PWA. کاملاً سبک، سَبک‌وزن، ریسپانسیو از 320px تا دسکتاپ — بدون پرش، بدون فلش.
 
 ---
