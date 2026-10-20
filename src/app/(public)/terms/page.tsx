@@ -4,6 +4,7 @@ import { getPage } from "@/features/pages/queries";
 import { Intro } from "@/components/shared/intro";
 import { Section } from "@/components/shared/section";
 
+export const revalidate = 86400;
 export async function generateMetadata() {
   const page = await getPage("terms");
   return publicMetadata({

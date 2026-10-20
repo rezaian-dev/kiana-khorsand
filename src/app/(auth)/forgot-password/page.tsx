@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { AuthShell } from "@/components/auth/auth-shell";
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 export const metadata = {
   title: "بازیابی رمز عبور",
   robots: { index: false, follow: false },

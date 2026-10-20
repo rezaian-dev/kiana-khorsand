@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/site-urls";
 
 /** The demo panels and auth flows are not crawlable even when their pages are accessible. */
+export const revalidate = 3600;
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {

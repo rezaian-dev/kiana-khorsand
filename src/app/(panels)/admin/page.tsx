@@ -27,6 +27,9 @@ import { PanelHeading, appointmentLabels } from "@/components/panels/ui";
 import { adminLinks } from "@/components/panels/panel-nav";
 import { formatDate, formatNumber, formatTime } from "@/lib/format";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Palette stays attached to the semantic stat icon; the parent tone is still a hook.
 const iconToneClassName = {
   teal: "bg-[rgba(24,145,136,.12)] text-[#0c7975] dark:bg-[rgba(94,204,184,.16)] dark:text-[#83ded1]",

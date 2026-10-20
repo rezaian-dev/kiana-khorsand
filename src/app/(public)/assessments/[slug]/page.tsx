@@ -5,8 +5,19 @@ import { getAssessment, listAssessments } from "@/features/assessments/queries";
 import { Intro } from "@/components/shared/intro";
 import { Quiz } from "@/features/assessments/ui/quiz";
 
+export const revalidate = 3600;
+export const dynamicParams = true;
 export async function generateStaticParams() {
-  return (await listAssessments()).map((item) => ({ slug: item.slug }));
+  const items = await listAssessments();
+  if (items.length > 0) return items.map((item) => ({ slug: item.slug }));
+  return [
+    { slug: "anxiety-check" },
+    { slug: "mood-check" },
+    { slug: "stress-check" },
+    { slug: "sleep-check" },
+    { slug: "relationship-check" },
+    { slug: "self-esteem-check" },
+  ];
 }
 export async function generateMetadata({ params }: SlugPageProps) {
   const { slug } = await params;

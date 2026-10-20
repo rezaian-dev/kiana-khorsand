@@ -24,6 +24,7 @@ const publicPaths = [
   "/terms",
 ];
 
+export const revalidate = 3600;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articles: Awaited<ReturnType<typeof listArticles>> = [];
   let areas: Awaited<ReturnType<typeof listAreas>> = [];

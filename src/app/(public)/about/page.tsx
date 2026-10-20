@@ -4,6 +4,7 @@ import { getPage } from "@/features/pages/queries";
 import { getSettings } from "@/features/settings/queries";
 import { AboutReference } from "@/features/pages/ui/about-reference";
 
+export const revalidate = 86400;
 export async function generateMetadata() {
   const page = await getPage("about");
   return publicMetadata({

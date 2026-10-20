@@ -14,6 +14,8 @@ import { labels } from "@/lib/labels";
 import { workshopPrice } from "@/features/workshops/pricing";
 import { formatToman } from "@/lib/format";
 
+export const revalidate = 3600;
+
 const baseMetadata = {
   title: labels.workshops,
   description:

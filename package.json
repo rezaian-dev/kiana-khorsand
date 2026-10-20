@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "وب‌سایت روان‌شناسی کیانا خرسند — Next.js 16 + PWA + RTL",
+  "packageManager": "npm@10.8.2",
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +15,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "seed": "tsx src/db/seed.ts",
+    "seed:dev": "tsx src/db/seed-development.ts"
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.7.7",
@@ -47,7 +54,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "axe-core": "^4.14.0",
-    "eslint": "^9",
+    "eslint": "^9.45.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
@@ -62,6 +69,10 @@
   "overrides": {
     "react-markdown-editor-lite": {
       "nanoid": "^5.1.16"
-    }
-  }
+    },
+    "glob": "^11.1.0",
+    "inflight": "npm:lru-cache@^10.4.3",
+    "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.5.5"
+  },
+  "allowedScripts": ["esbuild", "sharp"]
 }

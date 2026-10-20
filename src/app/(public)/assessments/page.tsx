@@ -9,6 +9,7 @@ import { formatNumber } from "@/lib/format";
 import { labels } from "@/lib/labels";
 import { publicMetadata } from "@/lib/public-metadata";
 
+export const revalidate = 3600;
 export const metadata = publicMetadata({
   title: labels.assessments,
   description:

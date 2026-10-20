@@ -18,6 +18,7 @@ const baseMetadata = {
   description:
     "پاسخ پرسش‌های رایج درباره جلسات مشاوره، زمان‌بندی، هزینه و حریم خصوصی.",
 };
+export const revalidate = 86400;
 export async function generateMetadata({ searchParams }: QueryPageProps) {
   const params = await searchParams;
   return publicMetadata({

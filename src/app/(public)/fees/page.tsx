@@ -19,6 +19,7 @@ import * as motion from "motion/react-client";
 import { motionTiming } from "@/lib/motion-tokens";
 import { labels } from "@/lib/labels";
 
+export const revalidate = 86400;
 export async function generateMetadata() {
   const page = await getPage("fees");
   return publicMetadata({

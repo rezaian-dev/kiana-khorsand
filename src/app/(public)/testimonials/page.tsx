@@ -30,6 +30,7 @@ import {
 
 const pageSize = 6;
 
+export const revalidate = 3600;
 export async function generateMetadata({ searchParams }: CategorySearchProps) {
   const { category, page } = await searchParams;
   const items = await listTestimonials();

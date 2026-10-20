@@ -10,6 +10,7 @@ import { Intro } from "@/components/shared/intro";
 import { PublicCardMotion } from "@/components/shared/card-hover-motion";
 import { Section } from "@/components/shared/section";
 
+export const revalidate = 86400;
 export async function generateMetadata() {
   const page = await getPage("cancellation");
   return publicMetadata({

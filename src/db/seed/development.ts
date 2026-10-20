@@ -36,6 +36,18 @@ const bootstrap = betterAuth({
   ],
 });
 
+// Realistic Persian demo clients — SEO-friendly seeding with diverse profiles
+const DEMO_CLIENTS = [
+  { name: "نسترن کریمی", username: "09123456701", password: "Demo12345678!" },
+  { name: "امیرحسین شریفی", username: "09123456702", password: "Demo12345678!" },
+  { name: "سارا رضایی", username: "09123456703", password: "Demo12345678!" },
+  { name: "مریم جلالی", username: "09123456704", password: "Demo12345678!" },
+  { name: "کاوه نوری", username: "09123456705", password: "Demo12345678!" },
+  { name: "هانیه براتی", username: "09123456706", password: "Demo12345678!" },
+  { name: "رضا مرادی", username: "09123456707", password: "Demo12345678!" },
+  { name: "لیلا فرهادی", username: "09123456708", password: "Demo12345678!" },
+] as const;
+
 async function account(kind: "CLIENT" | "ADMIN") {
   const number = process.env[`SEED_${kind}_PHONE`];
   const password = process.env[`SEED_${kind}_PASSWORD`];
@@ -71,12 +83,40 @@ async function account(kind: "CLIENT" | "ADMIN") {
   return { id: created.user.id, created: true };
 }
 
+async function demoClient(def: (typeof DEMO_CLIENTS)[number]) {
+  const users = db.collection("users");
+  const existing = await users.findOne({ username: def.username });
+  if (existing) return { id: String(existing._id), created: false };
+  try {
+    const created = await bootstrap.api.signUpEmail({
+      body: {
+        name: def.name,
+        email: `${def.username}@accounts.kianakhorsand.invalid`,
+        username: def.username,
+        password: def.password,
+      },
+    });
+    if (!created?.user?.id) return null;
+    return { id: created.user.id, created: true };
+  } catch {
+    // Already exists or validation — skip silently
+    const again = await users.findOne({ username: def.username });
+    return again ? { id: String(again._id), created: false } : null;
+  }
+}
+
 export async function seedDevelopment() {
-  if (process.env.NODE_ENV === "production")
-    throw new Error("Development seed disabled in production");
+  const allowProdDemo = process.env.SEED_ALLOW_DEMO === "1";
+  if (process.env.NODE_ENV === "production" && !allowProdDemo)
+    throw new Error("Development seed disabled in production (set SEED_ALLOW_DEMO=1 to override)");
   const admin = await account("ADMIN");
   const client = await account("CLIENT");
   let created = Number(admin?.created) + Number(client?.created);
+  // Create realistic demo clients for showcase (always in dev, opt-in in prod)
+  for (const def of DEMO_CLIENTS) {
+    const res = await demoClient(def);
+    if (res?.created) created += 1;
+  }
   if (client) {
     const userId = client.id;
     const appointmentId = `dev-appointment-${userId}`;

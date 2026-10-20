@@ -9,8 +9,12 @@ import { Intro } from "@/components/shared/intro";
 import { Prose } from "@/components/shared/prose";
 import { cleanEditorialBody } from "@/lib/clean-copy";
 
+export const revalidate = 3600;
+export const dynamicParams = true;
 export async function generateStaticParams() {
-  return (await listAreas()).map((item) => ({ slug: item.slug }));
+  const areas = await listAreas();
+  if (areas.length > 0) return areas.map((item) => ({ slug: item.slug }));
+  return [{ slug: "anxiety" }, { slug: "depression" }, { slug: "grief" }, { slug: "relationship-family" }, { slug: "self-esteem" }];
 }
 export async function generateMetadata({ params }: SlugPageProps) {
   const { slug } = await params;

@@ -23,8 +23,19 @@ import { workshopPrice } from "@/features/workshops/pricing";
 import { formatDate, formatToman } from "@/lib/format";
 import { labels } from "@/lib/labels";
 
+export const revalidate = 3600;
+export const dynamicParams = true;
 export async function generateStaticParams() {
-  return (await listWorkshops()).map((item) => ({ slug: item.slug }));
+  const workshops = await listWorkshops();
+  if (workshops.length > 0) return workshops.map((item) => ({ slug: item.slug }));
+  return [
+    { slug: "emotion-regulation" },
+    { slug: "couple-communication" },
+    { slug: "mindfulness-intro" },
+    { slug: "self-compassion" },
+    { slug: "boundaries-workshop" },
+    { slug: "sleep-workshop" },
+  ];
 }
 export async function generateMetadata({ params }: SlugPageProps) {
   const { slug } = await params;

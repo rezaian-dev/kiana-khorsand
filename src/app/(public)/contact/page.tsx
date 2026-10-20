@@ -36,6 +36,7 @@ import { ContactForm } from "@/features/contact/ui/contact-form";
 import { HoverCard } from "@/components/shared/hover-card";
 import { publicMetadata } from "@/lib/public-metadata";
 
+export const revalidate = 86400;
 export const metadata = publicMetadata({
   title: "تماس و پرسش درباره مشاوره | کیانا خرسند",
   description:

@@ -10,6 +10,7 @@ import { listTestimonials } from "@/features/testimonials/queries";
 import { listFaqs } from "@/features/faqs/queries";
 import { HomeReference } from "@/features/pages/ui/home-reference";
 
+export const revalidate = 60;
 export async function generateMetadata() {
   const page = await getPage("home");
   return publicMetadata({

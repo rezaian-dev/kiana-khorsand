@@ -8,6 +8,7 @@ import { ContentCard } from "@/components/shared/card";
 import { labels } from "@/lib/labels";
 import { publicMetadata } from "@/lib/public-metadata";
 
+export const revalidate = 3600;
 export const metadata = publicMetadata({
   title: labels.areas,
   description:

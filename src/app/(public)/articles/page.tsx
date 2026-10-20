@@ -10,6 +10,7 @@ import { publicMetadata } from "@/lib/public-metadata";
 const description =
   "نوشته‌های آموزشی درباره سلامت روان، روابط، اضطراب و مراقبت از خود را بخوانید.";
 
+export const revalidate = 3600;
 export async function generateMetadata({ searchParams }: ArticleSearchProps) {
   const [params, articles] = await Promise.all([searchParams, listArticles()]);
   const view = resolveArticleSearch(params, articles);

@@ -16,8 +16,32 @@ import { formatDate } from "@/lib/format";
 import { StructuredData } from "@/components/shared/structured-data";
 import { absoluteUrl } from "@/lib/site-urls";
 
+export const revalidate = 3600;
+export const dynamicParams = true;
 export async function generateStaticParams() {
-  return (await listArticles()).map((item) => ({ slug: item.slug }));
+  const articles = await listArticles();
+  if (articles.length > 0) return articles.map((item) => ({ slug: item.slug }));
+  // Fallback for Vercel build without DB — ensures SSG even when DB unavailable
+  return [
+    { slug: "anxiety-basics" },
+    { slug: "thought-feeling-loop" },
+    { slug: "relationship-stuck" },
+    { slug: "self-worth" },
+    { slug: "grief-path" },
+    { slug: "sleep-anxiety" },
+    { slug: "body-signals" },
+    { slug: "boundaries-family" },
+    { slug: "inner-critic" },
+    { slug: "daylight-and-mood" },
+    { slug: "grief-and-work" },
+    { slug: "checking-behavior" },
+    { slug: "perfectionism-burnout" },
+    { slug: "mindful-communication" },
+    { slug: "emotional-regulation-tools" },
+    { slug: "parenting-without-guilt" },
+    { slug: "social-anxiety-steps" },
+    { slug: "values-based-living" },
+  ];
 }
 export async function generateMetadata({ params }: SlugPageProps) {
   const { slug } = await params;
