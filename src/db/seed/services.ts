@@ -1,0 +1,70 @@
+import type { Model } from "@/types/models";
+
+export const rows = [
+  {
+    slug: "s-online",
+    name: "مشاوره فردی — آنلاین",
+    mode: "online",
+    duration: 50,
+    price: 450000,
+    status: "published",
+    features: [
+      "جلسه‌ی ویدیویی امن",
+      "تمرین‌های بین جلسه",
+      "امکان جابه‌جایی زمان با هماهنگی",
+    ],
+  },
+  {
+    slug: "s-inperson",
+    name: "مشاوره فردی — حضوری",
+    mode: "in_person",
+    duration: 50,
+    price: 550000,
+    status: "published",
+    features: [
+      "فضای آرام و خصوصی",
+      "تمرین‌های بین جلسه",
+      "امکان جابه‌جایی زمان با هماهنگی",
+    ],
+  },
+  {
+    slug: "s-couple",
+    name: "مشاوره زوج و خانواده",
+    mode: "in_person",
+    duration: 75,
+    price: 750000,
+    status: "published",
+    features: [
+      "حضور دو یا چند نفر",
+      "تمرین‌های ارتباطی مشترک",
+      "بازبینی دوره‌ای مسیر",
+    ],
+  },
+  {
+    slug: "s-workshop",
+    name: "کارگاه گروهی",
+    mode: "online",
+    duration: 90,
+    price: 320000,
+    status: "published",
+    features: ["جمع کوچک و امن", "تمرین‌های عملی", "متن خلاصه پس از جلسه"],
+  },
+  {
+    slug: "s-emergency",
+    name: "جلسه‌ی کوتاه هماهنگی",
+    mode: "online",
+    duration: 30,
+    price: 250000,
+    status: "hidden",
+    features: ["مخصوص مراجعان فعال", "بدون نیاز به پرونده‌ی جدید"],
+  },
+  {
+    slug: "s-archive",
+    name: "بسته‌ی ۴ جلسه‌ای (بایگانی)",
+    mode: "online",
+    duration: 200,
+    price: 1600000,
+    status: "hidden",
+    features: ["بسته‌ی پیشین"],
+  },
+] satisfies Model["services"][];
