@@ -157,9 +157,9 @@ export function CalendarBoard({
       className={`admin-calendar-board ${panelCardClassName} overflow-visible rounded-[26px]! p-[clamp(1rem,2.5vw,2rem)]! [box-shadow:var(--ar-shadow)]! [background:linear-gradient(135deg,color-mix(in_srgb,var(--panel-surface)_93%,var(--panel-accent)),var(--panel-surface)_52%)]! [border:1px_solid_var(--panel-line)]`}
       aria-label="تقویم نوبت‌ها"
     >
-      <div className="admin-calendar-toolbar flex flex-wrap items-center justify-between gap-3">
+      <div className="admin-calendar-toolbar flex flex-wrap items-center justify-between gap-3 max-[360px]:gap-2 max-[320px]:gap-1.5">
         <div
-          className="admin-calendar-tabs flex flex-wrap items-center gap-[.4rem] rounded-[14px] bg-[var(--ar-surface2)] p-1 [border:1px_solid_var(--panel-line)]"
+          className="admin-calendar-tabs flex flex-wrap items-center gap-[.4rem] rounded-[14px] bg-[var(--ar-surface2)] p-1 [border:1px_solid_var(--panel-line)] max-[320px]:gap-[.2rem] max-[320px]:p-0.5"
           role="navigation"
           aria-label="نمای تقویم"
         >
@@ -174,7 +174,7 @@ export function CalendarBoard({
             </Link>
           ))}
         </div>
-        <div className="admin-calendar-nav flex flex-wrap items-center gap-[.4rem] max-[420.02px]:gap-1">
+        <div className="admin-calendar-nav flex flex-wrap items-center gap-[.4rem] max-[420.02px]:gap-1 max-[320px]:gap-0.5 max-[320px]:[&_a]:min-h-8 max-[320px]:[&_a]:min-w-8 max-[320px]:[&_a]:p-0.5 max-[320px]:[&_a]:text-[.75rem]">
           <JalaliDatePicker date={date} view={view} />
           <Link
             className={`admin-calendar-today ${navLinkClassName} px-4`}
@@ -207,7 +207,7 @@ export function CalendarBoard({
         {label}
       </h2>
       <div
-        className="admin-calendar-insights mb-[1.4rem] grid grid-cols-3 gap-[.7rem] max-[420.02px]:gap-[.3rem]"
+        className="admin-calendar-insights mb-[1.4rem] grid grid-cols-3 gap-[.7rem] max-[420.02px]:gap-[.3rem] max-[360px]:gap-[.25rem] max-[320px]:grid-cols-1 max-[320px]:gap-[.35rem]"
         aria-label="خلاصهٔ زمان‌بندی"
       >
         <div className="flex flex-wrap items-center justify-between gap-[.35rem] rounded-[16px] bg-[var(--ar-surface2)] px-4 py-[.7rem] [border:1px_solid_var(--panel-line)] max-[420.02px]:p-[.55rem]">

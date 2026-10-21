@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // CSS-only hover — no JS, server component
 export function installCardHoverMotion(_card: HTMLElement) {
   // kept for backwards compat, no-op — CSS handles hover now

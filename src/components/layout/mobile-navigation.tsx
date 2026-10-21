@@ -79,15 +79,17 @@ type SocialLinks = {
 export function MobileNavigation({ social }: { social?: SocialLinks }) {
   const pathname = usePathname();
   const reduceMotion = useLiveReducedMotion();
+  // Never show public dock inside account/admin panels — those have their own panel docks
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) {
+    return null;
+  }
   const current = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
   const extraActive = !dockLinks.some(({ href }) => current(href));
   const activeIndex = extraActive ? 4 : dockLinks.findIndex(({ href }) => current(href));
 
   const handleTap = () => {
-    if (typeof navigator !== "undefined" && "vibrate" in navigator) {
-      try { navigator.vibrate(10); } catch {}
-    }
+    // No haptic vibration — keeps PWA stable, no shake on tap (respects UX best practice: <300ms transform-only)
   };
 
   return (
@@ -110,9 +112,9 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
             >
               {isActive && <PublicDockSpotlight reduced={reduceMotion} />}
               <span className={`${mobileDockIconClassName} ${isActive ? "text-white" : ""}`}>
-                <Icon size={isActive ? 20 : 19} strokeWidth={isActive ? 2.5 : 1.7} aria-hidden="true" />
+                <Icon size={24} strokeWidth={isActive ? 2.4 : 1.8} aria-hidden="true" className="relative z-10" />
               </span>
-              <span className={`relative z-10 text-[10px] font-bold leading-none tracking-wide max-[360px]:text-[9px] ${isActive ? "text-white" : ""}`}>
+              <span className={`relative z-10 text-[11px] font-bold leading-none tracking-wide max-[360px]:text-[10px] ${isActive ? "text-white" : ""}`}>
                 {label}
               </span>
             </Link>
@@ -128,9 +130,9 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
           >
             {extraActive && <PublicDockSpotlight reduced={reduceMotion} />}
             <span className={`${mobileDockIconClassName} ${extraActive ? "text-white" : ""}`}>
-              <Grid2X2 size={extraActive ? 20 : 19} strokeWidth={extraActive ? 2.5 : 1.7} aria-hidden="true" />
+              <Grid2X2 size={24} strokeWidth={extraActive ? 2.4 : 1.8} aria-hidden="true" className="relative z-10" />
             </span>
-            <span className={`relative z-10 text-[10px] font-bold leading-none tracking-wide max-[360px]:text-[9px] ${extraActive ? "text-white" : ""}`}>بیشتر</span>
+            <span className={`relative z-10 text-[11px] font-bold leading-none tracking-wide max-[360px]:text-[10px] ${extraActive ? "text-white" : ""}`}>بیشتر</span>
           </button>
         </SheetTrigger>
       </nav>

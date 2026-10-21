@@ -38,7 +38,7 @@ const adminSheetPaletteClassName =
   "[--panel-surface:#fff] [--panel-text:#182234] [--panel-muted:#526074] [--panel-line:#e4e9f0] [--ar-text2:#415064] [--ar-brand-soft:#e6f3f2] [--ar-brand-ink:#176c67] dark:[--panel-surface:#151a27] dark:[--panel-text:#eef1f7] dark:[--panel-muted:#aab5c7] dark:[--panel-line:#344052] dark:[--ar-text2:#c1cbd8] dark:[--ar-brand-soft:#213d42] dark:[--ar-brand-ink:#a3e8dc]";
 const sheetItemClass = `${navItemClass} flex-none min-h-[46px] font-[650]! rounded-none! aria-[current=page]:rounded-[14px_0_0_14px]! aria-[current=page]:[background:linear-gradient(100deg,#e7f8f4,#eaf2fa)]! aria-[current=page]:[box-shadow:inset_3px_0_#36ab9d]! aria-[current=page]:text-[#145b6b]! dark:aria-[current=page]:[background:linear-gradient(100deg,#244b4e,#263a58)]! dark:aria-[current=page]:text-[#bcf1e4]!`;
 const sheetFooterItemClass = `${sheetItemClass} min-h-[42px]!`;
-const mobileItemClass = `${mobileDockItemClassName} max-[1023.02px]:gap-[.08rem] max-[1023.02px]:rounded-[19px] max-[1023.02px]:font-[750] max-[1023.02px]:aria-[current=page]:font-[750]! max-[1023.02px]:text-[.65rem]! max-[1023.02px]:not-[aria-current=page]:hover:text-[var(--dock-ink)]! max-[1023.02px]:aria-[current=page]:text-[#176978] dark:max-[1023.02px]:aria-[current=page]:text-[#bcefe4]`;
+const mobileItemClass = `${mobileDockItemClassName}`;
 
 const prominent = [
   "/admin",
@@ -50,8 +50,8 @@ const labelFor = (href: string, original: string) =>
   ({
     "/admin": "داشبورد",
     "/admin/calendar": "نوبت‌ها",
+    "/admin/clients": "مراجعین",
     "/admin/articles": "محتوا",
-    "/admin/settings": "تنظیمات",
   })[href] ?? original;
 
 export function AdminTopbarTitle() {
@@ -88,8 +88,10 @@ export function AdminReferenceNav() {
         aria-label="ناوبری اصلی"
       >
         <Link
-          className="admin-ref-brand mb-1 flex items-center gap-2.5 border-b border-[var(--panel-line)] px-2 pt-1.5 pb-3.5 text-inherit no-underline min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
-          href="/admin"
+          className="admin-ref-brand mb-1 flex items-center gap-2.5 rounded-[.4rem] border-b border-[var(--panel-line)] px-2 pt-1.5 pb-3.5 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
+          href="/"
+          aria-label="بازگشت به صفحه اصلی"
+          title="بازگشت به صفحه اصلی"
         >
           <BrandMark
             size={42}
@@ -174,7 +176,7 @@ export function AdminMobileTrigger() {
     <div className="admin-ref-menu-trigger block lg:hidden">
       <Sheet>
         <nav
-          className={`${mobileDockClassName} admin-ref-mobnav z-[45]! gap-[.15rem] max-[1023.02px]:[--dock-ink:#5c697a] max-[480.02px]:gap-[.05rem] lg:hidden! dark:max-[1023.02px]:[--dock-ink:#c1d4da]`}
+          className={`${mobileDockClassName} admin-ref-mobnav z-[45]! lg:hidden!`}
           data-dock-active={
             extraActive ? 4 : prominent.findIndex((href) => selected(href))
           }
@@ -189,11 +191,11 @@ export function AdminMobileTrigger() {
                 className={mobileItemClass}
                 aria-current={selected(href) ? "page" : undefined}
               >
-                <span className={mobileDockIconClassName}>
-                  {selected(href) && <DockSpotlight />}
-                  <Icon size={22} aria-hidden="true" />
+                {selected(href) && <DockSpotlight />}
+                <span className={`${mobileDockIconClassName} relative z-10 ${selected(href) ? "text-white" : ""}`}>
+                  <Icon size={24} aria-hidden="true" className="relative z-10" />
                 </span>
-                <span>{labelFor(href, label)}</span>
+                <span className="relative z-10">{labelFor(href, label)}</span>
               </Link>
             ))}
           <SheetTrigger asChild>
@@ -203,11 +205,11 @@ export function AdminMobileTrigger() {
               aria-current={extraActive ? "page" : undefined}
               type="button"
             >
-              <span className={mobileDockIconClassName}>
-                {extraActive && <DockSpotlight />}
-                <LayoutGrid size={22} aria-hidden="true" />
+              {extraActive && <DockSpotlight />}
+              <span className={`${mobileDockIconClassName} relative z-10 ${extraActive ? "text-white" : ""}`}>
+                <LayoutGrid size={24} aria-hidden="true" className="relative z-10" />
               </span>
-              <span>بیشتر</span>
+              <span className="relative z-10">بیشتر</span>
             </button>
           </SheetTrigger>
         </nav>

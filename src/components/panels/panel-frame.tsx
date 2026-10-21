@@ -32,15 +32,17 @@ export async function PanelFrame({
       <a href="#panel-main" className={panelSkipClassName}>
         پرش به محتوای اصلی
       </a>
-      <header className="panel-top sticky top-0 z-30 h-[76px] border-b border-[var(--panel-line)] bg-[var(--panel-surface)]">
-        <div className="panel-top-inner flex h-full items-center gap-4 px-[clamp(1rem,3vw,2rem)] max-[480.02px]:gap-2">
+      <header className="panel-top sticky top-0 z-30 h-[76px] border-b border-[var(--panel-line)] bg-[var(--panel-surface)] max-[320px]:h-[64px]">
+        <div className="panel-top-inner flex h-full items-center gap-4 px-[clamp(1rem,3vw,2rem)] max-[480.02px]:gap-2 max-[320px]:gap-1 max-[320px]:px-2">
           <PanelNav
             links={isAdmin ? adminLinks : clientLinks}
             title={isAdmin ? "مدیریت سایت" : "پنل کاربری"}
           />
           <Link
-            href={isAdmin ? "/admin" : "/dashboard"}
-            className="panel-brand flex items-center gap-2 font-extrabold max-[480.02px]:text-[.9rem]"
+            href="/"
+            className="panel-brand flex items-center gap-2 rounded-[.4rem] font-extrabold transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--panel-accent)] focus-visible:ring-offset-2 max-[480.02px]:text-[.9rem]"
+            aria-label="بازگشت به صفحه اصلی"
+            title="بازگشت به صفحه اصلی"
           >
             <BrandMark size={32} className="rounded-[.55rem]" /> پنل کیانا خرسند
           </Link>
@@ -71,7 +73,7 @@ export async function PanelFrame({
         />
         <main
           id="panel-main"
-          className="panel-main mx-auto w-full max-w-[1400px] min-w-0 p-[clamp(1rem,3vw,2.5rem)]"
+          className="panel-main mx-auto w-full max-w-[1400px] min-w-0 p-[clamp(1rem,3vw,2.5rem)] max-[900.02px]:pb-[calc(100px+env(safe-area-inset-bottom,0px))] max-[320px]:p-[.75rem] max-[320px]:pb-[calc(92px+env(safe-area-inset-bottom,0px))]"
         >
           <PageReveal>{children}</PageReveal>
         </main>

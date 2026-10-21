@@ -312,3 +312,12 @@
   --color-site-plum: var(--site-plum);
 }
 /* Public shell and legacy elements now use scoped utilities in public-legacy-classes.ts. */
+html {
+  scroll-padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "کیانا خرسند",
     description: siteDescription,
     url: SITE_ORIGIN,
-    images: [{ url: "/assets/images/hero-therapist.jpg", alt: "فضای مشاورهٔ روان‌شناسی", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.jpg", alt: "کیانا خرسند — جایی امن برای فهمیدن و تغییر", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
 };

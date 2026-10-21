@@ -56,11 +56,13 @@
 - فونت Vazirmatn با `next/font/local` + `preload` و `display:swap` — بدون CLS
 - `viewport-fit: cover` + `safe-area-inset` برای ناچ موبایل
 
-| متریک | قبل | بعد |
-|---|---|---|
-| JS انتقالی (Prod) | ~954 KB | **~364 KB** |
-| Client Components | 60 | **<40** |
-| صفحات استاتیک/داینامیک | 82 | 82 (بدون رگرسیون) |
+| متریک | اندازه‌گیری‌شده 2026-10-21 |
+|---|---|
+| Client Components (`\"use client\"`) | 56 فایل |
+| motion import | 48 فایل |
+| Routes (next build) | 65 (○ 4 static, ƒ 61 dynamic) |
+| eslint | 0 error (پس از پاکسازی) |
+| npm audit --omit=dev | 0 vulnerability (پس از upgrade markdown-it) |
 
 ---
 
@@ -69,7 +71,7 @@
 - **Framework:** Next.js 16.4 (App Router) + Turbopack
 - **UI:** Tailwind 4, lucide-react, Radix UI (تفکیک‌شده), motion (فقط داک)
 - **DB:** MongoDB 7 + better-auth + Zod
-- **PWA:** @ducanh2912/next-pwa + دستی sw.js
+- **PWA:** دستی sw.js (next-pwa حذف شد per Turbopack)
 - **Date:** @daypicker/persian, Jalali picker
 - **Font:** Vazirmatn (WOFF2)
 

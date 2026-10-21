@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import {
@@ -553,7 +554,7 @@ function ReviewCard({
           <span className="testimonial-name text-sm font-bold text-zinc-900 dark:text-zinc-100">
             {item.name}
           </span>
-          <span className="testimonial-role text-xs text-zinc-500 dark:text-zinc-400">
+          <span className="testimonial-role text-xs text-zinc-500 dark:text-zinc-300">
             {item.category === "couples"
               ? "مشاورهٔ زوجی"
               : item.category === "individual"

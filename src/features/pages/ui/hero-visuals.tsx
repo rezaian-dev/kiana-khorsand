@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Server — CSS reveal, no JS bundle
 export { PortraitFloat, FloatingTicket } from "./decorative-motion";
 

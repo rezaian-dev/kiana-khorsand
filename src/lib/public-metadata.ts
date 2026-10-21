@@ -6,7 +6,7 @@ export function publicMetadata({
   title,
   description,
   path,
-  image = "/assets/images/hero-therapist.jpg",
+  image = "/og-image.jpg",
   canonical = true,
   index = true,
   publishedTime,
