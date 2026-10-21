@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import {
@@ -22,9 +21,8 @@ import {
   publicContainerClassName,
   publicSectionClassName,
 } from "@/components/layout/public-layout-classes";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { publicSliderControlClassName } from "@/components/layout/public-slider-control-classes";
 import { animate, hover } from "motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +47,6 @@ import type { ArticleVisual } from "@/features/articles/article-visual";
 import {
   neonCarouselSectionClassName,
   neonCarouselLinkClassName,
-  neonCarouselControlClassName,
   neonArticleCardClassName,
   neonArticleActiveClassName,
 } from "./carousel-neon-classes";
@@ -124,17 +121,17 @@ type Props =
       articles?: never;
     };
 
-/** Native scroll snap + Tailwind slide depth; Motion only animates review avatars. */
+/** Principled infinite scroll: instant mount, rAF-throttled tracking, no jumps. */
 export function ReferenceCarousel(props: Props) {
   const viewport = useRef<HTMLDivElement>(null);
   const slides = useRef<(HTMLLIElement | null)[]>([]);
   const [position, setPosition] = useState(1);
   const current = useRef(1);
   const programmaticTarget = useRef<number | null>(null);
-  const drag = useRef<{ x: number; scroll: number; moved: boolean } | null>(
-    null,
-  );
+  const isAnimating = useRef(false);
+  const rafScroll = useRef<number | null>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const items =
     props.kind === "testimonials"
       ? props.reviews
@@ -151,49 +148,63 @@ export function ReferenceCarousel(props: Props) {
   const realIndex = (physical: number) =>
     looping ? (physical - 1 + items.length) % items.length : physical;
 
-  const center = (index: number, immediate = false) => {
-    const root = viewport.current;
-    const slide = slides.current[index];
-    if (!root || !slide) return;
-    const element = slide.getBoundingClientRect();
-    const frame = root.getBoundingClientRect();
-    const delta =
-      element.left + element.width / 2 - (frame.left + frame.width / 2);
-    root.scrollBy({ left: delta, behavior: immediate ? "instant" : "auto" });
-  };
-  const settle = () => {
+  // Center helper: uses native scrollIntoView which handles RTL/LTR automatically
+  // and avoids manual delta math that caused stutter.
+  const scrollToIndex = useCallback(
+    (index: number, behavior: ScrollBehavior = "smooth") => {
+      const root = viewport.current;
+      const slide = slides.current[index];
+      if (!root || !slide) return;
+      // Temporarily force the desired behavior without fighting the CSS scroll-smooth class
+      const prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = behavior === "instant" ? "auto" : behavior;
+      slide.scrollIntoView({
+        behavior: behavior === "instant" ? "instant" as ScrollBehavior : behavior,
+        block: "nearest",
+        inline: "center",
+      });
+      // Restore after the browser has queued the scroll
+      if (prev) root.style.scrollBehavior = prev;
+      else root.style.removeProperty("scroll-behavior");
+    },
+    []
+  );
+
+  const settle = useCallback(() => {
     const root = viewport.current;
     if (!root || !looping) return;
-    if (programmaticTarget.current !== null) {
-      const target = slides.current[programmaticTarget.current];
-      if (!target) return;
-      const box = target.getBoundingClientRect();
-      const frame = root.getBoundingClientRect();
-      if (Math.abs(box.left + box.width / 2 - frame.left - frame.width / 2) > 3)
-        return;
-      programmaticTarget.current = null;
-    }
-    // Edge copies give both sides a real neighbor; jump to the matching original
-    // after snapping, without traversing the entire carousel in view.
+    // Only jump when we are truly at a clone and the programmatic scroll finished
+    if (programmaticTarget.current !== null) return;
+    if (isAnimating.current) return;
     if (current.current === 0 || current.current === items.length + 1) {
       const landing = current.current === 0 ? items.length : 1;
       current.current = landing;
       setPosition(landing);
-      center(landing, true);
+      // Instant jump — no animation, no visible flash because slide content is identical
+      scrollToIndex(landing, "instant");
     }
-  };
-  const move = (step: number) => {
-    if (!looping) return;
-    settle();
-    const next = Math.max(
-      0,
-      Math.min(items.length + 1, current.current + step),
-    );
-    current.current = next;
-    setPosition(next);
-    programmaticTarget.current = next;
-    center(next);
-  };
+  }, [items.length, looping, scrollToIndex]);
+
+  const move = useCallback(
+    (step: number) => {
+      if (!looping) return;
+      if (isAnimating.current) return;
+      // If we are sitting on a clone, settle instantly before calculating next
+      if (current.current === 0 || current.current === items.length + 1) settle();
+      const next = Math.max(0, Math.min(items.length + 1, current.current + step));
+      current.current = next;
+      setPosition(next);
+      programmaticTarget.current = next;
+      isAnimating.current = true;
+      scrollToIndex(next, reduceMotion ? "instant" : "smooth");
+      // Safety: if scrollend never fires (old Safari), clear the lock
+      window.setTimeout(() => {
+        isAnimating.current = false;
+        if (programmaticTarget.current === next) programmaticTarget.current = null;
+      }, 700);
+    },
+    [items.length, looping, reduceMotion, scrollToIndex, settle]
+  );
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -202,38 +213,25 @@ export function ReferenceCarousel(props: Props) {
     media.addEventListener("change", sync);
     return () => media.removeEventListener("change", sync);
   }, []);
+
   useEffect(() => {
     if (props.kind === "testimonials") return;
     const root = viewport.current;
     if (!root) return;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const images = [
-      ...root.querySelectorAll<HTMLImageElement>(".art-carousel-card img"),
-    ];
+    const images = [...root.querySelectorAll<HTMLImageElement>(".art-carousel-card img")];
     const reset = () => {
-      if (media.matches)
-        for (const image of images)
-          animate(image, { scale: 1 }, { duration: 0 });
+      if (media.matches) for (const image of images) animate(image, { scale: 1 }, { duration: 0 });
     };
-    const listeners = [
-      ...root.querySelectorAll<HTMLElement>(".art-carousel-card"),
-    ].map((card) =>
+    const listeners = [...root.querySelectorAll<HTMLElement>(".art-carousel-card")].map((card) =>
       hover(card, () => {
         const image = card.querySelector<HTMLImageElement>("img");
         if (!image || media.matches) return;
-        animate(
-          image,
-          { scale: 1.035 },
-          { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] },
-        );
+        animate(image, { scale: 1.035 }, { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] });
         return () => {
-          animate(
-            image,
-            { scale: 1 },
-            { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] },
-          );
+          animate(image, { scale: 1 }, { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] });
         };
-      }),
+      })
     );
     media.addEventListener("change", reset);
     return () => {
@@ -241,41 +239,91 @@ export function ReferenceCarousel(props: Props) {
       media.removeEventListener("change", reset);
     };
   }, [props.kind, items.length]);
-  useEffect(() => {
-    center(looping ? 1 : 0, true);
-    // Re-center if a filtered carousel changes between one and multiple cards.
-  }, [looping]);
-  const trackScroll = () => {
+
+  // Principled mount: position instantly BEFORE paint so user never sees the jump
+  useLayoutEffect(() => {
     const root = viewport.current;
-    if (!root || drag.current) return;
-    const frame = root.getBoundingClientRect();
-    const middle = frame.left + frame.width / 2;
-    if (programmaticTarget.current !== null) {
-      const target = slides.current[programmaticTarget.current];
-      if (target) {
-        const box = target.getBoundingClientRect();
-        if (Math.abs(box.left + box.width / 2 - middle) <= 3) {
-          programmaticTarget.current = null;
-          // Scrollend performs the edge jump after native snap has finished.
-        }
-      }
-      // Ignore intermediate cards during a smooth jump.
-      return;
+    if (!root) return;
+    const target = looping ? 1 : 0;
+    current.current = target;
+    setPosition(target);
+    // Hide until positioned to avoid FOUC, then instantly center
+    scrollToIndex(target, "instant");
+    // Next frame: allow transitions and reveal
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setMounted(true));
+    });
+    return () => cancelAnimationFrame(id);
+  }, [looping, scrollToIndex, items.length]);
+
+  // Keep centered on resize without animation — prevents drift/jump
+  useEffect(() => {
+    const root = viewport.current;
+    if (!root) return;
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => {
+        scrollToIndex(current.current, "instant");
+      });
+      ro.observe(root);
     }
-    const nearest = slides.current.reduce(
-      (best, slide, index) => {
-        if (!slide) return best;
+    const onResize = () => scrollToIndex(current.current, "instant");
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      ro?.disconnect();
+    };
+  }, [scrollToIndex]);
+
+  const trackScroll = useCallback(() => {
+    if (rafScroll.current !== null) return;
+    rafScroll.current = requestAnimationFrame(() => {
+      rafScroll.current = null;
+      const root = viewport.current;
+      if (!root) return;
+      // Don't compete while user is dragging or during programmatic animation
+      const dragging = (root as HTMLElement & { dataset: DOMStringMap }).dataset.dragging === "true";
+      if (dragging) return;
+      if (isAnimating.current && programmaticTarget.current !== null) {
+        // During smooth scroll, only check if target reached
+        const target = slides.current[programmaticTarget.current];
+        if (target) {
+          const frame = root.getBoundingClientRect();
+          const box = target.getBoundingClientRect();
+          if (Math.abs(box.left + box.width / 2 - frame.left - frame.width / 2) <= 4) {
+            programmaticTarget.current = null;
+            isAnimating.current = false;
+          }
+        }
+        return;
+      }
+      const frame = root.getBoundingClientRect();
+      const middle = frame.left + frame.width / 2;
+      let best = current.current;
+      let gapBest = Infinity;
+      for (let i = 0; i < slides.current.length; i++) {
+        const slide = slides.current[i];
+        if (!slide) continue;
         const box = slide.getBoundingClientRect();
         const gap = Math.abs(box.left + box.width / 2 - middle);
-        return gap < best.gap ? { index, gap } : best;
-      },
-      { index: current.current, gap: Infinity },
-    );
-    if (nearest.index !== current.current) {
-      current.current = nearest.index;
-      setPosition(nearest.index);
-    }
-  };
+        if (gap < gapBest) {
+          gapBest = gap;
+          best = i;
+        }
+      }
+      if (best !== current.current) {
+        current.current = best;
+        setPosition(best);
+      }
+    });
+  }, []);
+
+  const handleScrollEnd = useCallback(() => {
+    programmaticTarget.current = null;
+    isAnimating.current = false;
+    settle();
+  }, [settle]);
+
   return (
     <section
       className={`${publicSectionClassName} reference-carousel ${immersive ? neonCarouselSectionClassName : ""} ${props.kind === "testimonials" ? "pt-10! pb-10! md:pt-24! md:pb-16!" : props.kind === "articles" ? "pt-8! pb-12! md:pt-16! md:pb-24!" : ""}`}
@@ -321,36 +369,22 @@ export function ReferenceCarousel(props: Props) {
             : `${publicContainerClassName} ${immersive ? "mt-6 sm:mt-10" : "mt-10"}`
         }
       >
-        {/* The focusable scroll region deliberately handles arrow keys; it is not a button. */}
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
         <div
           ref={viewport}
-          className={`carousel ${coverflow && !reduceMotion ? "carousel-coverflow carousel-3d" : ""} relative z-10 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] overflow-x-auto! overflow-y-hidden! overscroll-x-contain scroll-smooth motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden ${coverflow ? "pt-4 pb-8" : "pt-[.6rem] pb-4"}`}
-          // A scrollable region needs a keyboard focus target (WCAG 2.1.1).
+          className={`carousel ${coverflow && !reduceMotion ? "carousel-coverflow carousel-3d" : ""} relative z-10 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] overflow-x-auto! overflow-y-hidden! overscroll-x-contain scroll-smooth motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden ${coverflow ? "pt-4 pb-8" : "pt-[.6rem] pb-4"} ${mounted ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
           role="region"
           aria-roledescription="اسلایدر"
           aria-label={c.title}
           onScroll={trackScroll}
-          // React 19 supports scrollend; eslint's DOM attribute list lags behind.
           // eslint-disable-next-line react/no-unknown-property
-          onScrollEnd={settle}
+          onScrollEnd={handleScrollEnd}
           onKeyDown={(event) => {
-            if (
-              event.altKey ||
-              event.ctrlKey ||
-              event.metaKey ||
-              event.shiftKey
-            )
-              return;
+            if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
             if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-            if (
-              ["INPUT", "TEXTAREA", "SELECT"].includes(
-                (event.target as HTMLElement).tagName,
-              )
-            )
-              return;
+            if (["INPUT", "TEXTAREA", "SELECT"].includes((event.target as HTMLElement).tagName)) return;
             event.preventDefault();
             move(event.key === "ArrowLeft" ? 1 : -1);
           }}
@@ -360,47 +394,36 @@ export function ReferenceCarousel(props: Props) {
           onPointerDown={(event) => {
             programmaticTarget.current = null;
             if (event.pointerType !== "mouse") return;
-            event.currentTarget.classList.add("scroll-auto!", "snap-none!");
-            drag.current = {
-              x: event.clientX,
-              scroll: event.currentTarget.scrollLeft,
-              moved: false,
-            };
-          }}
-          onDragStart={(event) => event.preventDefault()}
-          onPointerCancel={(event) => {
-            drag.current = null;
-            event.currentTarget.classList.remove("scroll-auto!", "snap-none!");
-          }}
-          onPointerMove={(event) => {
-            const state = drag.current;
-            if (!state || event.buttons !== 1) return;
-            if (Math.abs(event.clientX - state.x) > 5) state.moved = true;
-            if (state.moved) {
-              event.preventDefault();
-              event.currentTarget.scrollLeft =
-                state.scroll + state.x - event.clientX;
-            }
+            // Disable snap + smooth during drag to prevent fight
+            event.currentTarget.dataset.dragging = "true";
+            event.currentTarget.classList.add("snap-none!");
+            (event.currentTarget as HTMLElement).style.scrollSnapType = "none";
+            (event.currentTarget as HTMLElement).style.scrollBehavior = "auto";
           }}
           onPointerUp={(event) => {
-            const state = drag.current;
-            drag.current = null;
-            event.currentTarget.classList.remove("scroll-auto!", "snap-none!");
-            if (state?.moved) {
-              event.currentTarget.dataset.dragged = "true";
-              const viewportElement = event.currentTarget;
-              queueMicrotask(() => {
-                delete viewportElement.dataset.dragged;
-              });
-              trackScroll();
-              center(current.current);
-              window.setTimeout(settle, 600);
-            }
+            const el = event.currentTarget as HTMLElement;
+            delete el.dataset.dragging;
+            el.classList.remove("snap-none!");
+            el.style.removeProperty("scroll-snap-type");
+            el.style.removeProperty("scroll-behavior");
+            trackScroll();
+            // Re-snap to nearest after drag ends
+            requestAnimationFrame(() => scrollToIndex(current.current, "smooth"));
           }}
-          onClickCapture={(event) => {
-            if (event.currentTarget.dataset.dragged) {
-              event.preventDefault();
-              event.stopPropagation();
+          onPointerCancel={(event) => {
+            const el = event.currentTarget as HTMLElement;
+            delete el.dataset.dragging;
+            el.classList.remove("snap-none!");
+            el.style.removeProperty("scroll-snap-type");
+            el.style.removeProperty("scroll-behavior");
+          }}
+          onPointerLeave={(event) => {
+            const el = event.currentTarget as HTMLElement;
+            if (el.dataset.dragging) {
+              delete el.dataset.dragging;
+              el.classList.remove("snap-none!");
+              el.style.removeProperty("scroll-snap-type");
+              el.style.removeProperty("scroll-behavior");
             }
           }}
         >
@@ -412,8 +435,7 @@ export function ReferenceCarousel(props: Props) {
               const selected = physical === (looping ? position : 0);
               const next = looping && position + 1 === physical;
               const previous = looping && position - 1 === physical;
-              const clone =
-                looping && (physical === 0 || physical === items.length + 1);
+              const clone = looping && (physical === 0 || physical === items.length + 1);
               return (
                 <li
                   key={`${item.slug}-${physical}`}
@@ -422,15 +444,13 @@ export function ReferenceCarousel(props: Props) {
                   }}
                   data-clone={clone ? "" : undefined}
                   aria-hidden={clone ? true : undefined}
-                  inert={clone}
+                  inert={clone ? true : undefined}
                   className={`carousel-slide flex h-auto shrink-0 snap-center items-stretch transition-opacity duration-500 ease-out motion-reduce:transition-none ${coverflow ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"} ${selected ? "carousel-slide-active opacity-100" : next ? "carousel-slide-next opacity-75" : previous ? "carousel-slide-prev opacity-75" : "opacity-35"} motion-reduce:opacity-100`}
                   aria-label={`اسلاید ${new Intl.NumberFormat("fa-IR").format(index + 1)} از ${new Intl.NumberFormat("fa-IR").format(items.length)}`}
                 >
                   {props.kind === "testimonials" ? (
                     <ReviewCard
                       item={item as Review}
-                      active={selected}
-                      reduceMotion={reduceMotion}
                       depthClass={
                         selected
                           ? ""
@@ -442,11 +462,7 @@ export function ReferenceCarousel(props: Props) {
                       }
                     />
                   ) : props.kind === "articles" ? (
-                    <ArticleCard
-                      item={item as Article}
-                      active={selected}
-                      reduceMotion={reduceMotion}
-                    />
+                    <ArticleCard item={item as Article} active={selected} reduceMotion={reduceMotion} />
                   ) : (
                     <WorkshopCard item={item as Workshop} />
                   )}
@@ -483,14 +499,7 @@ export function ReferenceCarousel(props: Props) {
     </section>
   );
 }
-// A restrained, slow border breath: no card movement, and no loop for reduced motion.
-function BorderBreath({
-  reduceMotion,
-  article = false,
-}: {
-  reduceMotion: boolean;
-  article?: boolean;
-}) {
+function BorderBreath({ reduceMotion, article = false }: { reduceMotion: boolean; article?: boolean }) {
   return (
     <motion.span
       aria-hidden="true"
@@ -500,12 +509,7 @@ function BorderBreath({
       transition={
         reduceMotion
           ? { duration: 0 }
-          : {
-              duration: 3.1,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }
+          : { duration: 3.1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }
       }
     />
   );
@@ -513,20 +517,12 @@ function BorderBreath({
 function ReviewCard({
   item,
   depthClass,
-  active,
-  reduceMotion,
 }: {
   item: Review;
   depthClass: string;
-  active: boolean;
-  reduceMotion: boolean;
 }) {
-  const avatar = testimonialPortrait(item);
-  const [hovered, setHovered] = useState(false);
   return (
-    <figure
-      className={`${publicTestimonialClassName} h-full flex-auto ${depthClass}`}
-    >
+    <figure className={`${publicTestimonialClassName} h-full flex-auto ${depthClass}`}>
       <span className={publicTestimonialMarkClassName} aria-hidden="true">
         <i className="ph-fill ph-quotes" />
       </span>
@@ -539,27 +535,25 @@ function ReviewCard({
           role="img"
           aria-label={`پرترهٔ تولیدشده برای ${item.name}`}
         >
-          {avatar && (
-            <Image
-              src={avatar}
-              width={120}
-              height={120}
-              sizes="48px"
-              className="absolute inset-0 size-full rounded-full object-cover"
-              alt=""
-            />
-          )}
+          {item.avatar ? null : null}
+          {(() => {
+            const avatar = testimonialPortrait(item);
+            return avatar ? (
+              <Image
+                src={avatar}
+                width={120}
+                height={120}
+                sizes="48px"
+                className="absolute inset-0 size-full rounded-full object-cover"
+                alt=""
+              />
+            ) : null;
+          })()}
         </span>
         <span className="testimonial-who flex min-w-0 flex-col gap-0.5">
-          <span className="testimonial-name text-sm font-bold text-zinc-900 dark:text-zinc-100">
-            {item.name}
-          </span>
+          <span className="testimonial-name text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.name}</span>
           <span className="testimonial-role text-xs text-zinc-500 dark:text-zinc-300">
-            {item.category === "couples"
-              ? "مشاورهٔ زوجی"
-              : item.category === "individual"
-                ? "مشاورهٔ فردی"
-                : item.category}
+            {item.category === "couples" ? "مشاورهٔ زوجی" : item.category === "individual" ? "مشاورهٔ فردی" : item.category}
           </span>
         </span>
         <span className="testimonial-badge ms-auto rounded-full bg-teal-600 px-3 py-1 text-xs font-bold text-white shadow-sm dark:bg-teal-500">
@@ -569,15 +563,7 @@ function ReviewCard({
     </figure>
   );
 }
-function ArticleCard({
-  item,
-  active,
-  reduceMotion,
-}: {
-  item: Article;
-  active: boolean;
-  reduceMotion: boolean;
-}) {
+function ArticleCard({ item, active, reduceMotion }: { item: Article; active: boolean; reduceMotion: boolean }) {
   return (
     <Link
       href={`/articles/${item.slug}`}
@@ -598,11 +584,7 @@ function ArticleCard({
             />
           )}
         </div>
-        <ArticleEmblem
-          visual={item.visual}
-          slug={item.slug}
-          className={artSealCompactClassName}
-        />
+        <ArticleEmblem visual={item.visual} slug={item.slug} className={artSealCompactClassName} />
       </div>
       <div className="mx-[0.65rem] mt-4 flex flex-wrap items-center gap-2.5">
         <span
@@ -611,22 +593,13 @@ function ArticleCard({
           {item.category}
         </span>
       </div>
-      <h3
-        className={`${publicH3ClassName} mx-[0.65rem] mt-3 break-words text-[#244247]! dark:text-[#f0fcf8]!`}
-      >
-        {item.title}
-      </h3>
-      <p className="text-muted mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">
-        {item.excerpt}
-      </p>
+      <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-3 break-words text-[#244247]! dark:text-[#f0fcf8]!`}>{item.title}</h3>
+      <p className="text-muted mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">{item.excerpt}</p>
       <span
         className={`art-carousel-read mx-[.65rem]! mt-auto! group-hover:motion-safe:-translate-y-0.5 motion-reduce:transform-none! ${articleActionClassName} hover:no-underline! [&&]:border-[#9eb6dc]! [&&]:bg-[#ebf1fd]! [&&]:text-[#294d80]! [&&]:hover:bg-[#dce7fa]! [&&]:hover:text-[#213e70]! dark:[&&]:border-[#7287b2]! dark:[&&]:bg-[#293654]! dark:[&&]:text-[#e0eafb]! dark:[&&]:hover:bg-[#3a4b73]! dark:[&&]:hover:text-white!`}
       >
         خواندن مقاله
-        <i
-          className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px]`}
-          aria-hidden="true"
-        />
+        <i className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px]`} aria-hidden="true" />
       </span>
     </Link>
   );
@@ -650,35 +623,24 @@ function WorkshopCard({ item }: { item: Workshop }) {
             />
           )}
         </div>
-        <span
-          className={`${artSealClassName} ${artSealCompactClassName}`}
-          aria-hidden="true"
-        >
+        <span className={`${artSealClassName} ${artSealCompactClassName}`} aria-hidden="true">
           <i className="ph-duotone ph-users-three" />
         </span>
       </div>
       <span className="text-muted mx-[0.65rem] mt-4 text-xs font-extrabold tracking-wide">
         {item.mode === "online" ? "آنلاین" : "حضوری"}
       </span>
-      <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-2 break-words`}>
-        {item.title}
-      </h3>
+      <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-2 break-words`}>{item.title}</h3>
       <p className="text-muted mx-[0.65rem] mt-2 text-xs font-bold">
         {formatToman(workshopPrice(item).total)}
         {workshopPrice(item).percent > 0 && (
           <span className="font-extrabold text-[#10665f] dark:text-[#8fe4d6]">
             {" "}
-            · ٪
-            {new Intl.NumberFormat("fa-IR").format(
-              workshopPrice(item).percent,
-            )}{" "}
-            تخفیف
+            · ٪{new Intl.NumberFormat("fa-IR").format(workshopPrice(item).percent)} تخفیف
           </span>
         )}
       </p>
-      <p className="text-muted mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">
-        {item.description}
-      </p>
+      <p className="text-muted mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">{item.description}</p>
       <span className="mx-[0.65rem] mt-5 inline-flex grow items-center gap-1.5 pt-2 text-sm font-bold text-[#126c68] dark:text-[#8fe4d6]">
         جزئیات کارگاه
         <i className="ph-bold ph-arrow-left" aria-hidden="true" />
