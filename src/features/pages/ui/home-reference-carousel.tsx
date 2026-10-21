@@ -148,24 +148,30 @@ export function ReferenceCarousel(props: Props) {
   const realIndex = (physical: number) =>
     looping ? (physical - 1 + items.length) % items.length : physical;
 
-  // Center helper: uses native scrollIntoView which handles RTL/LTR automatically
-  // and avoids manual delta math that caused stutter.
+  // Center helper: native scrollIntoView handles RTL/LTR. During programmatic
+  // smooth moves we temporarily disable snap to prevent snap-vs-smooth fight (the tick).
   const scrollToIndex = useCallback(
     (index: number, behavior: ScrollBehavior = "smooth") => {
       const root = viewport.current;
       const slide = slides.current[index];
       if (!root || !slide) return;
-      // Temporarily force the desired behavior without fighting the CSS scroll-smooth class
+      const isInstant = behavior === "instant";
+      if (!isInstant) {
+        // Disable snap for the duration of smooth travel
+        (root as HTMLElement).style.scrollSnapType = "none";
+      }
       const prev = root.style.scrollBehavior;
-      root.style.scrollBehavior = behavior === "instant" ? "auto" : behavior;
+      root.style.scrollBehavior = isInstant ? "auto" : behavior;
       slide.scrollIntoView({
-        behavior: behavior === "instant" ? "instant" as ScrollBehavior : behavior,
+        behavior: isInstant ? ("instant" as unknown as ScrollBehavior) : behavior,
         block: "nearest",
         inline: "center",
       });
-      // Restore after the browser has queued the scroll
       if (prev) root.style.scrollBehavior = prev;
       else root.style.removeProperty("scroll-behavior");
+      if (!isInstant) {
+        window.setTimeout(() => (root as HTMLElement).style.removeProperty("scroll-snap-type"), 680);
+      }
     },
     []
   );
@@ -281,22 +287,10 @@ export function ReferenceCarousel(props: Props) {
       rafScroll.current = null;
       const root = viewport.current;
       if (!root) return;
-      // Don't compete while user is dragging or during programmatic animation
       const dragging = (root as HTMLElement & { dataset: DOMStringMap }).dataset.dragging === "true";
       if (dragging) return;
-      if (isAnimating.current && programmaticTarget.current !== null) {
-        // During smooth scroll, only check if target reached
-        const target = slides.current[programmaticTarget.current];
-        if (target) {
-          const frame = root.getBoundingClientRect();
-          const box = target.getBoundingClientRect();
-          if (Math.abs(box.left + box.width / 2 - frame.left - frame.width / 2) <= 4) {
-            programmaticTarget.current = null;
-            isAnimating.current = false;
-          }
-        }
-        return;
-      }
+      // While a button-driven smooth is in flight, never update position mid-flight — the tick
+      if (isAnimating.current || programmaticTarget.current !== null) return;
       const frame = root.getBoundingClientRect();
       const middle = frame.left + frame.width / 2;
       let best = current.current;
@@ -319,6 +313,28 @@ export function ReferenceCarousel(props: Props) {
   }, []);
 
   const handleScrollEnd = useCallback(() => {
+    // Find the true center after any user swipe (snap has settled)
+    const root = viewport.current;
+    if (root && !isAnimating.current && programmaticTarget.current === null) {
+      const frame = root.getBoundingClientRect();
+      const middle = frame.left + frame.width / 2;
+      let best = current.current;
+      let gapBest = Infinity;
+      for (let i = 0; i < slides.current.length; i++) {
+        const s = slides.current[i];
+        if (!s) continue;
+        const box = s.getBoundingClientRect();
+        const gap = Math.abs(box.left + box.width / 2 - middle);
+        if (gap < gapBest) {
+          gapBest = gap;
+          best = i;
+        }
+      }
+      if (best !== current.current) {
+        current.current = best;
+        setPosition(best);
+      }
+    }
     programmaticTarget.current = null;
     isAnimating.current = false;
     settle();
@@ -445,7 +461,7 @@ export function ReferenceCarousel(props: Props) {
                   data-clone={clone ? "" : undefined}
                   aria-hidden={clone ? true : undefined}
                   inert={clone ? true : undefined}
-                  className={`carousel-slide flex h-auto shrink-0 snap-center items-stretch transition-opacity duration-500 ease-out motion-reduce:transition-none ${coverflow ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"} ${selected ? "carousel-slide-active opacity-100" : next ? "carousel-slide-next opacity-75" : previous ? "carousel-slide-prev opacity-75" : "opacity-35"} motion-reduce:opacity-100`}
+                  className={`carousel-slide flex h-auto shrink-0 snap-center items-stretch ${coverflow ? "transition-opacity duration-500 ease-out motion-reduce:transition-none" : ""} ${coverflow ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"} ${coverflow ? (selected ? "carousel-slide-active opacity-100" : next || previous ? "carousel-slide-next opacity-70" : "opacity-35") : "opacity-100"} motion-reduce:opacity-100`}
                   aria-label={`اسلاید ${new Intl.NumberFormat("fa-IR").format(index + 1)} از ${new Intl.NumberFormat("fa-IR").format(items.length)}`}
                 >
                   {props.kind === "testimonials" ? (
