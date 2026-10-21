@@ -22,7 +22,6 @@ import {
   publicSectionClassName,
 } from "@/components/layout/public-layout-classes";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
 import { animate, hover } from "motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -478,7 +477,7 @@ export function ReferenceCarousel(props: Props) {
                       }
                     />
                   ) : props.kind === "articles" ? (
-                    <ArticleCard item={item as Article} active={selected} reduceMotion={reduceMotion} />
+                    <ArticleCard item={item as Article} active={selected} />
                   ) : (
                     <WorkshopCard item={item as Workshop} />
                   )}
@@ -513,21 +512,6 @@ export function ReferenceCarousel(props: Props) {
         </div>
       </div>
     </section>
-  );
-}
-function BorderBreath({ reduceMotion, article = false }: { reduceMotion: boolean; article?: boolean }) {
-  return (
-    <motion.span
-      aria-hidden="true"
-      className={`carousel-breathing-rim pointer-events-none absolute inset-[2px] z-[2] border border-[#62ad9a] [box-shadow:inset_0_0_9px_#6ab9a323] dark:border-[#80dec4] dark:[box-shadow:inset_0_0_12px_#6fe2bc27] ${article ? "rounded-[22px]" : "rounded-[28px]"}`}
-      initial={reduceMotion ? false : { opacity: 0.18 }}
-      animate={reduceMotion ? { opacity: 0.3 } : { opacity: 0.48 }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 3.1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }
-      }
-    />
   );
 }
 function ReviewCard({
@@ -579,13 +563,12 @@ function ReviewCard({
     </figure>
   );
 }
-function ArticleCard({ item, active, reduceMotion }: { item: Article; active: boolean; reduceMotion: boolean }) {
+function ArticleCard({ item, active }: { item: Article; active: boolean }) {
   return (
     <Link
       href={`/articles/${item.slug}`}
       className={`${publicCardClassName} ${publicSpotClassName} group art-carousel-card flex h-full w-full min-w-0 flex-col !p-4 hover:no-underline! focus-visible:no-underline! focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#247d72] ${artSurfaceClassName} ${neonArticleCardClassName} ${active ? neonArticleActiveClassName : ""}`}
     >
-      {active && <BorderBreath reduceMotion={reduceMotion} article />}
       <div className="art-cover-media relative isolate min-w-0 flex-none">
         <div className={referenceCoverClassName}>
           {item.cover && (
