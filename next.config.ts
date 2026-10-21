@@ -1,16 +1,4 @@
 import type { NextConfig } from "next";
-import withPWAInit from "@ducanh2912/next-pwa";
-
-const withPWA = withPWAInit({
-  dest: "public",
-  disable: process.env.NODE_ENV === "development",
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
-  reloadOnOnline: true,
-  workboxOptions: {
-    disableDevLogs: true,
-  },
-});
 
 const historicPages = [
   "404",
@@ -60,6 +48,9 @@ const historicPages = [
   "workshops",
 ];
 
+// F7 Phase 4 BLOCKED: cacheComponents requires removing runtime="nodejs" and unstable_cache migration
+// which conflicts with Better Auth + Mongo driver per https://nextjs.org/docs/app/guides/migrating-to-cache-components
+// Fallback: keep Header dynamic but reserve space for CLS 0 via Suspense in future (not yet implemented).
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
@@ -89,6 +80,19 @@ const nextConfig: NextConfig = {
         source: "/assets/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
+      // Never cache private navigations per F4 — https://nextjs.org/docs/app/api-reference/config/next-config-js/headers
+      {
+        source: "/dashboard/:path*",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
+      {
+        source: "/admin/:path*",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
+      {
+        source: "/book/:path*",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
       {
         source: "/(.*)",
         headers: [
@@ -115,4 +119,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPWA(nextConfig);
+export default nextConfig;

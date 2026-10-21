@@ -172,18 +172,29 @@ export function AccountMenu({
                       }
                     : undefined
                 }
-                transition={{
-                  duration: 0.85,
-                  times: [0, 0.2, 0.42, 0.62, 0.8, 1],
-                  ease: [0.2, 0.85, 0.2, 1],
-                }}
+                transition={
+                  notifications?.unread && !reduceMotion
+                    ? {
+                        duration: 0.85,
+                        times: [0, 0.2, 0.42, 0.62, 0.8, 1],
+                        ease: [0.2, 0.85, 0.2, 1] as const,
+                        repeat: Infinity,
+                        repeatDelay: 3.2,
+                        repeatType: "loop" as const,
+                      }
+                    : {
+                        duration: 0.85,
+                        times: [0, 0.2, 0.42, 0.62, 0.8, 1],
+                        ease: [0.2, 0.85, 0.2, 1] as const,
+                      }
+                }
               >
                 <BellRing
                   size={18}
                   aria-hidden="true"
                   className={
                     notifications?.unread
-                      ? "text-teal-700 dark:text-teal-300"
+                      ? "text-teal-700 dark:text-teal-300 motion-safe:drop-shadow-[0_0_6px_rgba(13,148,136,0.35)]"
                       : ""
                   }
                 />
@@ -209,13 +220,13 @@ export function AccountMenu({
               <DropdownMenu.Item asChild>
                 <Link href="/admin">
                   <ShieldCheck size={18} />
-                  پنل مدیریت
+                  پیشخوان مدیریت
                 </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Item asChild>
                 <Link href="/admin/calendar">
                   <CalendarDays size={18} />
-                  تقویم نوبت‌ها
+                  تقویم و نوبت‌ها
                 </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Item asChild>
@@ -227,7 +238,7 @@ export function AccountMenu({
               <DropdownMenu.Item asChild>
                 <Link href="/dashboard/settings">
                   <CircleUserRound size={18} />
-                  تصویر و امنیت حساب
+                  حساب کاربری من
                 </Link>
               </DropdownMenu.Item>
             </>
@@ -236,7 +247,7 @@ export function AccountMenu({
               <DropdownMenu.Item asChild>
                 <Link href="/dashboard">
                   <LayoutDashboard size={18} />
-                  نمای کلی حساب
+                  پیشخوان
                 </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Item asChild>
@@ -247,8 +258,8 @@ export function AccountMenu({
               </DropdownMenu.Item>
               <DropdownMenu.Item asChild>
                 <Link href="/dashboard/settings">
-                  <Settings size={18} />
-                  تنظیمات حساب
+                  <CircleUserRound size={18} />
+                  حساب کاربری من
                 </Link>
               </DropdownMenu.Item>
             </>
@@ -259,6 +270,16 @@ export function AccountMenu({
             disabled={pending}
             onSelect={() =>
               startTransition(async () => {
+                // Purge private cache on sign-out per F4 (MDN Cache, Clear-Site-Data via SW message)
+                try {
+                  if ("caches" in window) {
+                    const keys = await caches.keys();
+                    await Promise.all(keys.map((k) => caches.delete(k)));
+                  }
+                  if (navigator.serviceWorker?.controller) {
+                    navigator.serviceWorker.controller.postMessage({ type: "CLEAR_PRIVATE_CACHE" });
+                  }
+                } catch {}
                 await signOutInPlaceAction();
                 if (
                   pathname.startsWith("/admin") ||
