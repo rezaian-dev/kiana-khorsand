@@ -22,6 +22,9 @@ export const envSchema = z.object({
     .string()
     .min(32)
     .refine((value) => !value.startsWith("REPLACE_WITH_")),
+  // Dedicated key for private notes (F10) — HKDF-derived, independent of BETTER_AUTH_SECRET rotation
+  // per https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html
+  PRIVATE_NOTES_KEY: z.string().min(32).optional(),
   BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
   SITE_URL: z.url().default("https://kianakhorsand.ir"),
   AUTH_PREVIEW_ORIGIN: z.url().optional(),

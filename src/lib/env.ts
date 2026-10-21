@@ -6,29 +6,15 @@ const parsed = envSchema.safeParse(process.env);
 let envData: ReturnType<(typeof envSchema)["parse"]>;
 if (!parsed.success) {
   const issues = parsed.error.issues.map((issue) => issue.path.join(".")).join(", ");
-  // During Vercel build the env may be partially available — don't crash page collection.
-  const isBuildFallback =
-    process.env.SKIP_ENV_VALIDATION === "1" ||
-    process.env.VERCEL === "1" ||
-    process.env.NEXT_PHASE === "phase-production-build" ||
-    process.env.npm_lifecycle_event === "build";
-  if (isBuildFallback) {
-    // eslint-disable-next-line no-console
-    console.warn(`[env] Invalid server environment keys: ${issues} — using build fallback`);
-    envData = {
-      MONGODB_URI: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/dummy",
-      MONGODB_DB: "kiana-khorsand",
-      BETTER_AUTH_SECRET:
-        process.env.BETTER_AUTH_SECRET && process.env.BETTER_AUTH_SECRET.length >= 32
-          ? process.env.BETTER_AUTH_SECRET
-          : "x".repeat(32),
-      BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
-      SITE_URL: process.env.SITE_URL || "https://kianakhorsand.ir",
-      AUTH_PREVIEW_ORIGIN: undefined,
-    } as ReturnType<(typeof envSchema)["parse"]>;
-  } else {
-    throw new Error(`Invalid server environment keys: ${issues}`);
+  // Fail fast at runtime; do not fabricate secrets. VERCEL=1 is present at both build and runtime
+  // per https://vercel.com/docs/environment-variables/system-environment-variables, so it cannot be used to distinguish.
+  // Next.js build-phase signal is NEXT_PHASE=phase-production-build per
+  // https://github.com/vercel/next.js/discussions/48736 and next/constants — we only warn in that phase
+  // and still throw so invalid env never silently uses dummy values.
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    console.warn(`[env] Invalid server environment keys during build: ${issues}`);
   }
+  throw new Error(`Invalid server environment keys: ${issues}`);
 } else {
   envData = parsed.data;
 }
