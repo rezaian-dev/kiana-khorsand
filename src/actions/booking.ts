@@ -10,6 +10,8 @@ import { requireUser } from "@/lib/session";
 import { throttle } from "@/lib/throttle";
 import { getSlots } from "@/features/booking/queries";
 
+// OWNER-DECISION: per-user pending cap — 3 pending appointments max (F9)
+const BOOKING_PENDING_CAP = 3;
 export async function createBooking(
   _previous: BookingState,
   data: FormData,
@@ -20,6 +22,13 @@ export async function createBooking(
     return { error: "اطلاعات رزرو را بررسی و دوباره تلاش کنید.", id: "" };
   if (!(await throttle("booking", 12)))
     return { error: "تعداد درخواست‌های امروز بیش از حد مجاز است.", id: "" };
+  const pendingCount = await collection("appointments").countDocuments({
+    userId: session.user.id,
+    status: "pending",
+  });
+  if (pendingCount >= BOOKING_PENDING_CAP) {
+    return { error: `حداکثر ${BOOKING_PENDING_CAP} نوبت در انتظار می‌توانید داشته باشید.`, id: "" };
+  }
   const service = await collection("services").findOne({
     slug: parsed.data.serviceId,
     status: "published",

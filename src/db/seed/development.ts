@@ -36,16 +36,23 @@ const bootstrap = betterAuth({
   ],
 });
 
-// Realistic Persian demo clients — SEO-friendly seeding with diverse profiles
+// Realistic Persian demo clients — passwords from env or generated, never literal in repo (F8)
+import { randomBytes } from "node:crypto";
+function demoPassword(): string {
+  if (process.env.SEED_DEMO_PASSWORD && process.env.SEED_DEMO_PASSWORD.length >= 8) return process.env.SEED_DEMO_PASSWORD;
+  const pwd = `Demo-${randomBytes(8).toString("hex")}A1!`;
+  console.warn(`[seed] Generated demo password (once): ${pwd}`);
+  return pwd;
+}
 const DEMO_CLIENTS = [
-  { name: "نسترن کریمی", username: "09123456701", password: "Demo12345678!" },
-  { name: "امیرحسین شریفی", username: "09123456702", password: "Demo12345678!" },
-  { name: "سارا رضایی", username: "09123456703", password: "Demo12345678!" },
-  { name: "مریم جلالی", username: "09123456704", password: "Demo12345678!" },
-  { name: "کاوه نوری", username: "09123456705", password: "Demo12345678!" },
-  { name: "هانیه براتی", username: "09123456706", password: "Demo12345678!" },
-  { name: "رضا مرادی", username: "09123456707", password: "Demo12345678!" },
-  { name: "لیلا فرهادی", username: "09123456708", password: "Demo12345678!" },
+  { name: "نسترن کریمی", username: "09123456701", get password() { return demoPassword(); } },
+  { name: "امیرحسین شریفی", username: "09123456702", get password() { return demoPassword(); } },
+  { name: "سارا رضایی", username: "09123456703", get password() { return demoPassword(); } },
+  { name: "مریم جلالی", username: "09123456704", get password() { return demoPassword(); } },
+  { name: "کاوه نوری", username: "09123456705", get password() { return demoPassword(); } },
+  { name: "هانیه براتی", username: "09123456706", get password() { return demoPassword(); } },
+  { name: "رضا مرادی", username: "09123456707", get password() { return demoPassword(); } },
+  { name: "لیلا فرهادی", username: "09123456708", get password() { return demoPassword(); } },
 ] as const;
 
 async function account(kind: "CLIENT" | "ADMIN") {
@@ -107,6 +114,10 @@ async function demoClient(def: (typeof DEMO_CLIENTS)[number]) {
 
 export async function seedDevelopment() {
   const allowProdDemo = process.env.SEED_ALLOW_DEMO === "1";
+  const isLocalHost = /^(mongodb:\/\/)?(127\.0\.0\.1|localhost)(:|\/|$)/.test(process.env.MONGODB_URI || "");
+  if (!allowProdDemo || !isLocalHost) {
+    throw new Error("Development seed requires SEED_ALLOW_DEMO=1 AND localhost Mongo (F8)");
+  }
   if (process.env.NODE_ENV === "production" && !allowProdDemo)
     throw new Error("Development seed disabled in production (set SEED_ALLOW_DEMO=1 to override)");
   const admin = await account("ADMIN");
