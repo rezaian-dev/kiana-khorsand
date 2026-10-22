@@ -3,7 +3,7 @@
 import { BrandMark } from "@/components/shared/brand-mark";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useLiveReducedMotion } from "./use-live-reduced-motion";
 import { usePathname } from "next/navigation";
 import { PublicDockSpotlight } from "./dock-spotlight";
@@ -145,7 +145,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
         className="ref-menu-sheet [&:where([data-state=open],[data-open]:not([data-open=false]))]:animate-ref-menu-open [&:where([data-state=closed],[data-closed]:not([data-closed=false]))]:animate-ref-menu-close right-0! left-auto! flex! h-dvh! w-[min(88vw,380px)]! max-w-none! min-w-0 flex-col! gap-0! overflow-hidden! rounded-[28px_0_0_28px]! border! border-r-0! border-[var(--line)]! bg-[var(--glass-strong)]! px-[.875rem]! pt-[env(safe-area-inset-top,0px)]! pb-[calc(.55rem+env(safe-area-inset-bottom,0px))]! text-[var(--fg)]! shadow-[-14px_0_50px_rgba(18,15,43,0.18)]! backdrop-blur-[24px]! backdrop-saturate-[180%]! transition-none! motion-reduce:animate-none!"
         aria-describedby={undefined}
       >
-        <motion.div
+        <m.div
           data-menu-topline
           className="absolute inset-x-5 top-0 z-[2] h-[3px] origin-right rounded-b-[99px] [background-image:var(--grad-sunset)]"
           initial={reduceMotion ? false : { scaleX: 0 }}
@@ -154,7 +154,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
           aria-hidden="true"
         />
         <div className="ref-menu-content min-h-0 flex-1 [scrollbar-width:thin] [scrollbar-color:var(--line)_transparent] overflow-x-hidden overflow-y-auto overscroll-contain pt-4 pb-[.35rem] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[var(--line)] [&::-webkit-scrollbar-track]:bg-transparent">
-          <motion.div
+          <m.div
             className="mb-2 flex items-center justify-between gap-2"
             data-menu-item=""
             initial={reduceMotion ? false : itemInitial}
@@ -178,11 +178,11 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
                 <i className="ph-bold ph-x text-[1.1rem] transition-[transform] duration-[450ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover/close:[transform:rotate(90deg)] motion-reduce:transition-none motion-reduce:group-hover/close:[transform:none]" aria-hidden="true" />
               </button>
             </SheetClose>
-          </motion.div>
+          </m.div>
           <nav aria-label="ناوبری موبایل" className="ref-menu-nav">
             <ul className="flex flex-col gap-0.5">
               {additionalMenuLinks.map((item) => (
-                <motion.li key={item.href} data-menu-item="" initial={reduceMotion ? false : itemInitial} animate={itemVisible} transition={itemTransition}>
+                <m.li key={item.href} data-menu-item="" initial={reduceMotion ? false : itemInitial} animate={itemVisible} transition={itemTransition}>
                   <SheetClose asChild>
                     <Link
                       href={item.href}
@@ -197,15 +197,15 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
                       <i className="ph-bold ph-arrow-left flex-none text-[.9rem] text-[var(--muted)] transition-[transform,color] [transition-duration:450ms,300ms] [transition-timing-function:ease,ease] group-hover/link:[transform:translateX(-8px)] group-hover/link:text-[var(--fg)] group-focus-visible/link:[transform:translateX(-8px)] group-focus-visible/link:text-[var(--fg)] motion-reduce:transition-none motion-reduce:group-hover/link:[transform:none] motion-reduce:group-focus-visible/link:[transform:none]" aria-hidden="true" />
                     </Link>
                   </SheetClose>
-                </motion.li>
+                </m.li>
               ))}
             </ul>
           </nav>
           <div data-menu-line className="my-4 h-px opacity-[.55] [background:var(--grad-sunset)]" aria-hidden="true" />
-          <motion.div className="mb-2 text-xs leading-[1.428571] font-extrabold text-[var(--muted)]" data-menu-item="" initial={reduceMotion ? false : itemInitial} animate={itemVisible} transition={itemTransition}>
+          <m.div className="mb-2 text-xs leading-[1.428571] font-extrabold text-[var(--muted)]" data-menu-item="" initial={reduceMotion ? false : itemInitial} animate={itemVisible} transition={itemTransition}>
             من در شبکه‌های اجتماعی
-          </motion.div>
-          <motion.ul className="flex items-center gap-2.5" data-menu-item="" initial={reduceMotion ? false : itemInitial} animate={itemVisible} transition={itemTransition}>
+          </m.div>
+          <m.ul className="flex items-center gap-2.5" data-menu-item="" initial={reduceMotion ? false : itemInitial} animate={itemVisible} transition={itemTransition}>
             {socials.map(
               (item) =>
                 social?.[item.key] && (
@@ -222,7 +222,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
                   </li>
                 ),
             )}
-          </motion.ul>
+          </m.ul>
         </div>
       </SheetContent>
     </Sheet>

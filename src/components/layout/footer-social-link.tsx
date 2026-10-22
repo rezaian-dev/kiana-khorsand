@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import {
   footerSocialClassName,
   footerSocialTones,
@@ -35,7 +35,7 @@ export function FooterSocialLink({
         ? "telegram-logo"
         : "whatsapp-logo";
   return (
-    <motion.a
+    <m.a
       className={`${footerSocialClassName} ${footerSocialTones[name]} social-${name}`}
       href={href}
       target="_blank"
@@ -68,14 +68,14 @@ export function FooterSocialLink({
       }
       transition={{ duration: reduce ? 0 : 0.45, ease: [0.2, 0.8, 0.2, 1] }}
     >
-      <motion.span
+      <m.span
         className="pointer-events-none absolute inset-0 -z-[1] rounded-[inherit] bg-[linear-gradient(135deg,var(--sa,var(--c-violet)),var(--sb,var(--c-plum)))]"
         aria-hidden="true"
         initial={false}
         animate={{ opacity: active ? 1 : 0 }}
         transition={{ duration: reduce ? 0 : 0.4 }}
       />
-      <motion.i
+      <m.i
         className={`ph-duotone ph-${icon} relative`}
         aria-hidden="true"
         initial={false}
@@ -86,6 +86,6 @@ export function FooterSocialLink({
         }
         transition={{ duration: reduce ? 0 : 0.45, ease: [0.2, 0.8, 0.2, 1] }}
       />
-    </motion.a>
+    </m.a>
   );
 }

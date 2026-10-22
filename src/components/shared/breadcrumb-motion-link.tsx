@@ -1,37 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
-import { useSyncExternalStore, type ReactNode } from "react";
+import { m } from "motion/react";
+import type { ReactNode } from "react";
+import { hoverNudge, press, motionTiming } from "@/lib/motion-tokens";
 
-const MotionLink = motion.create(Link);
-const mediaQuery = "(prefers-reduced-motion: reduce)";
-const subscribe = (notify: () => void) => {
-  const media = window.matchMedia(mediaQuery);
-  media.addEventListener("change", notify);
-  return () => media.removeEventListener("change", notify);
-};
-const getReduced = () => window.matchMedia(mediaQuery).matches;
-const serverReduced = () => false;
+const MotionLink = m.create(Link);
 
-/** Only these links hydrate; the breadcrumb, JSON-LD, and remaining page stay server-rendered. */
-export function BreadcrumbMotionLink(props: {
+/**
+ * A breadcrumb link only hydrates for its hover/tap feedback; colour and the pill
+ * background stay in CSS so the paint path never waits for JavaScript.
+ */
+export function BreadcrumbMotionLink({
+  href,
+  children,
+  className,
+  "aria-label": ariaLabel,
+}: {
   href: string;
   children: ReactNode;
   className?: string;
   "aria-label"?: string;
 }) {
-  const reduced = useSyncExternalStore(subscribe, getReduced, serverReduced);
   return (
     <MotionLink
-      {...props}
-      initial={false}
-      animate={{ color: "var(--site-muted)", "--breadcrumb-opacity": 0 }}
-      whileHover={{ color: "var(--site-violet)", "--breadcrumb-opacity": 0.11 }}
-      transition={{
-        duration: reduced ? 0 : 0.18,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
-    />
+      href={href}
+      aria-label={ariaLabel}
+      className={className}
+      whileHover={hoverNudge}
+      whileTap={press}
+      transition={motionTiming.hover}
+    >
+      {children}
+    </MotionLink>
   );
 }

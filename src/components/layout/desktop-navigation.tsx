@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useLiveReducedMotion } from "./use-live-reduced-motion";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 
-const MotionLink = motion.create(Link);
+const MotionLink = m.create(Link);
 const navLinkClassName =
   "nav-link relative inline-flex min-h-11 items-center rounded-[999px] px-[.7rem] py-[.35rem] text-[.9375rem] font-semibold no-underline transition-[color,background-color] duration-300 ease-[ease] motion-reduce:transition-none hover:bg-[var(--hover)] hover:text-[var(--fg)] min-[769px]:max-[1023.02px]:px-[.42rem] min-[769px]:max-[1023.02px]:text-[.82rem]";
 const navUnderlineClassName =
@@ -51,7 +51,7 @@ function DesktopNavLink({
       onBlur={() => setHovered(false)}
     >
       {label}
-      <motion.span
+      <m.span
         aria-hidden="true"
         className={navUnderlineClassName}
         initial={false}

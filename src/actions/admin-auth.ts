@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { throttleAuthPhone } from "@/lib/auth-throttle";
+import { authCopy, isRateLimited } from "@/lib/auth-throttle";
 import { parseAdminCredentials } from "@/validations/admin-auth";
 import { collection } from "@/db/collections";
 import type { AuthState } from "@/types/auth";
@@ -13,11 +13,11 @@ import type { AuthState } from "@/types/auth";
  *
  * Order of operations matters:
  * 1. Validate the submitted phone/password shape.
- * 2. Apply the same per-phone throttle the public form uses, so this entrance can
+ * 2. Sign in with Better Auth (phone-based username plugin — the site has no email
+ *    sign-in; `/sign-in/email` is disabled in `lib/auth.ts`). The per-phone throttle
+ *    lives in the auth hook, so this entrance shares the public form's budget and can
  *    never become a faster way to guess a password.
- * 3. Sign in with Better Auth (phone-based username plugin — the site has no email
- *    sign-in; `/sign-in/email` is disabled in `lib/auth.ts`).
- * 4. Read the role from the returned user. If it is not `admin`, the freshly created
+ * 3. Read the role from the returned user. If it is not `admin`, the freshly created
  *    session is destroyed immediately and the visitor is told the account has no
  *    access. No cookie for a non-admin ever survives this action.
  *
@@ -32,21 +32,15 @@ export async function adminLoginAction(
   if (Object.keys(fields).length) return { error: "", fields };
 
   try {
-    await throttleAuthPhone("sign-in", phone);
-  } catch {
-    return {
-      error: "تلاش‌های ورود بیش از حد مجاز است؛ چند دقیقه بعد دوباره امتحان کنید.",
-      fields: {},
-    };
-  }
-
-  try {
     await auth.api.signInUsername({
       body: { username: phone, password },
       headers: await headers(),
     });
-  } catch {
-    return { error: "شماره یا رمز عبور درست نیست.", fields: {} };
+  } catch (error) {
+    return {
+      error: isRateLimited(error) ? authCopy.throttled : authCopy.credentials,
+      fields: {},
+    };
   }
 
   // `signInUsername` returns the plugin's base user shape, so the role is read from

@@ -3,12 +3,12 @@
 import { MoonStar, Sun } from "lucide-react";
 
 import { useSyncExternalStore } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useTheme } from "next-themes";
 import { useLiveReducedMotion } from "@/components/layout/use-live-reduced-motion";
 
-const MotionMoon = motion.create(MoonStar);
-const MotionSun = motion.create(Sun);
+const MotionMoon = m.create(MoonStar);
+const MotionSun = m.create(Sun);
 const iconVariants = {
   rest: { y: 0, scale: 1 },
   hover: { y: -2, scale: 1.06 },
@@ -33,7 +33,7 @@ export function ThemeToggle({
   );
   const dark = mounted && resolvedTheme === "dark";
   return (
-    <motion.button
+    <m.button
       id={id}
       type="button"
       initial={false}
@@ -76,6 +76,6 @@ export function ThemeToggle({
           }}
         />
       )}
-    </motion.button>
+    </m.button>
   );
 }

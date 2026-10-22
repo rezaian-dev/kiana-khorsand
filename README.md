@@ -52,14 +52,14 @@
 - `experimental.optimizePackageImports: lucide-react, motion, zod` + تفکیک `radix-ui` به پکیج‌های جدا
 - `images: avif/webp`, `compress:true`, `poweredByHeader:false`
 - Server Components پیش‌فرض — فقط داک/منو/فرم‌ها Client هستند
-- انیمیشن‌های تزئینی با **CSS خالص** (`@keyframes`, `motion-safe`) — Motion فقط برای پیل داک
+- Motion با `LazyMotion` + `domMax` و کامپوننت سبک `m`؛ کالیبراسیون مشترک در `src/lib/motion-tokens.ts`
 - فونت Vazirmatn با `next/font/local` + `preload` و `display:swap` — بدون CLS
 - `viewport-fit: cover` + `safe-area-inset` برای ناچ موبایل
 
 | متریک | اندازه‌گیری‌شده 2026-10-22 |
 |---|---|
-| Client Components (`\"use client\"`) | 62 فایل |
-| motion import | 21 فایل |
+| Client Components (`\"use client\"`) | 66 فایل |
+| motion (`LazyMotion` + `m`) | 22 فایل |
 | Routes (next build) | 62 (○ 5 static, ƒ 57 dynamic) |
 | eslint | 0 error (پس از پاکسازی) |
 | npm audit --omit=dev | 0 vulnerability (پس از upgrade markdown-it) |
@@ -69,7 +69,7 @@
 ## 🛠️ استک
 
 - **Framework:** Next.js 16.4 (App Router) + Turbopack
-- **UI:** Tailwind 4, lucide-react, Radix UI (تفکیک‌شده), motion (فقط داک)
+- **UI:** Tailwind 4, lucide-react, Radix UI (تفکیک‌شده), Motion (`LazyMotion` + `m`)
 - **DB:** MongoDB 7 + better-auth + Zod
 - **PWA:** دستی sw.js (next-pwa حذف شد per Turbopack)
 - **Date:** @daypicker/persian, Jalali picker

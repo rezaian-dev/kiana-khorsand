@@ -131,7 +131,6 @@ export function Section({
         </ScrollReveal>
         {groups.length > 0 && (
           <ScrollReveal
-            hoverCardSelector=".site-card"
             className={`${siteGridClassName} site-section-cards mt-[clamp(1.5rem,3vw,2.5rem)]! grid-cols-3! gap-4! py-0! max-[850px]:grid-cols-2! max-[600px]:grid-cols-1!`}
           >
             {groups.map((group, position) => (

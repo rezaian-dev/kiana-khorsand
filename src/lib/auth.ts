@@ -4,9 +4,9 @@ import { APIError, createAuthMiddleware } from "better-auth/api";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { nextCookies } from "better-auth/next-js";
 import { username } from "better-auth/plugins";
-import { createHmac } from "node:crypto";
 import { db, mongoClient } from "@/db/client";
 import { env } from "@/lib/env";
+import { registerAuthAttempt } from "@/lib/auth-throttle";
 
 const authURL = env.BETTER_AUTH_URL;
 
@@ -64,21 +64,7 @@ export const auth = betterAuth({
           headers?.get("x-vercel-forwarded-for")?.split(",").pop()?.trim() ||
           "anonymous";
         const kind = ctx.path === "/sign-in/username" ? "sign-in" : "sign-up";
-        const windowMs = kind === "sign-in" ? 15 * 60_000 : 24 * 3600_000;
-        const limit = kind === "sign-in" ? 10 : 3;
-        const key = createHmac("sha256", env.BETTER_AUTH_SECRET)
-          .update(`${kind}:${rawPhone}:${ip}:${Math.floor(Date.now() / windowMs)}`)
-          .digest("hex");
-        const col = db.collection<{ key: string; count: number }>("limits");
-        const record = await col.findOneAndUpdate(
-          { key },
-          {
-            $inc: { count: 1 },
-            $setOnInsert: { expiresAt: new Date(Date.now() + windowMs * 2) },
-          },
-          { upsert: true, returnDocument: "after" },
-        );
-        if (record && record.count > limit) {
+        if (await registerAuthAttempt(kind, rawPhone, ip)) {
           throw new APIError("TOO_MANY_REQUESTS", {
             message: "Too many authentication attempts. Please try later.",
           });

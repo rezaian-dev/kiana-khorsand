@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 
 /** Decorative hover only; the server page keeps the card content and data. */
 export function TestimonialStoryMotion({
@@ -13,7 +13,7 @@ export function TestimonialStoryMotion({
 }) {
   const reduce = useReducedMotion();
   return (
-    <motion.article
+    <m.article
       className={className}
       whileHover={{
         y: reduce ? 0 : -5,
@@ -25,6 +25,6 @@ export function TestimonialStoryMotion({
       }
     >
       {children}
-    </motion.article>
+    </m.article>
   );
 }

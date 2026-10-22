@@ -3,7 +3,7 @@
 import { panelMutedClassName } from "@/components/panels/panel-layout-classes";
 import { useState } from "react";
 import { Clock3 } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useLiveReducedMotion } from "@/components/layout/use-live-reduced-motion";
 const choices = Array.from({ length: 31 }, (_, index) => {
   const total = 7 * 60 + index * 30;
@@ -33,7 +33,7 @@ export function SlotPicker({ id, initial }: { id: string; initial: string[] }) {
         aria-label="ساعت‌های قابل درخواست"
       >
         {options.map((time) => (
-          <motion.button
+          <m.button
             type="button"
             className="min-h-9 rounded-[9px] bg-[var(--panel-surface)] text-[.78rem] text-[var(--panel-text)] [border:1px_solid_var(--panel-line)] hover:border-[var(--ar-accent)]! disabled:transform-none! disabled:cursor-not-allowed! disabled:opacity-[.42]! aria-[pressed=true]:border-[var(--ar-brand-ink)]! aria-[pressed=true]:bg-[var(--ar-brand-ink)]! aria-[pressed=true]:text-[var(--panel-surface)]! [@media(scripting:none)]:hover:[transform:translateY(-2px)]!"
             key={time}
@@ -54,7 +54,7 @@ export function SlotPicker({ id, initial }: { id: string; initial: string[] }) {
             }
           >
             {time}
-          </motion.button>
+          </m.button>
         ))}
       </div>
       <p className={panelMutedClassName}>

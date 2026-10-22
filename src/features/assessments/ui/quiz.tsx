@@ -7,7 +7,7 @@ import {
 
 import { useActionState, useState } from "react";
 import { CircleCheck } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import { motionTiming } from "@/lib/motion-tokens";
 import type { Model } from "@/types/models";
 import { submitAssessment } from "@/actions/assessments";
@@ -65,7 +65,7 @@ export function Quiz({ definition }: { definition: Model["assessments"] }) {
               aria-valuenow={index + 1}
               aria-valuetext={`${formatNumber(index + 1)} از ${formatNumber(definition.questions.length)} پرسش`}
             >
-              <motion.span
+              <m.span
                 className="block h-full rounded-[inherit] [background-image:linear-gradient(90deg,#247c78,#7865a0)]"
                 initial={false}
                 animate={{

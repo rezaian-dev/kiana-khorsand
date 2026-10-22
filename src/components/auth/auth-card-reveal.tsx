@@ -1,10 +1,10 @@
-import * as motion from "motion/react-client";
+import * as m from "motion/react-client";
 import { motionTiming, pageEntrance } from "@/lib/motion-tokens";
 
 /** Keep the authentication page on the server; hydrate only the motion element. */
 export function AuthCardReveal({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
+    <m.div
       className="auth-new-card w-[min(100%,430px)] motion-reduce:transform-none! motion-reduce:opacity-100!"
       initial="initial"
       animate="visible"
@@ -12,6 +12,6 @@ export function AuthCardReveal({ children }: { children: React.ReactNode }) {
       transition={motionTiming.standard}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

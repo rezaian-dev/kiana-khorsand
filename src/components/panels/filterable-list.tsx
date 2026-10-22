@@ -12,7 +12,7 @@ import { Search, X } from "lucide-react";
 import {
   AnimatePresence,
   LayoutGroup,
-  motion,
+  m,
   useReducedMotion,
 } from "motion/react";
 import { motionTiming, tilePresence } from "@/lib/motion-tokens";
@@ -79,7 +79,7 @@ export function FilterableList({
                   onClick={() => setStatus(option.value)}
                 >
                   {status === option.value && (
-                    <motion.span
+                    <m.span
                       aria-hidden="true"
                       layoutId="panel-filter-indicator"
                       className="pointer-events-none absolute inset-0 rounded-full bg-[var(--ar-brand-soft)]"
@@ -105,7 +105,7 @@ export function FilterableList({
       <div className={panelListClassName}>
         <AnimatePresence initial={false} mode="popLayout">
           {visible.map((item) => (
-            <motion.div
+            <m.div
               key={item.key}
               layout={reduce ? false : "position"}
               variants={tilePresence}
@@ -117,13 +117,13 @@ export function FilterableList({
               transition={reduce ? { duration: 0 } : motionTiming.tile}
             >
               {item.content}
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
       </div>
       <AnimatePresence initial={false}>
         {!visible.length && (
-          <motion.div
+          <m.div
             key="empty-panel"
             className={`${panelCardClassName} flex flex-wrap items-center justify-between gap-4`}
             initial={reduce ? false : { opacity: 0, y: 8 }}
@@ -146,7 +146,7 @@ export function FilterableList({
             >
               <X size={16} aria-hidden="true" /> پاک‌کردن فیلترها
             </button>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

@@ -16,7 +16,19 @@ export default defineConfig({
     locale: "fa-IR",
     trace: "retain-on-failure",
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    { name: "setup", testMatch: /.*\.setup\.ts/ },
+    {
+      name: "chromium",
+      testIgnore: /.*\.setup\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        // One admin sign-in per run; panel tests inherit the cookie jar.
+        storageState: "e2e/.auth/admin.json",
+      },
+      dependencies: ["setup"],
+    },
+  ],
   webServer: {
     command: "npm run start -- -p 3100 -H 0.0.0.0",
     url: "http://127.0.0.1:3100",

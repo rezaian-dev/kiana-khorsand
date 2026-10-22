@@ -53,3 +53,6 @@ next-env.d.ts
 # Python build artefacts from scripts/
 __pycache__/
 *.pyc
+
+# playwright session cache
+/e2e/.auth/

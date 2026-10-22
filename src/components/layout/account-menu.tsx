@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useTransition } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useLiveReducedMotion } from "@/components/layout/use-live-reduced-motion";
 import {
   BellRing,
@@ -72,7 +72,7 @@ export function AccountMenu({
   return (
     <DropdownMenu.Root dir="rtl" modal={false}>
       <DropdownMenu.Trigger asChild>
-        <motion.button
+        <m.button
           type="button"
           initial={false}
           animate="rest"
@@ -81,7 +81,7 @@ export function AccountMenu({
           aria-label={`باز کردن منوی حساب کاربری${notifications?.unread ? `؛ ${notifications.unread} پیام خوانده‌نشده` : ""}`}
           title="حساب کاربری"
         >
-          <motion.svg
+          <m.svg
             className={`site-account-symbol block! size-6! text-inherit! ${publicScope ? publicAccountIconFallback : ""}`}
             variants={publicScope ? accountIconVariants : undefined}
             transition={{
@@ -98,9 +98,9 @@ export function AccountMenu({
           >
             <circle cx="12" cy="8" r="3.25" />
             <path d="M5.5 20v-1.5a6.5 6.5 0 0 1 13 0V20" />
-          </motion.svg>
+          </m.svg>
           {Boolean(notifications?.unread) && (
-            <motion.span
+            <m.span
               key={`${notifications?.unread}-${notifications?.latestId}`}
               initial={false}
               animate={
@@ -113,9 +113,9 @@ export function AccountMenu({
               aria-hidden="true"
             >
               {(notifications?.unread ?? 0) > 9 ? "۹+" : notifications?.unread}
-            </motion.span>
+            </m.span>
           )}
-        </motion.button>
+        </m.button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
@@ -159,7 +159,7 @@ export function AccountMenu({
                   : "اعلان‌ها"
               }
             >
-              <motion.span
+              <m.span
                 key={`${notifications?.unread}-${notifications?.latestId}`}
                 className="inline-flex shrink-0 origin-top items-center justify-center"
                 initial={false}
@@ -197,7 +197,7 @@ export function AccountMenu({
                       : ""
                   }
                 />
-              </motion.span>
+              </m.span>
               <span className="grow">اعلان‌ها</span>
               {Boolean(notifications?.unread) && (
                 <span

@@ -28,4 +28,6 @@ export const envSchema = z.object({
   BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
   SITE_URL: z.url().default("https://kianakhorsand.ir"),
   AUTH_PREVIEW_ORIGIN: z.url().optional(),
+  /** Per-phone sign-in attempts inside the 15-minute window (10 in production). */
+  AUTH_SIGNIN_LIMIT: z.coerce.number().int().positive().default(10),
 });

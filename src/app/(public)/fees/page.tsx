@@ -15,7 +15,7 @@ import { listServices } from "@/features/services/queries";
 import { Intro } from "@/components/shared/intro";
 import { Section } from "@/components/shared/section";
 import { formatNumber } from "@/lib/format";
-import * as motion from "motion/react-client";
+import * as m from "motion/react-client";
 import { motionTiming } from "@/lib/motion-tokens";
 import { labels } from "@/lib/labels";
 
@@ -71,7 +71,7 @@ export default async function Page() {
                   ? MonitorPlay
                   : HeartHandshake;
               return (
-                <motion.article
+                <m.article
                   key={item.slug}
                   className={`fees-detail-card relative flex min-h-[385px] min-w-0 flex-col overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--fee-accent)_18%,var(--site-line))] bg-[var(--site-surface)] p-[clamp(1.2rem,2vw,1.65rem)] shadow-[0_20px_45px_-35px_#1b566259] before:absolute before:inset-x-0 before:top-0 before:h-1 before:[background-image:linear-gradient(90deg,var(--fee-accent),color-mix(in_srgb,var(--fee-accent)_32%,#efb68d))] before:content-[''] hover:border-[color:color-mix(in_srgb,var(--fee-accent)_38%,var(--site-line))] hover:shadow-[0_26px_50px_-29px_color-mix(in_srgb,var(--fee-accent)_30%,#2a3a4e)] motion-reduce:transform-none! max-[620px]:min-h-0 ${index % 2 ? "[--fee-accent:#78629b]" : "[--fee-accent:#267f7a]"}`}
                   whileHover={{ y: -5 }}
@@ -133,7 +133,7 @@ export default async function Page() {
                       aria-hidden="true"
                     />
                   </Link>
-                </motion.article>
+                </m.article>
               );
             })}
           </ScrollReveal>

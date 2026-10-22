@@ -2,9 +2,9 @@
 
 import type { MouseEventHandler, ReactNode } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 
-const MotionLink = motion.create(Link);
+const MotionLink = m.create(Link);
 
 type PageLinkProps = {
   href: string;
@@ -31,13 +31,13 @@ function hoverTiming(reduce: boolean | null) {
 export function PaginationAnchor({ children, ...props }: PageLinkProps) {
   const reduce = useReducedMotion();
   return (
-    <motion.a
+    <m.a
       {...props}
       whileHover={hoverState(reduce, props["aria-current"])}
       transition={hoverTiming(reduce)}
     >
       {children}
-    </motion.a>
+    </m.a>
   );
 }
 

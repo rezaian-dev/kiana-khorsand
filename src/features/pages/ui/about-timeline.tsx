@@ -1,4 +1,4 @@
-import * as motion from "motion/react-client";
+import * as m from "motion/react-client";
 import { motionTiming, sectionEntrance } from "@/lib/motion-tokens";
 import {
   GraduationCap,
@@ -75,7 +75,7 @@ export function AboutTimeline() {
         {milestones.map((milestone, index) => {
           const Icon = milestone.icon;
           return (
-            <motion.li
+            <m.li
               className={`about-milestone group/milestone relative min-w-0 ps-16 max-[400.02px]:ps-[3.2rem] ${milestoneTone[milestone.tone]} motion-reduce:transform-none! motion-reduce:opacity-100!`}
               key={milestone.title}
               initial="initial"
@@ -117,7 +117,7 @@ export function AboutTimeline() {
                   {milestone.body}
                 </p>
               </div>
-            </motion.li>
+            </m.li>
           );
         })}
       </ol>

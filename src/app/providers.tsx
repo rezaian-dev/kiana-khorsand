@@ -3,7 +3,7 @@
 import { ThemeProvider, useTheme } from "next-themes";
 import { useEffect } from "react";
 import { DirectionProvider } from "@/components/ui/direction";
-import { MotionConfig } from "motion/react";
+import { domMax, LazyMotion, MotionConfig } from "motion/react";
 import { PwaRegister } from "./pwa-register";
 
 // The static icon.svg responds to the OS before hydration. Sync explicit theme
@@ -32,13 +32,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <MotionConfig reducedMotion="user">
-        <ThemeFavicon />
-        <PwaRegister />
-        <DirectionProvider dir="rtl" direction="rtl">
-          {children}
-        </DirectionProvider>
-      </MotionConfig>
+      <LazyMotion features={domMax} strict>
+        <MotionConfig reducedMotion="user">
+          <ThemeFavicon />
+          <PwaRegister />
+          <DirectionProvider dir="rtl" direction="rtl">
+            {children}
+          </DirectionProvider>
+        </MotionConfig>
+      </LazyMotion>
     </ThemeProvider>
   );
 }

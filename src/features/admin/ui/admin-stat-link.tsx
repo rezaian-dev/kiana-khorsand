@@ -2,10 +2,10 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useLiveReducedMotion } from "@/components/layout/use-live-reduced-motion";
 
-const MotionLink = motion.create(Link);
+const MotionLink = m.create(Link);
 
 /** A small hover-only island: all labels, numbers and icons stay server-rendered children. */
 export function AdminStatLink({

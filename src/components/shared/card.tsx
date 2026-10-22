@@ -41,7 +41,6 @@ export function ContentCard({
     <ScrollReveal
       as="article"
       className={`${siteCardClassName} art-content-card group gap-0! px-3! pt-3! pb-5! ${artSurfaceClassName}`}
-      hoverImageSelector={image ? ".site-card-image" : undefined}
     >
       <div className="art-card-media relative isolate min-w-0 flex-none">
         <div

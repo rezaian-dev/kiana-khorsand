@@ -8,7 +8,7 @@ import {
 } from "./panel-layout-classes";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { DockSpotlight } from "@/components/layout/dock-spotlight";
 import {
   mobileDockClassName,
@@ -28,7 +28,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-const MotionLink = motion.create(Link);
+const MotionLink = m.create(Link);
 
 // One semantic nav skin for desktop, the mobile sheet, and the sidebar footer.
 const navItemClass =
@@ -149,7 +149,7 @@ export function AdminReferenceNav() {
             مشاهده سایت
           </MotionLink>
           <form action={adminSignOutAction}>
-            <motion.button
+            <m.button
               type="submit"
               className={navItemClass}
               initial={false}
@@ -158,7 +158,7 @@ export function AdminReferenceNav() {
             >
               <LogOut size={19} aria-hidden="true" />
               خروج از حساب
-            </motion.button>
+            </m.button>
           </form>
         </div>
       </aside>

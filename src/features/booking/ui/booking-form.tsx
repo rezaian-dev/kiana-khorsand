@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { DayPicker } from "@daypicker/persian";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import "@daypicker/react/style.css";
 import { getDefaultClassNames } from "@daypicker/react";
 import { CalendarDays, Clock3, HeartHandshake, RefreshCw } from "lucide-react";
@@ -291,7 +291,7 @@ export function BookingForm({
                 aria-label="ساعت‌های آزاد روز انتخابی"
               >
                 {times.map((slot) => (
-                  <motion.button
+                  <m.button
                     key={slot.startsAt}
                     type="button"
                     className="booking-time-option min-h-11 min-w-0 rounded-[11px] border border-[color:color-mix(in_srgb,#388f86_22%,var(--site-line))] bg-[var(--site-surface)] px-[.4rem] py-2 text-[.88rem] font-extrabold hover:border-[#277d75] focus-visible:outline-2! focus-visible:outline-offset-2! focus-visible:outline-[#277d75]! aria-pressed:border-[#176d6c] aria-pressed:bg-[#176d6c] aria-pressed:text-white aria-pressed:hover:border-[#176d6c]"
@@ -307,7 +307,7 @@ export function BookingForm({
                     }}
                   >
                     {formatTime(slot.startsAt)}
-                  </motion.button>
+                  </m.button>
                 ))}
               </div>
               <p className="booking-time-hint mt-[0.85rem] text-[0.78rem] leading-[1.8] text-[var(--site-muted)]">

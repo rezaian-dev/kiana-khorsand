@@ -13,8 +13,6 @@ export function ScrollReveal({
   className?: string;
   id?: string;
   as?: "div" | "section" | "article";
-  hoverImageSelector?: string;
-  hoverCardSelector?: string;
 }) {
   const cls = `${className ?? ""}`;
   if (as === "article")
