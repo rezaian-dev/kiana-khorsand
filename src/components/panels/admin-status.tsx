@@ -21,19 +21,16 @@ export function AdminStatus({
     >
       <input type="hidden" name="kind" value={kind} />
       <input type="hidden" name="slug" value={slug} />
-      <label>
-        <span className="sr-only">وضعیت انتشار {slug}</span>
-        <PanelSelect
-          name="status"
-          defaultValue={value}
-          label="وضعیت انتشار"
-          options={[
-            { value: "draft", label: "پیش‌نویس" },
-            { value: "published", label: "منتشرشده" },
-            { value: "hidden", label: "پنهان" },
-          ]}
-        />
-      </label>
+      <PanelSelect
+        name="status"
+        defaultValue={value}
+        label={`وضعیت انتشار ${slug}`}
+        options={[
+          { value: "draft", label: "پیش‌نویس" },
+          { value: "published", label: "منتشرشده" },
+          { value: "hidden", label: "پنهان" },
+        ]}
+      />
       <button
         className={`${panelButtonClassName} ${panelButtonOutlineClassName}`}
         type="submit"

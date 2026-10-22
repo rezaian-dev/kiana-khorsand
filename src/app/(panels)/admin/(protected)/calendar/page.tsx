@@ -151,23 +151,18 @@ export default async function Page({
                     action={setAppointmentStatus}
                   >
                     <input type="hidden" name="id" value={item.id} />
-                    <label>
-                      <span className="sr-only">
-                        وضعیت نوبت {nameFor(item.userId)}
-                      </span>
-                      <PanelSelect
-                        name="status"
-                        defaultValue={item.status}
-                        label="وضعیت نوبت"
-                        options={[
-                          { value: "pending", label: "در انتظار" },
-                          { value: "confirmed", label: "تأیید" },
-                          { value: "completed", label: "انجام‌شده" },
-                          { value: "cancelled", label: "لغو" },
-                          { value: "no_show", label: "عدم حضور" },
-                        ]}
-                      />
-                    </label>
+                    <PanelSelect
+                      name="status"
+                      defaultValue={item.status}
+                      label={`وضعیت نوبت ${nameFor(item.userId)}`}
+                      options={[
+                        { value: "pending", label: "در انتظار" },
+                        { value: "confirmed", label: "تأیید" },
+                        { value: "completed", label: "انجام‌شده" },
+                        { value: "cancelled", label: "لغو" },
+                        { value: "no_show", label: "عدم حضور" },
+                      ]}
+                    />
                     <button
                       type="submit"
                       className={`${panelButtonClassName} ${panelButtonOutlineClassName}`}

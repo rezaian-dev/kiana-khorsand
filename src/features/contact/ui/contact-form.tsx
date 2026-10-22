@@ -32,7 +32,7 @@ export function ContactForm() {
       </div>
     );
   return (
-    <form id="contactForm" className="mt-6" action={action} noValidate>
+    <form id="contactForm" className="mt-6" action={action}>
       <div className="mb-[1.15rem]">
         <label
           className="mb-2 block text-[.8125rem] font-bold text-[var(--fg)] [&>span:not(.text-muted)]:text-[var(--c-rose)]"
