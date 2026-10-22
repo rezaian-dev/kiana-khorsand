@@ -47,3 +47,5 @@ next-env.d.ts
 /.cache/
 # env examples (kept locally, not committed)
 .env.example
+/test-results/
+/playwright-report/

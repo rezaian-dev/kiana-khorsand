@@ -312,8 +312,11 @@
   --color-site-plum: var(--site-plum);
 }
 /* Public shell and legacy elements now use scoped utilities in public-legacy-classes.ts. */
+/* Reserve room for the fixed mobile dock when jumping to an anchor. The page
+   padding itself lives on the public shell (see app/(public)/layout.tsx).
+   https://developer.mozilla.org/en-US/docs/Web/CSS/env */
 html {
-  scroll-padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  scroll-padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px));
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

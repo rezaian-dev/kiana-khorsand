@@ -1,98 +1,182 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
 /**
- * Carousel Navigation Regression — RTL audit
- * Verifies explicit contract:
- *   Prev button (←) => scrollPrev => logical previous
- *   Next button (→) => scrollNext => logical next
- * Icons must be Next →, Prev ← per project convention (not RTL-reversed)
+ * Slider navigation contract (RTL):
+ *   Previous (قبلی)  = inline-start (right) => Embla scrollPrev, arrow points right
+ *   Next (بعدی)      = inline-end (left)    => Embla scrollNext, arrow points left
+ * The counter «۲ از ۶» is the source of truth for the active slide.
  */
 
-test.describe("Carousel RTL Navigation", () => {
+const DIGITS: Record<string, string> = {
+  "۰": "0",
+  "۱": "1",
+  "۲": "2",
+  "۳": "3",
+  "۴": "4",
+  "۵": "5",
+  "۶": "6",
+  "۷": "7",
+  "۸": "8",
+  "۹": "9",
+};
+
+const toEnDigits = (value: string) =>
+  value.replace(/[۰-۹]/g, (digit) => DIGITS[digit] ?? digit);
+
+async function activeIndex(page: Page, region: ReturnType<Page["locator"]>) {
+  const counter = region.locator(".slider-controls .slider-counter").first();
+  const text = toEnDigits((await counter.textContent()) ?? "");
+  const match = text.match(/(\d+)/);
+  return match ? Number(match[1]) : -1;
+}
+
+async function slideTotal(page: Page, region: ReturnType<Page["locator"]>) {
+  const counter = region.locator(".slider-controls .slider-counter").first();
+  const text = toEnDigits((await counter.textContent()) ?? "");
+  const parts = [...text.matchAll(/\d+/g)];
+  return parts.length > 1 ? Number(parts[1][0]) : 0;
+}
+
+const carousel = (page: Page, name: string) =>
+  page.getByRole("region", { name, exact: true });
+
+const regions = {
+  testimonials: (page: Page) => carousel(page, "از زبان کسانی که مسیر را آمده‌اند"),
+  articles: (page: Page) => carousel(page, "خواندنی‌های کوتاه برای روزهای سخت"),
+  workshops: (page: Page) => carousel(page, "یادگیری گروهی، در فضایی امن"),
+};
+
+test.describe("Home sliders — RTL navigation", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
+    await page.goto("/");
   });
 
-  test("testimonials carousel next/prev navigate correctly and icons are Next → Prev ←", async ({
-    page,
-  }) => {
-    const carousel = page.locator('[aria-label="از زبان کسانی که مسیر را آمده‌اند"]').first();
-    await expect(carousel).toBeVisible();
+  test("testimonials: logical prev/next, disabled ends and APG roles", async ({ page }) => {
+    const region = regions.testimonials(page);
+    await expect(region).toBeVisible();
+    await expect(region).toHaveAttribute("aria-roledescription", "carousel");
 
-    // Find the two nav buttons inside this section's footer
-    const section = page.locator("section", { has: carousel }).first();
-    const prevBtn = section.getByRole("button", { name: "تجربه‌های قبلی" });
-    const nextBtn = section.getByRole("button", { name: "تجربه‌های بعدی" });
+    const prev = region.getByRole("button", { name: "قبلی" });
+    const next = region.getByRole("button", { name: "بعدی" });
 
-    await expect(prevBtn).toBeVisible();
-    await expect(nextBtn).toBeVisible();
+    // Icons: Previous points inline-start (right), Next points inline-end (left),
+    // both rendered from Lucide and mirrored by the `rtl:` variant.
+    await expect(prev.locator("svg.lucide-arrow-left")).toBeVisible();
+    await expect(next.locator("svg.lucide-arrow-right")).toBeVisible();
 
-    // Icon convention: Next →, Prev ←
-    await expect(nextBtn.locator("i.ph-arrow-right")).toBeVisible();
-    await expect(prevBtn.locator("i.ph-arrow-left")).toBeVisible();
+    // No loop for testimonials: previous is disabled on the first slide.
+    await expect(prev).toBeDisabled();
+    expect(await activeIndex(page, region)).toBe(1);
 
-    // Capture initial selected slide index via aria-label (contains "اسلاید X از Y")
-    const firstSlide = section.locator('[aria-label^="اسلاید"]').first();
-    await expect(firstSlide).toBeVisible();
+    await next.click();
+    await expect.poll(() => activeIndex(page, region)).toBe(2);
 
-    // Click next — should advance selected slide (Embla selected index changes)
-    // We verify by checking that the slide with opacity-100 changes
-    const activeBefore = section.locator(".carousel-slide-active, .embla__slide:has(.opacity-100)").first();
-    await expect(activeBefore).toBeVisible();
+    await prev.click();
+    await expect.poll(() => activeIndex(page, region)).toBe(1);
 
-    await nextBtn.click();
-    await page.waitForTimeout(700); // Embla smooth duration
+    // Repeated clicks keep advancing.
+    await next.click();
+    await next.click();
+    await expect.poll(() => activeIndex(page, region)).toBe(3);
 
-    // After next, a different slide should be active (we check selected index changed via Embla API exposed as data-attribute fallback)
-    // Fallback: verify that clicking prev returns to previous state (round-trip)
-    await prevBtn.click();
-    await page.waitForTimeout(700);
+    // Last slide disables next, not previous.
+    const total = await slideTotal(page, region);
+    for (let index = 3; index < total; index += 1) await next.click();
+    await expect.poll(() => activeIndex(page, region)).toBe(total);
+    await expect(next).toBeDisabled();
+    await expect(prev).toBeEnabled();
 
-    // Repeated clicks should still work (no stale state)
-    await nextBtn.click();
-    await page.waitForTimeout(700);
-    await nextBtn.click();
-    await page.waitForTimeout(700);
-    await expect(section.getByRole("button", { name: "تجربه‌های بعدی" })).toBeEnabled();
+    // APG: each slide is a labelled group.
+    const slide = region.getByRole("group", { name: /^۱ از/ }).first();
+    await expect(slide).toHaveAttribute("aria-roledescription", "slide");
   });
 
-  test("articles carousel respects same contract", async ({ page }) => {
-    const carousel = page.locator('[aria-label="خواندنی‌های کوتاه برای روزهای سخت"]').first();
-    await expect(carousel).toBeVisible();
-    const section = page.locator("section", { has: carousel }).first();
-    const prevBtn = section.getByRole("button", { name: "مقاله‌های قبلی" });
-    const nextBtn = section.getByRole("button", { name: "مقاله‌های بعدی" });
-    await expect(prevBtn).toBeVisible();
-    await expect(nextBtn).toBeVisible();
-    await expect(nextBtn.locator("i.ph-arrow-right")).toBeVisible();
-    await expect(prevBtn.locator("i.ph-arrow-left")).toBeVisible();
+  test("articles: loop, autoplay pause control and mirrored arrows", async ({ page }) => {
+    const region = regions.articles(page);
+    await expect(region).toBeVisible();
 
-    await nextBtn.click();
-    await page.waitForTimeout(600);
-    await prevBtn.click();
-    await page.waitForTimeout(600);
+    const prev = region.getByRole("button", { name: "قبلی" });
+    const next = region.getByRole("button", { name: "بعدی" });
+    await expect(prev).toBeEnabled();
+    await expect(next).toBeEnabled();
+
+    expect(await activeIndex(page, region)).toBe(1);
+    await next.click();
+    await expect.poll(() => activeIndex(page, region)).toBe(2);
+    await prev.click();
+    await expect.poll(() => activeIndex(page, region)).toBe(1);
+
+    // WCAG 2.2.2: autoplay can be paused by the user.
+    const pause = region.getByRole("button", { name: "توقف پخش خودکار" });
+    await expect(pause).toBeVisible();
+    await pause.click();
+    await expect(region.getByRole("button", { name: "پخش خودکار" })).toBeVisible();
   });
 
-  test("workshops carousel loop keeps navigation enabled", async ({ page }) => {
-    const carousel = page.locator('[aria-label="یادگیری گروهی، در فضایی امن"]').first();
-    await expect(carousel).toBeVisible();
-    const section = page.locator("section", { has: carousel }).first();
-    const prevBtn = section.getByRole("button", { name: "کارگاه‌های قبلی" });
-    const nextBtn = section.getByRole("button", { name: "کارگاه‌های بعدی" });
-    // Loop carousels never disable per Embla docs
-    await expect(nextBtn).toBeEnabled();
-    await expect(prevBtn).toBeEnabled();
+  test("workshops: previous wraps backwards when looping", async ({ page }) => {
+    const region = regions.workshops(page);
+    await expect(region).toBeVisible();
+    const total = await slideTotal(page, region);
+    expect(total).toBeGreaterThan(1);
+
+    await region.getByRole("button", { name: "قبلی" }).click();
+    await expect.poll(() => activeIndex(page, region)).toBe(total);
   });
 
-  test("mobile and desktop widths both navigate", async ({ page }) => {
-    for (const width of [375, 1280]) {
-      await page.setViewportSize({ width, height: 800 });
-      const carousel = page.locator('[aria-label="از زبان کسانی که مسیر را آمده‌اند"]').first();
-      await expect(carousel).toBeVisible();
-      const section = page.locator("section", { has: carousel }).first();
-      const nextBtn = section.getByRole("button", { name: "تجربه‌های بعدی" });
-      await nextBtn.click();
-      await page.waitForTimeout(600);
+  test("keyboard, touch targets and 320px layout", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    const region = regions.testimonials(page);
+    await expect(region).toBeVisible();
+
+    // No horizontal page overflow at 320px.
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(1);
+
+    // 44×44 touch targets.
+    const next = region.getByRole("button", { name: "بعدی" });
+    const box = await next.boundingBox();
+    expect(box?.width).toBeGreaterThanOrEqual(44);
+    expect(box?.height).toBeGreaterThanOrEqual(44);
+
+    // ArrowLeft moves forward in RTL while focus is inside the slider.
+    await next.focus();
+    await page.keyboard.press("ArrowLeft");
+    await expect.poll(() => activeIndex(page, region)).toBe(2);
+  });
+
+  test("mobile swipe advances one slide", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const region = regions.testimonials(page);
+    await expect(region).toBeVisible();
+    await region.scrollIntoViewIfNeeded();
+    const viewport = region.locator(".slider-viewport").first();
+    const box = await viewport.boundingBox();
+    if (!box) throw new Error("viewport not measured");
+
+    const y = box.y + box.height / 2;
+    // RTL: pulling the track from the inline-start side to the right reveals
+    // the next slide (later slides live on the left in an RTL track).
+    await page.mouse.move(box.x + 40, y);
+    await page.mouse.down();
+    for (let step = 1; step <= 24; step += 1) {
+      await page.mouse.move(box.x + 40 + ((box.width - 80) * step) / 24, y);
+      await page.waitForTimeout(16);
     }
+    await page.mouse.up();
+
+    await expect.poll(() => activeIndex(page, region)).toBe(2);
+
+    // The opposite drag goes back to the first slide.
+    await page.mouse.move(box.x + box.width - 40, y);
+    await page.mouse.down();
+    for (let step = 1; step <= 24; step += 1) {
+      await page.mouse.move(box.x + box.width - 40 - ((box.width - 80) * step) / 24, y);
+      await page.waitForTimeout(16);
+    }
+    await page.mouse.up();
+
+    await expect.poll(() => activeIndex(page, region)).toBe(1);
   });
 });

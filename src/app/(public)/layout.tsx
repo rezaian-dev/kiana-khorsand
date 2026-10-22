@@ -10,7 +10,7 @@ export default function SiteLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div
-      className={`${fieldReducedMotionClassName} ${publicLegacyClassName} site-shell reference-home scroll-pt-[6.5rem] [font-family:Vazirmatn,Tahoma,system-ui,-apple-system,'Segoe_UI',sans-serif] text-[16px] leading-[1.7] antialiased selection:bg-[color:color-mix(in_srgb,var(--c-violet)_28%,transparent)] max-[768.02px]:pb-[calc(92px+env(safe-area-inset-bottom,0px))] [&_.break-words]:[word-break:break-word] [&_:where(button)]:cursor-pointer [&_:where(svg)]:h-auto [&_:where(svg)]:max-w-full [:where(&_:focus-visible)]:rounded-[6px]`}
+      className={`${fieldReducedMotionClassName} ${publicLegacyClassName} site-shell reference-home scroll-pt-[6.5rem] [font-family:Vazirmatn,Tahoma,system-ui,-apple-system,'Segoe_UI',sans-serif] text-[16px] leading-[1.7] antialiased selection:bg-[color:color-mix(in_srgb,var(--c-violet)_28%,transparent)] max-[768.02px]:pb-[calc(104px+env(safe-area-inset-bottom,0px))] [&_.break-words]:[word-break:break-word] [&_:where(button)]:cursor-pointer [&_:where(svg)]:h-auto [&_:where(svg)]:max-w-full [:where(&_:focus-visible)]:rounded-[6px]`}
     >
       <link rel="stylesheet" href="/assets/vendor/phosphor/duotone/style.css" />
       <link rel="stylesheet" href="/assets/vendor/phosphor/bold/style.css" />

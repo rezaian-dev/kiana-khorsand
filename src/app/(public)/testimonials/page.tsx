@@ -5,7 +5,6 @@ import {
 import { ScrollReveal } from "@/components/layout/page-reveal";
 import { pageNumber } from "@/lib/list-search";
 import type { CategorySearchProps } from "@/types/routes";
-import Image from "next/image";
 import { ListFilter, RotateCcw } from "lucide-react";
 import { permanentRedirect } from "next/navigation";
 import { PanelSelect } from "@/components/panels/panel-select";
@@ -16,7 +15,7 @@ import { ReviewSubmission } from "@/features/community/ui/review-submission";
 import { Intro } from "@/components/shared/intro";
 import { SiteToaster } from "@/components/shared/site-toaster";
 import { labels } from "@/lib/labels";
-import { testimonialPortrait } from "@/features/testimonials/portrait";
+import { TestimonialCard } from "@/features/testimonials/ui/testimonial-card";
 import { TestimonialStoryMotion } from "@/features/testimonials/ui/testimonial-card-motion";
 import { PaginationLink } from "@/components/shared/pagination-link-motion";
 import { publicMetadata } from "@/lib/public-metadata";
@@ -170,49 +169,14 @@ export default async function Page({ searchParams }: CategorySearchProps) {
             <ScrollReveal
               className={`${siteGridClassName} testimonial-story-grid items-stretch pt-[1.3rem]! pb-[2.2rem]!`}
             >
-              {visible.map((item) => {
-                const portrait = testimonialPortrait(item);
-                return (
-                  <TestimonialStoryMotion
-                    key={item.slug}
-                    className="testimonial-story-card relative flex min-h-[295px] flex-col gap-4 overflow-hidden rounded-[25px] border border-[var(--line)] bg-[linear-gradient(145deg,var(--surface),color-mix(in_srgb,var(--c-teal)_5%,var(--surface)))] p-[clamp(1.15rem,2.2vw,1.75rem)] [box-shadow:0_18px_42px_-32px_color-mix(in_srgb,var(--c-indigo)_55%,transparent)] before:absolute before:[inset-block:1.3rem] before:[inset-inline-start:0] before:w-[3px] before:rounded-[99px] before:bg-[linear-gradient(var(--c-teal),var(--c-indigo))] before:content-[''] nth-[3n]:bg-[linear-gradient(145deg,var(--surface),color-mix(in_srgb,var(--c-indigo)_6%,var(--surface)))] nth-[3n+2]:bg-[linear-gradient(145deg,var(--surface),color-mix(in_srgb,var(--c-rose)_6%,var(--surface)))] motion-reduce:hover:transform-none!"
-                  >
-                    <div
-                      className="testimonial-story-top flex items-center justify-between text-[var(--c-teal)]"
-                      aria-hidden="true"
-                    >
-                      <span className="text-[2.5rem] leading-none font-black opacity-[0.55]">
-                        «
-                      </span>
-                      <small className="text-[0.75rem]! leading-[1.7] font-extrabold! text-[var(--site-muted)]">
-                        روایت همراهان
-                      </small>
-                    </div>
-                    <blockquote className="flex-1 text-[0.96rem] leading-[2.1] text-pretty text-[var(--fg)]">
-                      <p>{item.quote}</p>
-                    </blockquote>
-                    <div className="testimonial-story-author flex items-center gap-[0.8rem] border-t border-[var(--line)] pt-4">
-                      {portrait && (
-                        <Image
-                          src={portrait}
-                          width={48}
-                          height={48}
-                          alt=""
-                          className="site-avatar size-12 flex-none rounded-[15px]! object-cover"
-                        />
-                      )}
-                      <div className="grid min-w-0 gap-[0.15rem]">
-                        <strong className="text-[0.88rem] text-[var(--fg)]">
-                          {item.name}
-                        </strong>
-                        <small className="text-[0.76rem]! leading-[1.7] text-[var(--site-muted)]">
-                          تجربه از: {item.experience}
-                        </small>
-                      </div>
-                    </div>
-                  </TestimonialStoryMotion>
-                );
-              })}
+              {visible.map((item) => (
+                <TestimonialStoryMotion
+                  key={item.slug}
+                  className="testimonial-story-card h-full"
+                >
+                  <TestimonialCard item={item} />
+                </TestimonialStoryMotion>
+              ))}
             </ScrollReveal>
           </section>
         ) : (

@@ -51,7 +51,7 @@ import {
   ReferenceFaq,
   ReferenceFees,
 } from "./home-reference-sections";
-import { ReferenceCarousel } from "./home-reference-carousel";
+import { HomeSlider } from "./home-slider";
 import type { listAreas } from "@/features/areas/queries";
 import type { listServices } from "@/features/services/queries";
 import type { listArticles } from "@/features/articles/queries";
@@ -466,9 +466,9 @@ export function HomeReference({
           </ScrollReveal>
         </div>
       </section>
-      {<ReferenceCarousel kind="testimonials" reviews={testimonials} />}
-      {<ReferenceCarousel kind="articles" articles={articles} />}
-      {<ReferenceCarousel kind="workshops" workshops={workshops} />}
+      {<HomeSlider kind="testimonials" reviews={testimonials} />}
+      {<HomeSlider kind="articles" articles={articles} />}
+      {<HomeSlider kind="workshops" workshops={workshops} />}
       <section
         className={`${publicSectionClassName}`}
         aria-labelledby="fees-title"
