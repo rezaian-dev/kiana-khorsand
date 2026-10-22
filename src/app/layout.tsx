@@ -2,12 +2,21 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
+import { SITE_NAME, socialMetadata } from "@/lib/public-metadata";
 import { SITE_ORIGIN } from "@/lib/site-urls";
 
 const vazirmatn = localFont({
   src: [
-    { path: "../../public/assets/fonts/Vazirmatn-Regular.woff2", weight: "400", style: "normal" },
-    { path: "../../public/assets/fonts/Vazirmatn-ExtraBold.woff2", weight: "800", style: "normal" },
+    {
+      path: "../../public/assets/fonts/Vazirmatn-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/assets/fonts/Vazirmatn-ExtraBold.woff2",
+      weight: "800",
+      style: "normal",
+    },
   ],
   display: "swap",
   variable: "--font-vazirmatn",
@@ -19,28 +28,25 @@ const vazirmatn = localFont({
 const siteDescription =
   "آشنایی با رویکرد درمان، خدمات مشاوره روان‌شناسی، نوشته‌ها و درخواست وقت با کیانا خرسند.";
 
+const social = socialMetadata({
+  title: SITE_NAME,
+  description: siteDescription,
+  path: "/",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
-  title: { default: "کیانا خرسند", template: "%s — کیانا خرسند" },
+  title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
   description: siteDescription,
-  applicationName: "کیانا خرسند",
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "کیانا خرسند" },
+  applicationName: SITE_NAME,
+  appleWebApp: { capable: true, statusBarStyle: "default", title: SITE_NAME },
   formatDetection: { telephone: false },
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
   },
-  openGraph: {
-    type: "website",
-    locale: "fa_IR",
-    siteName: "کیانا خرسند",
-    title: "کیانا خرسند",
-    description: siteDescription,
-    url: SITE_ORIGIN,
-    images: [{ url: "/og-image.jpg", alt: "کیانا خرسند — جایی امن برای فهمیدن و تغییر", width: 1200, height: 630 }],
-  },
-  twitter: { card: "summary_large_image" },
+  ...social,
 };
 
 export const viewport: Viewport = {
@@ -54,7 +60,9 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="fa"
