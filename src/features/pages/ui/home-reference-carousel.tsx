@@ -142,7 +142,7 @@ function SectionSlider(props: CarouselProps) {
   const rendered = canLoop ? [items[items.length - 1], ...items, items[0]] : items;
   const toReal = (physical: number) => (canLoop ? (physical - 1 + items.length) % items.length : physical);
 
-  // -- scroll helper (RTL-safe, snap-safe)
+  // -- scroll helper: only scrolls the carousel viewport, never the page (no window scroll)
   const goTo = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
     const root = viewport.current;
     const el = slides.current[index];
@@ -151,11 +151,11 @@ function SectionSlider(props: CarouselProps) {
     if (!instant) (root as HTMLElement).style.scrollSnapType = "none";
     const prev = root.style.scrollBehavior;
     root.style.scrollBehavior = instant ? "auto" : behavior;
-    el.scrollIntoView({
-      behavior: instant ? ("instant" as unknown as ScrollBehavior) : behavior,
-      block: "nearest",
-      inline: "center",
-    });
+    const r = root.getBoundingClientRect();
+    const e = el.getBoundingClientRect();
+    const delta = e.left + e.width / 2 - (r.left + r.width / 2);
+    // root.scrollBy scrolls only this container, not the window — fixes auto-play page jump
+    root.scrollBy({ left: delta, behavior: instant ? "instant" : "smooth" });
     if (prev) root.style.scrollBehavior = prev;
     else root.style.removeProperty("scroll-behavior");
     if (!instant) window.setTimeout(() => (root as HTMLElement).style.removeProperty("scroll-snap-type"), 680);
