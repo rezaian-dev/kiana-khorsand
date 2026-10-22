@@ -1,8 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { animate, hover } from "motion";
 
 // Layout tokens
@@ -24,7 +26,7 @@ import {
   publicTestimonialMarkClassName,
 } from "@/components/layout/public-testimonial-classes";
 
-// Shared card visuals
+// Shared visuals
 import {
   artMediaMaskClassName,
   artSealClassName,
@@ -48,7 +50,7 @@ import {
 } from "./carousel-neon-classes";
 
 // ---------------------------------------------------------------------------
-// Types — short, readable
+// Types — readable, concise
 // ---------------------------------------------------------------------------
 
 type TestimonialItem = {
@@ -108,102 +110,78 @@ const META = {
   },
 } as const;
 
-const COVER =
-  `cover cover-violet relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)] [background-image:radial-gradient(75%_65%_at_18%_18%,rgba(109,74,255,0.55),transparent_72%),radial-gradient(65%_65%_at_88%_82%,rgba(177,74,158,0.45),transparent_72%)] ${artMediaMaskClassName}`;
+const COVER = `cover cover-violet relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)] [background-image:radial-gradient(75%_65%_at_18%_18%,rgba(109,74,255,0.55),transparent_72%),radial-gradient(65%_65%_at_88%_82%,rgba(177,74,158,0.45),transparent_72%)] ${artMediaMaskClassName}`;
 
-// Keep old name for backward compat — new readable alias below
+// Backward-compat alias
 export function ReferenceCarousel(props: CarouselProps) {
   return <HomeSlider {...props} />;
 }
 
-/** Readable alias — use this in new code */
 export function HomeSlider(props: CarouselProps) {
   return <SectionSlider {...props} />;
 }
 
-/** Core slider — clean, principled, auto-playing */
-function SectionSlider(props: CarouselProps) {
-  const viewport = useRef<HTMLDivElement>(null);
-  const slides = useRef<(HTMLLIElement | null)[]>([]);
-  const [position, setPosition] = useState(1);
-  const current = useRef(1);
-  const target = useRef<number | null>(null);
-  const animating = useRef(false);
-  const raf = useRef<number | null>(null);
-  const [reduced, setReduced] = useState(false);
-  const [ready, setReady] = useState(false);
+// ---------------------------------------------------------------------------
+// Core — Embla per official docs: https://www.embla-carousel.com/get-started/react
+// ---------------------------------------------------------------------------
 
+function SectionSlider(props: CarouselProps) {
   const items =
     props.kind === "testimonials" ? props.reviews : props.kind === "articles" ? props.articles : props.workshops;
   const meta = META[props.kind];
   const isTestimonial = props.kind === "testimonials";
   const isImmersive = props.kind !== "workshops";
   const canLoop = items.length > 1;
-  const rendered = canLoop ? [items[items.length - 1], ...items, items[0]] : items;
-  const toReal = (physical: number) => (canLoop ? (physical - 1 + items.length) % items.length : physical);
 
-  // -- scroll helper: only scrolls the carousel viewport, never the page (no window scroll)
-  const goTo = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
-    const root = viewport.current;
-    const el = slides.current[index];
-    if (!root || !el) return;
-    const instant = behavior === "instant";
-    if (!instant) (root as HTMLElement).style.scrollSnapType = "none";
-    const prev = root.style.scrollBehavior;
-    root.style.scrollBehavior = instant ? "auto" : behavior;
-    const r = root.getBoundingClientRect();
-    const e = el.getBoundingClientRect();
-    const delta = e.left + e.width / 2 - (r.left + r.width / 2);
-    // root.scrollBy scrolls only this container, not the window — fixes auto-play page jump
-    root.scrollBy({ left: delta, behavior: instant ? "instant" : "smooth" });
-    if (prev) root.style.scrollBehavior = prev;
-    else root.style.removeProperty("scroll-behavior");
-    if (!instant) window.setTimeout(() => (root as HTMLElement).style.removeProperty("scroll-snap-type"), 680);
-  }, []);
-
-  const snapToClone = useCallback(() => {
-    const root = viewport.current;
-    if (!root || !canLoop) return;
-    if (target.current !== null || animating.current) return;
-    if (current.current === 0 || current.current === items.length + 1) {
-      const landing = current.current === 0 ? items.length : 1;
-      current.current = landing;
-      setPosition(landing);
-      goTo(landing, "instant");
-    }
-  }, [canLoop, items.length, goTo]);
-
-  const step = useCallback(
-    (delta: number) => {
-      if (!canLoop || animating.current) return;
-      if (current.current === 0 || current.current === items.length + 1) snapToClone();
-      const next = Math.max(0, Math.min(items.length + 1, current.current + delta));
-      current.current = next;
-      setPosition(next);
-      target.current = next;
-      animating.current = true;
-      goTo(next, reduced ? "instant" : "smooth");
-      window.setTimeout(() => {
-        animating.current = false;
-        if (target.current === next) target.current = null;
-      }, 700);
+  // Official Embla setup: direction rtl for Persian, loop, center align
+  // Autoplay plugin handles auto-advance, pause on hover/focus per docs
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: canLoop,
+      align: "center",
+      direction: "rtl",
+      containScroll: "trimSnaps",
+      slidesToScroll: 1,
+      skipSnaps: false,
+      dragFree: false,
     },
-    [canLoop, items.length, reduced, goTo, snapToClone],
+    [
+      Autoplay({
+        delay: 4500,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+        stopOnFocusIn: true,
+        playOnInit: true,
+      }),
+    ],
   );
 
-  // reduced motion
-  useEffect(() => {
-    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(m.matches);
-    sync();
-    m.addEventListener("change", sync);
-    return () => m.removeEventListener("change", sync);
-  }, []);
+  const [selected, setSelected] = useState(0);
 
-  // hover zoom for article/workshop covers (testimonials excluded)
+  // Sync selected index for styling (testimonials coverflow focus)
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelected(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
   useEffect(() => {
-    if (props.kind === "testimonials") return;
-    const root = viewport.current;
+    if (!emblaApi) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+    // Ensure autoplay starts (required per official docs)
+    emblaApi.plugins().autoplay?.play();
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  // Hover zoom for article/workshop covers — kept lightweight
+  useEffect(() => {
+    if (props.kind === "testimonials" || !emblaApi) return;
+    const root = emblaApi.rootNode() as HTMLElement | null;
     if (!root) return;
     const m = window.matchMedia("(prefers-reduced-motion: reduce)");
     const imgs = [...root.querySelectorAll<HTMLImageElement>(".art-carousel-card img")];
@@ -223,121 +201,15 @@ function SectionSlider(props: CarouselProps) {
       stops.forEach((s) => s());
       m.removeEventListener("change", reset);
     };
-  }, [props.kind, items.length]);
+  }, [emblaApi, props.kind]);
 
-  // instant mount — no flash
-  useLayoutEffect(() => {
-    const idx = canLoop ? 1 : 0;
-    current.current = idx;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPosition(idx);
-    goTo(idx, "instant");
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => setReady(true)));
-    return () => cancelAnimationFrame(id);
-  }, [canLoop, goTo, items.length]);
-
-  // keep centered on resize
-  useEffect(() => {
-    const root = viewport.current;
-    if (!root) return;
-    const ro =
-      typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(() => goTo(current.current, "instant"))
-        : null;
-    if (ro) ro.observe(root);
-    const onResize = () => goTo(current.current, "instant");
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      ro?.disconnect();
-    };
-  }, [goTo]);
-
-  // -- auto-play: every 4.5s, pauses on hover/focus/drag/reduced-motion/hidden
-  const paused = useRef(false);
-  useEffect(() => {
-    if (!canLoop || reduced) return;
-    let timer: number | null = null;
-    const schedule = () => {
-      if (timer) window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        if (!paused.current && !animating.current && !document.hidden) step(1);
-        schedule();
-      }, 4500);
-    };
-    schedule();
-    const onVis = () => {
-      if (document.hidden && timer) window.clearTimeout(timer);
-      else schedule();
-    };
-    document.addEventListener("visibilitychange", onVis);
-    return () => {
-      if (timer) window.clearTimeout(timer);
-      document.removeEventListener("visibilitychange", onVis);
-    };
-  }, [canLoop, reduced, step]);
-
-  // -- scroll tracking (rAF-throttled, ignore during auto/manual animation)
-  const onScroll = useCallback(() => {
-    if (raf.current !== null) return;
-    raf.current = requestAnimationFrame(() => {
-      raf.current = null;
-      const root = viewport.current;
-      if (!root) return;
-      if ((root as HTMLElement).dataset.dragging === "true") return;
-      if (animating.current || target.current !== null) return;
-      const frame = root.getBoundingClientRect();
-      const mid = frame.left + frame.width / 2;
-      let best = current.current;
-      let bestGap = Infinity;
-      for (let i = 0; i < slides.current.length; i++) {
-        const s = slides.current[i];
-        if (!s) continue;
-        const gap = Math.abs(s.getBoundingClientRect().left + s.getBoundingClientRect().width / 2 - mid);
-        if (gap < bestGap) {
-          bestGap = gap;
-          best = i;
-        }
-      }
-      if (best !== current.current) {
-        current.current = best;
-        setPosition(best);
-      }
-    });
-  }, []);
-
-  const onScrollEnd = useCallback(() => {
-    const root = viewport.current;
-    if (root && !animating.current && target.current === null) {
-      const frame = root.getBoundingClientRect();
-      const mid = frame.left + frame.width / 2;
-      let best = current.current;
-      let bestGap = Infinity;
-      for (let i = 0; i < slides.current.length; i++) {
-        const s = slides.current[i];
-        if (!s) continue;
-        const gap = Math.abs(s.getBoundingClientRect().left + s.getBoundingClientRect().width / 2 - mid);
-        if (gap < bestGap) {
-          bestGap = gap;
-          best = i;
-        }
-      }
-      if (best !== current.current) {
-        current.current = best;
-        setPosition(best);
-      }
-    }
-    target.current = null;
-    animating.current = false;
-    snapToClone();
-  }, [snapToClone]);
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
     <section
-      className={`${publicSectionClassName} reference-carousel ${isImmersive ? neonCarouselSectionClassName : ""} ${props.kind === "testimonials" ? "pt-10! pb-10! md:pt-24! md:pb-16!" : props.kind === "articles" ? "pt-8! pb-12! md:pt-16! md:pb-24!" : ""}`}
+      className={`${publicSectionClassName} ${isImmersive ? neonCarouselSectionClassName : ""} ${props.kind === "testimonials" ? "pt-10! pb-10! md:pt-24! md:pb-16!" : props.kind === "articles" ? "pt-8! pb-12! md:pt-16! md:pb-24!" : ""}`}
       aria-labelledby={meta.id}
-      data-slider=""
-      data-effect={isTestimonial ? "coverflow" : undefined}
     >
       <div className={`${publicContainerClassName} flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start`}>
         <div className="max-w-[52ch] min-w-0">
@@ -361,7 +233,7 @@ function SectionSlider(props: CarouselProps) {
         {!isTestimonial && (
           <Link
             href={props.kind === "articles" ? "/articles" : "/workshops"}
-            className={`${publicButtonSoftClassName} carousel-section-link flex-none max-[620.02px]:self-start ${isImmersive ? neonCarouselLinkClassName : ""}`}
+            className={`${publicButtonSoftClassName} flex-none max-[620.02px]:self-start ${isImmersive ? neonCarouselLinkClassName : ""}`}
           >
             {props.kind === "articles" ? "همهٔ مقاله‌ها" : "همهٔ کارگاه‌ها"}
             <i className="ph-bold ph-arrow-left" aria-hidden="true" />
@@ -376,114 +248,62 @@ function SectionSlider(props: CarouselProps) {
             : `${publicContainerClassName} ${isImmersive ? "mt-6 sm:mt-10" : "mt-10"}`
         }
       >
-        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+        {/* Embla viewport — official structure */}
         <div
-          ref={viewport}
-          className={`carousel ${isTestimonial && !reduced ? "carousel-coverflow carousel-3d" : ""} relative z-10 snap-x snap-mandatory scroll-px-4 [scrollbar-width:none] overflow-x-auto! overflow-y-hidden! overscroll-x-contain scroll-smooth motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden ${isTestimonial ? "pt-4 pb-8" : "pt-[.6rem] pb-4"} ${ready ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-          tabIndex={0}
-          role="region"
+          ref={emblaRef}
+          dir="rtl"
+          className={`embla relative z-10 overflow-hidden ${isTestimonial ? "pt-4 pb-8" : "pt-[.6rem] pb-4"}`}
           aria-roledescription="اسلایدر"
           aria-label={meta.title}
-          onScroll={onScroll}
-          // eslint-disable-next-line react/no-unknown-property
-          onScrollEnd={onScrollEnd}
-          onMouseEnter={() => (paused.current = true)}
-          onMouseLeave={() => (paused.current = false)}
-          onFocus={() => (paused.current = true)}
-          onBlur={() => (paused.current = false)}
-          onKeyDown={(e) => {
-            if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-            if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-            if (["INPUT", "TEXTAREA", "SELECT"].includes((e.target as HTMLElement).tagName)) return;
-            e.preventDefault();
-            step(e.key === "ArrowLeft" ? 1 : -1);
-          }}
-          onTouchStart={() => (target.current = null)}
-          onPointerDown={(e) => {
-            target.current = null;
-            paused.current = true;
-            if (e.pointerType !== "mouse") return;
-            e.currentTarget.dataset.dragging = "true";
-            e.currentTarget.classList.add("snap-none!");
-            (e.currentTarget as HTMLElement).style.scrollSnapType = "none";
-            (e.currentTarget as HTMLElement).style.scrollBehavior = "auto";
-          }}
-          onPointerUp={(e) => {
-            const el = e.currentTarget as HTMLElement;
-            delete el.dataset.dragging;
-            el.classList.remove("snap-none!");
-            el.style.removeProperty("scroll-snap-type");
-            el.style.removeProperty("scroll-behavior");
-            paused.current = false;
-            onScroll();
-            requestAnimationFrame(() => goTo(current.current, "smooth"));
-          }}
-          onPointerCancel={(e) => {
-            const el = e.currentTarget as HTMLElement;
-            delete el.dataset.dragging;
-            el.classList.remove("snap-none!");
-            el.style.removeProperty("scroll-snap-type");
-            el.style.removeProperty("scroll-behavior");
-            paused.current = false;
-          }}
-          onPointerLeave={(e) => {
-            const el = e.currentTarget as HTMLElement;
-            if (el.dataset.dragging) {
-              delete el.dataset.dragging;
-              el.classList.remove("snap-none!");
-              el.style.removeProperty("scroll-snap-type");
-              el.style.removeProperty("scroll-behavior");
-            }
-            paused.current = false;
-          }}
         >
-          <ul
-            className={`carousel-wrapper flex items-stretch gap-4 py-4 sm:gap-5 lg:gap-6 ${isTestimonial ? "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] sm:before:basis-[20%] sm:after:basis-[20%] lg:before:basis-[30.5%] lg:after:basis-[30.5%]" : "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] min-[480px]:before:basis-[10%] min-[480px]:after:basis-[10%] sm:before:basis-[26%] sm:after:basis-[26%] lg:before:basis-[34.5%] lg:after:basis-[34.5%]"}`}
-          >
-            {rendered.map((item, physical) => {
-              const idx = toReal(physical);
-              const active = physical === (canLoop ? position : 0);
-              const next = canLoop && position + 1 === physical;
-              const prev = canLoop && position - 1 === physical;
-              const clone = canLoop && (physical === 0 || physical === items.length + 1);
+          <div className={`embla__container flex touch-pan-y gap-4 sm:gap-5 lg:gap-6 py-4 ${isTestimonial ? "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] sm:before:basis-[20%] sm:after:basis-[20%] lg:before:basis-[30.5%] lg:after:basis-[30.5%]" : "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] min-[480px]:before:basis-[10%] min-[480px]:after:basis-[10%] sm:before:basis-[26%] sm:after:basis-[26%] lg:before:basis-[34.5%] lg:after:basis-[34.5%]"}`}>
+            {items.map((item, index) => {
+              const active = index === selected;
+              const isPrev = index === (selected - 1 + items.length) % items.length;
+              const isNext = index === (selected + 1) % items.length;
               return (
-                <li
-                  key={`${item.slug}-${physical}`}
-                  ref={(n) => {
-                    slides.current[physical] = n;
-                  }}
-                  data-clone={clone ? "" : undefined}
-                  aria-hidden={clone ? true : undefined}
-                  inert={clone ? true : undefined}
-                  className={`carousel-slide flex h-auto shrink-0 snap-center items-stretch ${isTestimonial ? "transition-opacity duration-500 ease-out motion-reduce:transition-none" : ""} ${isTestimonial ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"} ${isTestimonial ? (active ? "carousel-slide-active opacity-100" : next || prev ? "carousel-slide-next opacity-70" : "opacity-35") : "opacity-100"} motion-reduce:opacity-100`}
-                  aria-label={`اسلاید ${new Intl.NumberFormat("fa-IR").format(idx + 1)} از ${new Intl.NumberFormat("fa-IR").format(items.length)}`}
+                <div
+                  key={item.slug}
+                  className={`embla__slide flex-[0_0_auto] min-w-0 ${isTestimonial ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"}`}
+                  aria-hidden={canLoop ? undefined : !active}
                 >
-                  {props.kind === "testimonials" ? (
-                    <TestimonialCard
-                      item={item as TestimonialItem}
-                      depth={active ? "" : next ? "[transform:translate3d(48px,0,-170px)_rotateY(-23deg)] blur-[0.7px] motion-reduce:blur-none" : prev ? "[transform:translate3d(-48px,0,-170px)_rotateY(23deg)] blur-[0.7px] motion-reduce:blur-none" : "[transform:translate3d(0,0,-180px)_scale(.95)]"}
-                    />
-                  ) : props.kind === "articles" ? (
-                    <ArticleCard item={item as ArticleItem} active={active} />
-                  ) : (
-                    <WorkshopCard item={item as WorkshopItem} />
-                  )}
-                </li>
+                  <div
+                    className={`h-full ${isTestimonial ? "transition-opacity duration-500 ease-out motion-reduce:transition-none" : ""} ${isTestimonial ? (active ? "opacity-100" : isPrev || isNext ? "opacity-70" : "opacity-35") : "opacity-100"} motion-reduce:opacity-100`}
+                  >
+                    {props.kind === "testimonials" ? (
+                      <TestimonialCard
+                        item={item as TestimonialItem}
+                        depth={
+                          active
+                            ? ""
+                            : isNext
+                              ? "[transform:translate3d(48px,0,-170px)_rotateY(-23deg)] blur-[0.7px] motion-reduce:blur-none"
+                              : isPrev
+                                ? "[transform:translate3d(-48px,0,-170px)_rotateY(23deg)] blur-[0.7px] motion-reduce:blur-none"
+                                : "[transform:translate3d(0,0,-180px)_scale(.95)]"
+                        }
+                      />
+                    ) : props.kind === "articles" ? (
+                      <ArticleCard item={item as ArticleItem} active={active} />
+                    ) : (
+                      <WorkshopCard item={item as WorkshopItem} />
+                    )}
+                  </div>
+                </div>
               );
             })}
-          </ul>
+          </div>
         </div>
       </div>
 
       <div className={publicContainerClassName}>
-        <div className="slider-footer flex items-center justify-end gap-3 pt-6">
-          <div className="slider-arrows inline-flex items-center gap-2">
+        <div className="flex items-center justify-end gap-3 pt-6">
+          <div className="inline-flex items-center gap-2">
             <button
               type="button"
               className="grid size-10 place-items-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-40 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-white/20 dark:hover:bg-zinc-700 dark:hover:text-white"
               aria-label={meta.next}
-              onClick={() => step(1)}
+              onClick={scrollNext}
               disabled={items.length < 2}
             >
               <i className="ph-bold ph-arrow-left text-[14px]" aria-hidden="true" />
@@ -492,7 +312,7 @@ function SectionSlider(props: CarouselProps) {
               type="button"
               className="grid size-10 place-items-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-40 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-white/20 dark:hover:bg-zinc-700 dark:hover:text-white"
               aria-label={meta.prev}
-              onClick={() => step(-1)}
+              onClick={scrollPrev}
               disabled={items.length < 2}
             >
               <i className="ph-bold ph-arrow-right text-[14px]" aria-hidden="true" />
@@ -505,7 +325,7 @@ function SectionSlider(props: CarouselProps) {
 }
 
 // ---------------------------------------------------------------------------
-// Cards — tiny, single-purpose
+// Cards — small, single purpose
 // ---------------------------------------------------------------------------
 
 function TestimonialCard({ item, depth }: { item: TestimonialItem; depth: string }) {
@@ -524,21 +344,17 @@ function TestimonialCard({ item, depth }: { item: TestimonialItem; depth: string
           aria-label={`پرترهٔ تولیدشده برای ${item.name}`}
         >
           {(() => {
-            const avatar = testimonialPortrait(item);
-            return avatar ? (
-              <Image src={avatar} width={120} height={120} sizes="48px" className="absolute inset-0 size-full rounded-full object-cover" alt="" />
-            ) : null;
+            const a = testimonialPortrait(item);
+            return a ? <Image src={a} width={120} height={120} sizes="48px" className="absolute inset-0 size-full rounded-full object-cover" alt="" /> : null;
           })()}
         </span>
-        <span className="testimonial-who flex min-w-0 flex-col gap-0.5">
-          <span className="testimonial-name text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.name}</span>
-          <span className="testimonial-role text-xs text-zinc-500 dark:text-zinc-300">
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <span className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.name}</span>
+          <span className="text-xs text-zinc-500 dark:text-zinc-300">
             {item.category === "couples" ? "مشاورهٔ زوجی" : item.category === "individual" ? "مشاورهٔ فردی" : item.category}
           </span>
         </span>
-        <span className="testimonial-badge ms-auto rounded-full bg-teal-600 px-3 py-1 text-xs font-bold text-white shadow-sm dark:bg-teal-500">
-          {item.experience}
-        </span>
+        <span className="ms-auto rounded-full bg-teal-600 px-3 py-1 text-xs font-bold text-white shadow-sm dark:bg-teal-500">{item.experience}</span>
       </figcaption>
     </figure>
   );
@@ -548,9 +364,9 @@ function ArticleCard({ item, active }: { item: ArticleItem; active: boolean }) {
   return (
     <Link
       href={`/articles/${item.slug}`}
-      className={`${publicCardClassName} ${publicSpotClassName} group art-carousel-card flex h-full w-full min-w-0 flex-col !p-4 hover:no-underline! focus-visible:no-underline! focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#247d72] ${artSurfaceClassName} ${neonArticleCardClassName} ${active ? neonArticleActiveClassName : ""}`}
+      className={`${publicCardClassName} ${publicSpotClassName} group flex h-full w-full min-w-0 flex-col !p-4 hover:no-underline! focus-visible:no-underline! focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#247d72] ${artSurfaceClassName} ${neonArticleCardClassName} ${active ? neonArticleActiveClassName : ""}`}
     >
-      <div className="art-cover-media relative isolate min-w-0 flex-none">
+      <div className="relative isolate min-w-0 flex-none">
         <div className={COVER}>
           {item.cover && (
             <Image
@@ -572,12 +388,11 @@ function ArticleCard({ item, active }: { item: ArticleItem; active: boolean }) {
         </span>
       </div>
       <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-3 break-words text-[#244247]! dark:text-[#f0fcf8]!`}>{item.title}</h3>
-      <p className="text-muted mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">{item.excerpt}</p>
+      <p className="mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">{item.excerpt}</p>
       <span
-        className={`art-carousel-read mx-[.65rem]! mt-auto! group-hover:motion-safe:-translate-y-0.5 motion-reduce:transform-none! ${articleActionClassName} hover:no-underline! [&&]:border-[#9eb6dc]! [&&]:bg-[#ebf1fd]! [&&]:text-[#294d80]! [&&]:hover:bg-[#dce7fa]! [&&]:hover:text-[#213e70]! dark:[&&]:border-[#7287b2]! dark:[&&]:bg-[#293654]! dark:[&&]:text-[#e0eafb]! dark:[&&]:hover:bg-[#3a4b73]! dark:[&&]:hover:text-white!`}
+        className={`mx-[.65rem]! mt-auto! group-hover:motion-safe:-translate-y-0.5 motion-reduce:transform-none! ${articleActionClassName} hover:no-underline! [&&]:border-[#9eb6dc]! [&&]:bg-[#ebf1fd]! [&&]:text-[#294d80]! [&&]:hover:bg-[#dce7fa]! [&&]:hover:text-[#213e70]! dark:[&&]:border-[#7287b2]! dark:[&&]:bg-[#293654]! dark:[&&]:text-[#e0eafb]! dark:[&&]:hover:bg-[#3a4b73]! dark:[&&]:hover:text-white!`}
       >
-        خواندن مقاله
-        <i className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px]`} aria-hidden="true" />
+        خواندن مقاله <i className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px]`} aria-hidden="true" />
       </span>
     </Link>
   );
@@ -587,9 +402,9 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
   return (
     <Link
       href={`/workshops/${item.slug}`}
-      className={`${publicCardClassName} ${publicSpotClassName} group art-carousel-card flex h-full w-full min-w-0 flex-col !p-4 ${artSurfaceClassName}`}
+      className={`${publicCardClassName} ${publicSpotClassName} group flex h-full w-full min-w-0 flex-col !p-4 ${artSurfaceClassName}`}
     >
-      <div className="art-cover-media relative isolate min-w-0 flex-none">
+      <div className="relative isolate min-w-0 flex-none">
         <div className={COVER}>
           {item.cover && (
             <Image
@@ -606,9 +421,9 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
           <i className="ph-duotone ph-users-three" />
         </span>
       </div>
-      <span className="text-muted mx-[0.65rem] mt-4 text-xs font-extrabold tracking-wide">{item.mode === "online" ? "آنلاین" : "حضوری"}</span>
+      <span className="mx-[0.65rem] mt-4 text-xs font-extrabold tracking-wide text-zinc-500 dark:text-zinc-400">{item.mode === "online" ? "آنلاین" : "حضوری"}</span>
       <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-2 break-words`}>{item.title}</h3>
-      <p className="text-muted mx-[0.65rem] mt-2 text-xs font-bold">
+      <p className="mx-[0.65rem] mt-2 text-xs font-bold text-zinc-500 dark:text-zinc-400">
         {formatToman(workshopPrice(item).total)}
         {workshopPrice(item).percent > 0 && (
           <span className="font-extrabold text-[#10665f] dark:text-[#8fe4d6]">
@@ -617,10 +432,9 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
           </span>
         )}
       </p>
-      <p className="text-muted mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">{item.description}</p>
+      <p className="mx-[0.65rem] mt-3 text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">{item.description}</p>
       <span className="mx-[0.65rem] mt-5 inline-flex grow items-center gap-1.5 pt-2 text-sm font-bold text-[#126c68] dark:text-[#8fe4d6]">
-        جزئیات کارگاه
-        <i className="ph-bold ph-arrow-left" aria-hidden="true" />
+        جزئیات کارگاه <i className="ph-bold ph-arrow-left" aria-hidden="true" />
       </span>
     </Link>
   );
