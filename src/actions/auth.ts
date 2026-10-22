@@ -7,14 +7,13 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { throttleAuthPhone } from "@/lib/auth-throttle";
+import { safeReturnPath } from "@/lib/session";
 
-function returnAfterAuth(data: FormData) {
-  const next = data.get("next");
-  return typeof next === "string" &&
-    (next === "/testimonials" || /^\/workshops\/[a-z0-9-]{1,100}$/.test(next))
-    ? next
-    : "/dashboard";
-}
+/**
+ * Public authentication only. Administrators use this flow like any other customer
+ * and land on `/dashboard`; the admin panel has its own entrance (`/admin/login`)
+ * and its own action (`actions/admin-auth.ts`).
+ */
 
 export async function registerAction(
   _state: AuthState,
@@ -41,7 +40,7 @@ export async function registerAction(
       fields: {},
     };
   }
-  redirect(returnAfterAuth(data));
+  redirect(safeReturnPath(data.get("next")));
 }
 
 export async function loginAction(
@@ -59,7 +58,7 @@ export async function loginAction(
   } catch {
     return { error: "شماره یا رمز عبور درست نیست.", fields: {} };
   }
-  redirect(returnAfterAuth(data));
+  redirect(safeReturnPath(data.get("next")));
 }
 
 export async function signOutAction() {

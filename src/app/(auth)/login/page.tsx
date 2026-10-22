@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/lib/session";
+import { getSession, safeReturnPath } from "@/lib/session";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { AuthForm } from "@/components/auth/auth-form";
 
@@ -15,14 +15,7 @@ export default async function Page({
   searchParams: Promise<{ next?: string }>;
 }) {
   const { next } = await searchParams;
-  if (await getSession())
-    redirect(
-      next &&
-        (next === "/testimonials" ||
-          /^\/workshops\/[a-z0-9-]{1,100}$/.test(next))
-        ? next
-        : "/dashboard",
-    );
+  if (await getSession()) redirect(safeReturnPath(next ?? null));
   return (
     <AuthShell
       loginVisual

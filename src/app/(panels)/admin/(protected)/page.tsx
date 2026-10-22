@@ -24,7 +24,7 @@ import {
   adminMessages,
 } from "@/features/admin/queries";
 import { PanelHeading, appointmentLabels } from "@/components/panels/ui";
-import { adminLinks } from "@/components/panels/panel-nav";
+import { adminLinks } from "@/features/admin/navigation";
 import { formatDate, formatNumber, formatTime } from "@/lib/format";
 
 export const dynamic = 'force-dynamic';

@@ -18,7 +18,7 @@ import {
 import { usePathname } from "next/navigation";
 import { LayoutGrid, ExternalLink, LogOut } from "lucide-react";
 import { signOutAction } from "@/actions/auth";
-import { adminLinks } from "./panel-nav";
+import { adminLinks } from "@/features/admin/navigation";
 import {
   Sheet,
   SheetClose,

@@ -9,13 +9,11 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { motion } from "motion/react";
 import { useLiveReducedMotion } from "@/components/layout/use-live-reduced-motion";
 import {
-  CircleUserRound,
+  BellRing,
   CalendarDays,
+  CircleUserRound,
   LayoutDashboard,
   LogOut,
-  Settings,
-  ShieldCheck,
-  BellRing,
 } from "lucide-react";
 import { signOutInPlaceAction } from "@/actions/auth";
 
@@ -26,16 +24,21 @@ const accountIconVariants = {
 const publicAccountIconFallback =
   "[@media(scripting:none)]:transition-transform [@media(scripting:none)]:duration-[250ms] [@media(scripting:none)]:ease-[cubic-bezier(0.22,1,0.36,1)] [@media(scripting:none)]:group-hover/account:-translate-y-0.5 [@media(scripting:none)]:group-hover/account:scale-[1.06] group-data-[state=open]/account:transform-none! group-data-[state=open]/account:[translate:0]! group-data-[state=open]/account:[scale:1]! motion-reduce:[transition:none]! motion-reduce:[transform:none]! [@media(scripting:enabled)]:motion-reduce:group-hover/account:[transform:translateY(-2px)_scale(1.06)]!";
 
+/**
+ * The one account menu for every signed-in visitor.
+ *
+ * It intentionally has no administrator destinations: an administrator who signs in
+ * through the public form is, for the public site, simply a customer. The admin area
+ * is reached by its own address (`/admin`) and its own sign-in page.
+ */
 export function AccountMenu({
   name,
-  accountRole,
   image,
   userId,
   notifications,
   publicScope = false,
 }: {
   name: string;
-  accountRole: string;
   image?: string | null;
   userId: string;
   notifications?: { unread: number; latestId: string | null };
@@ -143,17 +146,13 @@ export function AccountMenu({
               <strong className="overflow-hidden text-[.86rem] text-ellipsis whitespace-nowrap">
                 {name}
               </strong>
-              <small className="text-[var(--site-muted)]">
-                {accountRole === "admin" ? "مدیریت سایت" : "حساب کاربری"}
-              </small>
+              <small className="text-[var(--site-muted)]">حساب کاربری</small>
             </div>
           </div>
           <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-[var(--site-line)]" />
           <DropdownMenu.Item asChild>
             <Link
-              href={
-                accountRole === "admin" ? "/admin/inbox" : "/dashboard/messages"
-              }
+              href="/dashboard/messages"
               aria-label={
                 notifications?.unread
                   ? `اعلان‌ها؛ ${new Intl.NumberFormat("fa-IR").format(notifications.unread)} پیام خوانده‌نشده`
@@ -215,55 +214,24 @@ export function AccountMenu({
             </Link>
           </DropdownMenu.Item>
           <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-[var(--site-line)]" />
-          {accountRole === "admin" ? (
-            <>
-              <DropdownMenu.Item asChild>
-                <Link href="/admin">
-                  <ShieldCheck size={18} />
-                  پیشخوان مدیریت
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item asChild>
-                <Link href="/admin/calendar">
-                  <CalendarDays size={18} />
-                  تقویم و نوبت‌ها
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item asChild>
-                <Link href="/admin/settings">
-                  <Settings size={18} />
-                  تنظیمات سایت
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item asChild>
-                <Link href="/dashboard/settings">
-                  <CircleUserRound size={18} />
-                  حساب کاربری من
-                </Link>
-              </DropdownMenu.Item>
-            </>
-          ) : (
-            <>
-              <DropdownMenu.Item asChild>
-                <Link href="/dashboard">
-                  <LayoutDashboard size={18} />
-                  پیشخوان
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item asChild>
-                <Link href="/dashboard/appointments">
-                  <CalendarDays size={18} />
-                  نوبت‌های من
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item asChild>
-                <Link href="/dashboard/settings">
-                  <CircleUserRound size={18} />
-                  حساب کاربری من
-                </Link>
-              </DropdownMenu.Item>
-            </>
-          )}
+          <DropdownMenu.Item asChild>
+            <Link href="/dashboard">
+              <LayoutDashboard size={18} aria-hidden="true" />
+              پیشخوان
+            </Link>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item asChild>
+            <Link href="/dashboard/appointments">
+              <CalendarDays size={18} aria-hidden="true" />
+              نوبت‌های من
+            </Link>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item asChild>
+            <Link href="/dashboard/settings">
+              <CircleUserRound size={18} aria-hidden="true" />
+              حساب کاربری من
+            </Link>
+          </DropdownMenu.Item>
           <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-[var(--site-line)]" />
           <DropdownMenu.Item
             className="site-account-logout text-[#aa2d50] dark:text-[#ffafc1]"

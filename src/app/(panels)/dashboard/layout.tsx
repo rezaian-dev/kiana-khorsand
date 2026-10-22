@@ -14,7 +14,6 @@ export default async function DashboardLayout({
   return (
     <PanelFrame
       name={session.user.name}
-      role={session.user.role}
       image={session.user.image}
       userId={session.user.id}
     >

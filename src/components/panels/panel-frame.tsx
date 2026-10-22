@@ -8,36 +8,33 @@ import {
 } from "./panel-layout-classes";
 import { signOutAction } from "@/actions/auth";
 import { supportPreview } from "@/features/dashboard/support-preview";
-import { PanelNav, clientLinks, adminLinks } from "./panel-nav";
+import { PanelNav, clientLinks } from "./panel-nav";
 
+/**
+ * Shell for the signed-in customer area. Administrator destinations are not part of
+ * this frame at all: the panel navigation below only knows about customer routes, and
+ * the account menu has no link into `/admin`.
+ */
 export async function PanelFrame({
   children,
   name,
   image,
   userId,
-  mode = "client",
-  role = "client",
 }: {
   children: React.ReactNode;
   name: string;
   image?: string | null;
   userId: string;
-  mode?: "client" | "admin";
-  role?: string;
 }) {
-  const isAdmin = mode === "admin";
-  const notifications = await supportPreview(userId, isAdmin);
+  const notifications = await supportPreview(userId, false);
   return (
-    <div className={`${panelShellClassName} ${isAdmin ? "panel-admin" : ""}`}>
+    <div className={panelShellClassName}>
       <a href="#panel-main" className={panelSkipClassName}>
         پرش به محتوای اصلی
       </a>
       <header className="panel-top sticky top-0 z-30 h-[76px] border-b border-[var(--panel-line)] bg-[var(--panel-surface)] max-[320px]:h-[64px]">
         <div className="panel-top-inner flex h-full items-center gap-4 px-[clamp(1rem,3vw,2rem)] max-[480.02px]:gap-2 max-[320px]:gap-1 max-[320px]:px-2">
-          <PanelNav
-            links={isAdmin ? adminLinks : clientLinks}
-            title={isAdmin ? "مدیریت سایت" : "پنل کاربری"}
-          />
+          <PanelNav links={clientLinks} title="پنل کاربری" />
           <Link
             href="/"
             className="panel-brand flex items-center gap-2 rounded-[.4rem] font-extrabold transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--panel-accent)] focus-visible:ring-offset-2 max-[480.02px]:text-[.9rem]"
@@ -49,7 +46,6 @@ export async function PanelFrame({
           <div className="panel-top-actions ms-auto flex items-center gap-4 text-[.88rem] max-[480.02px]:[&_span]:hidden">
             <AccountMenu
               name={name}
-              accountRole={role}
               image={image}
               userId={userId}
               notifications={notifications}

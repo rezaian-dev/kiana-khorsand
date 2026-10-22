@@ -110,21 +110,29 @@ export function AvatarForm({
           </p>
         </div>
       </div>
-      <label
-        htmlFor="avatar-upload"
-        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-[14px] border border-[var(--panel-line,var(--line))] bg-[var(--panel-surface,var(--surface))] px-4 py-[.65rem] font-[750] text-[var(--panel-text,var(--fg))] transition-[background-color,transform] duration-200 ease-[ease] focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-[var(--panel-accent)] hover:[transform:translateY(-2px)] hover:bg-[color-mix(in_srgb,var(--panel-accent)_8%,var(--panel-surface))] motion-reduce:transition-none motion-reduce:hover:[transform:none]"
-      >
-        <Camera size={18} aria-hidden="true" /> انتخاب تصویر JPG، PNG یا WebP
-      </label>
-      <input
-        id="avatar-upload"
-        name="avatar"
-        type="file"
-        className="w-full min-w-0 text-[.78rem] text-[var(--panel-text)]"
-        accept="image/jpeg,image/png,image/webp"
-        required
-        onChange={(event) => choose(event.currentTarget.files?.[0] || null)}
-      />
+      <div className="grid gap-2">
+        <label
+          htmlFor="avatar-upload"
+          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-[14px] border border-[var(--panel-line)] bg-[var(--panel-bg)] px-4 py-[.65rem] font-[750] text-[var(--panel-text)] transition-colors duration-200 ease-[ease] focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-[var(--panel-accent)] hover:bg-[color-mix(in_srgb,var(--panel-accent)_8%,var(--panel-surface))] motion-reduce:transition-none"
+        >
+          <Camera size={18} aria-hidden="true" />
+          انتخاب تصویر JPG، PNG یا WebP
+          <input
+            id="avatar-upload"
+            name="avatar"
+            type="file"
+            className="sr-only"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(event) => choose(event.currentTarget.files?.[0] || null)}
+          />
+        </label>
+        <p
+          className="m-0 truncate text-[.78rem] text-[var(--panel-muted)]"
+          aria-live="polite"
+        >
+          {file ? `فایل انتخاب‌شده: ${file.name}` : "فایلی انتخاب نشده است."}
+        </p>
+      </div>
       <p className={panelMutedClassName}>
         حداکثر ۷۵۰ کیلوبایت؛ تصویر بعد از ثبت، به‌شکل مربع و بدون فرادادهٔ اضافی
         ذخیره می‌شود.

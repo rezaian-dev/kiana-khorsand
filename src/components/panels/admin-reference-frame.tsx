@@ -53,7 +53,6 @@ export async function AdminReferenceFrame({
             />
             <AccountMenu
               name={name}
-              accountRole="admin"
               image={image}
               userId={userId}
               notifications={notifications}

@@ -46,7 +46,6 @@ export async function Header() {
                 <AccountMenu
                   publicScope
                   name={session.user.name}
-                  accountRole={session.user.role}
                   image={session.user.image}
                   userId={session.user.id}
                   notifications={notifications}
