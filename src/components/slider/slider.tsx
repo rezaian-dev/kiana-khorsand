@@ -17,11 +17,10 @@ type SliderContextValue = {
   snapCount: number;
   canPrev: boolean;
   canNext: boolean;
+  isPlaying: boolean;
   scrollPrev: () => void;
   scrollNext: () => void;
   scrollTo: (index: number) => void;
-  isPlaying: boolean;
-  togglePlay: () => void;
 };
 
 const SliderContext = React.createContext<SliderContextValue | null>(null);
@@ -41,11 +40,10 @@ type SliderProps = React.PropsWithChildren<{
   snapCount: number;
   canPrev: boolean;
   canNext: boolean;
+  isPlaying: boolean;
   scrollPrev: () => void;
   scrollNext: () => void;
   scrollTo: (index: number) => void;
-  isPlaying?: boolean;
-  togglePlay?: () => void;
   /** Accessible name. Prefer `labelId` so the visible heading names the carousel. */
   label?: string;
   labelId?: string;
@@ -59,11 +57,10 @@ export function Slider({
   snapCount,
   canPrev,
   canNext,
+  isPlaying,
   scrollPrev,
   scrollNext,
   scrollTo,
-  isPlaying = false,
-  togglePlay,
   label,
   labelId,
   className,
@@ -75,11 +72,10 @@ export function Slider({
       snapCount,
       canPrev,
       canNext,
+      isPlaying,
       scrollPrev,
       scrollNext,
       scrollTo,
-      isPlaying,
-      togglePlay: togglePlay ?? (() => {}),
     }),
     [
       emblaRef,
@@ -87,11 +83,10 @@ export function Slider({
       snapCount,
       canPrev,
       canNext,
+      isPlaying,
       scrollPrev,
       scrollNext,
       scrollTo,
-      isPlaying,
-      togglePlay,
     ],
   );
 
@@ -142,6 +137,12 @@ export function Slider({
         aria-label={labelId ? undefined : label}
         ref={rootRef}
         dir="rtl"
+        // Mirrors Embla's own state, so styling and end-to-end tests can read the
+        // active snap without re-deriving it from scroll geometry.
+        data-slider-root=""
+        data-active-slide={selectedIndex}
+        data-slide-count={snapCount}
+        data-autoplay={isPlaying ? "playing" : "paused"}
         className={cn("slider-root", className)}
       >
         {children}

@@ -1,13 +1,17 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { toFaDigits, useSliderContext } from "./slider";
+import { useSliderContext } from "./slider";
 
 /**
- * Navigation contract (Phase 2):
+ * Navigation contract:
  * - Previous = inline-start button (right in RTL). Icon points inline-start: →
  * - Next     = inline-end button (left in RTL).  Icon points inline-end:   ←
+ *
+ * These two buttons are the entire visible navigation; position is announced by each
+ * slide's own label («۲ از ۶»), so no counter, dots or rotation button compete with
+ * them for attention.
  *
  * The buttons render Lucide ArrowLeft / ArrowRight and mirror them with Tailwind's
  * `rtl:` variant, so the same component stays correct if direction ever flips.
@@ -58,60 +62,21 @@ export function SliderNextButton({
   );
 }
 
-export function SliderPlayPause({ className }: { className?: string }) {
-  const { isPlaying, togglePlay, snapCount } = useSliderContext();
-  if (snapCount <= 1) return null;
-  return (
-    <button
-      type="button"
-      aria-label={isPlaying ? "توقف پخش خودکار" : "پخش خودکار"}
-      onClick={togglePlay}
-      className={cn(controlClass, "ms-1", className)}
-    >
-      {isPlaying ? (
-        <Pause className="size-4" aria-hidden="true" />
-      ) : (
-        <Play className="size-4 rtl:-scale-x-100" aria-hidden="true" />
-      )}
-    </button>
-  );
-}
-
 /**
- * One compact row directly under the slides, aligned at inline-start.
- * Contains Previous, Next, the position indicator and a Persian counter.
+ * One compact row directly under the slides. Centred under the phone layout, where
+ * the active slide is centred too, and inline-start aligned once the row of cards
+ * starts from the edge.
  */
-export function SliderControls({
-  children,
-  showPlayPause = false,
-  className,
-}: React.PropsWithChildren<{
-  showPlayPause?: boolean;
-  className?: string;
-}>) {
-  const { selectedIndex, snapCount } = useSliderContext();
-
+export function SliderControls({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "slider-controls mt-4 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2",
+        "slider-controls mt-4 flex min-w-0 items-center justify-center gap-2 sm:justify-start",
         className,
       )}
     >
-      <div className="flex flex-none items-center gap-2">
-        {/* APG: the rotation control is the first element in the tab order of the carousel. */}
-        {showPlayPause && <SliderPlayPause />}
-        <SliderPrevButton />
-        <SliderNextButton />
-      </div>
-      {/* The counter mirrors state visually; the live region lives on the slide track
-          (APG), so it stays silent here and announcements never double up. */}
-      <span
-        className="slider-counter shrink-0 rounded-full bg-[color:color-mix(in_srgb,var(--c-teal)_9%,var(--surface))] px-3 py-1 text-[.78rem] font-extrabold text-[var(--site-muted)] tabular-nums"
-      >
-        {toFaDigits(selectedIndex + 1)} از {toFaDigits(snapCount)}
-      </span>
-      {children}
+      <SliderPrevButton />
+      <SliderNextButton />
     </div>
   );
 }

@@ -1,44 +1,16 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Locator, type Page } from "@playwright/test";
 
 /**
  * Slider navigation contract (RTL):
  *   Previous (قبلی)  = inline-start (right) => Embla scrollPrev, arrow points right
  *   Next (بعدی)      = inline-end (left)    => Embla scrollNext, arrow points left
- * The counter «۲ از ۶» is the source of truth for the active slide.
+ *
+ * Those two buttons are the whole visible navigation — no dots, counter or play
+ * button. The track never loops, so the first and last slide are real edges, and on
+ * phones the active slide is centred to within a pixel on every snap.
  */
 
-const DIGITS: Record<string, string> = {
-  "۰": "0",
-  "۱": "1",
-  "۲": "2",
-  "۳": "3",
-  "۴": "4",
-  "۵": "5",
-  "۶": "6",
-  "۷": "7",
-  "۸": "8",
-  "۹": "9",
-};
-
-const toEnDigits = (value: string) =>
-  value.replace(/[۰-۹]/g, (digit) => DIGITS[digit] ?? digit);
-
-async function activeIndex(page: Page, region: ReturnType<Page["locator"]>) {
-  const counter = region.locator(".slider-controls .slider-counter").first();
-  const text = toEnDigits((await counter.textContent()) ?? "");
-  const match = text.match(/(\d+)/);
-  return match ? Number(match[1]) : -1;
-}
-
-async function slideTotal(page: Page, region: ReturnType<Page["locator"]>) {
-  const counter = region.locator(".slider-controls .slider-counter").first();
-  const text = toEnDigits((await counter.textContent()) ?? "");
-  const parts = [...text.matchAll(/\d+/g)];
-  return parts.length > 1 ? Number(parts[1][0]) : 0;
-}
-
-const carousel = (page: Page, name: string) =>
-  page.getByRole("region", { name, exact: true });
+const carousel = (page: Page, name: string) => page.getByRole("region", { name, exact: true });
 
 const regions = {
   testimonials: (page: Page) => carousel(page, "از زبان کسانی که مسیر را آمده‌اند"),
@@ -46,43 +18,78 @@ const regions = {
   workshops: (page: Page) => carousel(page, "یادگیری گروهی، در فضایی امن"),
 };
 
+/**
+ * Embla's own selected snap (mirrored on the root as `data-active-slide`), plus how
+ * far that slide's centre sits from the viewport centre. On phones the offset must be
+ * zero; on wider screens several cards share the row and the offset is the half-width
+ * of the visible run, which is expected.
+ */
+async function activeSlide(region: Locator): Promise<{ index: number; offset: number; total: number }> {
+  return region.evaluate((root) => {
+    const viewport = root.querySelector(".slider-viewport")!.getBoundingClientRect();
+    const centre = viewport.x + viewport.width / 2;
+    const index = Number(root.getAttribute("data-active-slide") ?? 0);
+    const slides = [...root.querySelectorAll(".slider-slide")];
+    const box = slides[index]?.getBoundingClientRect();
+    return {
+      index,
+      offset: box ? box.x + box.width / 2 - centre : Number.NaN,
+      total: Number(root.getAttribute("data-slide-count") ?? slides.length),
+    };
+  });
+}
+
+const controls = (region: Locator) => region.locator(".slider-controls button");
+
 test.describe("Home sliders — RTL navigation", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
 
-  test("testimonials: logical prev/next, disabled ends and APG roles", async ({ page }) => {
+  test("only previous and next controls exist", async ({ page }) => {
     const region = regions.testimonials(page);
     await expect(region).toBeVisible();
+
+    await expect(controls(region)).toHaveCount(2);
+    await expect(region.getByRole("button", { name: "قبلی" })).toBeVisible();
+    await expect(region.getByRole("button", { name: "بعدی" })).toBeVisible();
+
+    // No dots, no counter and no rotation button.
+    await expect(region.getByRole("group", { name: "انتخاب اسلاید" })).toHaveCount(0);
+    await expect(region.locator(".slider-counter")).toHaveCount(0);
+    await expect(region.getByRole("button", { name: /پخش خودکار|توقف پخش/ })).toHaveCount(0);
+  });
+
+  test("testimonials: real edges, disabled states and APG roles", async ({ page }) => {
+    const region = regions.testimonials(page);
     await expect(region).toHaveAttribute("aria-roledescription", "carousel");
 
     const prev = region.getByRole("button", { name: "قبلی" });
     const next = region.getByRole("button", { name: "بعدی" });
 
-    // Icons: Previous points inline-start (right), Next points inline-end (left),
-    // both rendered from Lucide and mirrored by the `rtl:` variant.
+    // Icons: Previous points inline-start (right), Next points inline-end (left).
     await expect(prev.locator("svg.lucide-arrow-left")).toBeVisible();
     await expect(next.locator("svg.lucide-arrow-right")).toBeVisible();
 
-    // No loop for testimonials: previous is disabled on the first slide.
+    // No loop: the row opens on slide 1 with Previous disabled.
+    expect((await activeSlide(region)).index).toBe(0);
     await expect(prev).toBeDisabled();
-    expect(await activeIndex(page, region)).toBe(1);
 
     await next.click();
-    await expect.poll(() => activeIndex(page, region)).toBe(2);
+    await expect.poll(async () => (await activeSlide(region)).index).toBe(1);
+    await expect(prev).toBeEnabled();
 
     await prev.click();
-    await expect.poll(() => activeIndex(page, region)).toBe(1);
+    await expect.poll(async () => (await activeSlide(region)).index).toBe(0);
 
-    // Repeated clicks keep advancing.
-    await next.click();
-    await next.click();
-    await expect.poll(() => activeIndex(page, region)).toBe(3);
-
-    // Last slide disables next, not previous.
-    const total = await slideTotal(page, region);
-    for (let index = 3; index < total; index += 1) await next.click();
-    await expect.poll(() => activeIndex(page, region)).toBe(total);
+    // Walk to the last slide: Next disables, Previous stays live.
+    const total = (await activeSlide(region)).total;
+    for (let index = 0; index < total - 1; index += 1) {
+      if (await next.isDisabled()) break;
+      await next.click();
+      await page.waitForTimeout(250);
+    }
+    await expect.poll(async () => (await activeSlide(region)).index).toBe(total - 1);
     await expect(next).toBeDisabled();
     await expect(prev).toBeEnabled();
 
@@ -91,36 +98,47 @@ test.describe("Home sliders — RTL navigation", () => {
     await expect(slide).toHaveAttribute("aria-roledescription", "slide");
   });
 
-  test("articles: loop, autoplay pause control and mirrored arrows", async ({ page }) => {
+  test("autoplay advances the row and focus pauses it", async ({ page }) => {
     const region = regions.articles(page);
-    await expect(region).toBeVisible();
+    await region.scrollIntoViewIfNeeded();
+    await page.mouse.move(4, 4);
 
-    const prev = region.getByRole("button", { name: "قبلی" });
-    const next = region.getByRole("button", { name: "بعدی" });
-    await expect(prev).toBeEnabled();
-    await expect(next).toBeEnabled();
+    const start = (await activeSlide(region)).index;
+    // Autoplay delay is 5s; give it one full cycle plus the snap animation.
+    await expect
+      .poll(async () => (await activeSlide(region)).index, { timeout: 9_000 })
+      .toBeGreaterThan(start);
 
-    expect(await activeIndex(page, region)).toBe(1);
-    await next.click();
-    await expect.poll(() => activeIndex(page, region)).toBe(2);
-    await prev.click();
-    await expect.poll(() => activeIndex(page, region)).toBe(1);
-
-    // WCAG 2.2.2: autoplay can be paused by the user.
-    const pause = region.getByRole("button", { name: "توقف پخش خودکار" });
-    await expect(pause).toBeVisible();
-    await pause.click();
-    await expect(region.getByRole("button", { name: "پخش خودکار" })).toBeVisible();
+    // Focusing inside the carousel stops the rotation (WCAG 2.2.2 without a button).
+    await region.getByRole("button", { name: "بعدی" }).focus();
+    const paused = (await activeSlide(region)).index;
+    await page.waitForTimeout(6_000);
+    expect((await activeSlide(region)).index).toBe(paused);
   });
 
-  test("workshops: previous wraps backwards when looping", async ({ page }) => {
-    const region = regions.workshops(page);
-    await expect(region).toBeVisible();
-    const total = await slideTotal(page, region);
-    expect(total).toBeGreaterThan(1);
+  test("mobile: every snap is horizontally centred", async ({ page }) => {
+    // Reduced motion stops autoplay, so the snaps only move when we ask them to.
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.reload();
+    const region = regions.testimonials(page);
+    await region.scrollIntoViewIfNeeded();
+    await region.hover();
 
-    await region.getByRole("button", { name: "قبلی" }).click();
-    await expect.poll(() => activeIndex(page, region)).toBe(total);
+    const { total } = await activeSlide(region);
+    const next = region.getByRole("button", { name: "بعدی" });
+
+    for (let index = 0; index < total; index += 1) {
+      // Wait for this snap to settle, then assert both facts at once: the row is on
+      // the expected slide *and* that slide is on the viewport's centre line.
+      await expect
+        .poll(async () => {
+          const state = await activeSlide(region);
+          return state.index === index && Math.abs(state.offset) <= 1.5;
+        })
+        .toBe(true);
+      if (index < total - 1) await next.click();
+    }
   });
 
   test("keyboard, touch targets and 320px layout", async ({ page }) => {
@@ -143,7 +161,7 @@ test.describe("Home sliders — RTL navigation", () => {
     // ArrowLeft moves forward in RTL while focus is inside the slider.
     await next.focus();
     await page.keyboard.press("ArrowLeft");
-    await expect.poll(() => activeIndex(page, region)).toBe(2);
+    await expect.poll(async () => (await activeSlide(region)).index).toBe(1);
   });
 
   test("mobile swipe advances one slide", async ({ page }) => {
@@ -166,7 +184,10 @@ test.describe("Home sliders — RTL navigation", () => {
     }
     await page.mouse.up();
 
-    await expect.poll(() => activeIndex(page, region)).toBe(2);
+    await expect.poll(async () => (await activeSlide(region)).index).toBe(1);
+    await expect
+      .poll(async () => Math.abs((await activeSlide(region)).offset))
+      .toBeLessThanOrEqual(1.5);
 
     // The opposite drag goes back to the first slide.
     await page.mouse.move(box.x + box.width - 40, y);
@@ -177,6 +198,6 @@ test.describe("Home sliders — RTL navigation", () => {
     }
     await page.mouse.up();
 
-    await expect.poll(() => activeIndex(page, region)).toBe(1);
+    await expect.poll(async () => (await activeSlide(region)).index).toBe(0);
   });
 });

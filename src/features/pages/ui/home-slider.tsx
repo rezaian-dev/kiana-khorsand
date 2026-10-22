@@ -86,9 +86,9 @@ const coverClassName = `relative aspect-[16/10] w-full overflow-hidden bg-[var(-
 
 /**
  * Home sliders (Server Component): builds the cards and hands them to the client
- * slider shell as slots. Testimonials: no autoplay and no loop, so Previous/Next
- * expose real disabled states. Articles and workshops: loop + autoplay with a
- * visible pause control (WCAG 2.2.2).
+ * slider shell as slots. Every row stops at its real first and last slide — there is
+ * no wrap-around — and every row rotates on its own so the page keeps breathing.
+ * Hover, focus and `prefers-reduced-motion` pause the rotation.
  */
 export function HomeSlider(props: HomeSliderProps) {
   if (props.kind === "testimonials") {
@@ -99,10 +99,7 @@ export function HomeSlider(props: HomeSliderProps) {
         slides={props.reviews.map((item) => (
           <TestimonialCard key={item.slug} item={item} />
         ))}
-        loop={false}
-        autoplay={false}
-        live
-        mobileBasis="basis-[88%] sm:basis-[calc(50%-0.625rem)] lg:basis-[calc(33.333%-1rem)]"
+        autoplay={props.reviews.length > 1}
         className="pt-10! pb-10! md:pt-16! md:pb-16!"
       />
     );
@@ -117,7 +114,6 @@ export function HomeSlider(props: HomeSliderProps) {
         slides={props.articles.map((item) => (
           <ArticleCard key={item.slug} item={item} />
         ))}
-        loop={props.articles.length > 1}
         autoplay={props.articles.length > 1}
         className={`${neonCarouselSectionClassName} pt-8! pb-12! md:pt-16! md:pb-24!`}
       />
@@ -131,7 +127,6 @@ export function HomeSlider(props: HomeSliderProps) {
       slides={props.workshops.map((item) => (
         <WorkshopCard key={item.slug} item={item} />
       ))}
-      loop={props.workshops.length > 1}
       autoplay={props.workshops.length > 1}
     />
   );

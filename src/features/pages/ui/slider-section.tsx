@@ -10,7 +10,6 @@ import {
   SliderViewport,
 } from "@/components/slider/slider";
 import { SliderControls } from "@/components/slider/slider-controls";
-import { SliderDots } from "@/components/slider/slider-dots";
 import {
   publicContainerClassName,
   publicSectionClassName,
@@ -34,9 +33,7 @@ export type SliderSectionProps = {
   linkLabel?: string;
   slides: ReactNode[];
   variant?: "editorial" | "plain";
-  loop?: boolean;
   autoplay?: boolean;
-  live?: boolean;
   mobileBasis?: string;
   className?: string;
 };
@@ -50,10 +47,8 @@ export function SliderSection({
   linkLabel,
   slides,
   variant = "plain",
-  loop = false,
   autoplay = false,
-  live = false,
-  mobileBasis = "basis-[88%] sm:basis-[calc(50%-0.625rem)] lg:basis-[calc(33.333%-1rem)]",
+  mobileBasis = "basis-full sm:basis-[calc(50%-0.625rem)] lg:basis-[calc(33.333%-1rem)]",
   className = "",
 }: SliderSectionProps) {
   const {
@@ -62,12 +57,11 @@ export function SliderSection({
     snapCount,
     canPrev,
     canNext,
+    isPlaying,
     scrollPrev,
     scrollNext,
     scrollTo,
-    isPlaying,
-    togglePlay,
-  } = useSlider({ slideCount: slides.length, loop, autoplay });
+  } = useSlider({ slideCount: slides.length, autoplay });
 
   const editorial = variant === "editorial";
 
@@ -78,11 +72,10 @@ export function SliderSection({
       snapCount={snapCount}
       canPrev={canPrev}
       canNext={canNext}
+      isPlaying={isPlaying}
       scrollPrev={scrollPrev}
       scrollNext={scrollNext}
       scrollTo={scrollTo}
-      isPlaying={isPlaying}
-      togglePlay={togglePlay}
       labelId={id}
       className={editorial ? "editorial-slider" : undefined}
     >
@@ -120,10 +113,13 @@ export function SliderSection({
         </div>
 
         <div className={`${publicContainerClassName} mt-6 sm:mt-8`}>
-          {/* Edge fade lives on the inline-end side (left in RTL) and disappears once
-              several slides fit, so neighbours are never hard-clipped. */}
-          <SliderViewport className="[mask-image:linear-gradient(to_left,black_86%,transparent_100%)] [mask-repeat:no-repeat] md:[mask-image:none]">
-            <SliderTrack live={live} className="gap-4 sm:gap-5 lg:gap-6">
+          {/* Phones: the viewport carries a 6% gutter on each side and slides fill the
+              rest, so the active card is centred on every snap — including the first and
+              the last, which would otherwise stop flush against an edge. Neighbours still
+              peek through the gutter. A whole-pixel gutter keeps Embla's integer offset
+              maths exact instead of leaving a sub-pixel drift on each snap. */}
+          <SliderViewport className="max-sm:px-[21px]">
+            <SliderTrack live={!autoplay} className="gap-3 sm:gap-5 lg:gap-6">
               {slides.map((slide, index) => (
                 <SliderSlide
                   key={index}
@@ -147,9 +143,7 @@ export function SliderSection({
             </SliderTrack>
           </SliderViewport>
 
-          <SliderControls showPlayPause={autoplay}>
-            <SliderDots />
-          </SliderControls>
+          <SliderControls />
         </div>
       </section>
     </Slider>
