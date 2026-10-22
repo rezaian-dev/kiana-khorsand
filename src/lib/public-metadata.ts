@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { absoluteUrl, assetUrl } from "./site-urls";
+import { absoluteUrl } from "./site-urls";
 
 export const SITE_NAME = "کیانا خرسند";
 
@@ -14,7 +14,7 @@ const SOCIAL_CARD = {
 function socialImage(image: string) {
   const isCard = image === SOCIAL_CARD.path;
   return {
-    url: assetUrl(image),
+    url: absoluteUrl(image),
     ...(isCard
       ? {
           width: SOCIAL_CARD.width,
@@ -56,7 +56,7 @@ export function socialMetadata({
       card: image ? "summary_large_image" : "summary",
       title,
       description,
-      images: image ? [assetUrl(image)] : undefined,
+      images: image ? [absoluteUrl(image)] : undefined,
     },
   };
 }
