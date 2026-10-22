@@ -17,7 +17,7 @@ export async function generateMetadata() {
     title: page?.title || "کیانا خرسند",
     description: page?.description || "آشنایی با خدمات و رویکرد مشاوره.",
     path: "/",
-    image: "/assets/images/hero-therapist.jpg",
+    image: "/og-image.jpg",
   });
 }
 

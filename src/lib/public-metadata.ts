@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import { absoluteUrl } from "./site-urls";
 
+/** Size of the generated brand card in public/og-image.{png,jpg}. */
+const SOCIAL_CARD = { path: "/og-image.jpg", width: 1200, height: 630 } as const;
+
+function socialImage(image: string) {
+  const isCard = image === SOCIAL_CARD.path;
+  return {
+    url: absoluteUrl(image),
+    ...(isCard ? { width: SOCIAL_CARD.width, height: SOCIAL_CARD.height } : {}),
+  };
+}
+
 /** Keep SEO and social URLs tied to the same server-side canonical origin. */
 export function publicMetadata({
   title,
@@ -32,7 +43,7 @@ export function publicMetadata({
       title,
       description,
       url,
-      images: image ? [{ url: absoluteUrl(image), alt: title }] : undefined,
+      images: image ? [{ ...socialImage(image), alt: title }] : undefined,
       ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {
