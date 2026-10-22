@@ -45,3 +45,5 @@ next-env.d.ts
 
 # local browser snapshots and one-off diagnostics
 /.cache/
+# env examples (kept locally, not committed)
+.env.example
