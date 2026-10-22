@@ -32,7 +32,7 @@ export function useSliderContext() {
 }
 
 const faNumber = new Intl.NumberFormat("fa-IR");
-export const toFaDigits = (value: number) => faNumber.format(value);
+const toFaDigits = (value: number) => faNumber.format(value);
 
 type SliderProps = React.PropsWithChildren<{
   emblaRef: (node: HTMLElement | null) => void;

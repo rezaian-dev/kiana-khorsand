@@ -23,16 +23,3 @@ export const labels = {
   unavailable: "محتوایی برای نمایش وجود ندارد.",
   result: "نتیجه خودسنجی",
 } as const;
-
-export const siteLinks = [
-  { href: "/", label: labels.home },
-  { href: "/about", label: labels.about },
-  { href: "/approach", label: labels.approach },
-  { href: "/areas", label: labels.areas },
-  { href: "/articles", label: labels.articles },
-  { href: "/workshops", label: labels.workshops },
-  { href: "/assessments", label: labels.assessments },
-  { href: "/fees", label: labels.fees },
-  { href: "/faq", label: labels.faq },
-  { href: "/contact", label: labels.contact },
-] as const;

@@ -17,7 +17,7 @@ import type { EmblaOptionsType } from "embla-carousel";
  *    cards are visible at once, the row aligns to the inline-start edge as before.
  * 3. Autoplay keeps the row moving and pauses on hover, on focus and for
  *    `prefers-reduced-motion` — the only pause affordance left now that the visible
- *    rotation button is gone (see docs/slider-redesign-report.md).
+ *    rotation button is gone: previous/next only.
  *
  * Sources:
  * - Options (direction, loop, align, containScroll, breakpoints):

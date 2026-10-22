@@ -20,7 +20,7 @@
 ## ✨ ویژگی‌ها
 
 ### 🌿 صفحات عمومی
-- هوم مدرن با هیرو شناور، کاروسل مقالات/کارگاه‌ها/نظرات (coverflow)، تایم‌لاین و CTA شیشه‌ای
+- هوم مدرن با هیرو شناور، کاروسل مقالات/کارگاه‌ها/نظرات با دکمه‌های قبل/بعد، تایم‌لاین و CTA شیشه‌ای
 - حوزه‌ها، مقالات با سرچ/فیلتر/پیجینیشن 6تایی + نشان خودکار از عنوان، حوزه‌ها با جزئیات
 - کارگاه‌ها با تقویم شمسی، رزرو آنلاین، نظرات تأییدشده
 - درباره من، روش کار، تعرفه‌ها، پرسش‌های متداول
@@ -56,11 +56,11 @@
 - فونت Vazirmatn با `next/font/local` + `preload` و `display:swap` — بدون CLS
 - `viewport-fit: cover` + `safe-area-inset` برای ناچ موبایل
 
-| متریک | اندازه‌گیری‌شده 2026-10-21 |
+| متریک | اندازه‌گیری‌شده 2026-10-22 |
 |---|---|
-| Client Components (`\"use client\"`) | 56 فایل |
-| motion import | 48 فایل |
-| Routes (next build) | 65 (○ 4 static, ƒ 61 dynamic) |
+| Client Components (`\"use client\"`) | 62 فایل |
+| motion import | 21 فایل |
+| Routes (next build) | 62 (○ 5 static, ƒ 57 dynamic) |
 | eslint | 0 error (پس از پاکسازی) |
 | npm audit --omit=dev | 0 vulnerability (پس از upgrade markdown-it) |
 
@@ -92,10 +92,8 @@ public/
 ├── assets/              # fonts, images (hero, intro, og)
 ├── cover.jpg            # ✨ کاور README
 ├── icon-*.png / sw.js   # PWA
-└── og-image.png
+└── og-image.jpg
 ```
-
-> `scripts/` حذف شد — پروژه برای اجرای پروداکشن به اسکریپت Dev نیاز ندارد.
 
 ---
 
@@ -106,7 +104,7 @@ public/
 ```bash
 git clone https://github.com/rezaian-dev/kiana-khorsand.git
 cd kiana-khorsand
-cp .env.example .env.local  # مقادیر MONGODB_URI, BETTER_AUTH_SECRET, SITE_URL را پر کنید
+# یک فایل .env.local بسازید و مقادیر MONGODB_URI, BETTER_AUTH_SECRET, SITE_URL را در آن بگذارید
 npm ci
 npm run seed        # داده اولیه (تکرارپذیر)
 npm run dev         # http://localhost:3000
@@ -127,7 +125,7 @@ SITE_URL=http://localhost:3000
 | دستور | توضیح |
 |---|---|
 | `npm run dev` | Turbopack dev |
-| `npm run build` | بیلد پروداکشن (82 صفحه) |
+| `npm run build` | بیلد پروداکشن (62 مسیر) |
 | `npm run start` | اجرای پروداکشن روی 3000 |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | tsc --noEmit |

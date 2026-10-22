@@ -17,7 +17,7 @@ import {
 } from "@/components/layout/mobile-dock-classes";
 import { usePathname } from "next/navigation";
 import { LayoutGrid, ExternalLink, LogOut } from "lucide-react";
-import { signOutAction } from "@/actions/auth";
+import { adminSignOutAction } from "@/actions/admin-auth";
 import { adminLinks } from "@/features/admin/navigation";
 import {
   Sheet,
@@ -88,7 +88,7 @@ export function AdminReferenceNav() {
         aria-label="ناوبری اصلی"
       >
         <Link
-          className="admin-ref-brand mb-1 flex items-center gap-2.5 rounded-[.4rem] border-b border-[var(--panel-line)] px-2 pt-1.5 pb-3.5 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
+          className="admin-ref-brand mb-1 flex items-center gap-2.5 rounded-[.4rem] border-b border-[var(--panel-line)] px-2 pt-1.5 pb-3.5 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
           href="/"
           aria-label="بازگشت به صفحه اصلی"
           title="بازگشت به صفحه اصلی"
@@ -148,7 +148,7 @@ export function AdminReferenceNav() {
             <ExternalLink size={19} aria-hidden="true" />
             مشاهده سایت
           </MotionLink>
-          <form action={signOutAction}>
+          <form action={adminSignOutAction}>
             <motion.button
               type="submit"
               className={navItemClass}
@@ -192,8 +192,14 @@ export function AdminMobileTrigger() {
                 aria-current={selected(href) ? "page" : undefined}
               >
                 {selected(href) && <DockSpotlight />}
-                <span className={`${mobileDockIconClassName} relative z-10 ${selected(href) ? "text-white" : ""}`}>
-                  <Icon size={24} aria-hidden="true" className="relative z-10" />
+                <span
+                  className={`${mobileDockIconClassName} relative z-10 ${selected(href) ? "text-white" : ""}`}
+                >
+                  <Icon
+                    size={24}
+                    aria-hidden="true"
+                    className="relative z-10"
+                  />
                 </span>
                 <span className="relative z-10">{labelFor(href, label)}</span>
               </Link>
@@ -206,8 +212,14 @@ export function AdminMobileTrigger() {
               type="button"
             >
               {extraActive && <DockSpotlight />}
-              <span className={`${mobileDockIconClassName} relative z-10 ${extraActive ? "text-white" : ""}`}>
-                <LayoutGrid size={24} aria-hidden="true" className="relative z-10" />
+              <span
+                className={`${mobileDockIconClassName} relative z-10 ${extraActive ? "text-white" : ""}`}
+              >
+                <LayoutGrid
+                  size={24}
+                  aria-hidden="true"
+                  className="relative z-10"
+                />
               </span>
               <span className="relative z-10">بیشتر</span>
             </button>
@@ -256,7 +268,7 @@ export function AdminMobileTrigger() {
                 مشاهده سایت
               </Link>
             </SheetClose>
-            <form action={signOutAction}>
+            <form action={adminSignOutAction}>
               <button type="submit" className={sheetFooterItemClass}>
                 <LogOut size={19} aria-hidden="true" />
                 خروج از حساب

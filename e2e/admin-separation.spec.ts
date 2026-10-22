@@ -4,7 +4,9 @@ const adminPhone = process.env.SEED_ADMIN_PHONE!;
 const adminPassword = process.env.SEED_ADMIN_PASSWORD!;
 
 test.describe("admin / user separation", () => {
-  test("normal login sends the admin to a plain customer dashboard", async ({ page }) => {
+  test("normal login sends the admin to a plain customer dashboard", async ({
+    page,
+  }) => {
     await page.goto("/login");
     await page.locator("#auth-phone").fill(adminPhone);
     await page.locator("#auth-password").fill(adminPassword);
@@ -12,8 +14,12 @@ test.describe("admin / user separation", () => {
     await page.waitForURL("**/dashboard");
 
     await page.goto("/dashboard/settings");
-    await expect(page.getByRole("heading", { name: "پروفایل من" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "اطلاعات حساب" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "پروفایل من" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "اطلاعات حساب" }),
+    ).toBeVisible();
 
     await page.getByRole("button", { name: /منوی حساب کاربری/ }).click();
     const menu = page.getByRole("menu");
@@ -26,7 +32,9 @@ test.describe("admin / user separation", () => {
     await expect(menu).not.toContainText("مدیریت سایت");
   });
 
-  test("admin panel opens from the typed URL and lists users", async ({ page }) => {
+  test("admin panel opens from the typed URL and lists users", async ({
+    page,
+  }) => {
     await page.goto("/admin/login");
     await page.locator("#admin-phone").fill(adminPhone);
     await page.locator("#admin-password").fill(adminPassword);
@@ -34,15 +42,35 @@ test.describe("admin / user separation", () => {
     await page.waitForURL("**/admin");
 
     await page.goto("/admin/users");
-    await expect(page.getByRole("heading", { name: "مدیریت کاربران" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "ارتقا به مدیر" }).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: "حذف حساب" }).first()).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "مدیریت کاربران" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "ارتقا به مدیر" }).first(),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "حذف حساب" }).first(),
+    ).toBeVisible();
+  });
+
+  test("signing out of the panel returns to the admin entrance", async ({
+    page,
+  }) => {
+    await page.goto("/admin/login");
+    await page.locator("#admin-phone").fill(adminPhone);
+    await page.locator("#admin-password").fill(adminPassword);
+    await page.getByRole("button", { name: "ورود به پنل مدیریت" }).click();
+    await page.waitForURL("**/admin");
+    await page.getByRole("button", { name: "خروج از حساب" }).first().click();
+    await page.waitForURL("**/admin/login");
   });
 
   test("admin login rejects a customer account", async ({ page }) => {
     await page.goto("/admin/login");
     await page.locator("#admin-phone").fill(process.env.SEED_CLIENT_PHONE!);
-    await page.locator("#admin-password").fill(process.env.SEED_CLIENT_PASSWORD!);
+    await page
+      .locator("#admin-password")
+      .fill(process.env.SEED_CLIENT_PASSWORD!);
     await page.getByRole("button", { name: "ورود به پنل مدیریت" }).click();
     await expect(page.getByRole("alert").first()).toContainText(
       "دسترسی مدیریت ندارد",

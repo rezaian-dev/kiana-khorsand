@@ -16,7 +16,7 @@ import { showSignInToast } from "./sign-in-toast";
 const reviewSurface =
   "rounded-[24px] border border-[color:color-mix(in_srgb,var(--fg)_12%,transparent)] bg-[var(--surface)] p-[clamp(1.2rem,3vw,2rem)] [box-shadow:0_18px_50px_-40px_#1d344c80]";
 
-export function WorkshopReviewForm({
+function WorkshopReviewForm({
   slug,
   authenticated,
   eligible,
