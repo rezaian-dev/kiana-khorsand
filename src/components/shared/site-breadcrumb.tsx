@@ -15,7 +15,7 @@ const breadcrumbLinkClasses =
   "rounded-[99px] bg-[color:color-mix(in_srgb,var(--site-violet)_calc(var(--breadcrumb-opacity)*100%),transparent)] px-[0.4rem] py-[0.2rem] text-inherit no-underline [--breadcrumb-opacity:0] motion-reduce:[--breadcrumb-opacity:0]! motion-reduce:text-[var(--site-muted)]! motion-reduce:hover:[--breadcrumb-opacity:0.11]! motion-reduce:hover:text-[var(--site-violet)]! [@media(scripting:none)]:hover:[--breadcrumb-opacity:0.11]! [@media(scripting:none)]:hover:text-[var(--site-violet)]!";
 
 const itemClasses =
-  "inline-flex! h-[30px]! min-w-0 shrink-0! items-center! justify-center! leading-[1.3]! last:flex-[0_1_auto]! max-[420px]:[&:not(:last-child)]:max-w-[38%]!";
+  "inline-flex! h-[30px]! min-w-0 shrink-0! items-center! justify-center! leading-[1.3]! whitespace-nowrap! last:flex-[0_1_auto]! max-[420px]:[&:not(:last-child)]:max-w-[38%]!";
 
 export function SiteBreadcrumb({
   current,
@@ -54,9 +54,9 @@ export function SiteBreadcrumb({
         }}
       />
       <Breadcrumb
-        className={`site-breadcrumb mb-5 inline-flex min-h-10! max-w-[min(100%,calc(100vw_-_2rem))]! items-center! rounded-[999px] border border-[color:color-mix(in_srgb,var(--site-violet)_15%,var(--site-line))] bg-[color:color-mix(in_srgb,var(--site-surface)_78%,transparent)] px-[0.7rem] py-[0.4rem] align-middle! text-[0.78rem] text-[var(--site-muted)] [box-shadow:0_8px_24px_-20px_#28334d] max-[480.02px]:text-[0.72rem] ${className}`}
+        className={`site-breadcrumb mb-5 inline-flex max-h-10! max-w-[min(100%,calc(100vw_-_2rem))]! items-center! overflow-hidden! rounded-[999px] border border-[color:color-mix(in_srgb,var(--site-violet)_15%,var(--site-line))] bg-[color:color-mix(in_srgb,var(--site-surface)_78%,transparent)] px-[0.7rem] py-[0.4rem] align-middle! text-[0.78rem] leading-[1.3]! whitespace-nowrap! text-[var(--site-muted)] [box-shadow:0_8px_24px_-20px_#28334d] max-[480.02px]:text-[0.72rem] ${className}`}
       >
-        <BreadcrumbList className="flex! w-full! min-w-0 flex-nowrap! items-center! gap-[.3rem]! gap-x-[0.35rem] gap-y-[0.2rem] leading-[1.3]!">
+        <BreadcrumbList className="flex! w-full! min-w-0 flex-nowrap! items-center! gap-[.3rem]! gap-x-[0.35rem] leading-[1.3]! overflow-hidden! whitespace-nowrap!">
           <BreadcrumbItem className={itemClasses}>
             <BreadcrumbLink
               asChild

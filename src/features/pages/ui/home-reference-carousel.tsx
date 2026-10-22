@@ -497,7 +497,7 @@ export function ReferenceCarousel(props: Props) {
               onClick={() => move(1)}
               disabled={items.length < 2}
             >
-              <i className="ph-bold ph-arrow-right text-[14px]" aria-hidden="true" />
+              <i className="ph-bold ph-arrow-left text-[14px]" aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -506,7 +506,7 @@ export function ReferenceCarousel(props: Props) {
               onClick={() => move(-1)}
               disabled={items.length < 2}
             >
-              <i className="ph-bold ph-arrow-left text-[14px]" aria-hidden="true" />
+              <i className="ph-bold ph-arrow-right text-[14px]" aria-hidden="true" />
             </button>
           </div>
         </div>
