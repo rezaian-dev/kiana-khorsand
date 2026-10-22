@@ -170,7 +170,7 @@ function ArticleCard({ item }: { item: ArticleItem }) {
       >
         خواندن مقاله
         <i
-          className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px] rtl:rotate-180`}
+          className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px]`}
           aria-hidden="true"
         />
       </span>

@@ -63,15 +63,15 @@ export function SliderNextButton({
 }
 
 /**
- * One compact row directly under the slides. Centred under the phone layout, where
- * the active slide is centred too, and inline-start aligned once the row of cards
- * starts from the edge.
+ * One compact row directly under the slides, pinned to the inline-end edge — the
+ * left side in this RTL layout, on every breakpoint. `justify-end` is the logical
+ * value, so the pair follows the writing direction instead of hard-coding a side.
  */
 export function SliderControls({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "slider-controls mt-4 flex min-w-0 items-center justify-center gap-2 sm:justify-start",
+        "slider-controls mt-4 flex min-w-0 items-center justify-end gap-2",
         className,
       )}
     >
