@@ -1,10 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import { animate, hover } from "motion";
 
 // Layout tokens
@@ -48,6 +46,19 @@ import {
   neonCarouselLinkClassName,
   neonCarouselSectionClassName,
 } from "./carousel-neon-classes";
+
+// New modular carousel (audit)
+import { useCarousel } from "@/components/carousel/use-carousel";
+import {
+  Carousel,
+  CarouselContainer,
+  CarouselViewport,
+  CarouselSlide,
+} from "@/components/carousel";
+import {
+  CarouselNextButton,
+  CarouselPrevButton,
+} from "@/components/carousel/carousel-buttons";
 
 // ---------------------------------------------------------------------------
 // Types — readable, concise
@@ -112,7 +123,7 @@ const META = {
 
 const COVER = `cover cover-violet relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)] [background-image:radial-gradient(75%_65%_at_18%_18%,rgba(109,74,255,0.55),transparent_72%),radial-gradient(65%_65%_at_88%_82%,rgba(177,74,158,0.45),transparent_72%)] ${artMediaMaskClassName}`;
 
-// Backward-compat alias
+// Keep old name for backward compat
 export function ReferenceCarousel(props: CarouselProps) {
   return <HomeSlider {...props} />;
 }
@@ -122,7 +133,11 @@ export function HomeSlider(props: CarouselProps) {
 }
 
 // ---------------------------------------------------------------------------
-// Core — Embla per official docs: https://www.embla-carousel.com/get-started/react
+// Core — uses audit-compliant carousel
+// Navigation contract:
+//   Prev button (←) = scrollPrev = logical previous
+//   Next button (→) = scrollNext = logical next
+// Icons are explicit per project convention, not inferred from position.
 // ---------------------------------------------------------------------------
 
 function SectionSlider(props: CarouselProps) {
@@ -133,199 +148,168 @@ function SectionSlider(props: CarouselProps) {
   const isImmersive = props.kind !== "workshops";
   const canLoop = items.length > 1;
 
-  // Official Embla setup: direction rtl for Persian, loop, center align
-  // Autoplay plugin handles auto-advance, pause on hover/focus per docs
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: canLoop,
-      align: "center",
-      direction: "rtl",
-      containScroll: "trimSnaps",
-      slidesToScroll: 1,
-      skipSnaps: false,
-      dragFree: false,
-    },
-    [
-      Autoplay({
-        delay: 4500,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true,
-        stopOnFocusIn: true,
-        playOnInit: true,
-      }),
-    ],
-  );
+  // Audit: Embla 8.6.0, direction rtl required when html dir="rtl" (installed version verified)
+  // Do not add extra dir on viewport — single source via html + Embla option
+  const { emblaRef, selected, canPrev, canNext, scrollPrev, scrollNext } = useCarousel({
+    loop: canLoop,
+    align: "center",
+    autoplay: canLoop,
+    autoplayDelay: 4500,
+  });
 
-  const [selected, setSelected] = useState(0);
-
-  // Sync selected index for styling (testimonials coverflow focus)
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelected(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
+  // Hover zoom for article/workshop covers (testimonials excluded)
+  // Uses Embla rootNode per official docs, not manual viewport ref
   useEffect(() => {
-    if (!emblaApi) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-    // Ensure autoplay starts (required per official docs)
-    emblaApi.plugins().autoplay?.play();
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
-  // Hover zoom for article/workshop covers — kept lightweight
-  useEffect(() => {
-    if (props.kind === "testimonials" || !emblaApi) return;
-    const root = emblaApi.rootNode() as HTMLElement | null;
-    if (!root) return;
-    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const imgs = [...root.querySelectorAll<HTMLImageElement>(".art-carousel-card img")];
-    const reset = () => {
-      if (m.matches) for (const img of imgs) animate(img, { scale: 1 }, { duration: 0 });
-    };
-    const stops = [...root.querySelectorAll<HTMLElement>(".art-carousel-card")].map((card) =>
-      hover(card, () => {
-        const img = card.querySelector<HTMLImageElement>("img");
-        if (!img || m.matches) return;
-        animate(img, { scale: 1.035 }, { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] });
-        return () => animate(img, { scale: 1 }, { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] });
-      }),
-    );
-    m.addEventListener("change", reset);
-    return () => {
-      stops.forEach((s) => s());
-      m.removeEventListener("change", reset);
-    };
-  }, [emblaApi, props.kind]);
-
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+    if (props.kind === "testimonials") return;
+    // Access via emblaRef container — find via document
+    // Use timeout to ensure Embla mounted
+    const id = window.setTimeout(() => {
+      const root = document.querySelector(`[aria-label="${meta.title}"]`) as HTMLElement | null;
+      if (!root) return;
+      const m = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const imgs = [...root.querySelectorAll<HTMLImageElement>(".art-carousel-card img")];
+      const reset = () => {
+        if (m.matches) for (const img of imgs) animate(img, { scale: 1 }, { duration: 0 });
+      };
+      const stops = [...root.querySelectorAll<HTMLElement>(".art-carousel-card")].map((card) =>
+        hover(card, () => {
+          const img = card.querySelector<HTMLImageElement>("img");
+          if (!img || m.matches) return;
+          animate(img, { scale: 1.035 }, { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] });
+          return () => animate(img, { scale: 1 }, { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] });
+        }),
+      );
+      m.addEventListener("change", reset);
+      // cleanup not needed for timeout-based
+      return () => {
+        stops.forEach((s) => s());
+        m.removeEventListener("change", reset);
+      };
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, [props.kind, meta.title]);
 
   return (
-    <section
-      className={`${publicSectionClassName} ${isImmersive ? neonCarouselSectionClassName : ""} ${props.kind === "testimonials" ? "pt-10! pb-10! md:pt-24! md:pb-16!" : props.kind === "articles" ? "pt-8! pb-12! md:pt-16! md:pb-24!" : ""}`}
-      aria-labelledby={meta.id}
+    <Carousel
+      emblaRef={emblaRef}
+      selected={selected}
+      canPrev={canPrev}
+      canNext={canNext}
+      scrollPrev={scrollPrev}
+      scrollNext={scrollNext}
     >
-      <div className={`${publicContainerClassName} flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start`}>
-        <div className="max-w-[52ch] min-w-0">
-          <p
-            className={`${publicEyebrowClassName} ${isImmersive ? "text-[#19776e]! before:[background-image:linear-gradient(90deg,#3c9f87,#84c3ad)]! dark:text-[#9ce5d2]! dark:before:[background-image:linear-gradient(90deg,#85ebd3,#4aa9af)]!" : ""}`}
-          >
-            {meta.eyebrow}
-          </p>
-          <h2
-            id={meta.id}
-            className={`${publicH2ClassName} mt-4 ${isImmersive ? "text-[var(--fg)]! dark:text-[#f0faf5]! dark:[text-shadow:0_0_28px_#67ddba35]" : ""}`}
-          >
-            {meta.title}
-          </h2>
-          {isTestimonial && (
-            <p className="text-muted mt-3 text-sm leading-7 text-[#52716b]! dark:text-[#b1cec6]!">
-              تجربه‌ها با رضایت و نام خودِ مراجعان منتشر شده است.
+      <section
+        className={`${publicSectionClassName} ${isImmersive ? neonCarouselSectionClassName : ""} ${props.kind === "testimonials" ? "pt-10! pb-10! md:pt-24! md:pb-16!" : props.kind === "articles" ? "pt-8! pb-12! md:pt-16! md:pb-24!" : ""}`}
+        aria-labelledby={meta.id}
+      >
+        <div className={`${publicContainerClassName} flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start`}>
+          <div className="max-w-[52ch] min-w-0">
+            <p
+              className={`${publicEyebrowClassName} ${isImmersive ? "text-[#19776e]! before:[background-image:linear-gradient(90deg,#3c9f87,#84c3ad)]! dark:text-[#9ce5d2]! dark:before:[background-image:linear-gradient(90deg,#85ebd3,#4aa9af)]!" : ""}`}
+            >
+              {meta.eyebrow}
             </p>
+            <h2
+              id={meta.id}
+              className={`${publicH2ClassName} mt-4 ${isImmersive ? "text-[var(--fg)]! dark:text-[#f0faf5]! dark:[text-shadow:0_0_28px_#67ddba35]" : ""}`}
+            >
+              {meta.title}
+            </h2>
+            {isTestimonial && (
+              <p className="text-muted mt-3 text-sm leading-7 text-[#52716b]! dark:text-[#b1cec6]!">
+                تجربه‌ها با رضایت و نام خودِ مراجعان منتشر شده است.
+              </p>
+            )}
+          </div>
+          {!isTestimonial && (
+            <Link
+              href={props.kind === "articles" ? "/articles" : "/workshops"}
+              className={`${publicButtonSoftClassName} flex-none max-[620.02px]:self-start ${isImmersive ? neonCarouselLinkClassName : ""}`}
+            >
+              {props.kind === "articles" ? "همهٔ مقاله‌ها" : "همهٔ کارگاه‌ها"}
+              <i className="ph-bold ph-arrow-left" aria-hidden="true" />
+            </Link>
           )}
         </div>
-        {!isTestimonial && (
-          <Link
-            href={props.kind === "articles" ? "/articles" : "/workshops"}
-            className={`${publicButtonSoftClassName} flex-none max-[620.02px]:self-start ${isImmersive ? neonCarouselLinkClassName : ""}`}
-          >
-            {props.kind === "articles" ? "همهٔ مقاله‌ها" : "همهٔ کارگاه‌ها"}
-            <i className="ph-bold ph-arrow-left" aria-hidden="true" />
-          </Link>
-        )}
-      </div>
 
-      <div
-        className={
-          isTestimonial
-            ? "testimonials-stage relative mt-4 pt-6 pb-4 [perspective-origin:50%_45%] [perspective:1500px] before:pointer-events-none before:absolute before:[inset:12%_8%_4%] before:z-0 before:rounded-[999px] before:opacity-[.55] before:blur-[60px] before:content-[''] before:[background:radial-gradient(60%_50%_at_30%_40%,rgba(74,189,161,.25),transparent_70%),radial-gradient(60%_55%_at_75%_60%,rgba(44,138,146,.22),transparent_70%)] motion-reduce:[perspective:none] sm:mt-6 sm:pt-8 lg:pt-12 lg:pb-6 dark:before:opacity-[.35]"
-            : `${publicContainerClassName} ${isImmersive ? "mt-6 sm:mt-10" : "mt-10"}`
-        }
-      >
-        {/* Embla viewport — official structure */}
         <div
-          ref={emblaRef}
-          dir="rtl"
-          className={`embla relative z-10 overflow-hidden ${isTestimonial ? "pt-4 pb-8" : "pt-[.6rem] pb-4"}`}
-          aria-roledescription="اسلایدر"
-          aria-label={meta.title}
+          className={
+            isTestimonial
+              ? "testimonials-stage relative mt-4 pt-6 pb-4 [perspective-origin:50%_45%] [perspective:1500px] before:pointer-events-none before:absolute before:[inset:12%_8%_4%] before:z-0 before:rounded-[999px] before:opacity-[.55] before:blur-[60px] before:content-[''] before:[background:radial-gradient(60%_50%_at_30%_40%,rgba(74,189,161,.25),transparent_70%),radial-gradient(60%_55%_at_75%_60%,rgba(44,138,146,.22),transparent_70%)] motion-reduce:[perspective:none] sm:mt-6 sm:pt-8 lg:pt-12 lg:pb-6 dark:before:opacity-[.35]"
+              : `${publicContainerClassName} ${isImmersive ? "mt-6 sm:mt-10" : "mt-10"}`
+          }
         >
-          <div className={`embla__container flex touch-pan-y gap-4 sm:gap-5 lg:gap-6 py-4 ${isTestimonial ? "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] sm:before:basis-[20%] sm:after:basis-[20%] lg:before:basis-[30.5%] lg:after:basis-[30.5%]" : "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] min-[480px]:before:basis-[10%] min-[480px]:after:basis-[10%] sm:before:basis-[26%] sm:after:basis-[26%] lg:before:basis-[34.5%] lg:after:basis-[34.5%]"}`}>
-            {items.map((item, index) => {
-              const active = index === selected;
-              const isPrev = index === (selected - 1 + items.length) % items.length;
-              const isNext = index === (selected + 1) % items.length;
-              return (
-                <div
-                  key={item.slug}
-                  className={`embla__slide flex-[0_0_auto] min-w-0 ${isTestimonial ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"}`}
-                  aria-hidden={canLoop ? undefined : !active}
-                >
-                  <div
-                    className={`h-full ${isTestimonial ? "transition-opacity duration-500 ease-out motion-reduce:transition-none" : ""} ${isTestimonial ? (active ? "opacity-100" : isPrev || isNext ? "opacity-70" : "opacity-35") : "opacity-100"} motion-reduce:opacity-100`}
+          <CarouselViewport
+            className={`relative z-10 ${isTestimonial ? "pt-4 pb-8" : "pt-[.6rem] pb-4"}`}
+            aria-roledescription="اسلایدر"
+            aria-label={meta.title}
+          >
+            <CarouselContainer
+              className={`gap-4 sm:gap-5 lg:gap-6 py-4 ${isTestimonial ? "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] sm:before:basis-[20%] sm:after:basis-[20%] lg:before:basis-[30.5%] lg:after:basis-[30.5%]" : "before:shrink-0 before:basis-[9%] after:shrink-0 after:basis-[9%] min-[480px]:before:basis-[10%] min-[480px]:after:basis-[10%] sm:before:basis-[26%] sm:after:basis-[26%] lg:before:basis-[34.5%] lg:after:basis-[34.5%]"}`}
+            >
+              {items.map((item, index) => {
+                const active = index === selected;
+                const isPrev = index === (selected - 1 + items.length) % items.length;
+                const isNext = index === (selected + 1) % items.length;
+                return (
+                  <CarouselSlide
+                    key={item.slug}
+                    className={`${isTestimonial ? "basis-[80%] [perspective:900px] [transform-style:preserve-3d] min-[480px]:basis-[78%] sm:basis-[60%] lg:basis-[39%]" : "basis-[72%] min-[480px]:basis-[76%] sm:basis-[46%] lg:basis-[31%]"}`}
+                    aria-label={`اسلاید ${new Intl.NumberFormat("fa-IR").format(index + 1)} از ${new Intl.NumberFormat("fa-IR").format(items.length)}`}
                   >
-                    {props.kind === "testimonials" ? (
-                      <TestimonialCard
-                        item={item as TestimonialItem}
-                        depth={
-                          active
-                            ? ""
-                            : isNext
-                              ? "[transform:translate3d(48px,0,-170px)_rotateY(-23deg)] blur-[0.7px] motion-reduce:blur-none"
-                              : isPrev
-                                ? "[transform:translate3d(-48px,0,-170px)_rotateY(23deg)] blur-[0.7px] motion-reduce:blur-none"
-                                : "[transform:translate3d(0,0,-180px)_scale(.95)]"
-                        }
-                      />
-                    ) : props.kind === "articles" ? (
-                      <ArticleCard item={item as ArticleItem} active={active} />
-                    ) : (
-                      <WorkshopCard item={item as WorkshopItem} />
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                    <div
+                      className={`h-full ${isTestimonial ? "transition-opacity duration-500 ease-out motion-reduce:transition-none" : ""} ${isTestimonial ? (active ? "opacity-100" : isPrev || isNext ? "opacity-70" : "opacity-35") : "opacity-100"} motion-reduce:opacity-100`}
+                    >
+                      {props.kind === "testimonials" ? (
+                        <TestimonialCard
+                          item={item as TestimonialItem}
+                          depth={
+                            active
+                              ? ""
+                              : isNext
+                                ? "[transform:translate3d(48px,0,-170px)_rotateY(-23deg)] blur-[0.7px] motion-reduce:blur-none"
+                                : isPrev
+                                  ? "[transform:translate3d(-48px,0,-170px)_rotateY(23deg)] blur-[0.7px] motion-reduce:blur-none"
+                                  : "[transform:translate3d(0,0,-180px)_scale(.95)]"
+                          }
+                        />
+                      ) : props.kind === "articles" ? (
+                        <ArticleCard item={item as ArticleItem} active={active} />
+                      ) : (
+                        <WorkshopCard item={item as WorkshopItem} />
+                      )}
+                    </div>
+                  </CarouselSlide>
+                );
+              })}
+            </CarouselContainer>
+          </CarouselViewport>
         </div>
-      </div>
 
-      <div className={publicContainerClassName}>
-        <div className="flex items-center justify-end gap-3 pt-6">
-          <div className="inline-flex items-center gap-2">
-            <button
-              type="button"
-              className="grid size-10 place-items-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-40 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-white/20 dark:hover:bg-zinc-700 dark:hover:text-white"
-              aria-label={meta.next}
-              onClick={scrollNext}
-              disabled={items.length < 2}
-            >
-              <i className="ph-bold ph-arrow-left text-[14px]" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="grid size-10 place-items-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-40 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-white/20 dark:hover:bg-zinc-700 dark:hover:text-white"
-              aria-label={meta.prev}
-              onClick={scrollPrev}
-              disabled={items.length < 2}
-            >
-              <i className="ph-bold ph-arrow-right text-[14px]" aria-hidden="true" />
-            </button>
+        <div className={publicContainerClassName}>
+          <div className="flex items-center justify-end gap-3 pt-6">
+            <div className="inline-flex items-center gap-2">
+              {/* Contract: Previous ← calls scrollPrev, Next → calls scrollNext */}
+              <CarouselPrevButton
+                aria-label={meta.prev}
+                disabled={items.length < 2}
+                className="disabled:opacity-40"
+              />
+              <CarouselNextButton
+                aria-label={meta.next}
+                disabled={items.length < 2}
+                className="disabled:opacity-40"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Carousel>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Cards — small, single purpose
+// Cards — small, single purpose (unchanged visual, only wrapper updated)
 // ---------------------------------------------------------------------------
 
 function TestimonialCard({ item, depth }: { item: TestimonialItem; depth: string }) {
