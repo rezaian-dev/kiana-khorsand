@@ -10,10 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# test output
 /coverage
-/qa/report.json
-/qa/*-report.json
 
 # next.js
 /.next/
@@ -45,14 +43,8 @@ next-env.d.ts
 
 # local browser snapshots and one-off diagnostics
 /.cache/
-# env examples (kept locally, not committed)
-.env.example
 /test-results/
 /playwright-report/
-
-# Python build artefacts from scripts/
-__pycache__/
-*.pyc
 
 # playwright session cache
 /e2e/.auth/

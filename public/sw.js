@@ -1,13 +1,18 @@
 /* Kiana PWA — per https://nextjs.org/docs/app/guides/progressive-web-apps and Workbox strategies */
-const CACHE_VERSION = "kiana-v2026-10-21";
+const CACHE_VERSION = "kiana-v2026-10-23";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const OFFLINE_URL = "/offline";
-const PRECACHE = [OFFLINE_URL, "/manifest.webmanifest", "/icon.svg", "/favicon.ico"];
+const PRECACHE = [OFFLINE_URL, "/manifest.webmanifest", "/icon.svg"];
 
-// Install: precache only static assets + offline fallback (F4)
+// Install: precache the offline fallback, tolerating a single missing file.
+// `cache.addAll` rejects as a whole on one 404, which would abort the install and
+// leave the app with no worker at all — so each entry stands on its own.
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting()),
+    caches
+      .open(STATIC_CACHE)
+      .then((cache) => Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => {}))))
+      .then(() => self.skipWaiting()),
   );
 });
 

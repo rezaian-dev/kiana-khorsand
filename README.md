@@ -1,159 +1,367 @@
-![Cover](public/cover.jpg)
+<div align="center">
 
-<p align="center">
-  <h1 align="center">کیانا خرسند — Kiana Khorsand</h1>
-  <p align="center">جایی امن برای فهمیدن و تغییر · A Safe Space to Understand and Change</p>
+<img src="docs/cover.jpg" alt="کیانا خرسند — جایی امن برای فهمیدن و تغییر" width="100%" />
+
+# 🌿 کیانا خرسند
+
+**جایی امن برای فهمیدن و تغییر** · _A safe space to understand and change_
+
+وب‌سایت حرفه‌ای روان‌شناسی بالینی — فارسی، راست‌به‌چپ، موبایل‌محور، با پنل مدیریت کامل، تقویم شمسی، پرداخت، PWA و تست‌های سرتاسری.
+
+<br />
+
+[![Next.js](https://img.shields.io/badge/Next.js-16.4-000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.3-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
+[![Playwright](https://img.shields.io/badge/Playwright-24_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
+
+[![PWA](https://img.shields.io/badge/PWA-ready-0d736b?style=for-the-badge&logo=pwa&logoColor=white)](#-pwa)
+[![RTL](https://img.shields.io/badge/RTL-fa__IR-6f42c1?style=for-the-badge)](#-فارسی-و-راستبهچپ)
+[![a11y](https://img.shields.io/badge/a11y-WCAG_2.2_AA-0a7ea4?style=for-the-badge)](#-دسترس‌پذیری)
+[![License](https://img.shields.io/badge/license-MIT-2f855a?style=for-the-badge)](LICENSE)
+
+[**🌐 نسخهٔ زنده**](https://kiana-khorsand.vercel.app) · [ویژگی‌ها](#-ویژگیها) · [شروع سریع](#-شروع-سریع) · [معماری](#-معماری)
+
+</div>
+
+---
+
+## 📖 درباره پروژه
+
+این مخزن یک **وب‌سایت کامل درمانی** است، نه یک قالب و نه یک دمو: صفحه‌های عمومی برای معرفی رویکرد و خدمات، فرم رزرو نوبت با تقویم شمسی، نظرات تأییدشده، ارزیابی‌های کوتاه، پنل کاربر برای نوبت‌ها و پرداخت‌ها، و پنل مدیریتی که تقریباً همهٔ محتوا را بدون دست‌زدن به کد اداره می‌کند.
+
+سه اصل، شکل‌دهندهٔ همهٔ تصمیم‌ها بوده است:
+
+| اصل                    | معنی در عمل                                                                                |
+| :--------------------- | :----------------------------------------------------------------------------------------- |
+| 🧘 **آرام و بی‌دردسر** | هیچ پرش چیدمان، هیچ فلش سفید، انیمیشن‌هایی که با `prefers-reduced-motion` خاموش می‌شوند    |
+| 🎯 **درست تا آخر**     | اعتبارسنجی سمت سرور، کنترل دسترسی در هر Server Action، تست سرتاسری برای هر رفتار کاربرپسند |
+| 🪶 **سبک**             | Server Components پیش‌فرض، صفر وابستگی اضافه، تصاویر WebP/AVIF، JS حداقلی                  |
+
+> ✨ محتوای اصلی سایت — مقاله‌ها، کارگاه‌ها، حوزه‌ها، خدمات، تعرفه‌ها، پرسش‌های متداول، نظرات و متن صفحه‌ها — از پنل مدیریت ویرایش می‌شود و در پایگاه داده زندگی می‌کند، نه در کد.
+
+---
+
+## 🖼️ نگاهی به سایت
+
+<div align="center">
+
+**صفحهٔ نخست — دسکتاپ**
+
+<img src="docs/screenshots/home-desktop.webp" alt="صفحه نخست" width="100%" />
+
+**رزرو وقت با تقویم شمسی**
+
+<img src="docs/screenshots/booking.webp" alt="فرم رزرو" width="70%" />
+
+<p>
+<img src="docs/screenshots/home-mobile.webp" alt="نمای موبایل" height="430" />
+&nbsp;&nbsp;
+<img src="docs/screenshots/admin-panel.webp" alt="پنل مدیریت" width="620" />
 </p>
 
-<p align="center">
-  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-16.4-black?style=for-the-badge&logo=next.js" alt="Next.js"></a>
-  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS"></a>
-  <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss" alt="Tailwind"></a>
-  <img src="https://img.shields.io/badge/PWA-Ready-0d736b?style=for-the-badge" alt="PWA">
-  <img src="https://img.shields.io/badge/RTL-fa_IR-teal?style=for-the-badge" alt="RTL">
-</p>
-
-> **فارسی RTL** وب‌سایت درمانی مدرن با Next.js 16 App Router، MongoDB و PWA. کاملاً سبک، سَبک‌وزن، ریسپانسیو از 320px تا دسکتاپ — بدون پرش، بدون فلش.
+</div>
 
 ---
 
 ## ✨ ویژگی‌ها
 
-### 🌿 صفحات عمومی
-- هوم مدرن با هیرو شناور، کاروسل مقالات/کارگاه‌ها/نظرات با دکمه‌های قبل/بعد، تایم‌لاین و CTA شیشه‌ای
-- حوزه‌ها، مقالات با سرچ/فیلتر/پیجینیشن 6تایی + نشان خودکار از عنوان، حوزه‌ها با جزئیات
-- کارگاه‌ها با تقویم شمسی، رزرو آنلاین، نظرات تأییدشده
-- درباره من، روش کار، تعرفه‌ها، پرسش‌های متداول
+<table>
+<tr><td width="50%" valign="top">
 
-### 🔐 احراز هویت
-- ورود/ثبت‌نام با **موبایل + رمز عبور** (Better Auth)
-- نقش‌ها: `user` / `admin` ، محافظت Server Action، `headers()` امن
+### 🌿 تجربهٔ عمومی
 
-### 👤 داشبورد کاربر
-- نوبت‌ها، یادداشت‌ها، پرداخت‌ها، پیام‌های خصوصی با ادمین
-- آپلود آواتار (WebP مربعی بدون EXIF، 750KB)
+- صفحهٔ نخست با هیروی شناور، تایم‌لاین، کاروسل و CTA شیشه‌ای
+- مقاله‌ها با جست‌وجو، فیلتر حوزه، صفحه‌بندی و نشان خودکار از عنوان
+- حوزه‌های کاری، خدمات، تعرفه‌ها، درباره من، روش کار، پرسش‌های متداول
+- کارگاه‌ها با تقویم شمسی و رزرو آنلاین
+- نظرات مراجعان با تأیید پیش از انتشار
+- ارزیابی‌های کوتاه و تعاملی (کوییز چندبخشی)
 
-### 🛡️ پنل ادمین
-- مدیریت مقالات (Markdown + پیش‌نمایش زنده)، خدمات، کارگاه‌ها، حوزه‌ها
-- تقویم تعاملی روز/هفته/ماه + بستن بازه تعطیلی، صدور فاکتور دستی
+</td><td width="50%" valign="top">
+
+### 📅 رزرو و پرداخت
+
+- تقویم شمسی (`@daypicker/persian`) و انتخاب بازهٔ زمانی آزاد
+- اعتبارسنجی سمت سرور روی هر درخواست
+- جلوگیری از رزرو تکراری با یکپارچگی داده در Mongo
+- فاکتور دستی و پیگیری پرداخت در پنل مدیریت
+- یادداشت جلسه با رمزنگاری AES-256-GCM در سطح کاربر
+
+</td></tr>
+<tr><td valign="top">
+
+### 🛡️ پنل مدیریت
+
+- مدیریت مقاله‌ها با **Markdown + پیش‌نمایش زنده** و آپلود کاور
+- تقویم روز/هفته/ماه، بستن بازهٔ تعطیلی، تغییر سریع وضعیت نوبت
+- مدیریت کاربران، مراجعان، خدمات، کارگاه‌ها، نظرات و تنظیمات سایت
+- صندوق پیام، پاسخ به گفت‌وگوها
+- خروجی CSV امن (محافظت در برابر CSV injection)
+
+</td><td valign="top">
+
+### 👤 پنل کاربر
+
+- نوبت‌ها، پرداخت‌ها، دوره‌ها و ارزیابی‌ها
+- پیام خصوصی با ادمین
+- یادداشت‌های جلسه (رمزنگاری‌شده)
+- آپلود آواتار — تبدیل به WebP مربعی بدون EXIF در سمت سرور
+- تغییر رمز عبور و تنظیمات حساب
+
+</td></tr>
+</table>
+
+### 🔐 احراز هویت و جداسازی نقش‌ها
+
+- ورود/ثبت‌نام با **شمارهٔ موبایل + رمز عبور** روی [Better Auth](https://www.better-auth.com)
+- دو مسیر ورود مستقل: کاربر عادی از `/login` و مدیر فقط از `/admin/login`
+- ادمین بیرون از پنل مثل هر کاربر دیگری رفتار می‌کند — هیچ لینکی به پنل در منوی حساب او نیست
+- محافظت از مسیرها در سه لایه: `middleware`، چک نقش در Server Action و بررسی مالکیت داده
+- محدودسازی تلاش ورود (HMAC روی شمارهٔ موبایل + پنجرهٔ زمانی ۱۵ دقیقه)
+
+### 🎬 حرکت و تعامل
+
+- [Motion](https://motion.dev) با `LazyMotion` + کامپوننت سبک `m` — فقط بخش لازم کتابخانه بار می‌شود
+- کالیبراسیون مشترک فنرها، مدت‌ها و فاصله‌ها در `src/lib/motion-tokens.ts`
+- احترام کامل به `prefers-reduced-motion`؛ مسیر کاهش حرکت در سطح کامپوننت
+- کاروسل با [Embla](https://www.embla-carousel.com): بدون loop، بدون autoplay اجباری، در موبایل هر اسلاید دقیقاً وسط
+- کنترل‌های قبل/بعد با جهت درست RTL، دکمه‌های غیرفعال در لبه‌های واقعی
 
 ### 📲 PWA
-- `manifest.webmanifest` (standalone, RTL, theme #0d736b)
-- `sw.js` آفلاین سبک (cache-first assets, network-first navigate)
-- آیکون‌های 192/512/maskable + Apple Touch
 
----
+- `manifest.webmanifest` مستقل، RTL، با آیکون‌های ۱۹۲/۵۱۲/maskable
+- Service Worker دست‌نویس با راهبردهای Workbox:
+  - **cache-first** برای فایل‌های ثابت
+  - **network-first** برای ناوبری، با صفحهٔ آفلاین به‌عنوان جایگزین
+  - هیچ مسیر خصوصی (`/admin`, `/dashboard`, `/api`) هرگز کش نمی‌شود
+- پاک‌سازی کش خصوصی هنگام خروج
 
-## 🚀 پرفورمنس و بهینه‌سازی
+### 🔎 سئو و اشتراک‌گذاری
 
-طبق چک‌لیست رسمی Next.js 16 Production:
-
-- **Turbopack** پیش‌فرض — بیلد ~17s، HMR <50ms
-- `experimental.optimizePackageImports: lucide-react, motion, zod` + تفکیک `radix-ui` به پکیج‌های جدا
-- `images: avif/webp`, `compress:true`, `poweredByHeader:false`
-- Server Components پیش‌فرض — فقط داک/منو/فرم‌ها Client هستند
-- Motion با `LazyMotion` + `domMax` و کامپوننت سبک `m`؛ کالیبراسیون مشترک در `src/lib/motion-tokens.ts`
-- فونت Vazirmatn با `next/font/local` + `preload` و `display:swap` — بدون CLS
-- `viewport-fit: cover` + `safe-area-inset` برای ناچ موبایل
-
-| متریک | اندازه‌گیری‌شده 2026-10-22 |
-|---|---|
-| Client Components (`\"use client\"`) | 66 فایل |
-| motion (`LazyMotion` + `m`) | 22 فایل |
-| Routes (next build) | 62 (○ 5 static, ƒ 57 dynamic) |
-| eslint | 0 error (پس از پاکسازی) |
-| npm audit --omit=dev | 0 vulnerability (پس از upgrade markdown-it) |
+- متادیتای یکجا در `src/lib/public-metadata.ts` — عنوان، توضیح، canonical و کارت اجتماعی
+- کارت Open Graph ۱۲۰۰×۶۳۰ با `og:image:type/width/height`
+- `sitemap.xml` و `robots.txt` داینامیک، با تصاویر
+- داده‌های ساخت‌یافته: `BlogPosting` برای مقاله‌ها، `BreadcrumbList` برای مسیر راهنما
+- هاست canonical از خودِ دیپلوی گرفته می‌شود تا لینک‌ها هرگز به میزبان مرده اشاره نکنند
 
 ---
 
 ## 🛠️ استک
 
-- **Framework:** Next.js 16.4 (App Router) + Turbopack
-- **UI:** Tailwind 4, lucide-react, Radix UI (تفکیک‌شده), Motion (`LazyMotion` + `m`)
-- **DB:** MongoDB 7 + better-auth + Zod
-- **PWA:** دستی sw.js (next-pwa حذف شد per Turbopack)
-- **Date:** @daypicker/persian, Jalali picker
-- **Font:** Vazirmatn (WOFF2)
+| لایه           | انتخاب                                | چرا                                       |
+| :------------- | :------------------------------------ | :---------------------------------------- |
+| **فریم‌ورک**   | Next.js 16.4 (App Router) + Turbopack | Server Components، Server Actions، استریم |
+| **زبان**       | TypeScript 5 (strict)                 | مرزهای داده بدون `any`                    |
+| **رابط**       | Tailwind CSS 4 + Radix UI + shadcn/ui | دسترس‌پذیری آماده، استایل بدون runtime    |
+| **حرکت**       | Motion 14                             | API اعلامی و سبک با `LazyMotion`          |
+| **کاروسل**     | Embla Carousel 8                      | کنترل کامل روی RTL و لبه‌ها               |
+| **داده**       | MongoDB 7 + `mongodb` driver          | مدل سند انعطاف‌پذیر برای محتوای ویرایشی   |
+| **اعتبارسنجی** | Zod 4                                 | یک شِما برای فرم و سرور                   |
+| **احراز هویت** | Better Auth 1.7                       | نشست کوکی، پلاگین‌ها، بدون JWT دستی       |
+| **تاریخ**      | `@daypicker/persian`                  | تقویم شمسی واقعی، نه تبدیل سمت کلاینت     |
+| **مارک‌داون**  | markdown-it 15 + react-markdown       | ویرایش و نمایش مقاله                      |
+| **تصویر**      | sharp                                 | تبدیل آواتار به WebP مربعی، حذف EXIF      |
+| **اعلان**      | Sonner                                | توست دسترس‌پذیر                           |
+| **تست**        | Playwright                            | ۲۴ تست سرتاسری روی دسکتاپ و موبایل        |
 
 ---
 
-## 📂 ساختار
+## 📂 معماری
 
 ```
 src/
-├── app/                 # layout, manifest, sitemap, robots, (public)/(auth)/(panels)
-├── components/          # layout (header/dock/footer), ui, shared
-├── features/            # articles, areas, workshops, booking, testimonials ...
-├── actions/             # Server Actions (auth, admin, booking, contact)
-├── lib/                 # env, auth, motion-tokens, site-urls
-├── db/                  # Mongo client, indexes, seed
-└── validations/         # Zod schemas
-public/
-├── assets/              # fonts, images (hero, intro, og)
-├── cover.jpg            # ✨ کاور README
-├── icon-*.png / sw.js   # PWA
-└── og-image.jpg
+├── app/                      # مسیرها (Route Groups)
+│   ├── (public)/             # سایت عمومی: خانه، مقاله‌ها، رزرو، تعرفه، تماس …
+│   ├── (auth)/               # ورود، ثبت‌نام، فراموشی رمز
+│   ├── (panels)/dashboard/   # پنل کاربر
+│   ├── (panels)/admin/       # پنل مدیریت (مسیر ورود جدا)
+│   ├── api/                  # auth، آواتار، کاور مقاله
+│   └── layout | manifest | robots | sitemap | providers
+├── components/
+│   ├── ui/                   # پایهٔ shadcn/ui (Select، Sheet، Dialog، Input …)
+│   ├── layout/               # هدر، داک موبایل، فوتر، منوی حساب
+│   ├── panels/               # اسکلت پنل‌ها، جدول‌ها، Select فرم‌محور
+│   └── shared/               # برادکرمب، کارت، سکشن، پروز، داده ساخت‌یافته
+├── features/                 # هر دامنه یک پوشه: queries + actions + ui
+│   ├── articles/  booking/  workshops/  community/  assessments/
+│   ├── dashboard/ admin/    areas/      services/   testimonials/ …
+├── actions/                  # Server Actions مشترک (auth، رزرو، تماس، امنیت)
+├── db/                       # کلاینت Mongo، ایندکس‌ها، seed تکرارپذیر
+├── lib/                      # auth، env، motion-tokens، metadata، throttle
+├── validations/              # شِماهای Zod (هم‌مرز با فرم و سرور)
+└── types/                    # قراردادهای دامنه
+
+e2e/                          # Playwright: جداسازی نقش، مقاله‌ها، کاروسل، اورلی‌ها، متادیتا
+docs/                         # تصاویر README
 ```
+
+**قاعدهٔ چیدمان:** هر دامنه در `features/<domain>` با سه فایل هم‌نام — `queries.ts` (خواندن)، `actions.ts` (نوشتن)، `ui/` (نمایش). صفحه‌های `app/` فقط ترکیب می‌کنند.
 
 ---
 
-## 🏁 شروع سریع
+## 🚀 شروع سریع
 
-**پیش‌نیاز:** Node.js 20, npm, MongoDB Atlas
+**پیش‌نیاز:** Node.js 20+، npm، یک کلاستر MongoDB (Atlas رایگان کافی است).
 
 ```bash
 git clone https://github.com/rezaian-dev/kiana-khorsand.git
 cd kiana-khorsand
-# یک فایل .env.local بسازید و مقادیر MONGODB_URI, BETTER_AUTH_SECRET, SITE_URL را در آن بگذارید
+cp .env.example .env.local     # مقادیر را پر کنید
 npm ci
-npm run seed        # داده اولیه (تکرارپذیر)
-npm run dev         # http://localhost:3000
+npm run seed                   # دادهٔ اولیه، تکرارپذیر (idempotent)
+npm run dev                    # http://localhost:3000
 ```
 
-**متغیرهای محیطی (.env.local):**
+**متغیرهای محیطی** — همهٔ کلیدها در `src/validations/env.ts` با Zod اعتبارسنجی می‌شوند:
 
-```env
-MONGODB_URI=mongodb+srv://...
-MONGODB_DB=kiana-khorsand
-BETTER_AUTH_SECRET=...
-BETTER_AUTH_URL=http://localhost:3000
-SITE_URL=http://localhost:3000
-```
-
-`SITE_URL` فقط بیرون از Vercel تعیین‌کننده است (لوکال و هاست شخصی). روی Vercel دامنهٔ خود پروژه مبنا قرار می‌گیرد — و به‌محض اتصال دامنهٔ اختصاصی، همان دامنه به‌صورت خودکار در canonical، sitemap، robots و تصویر پیش‌نمایش لینک می‌نشیند؛ لازم نیست متغیری را دست بزنید. اگر `SITE_URL` را روی Vercel به دامنه‌ای بدهید که به پروژه وصل نیست، نادیده گرفته می‌شود تا لینک‌ها و پیش‌نمایش‌ها هرگز به میزبان مرده اشاره نکنند.
+| کلید                                       | الزامی | توضیح                                                                            |
+| :----------------------------------------- | :----: | :------------------------------------------------------------------------------- |
+| `MONGODB_URI`                              |   ✅   | رشتهٔ اتصال `mongodb://` یا `mongodb+srv://`                                     |
+| `BETTER_AUTH_SECRET`                       |   ✅   | حداقل ۳۲ کاراکتر — `openssl rand -base64 48`                                     |
+| `BETTER_AUTH_URL`                          |   ➖   | آدرس سرو auth (پیش‌فرض `http://localhost:3000`)                                  |
+| `SITE_URL`                                 |   ➖   | مبنای canonical؛ **روی Vercel نادیده گرفته می‌شود** و دامنهٔ خود دیپلوی مبنا است |
+| `PRIVATE_NOTES_KEY`                        |   ➖   | کلید اختصاصی رمزنگاری یادداشت جلسه (HKDF → AES-256-GCM)                          |
+| `AUTH_PREVIEW_ORIGIN`                      |   ➖   | یک origin مورد اعتماد اضافه (تونل یا پیش‌نمایش)                                  |
+| `AUTH_SIGNIN_LIMIT`                        |   ➖   | سقف تلاش ورود در پنجرهٔ ۱۵ دقیقه‌ای (پیش‌فرض ۱۰)                                 |
+| `SEED_ADMIN_PHONE` / `SEED_ADMIN_PASSWORD` |   ➖   | حساب مدیر برای `npm run seed`                                                    |
 
 **اسکریپت‌ها:**
 
-| دستور | توضیح |
-|---|---|
-| `npm run dev` | Turbopack dev |
-| `npm run build` | بیلد پروداکشن (62 مسیر) |
-| `npm run start` | اجرای پروداکشن روی 3000 |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | tsc --noEmit |
+| دستور                         | کار                                                          |
+| :---------------------------- | :----------------------------------------------------------- |
+| `npm run dev`                 | اجرای توسعه با Turbopack                                     |
+| `npm run build` / `npm start` | بیلد و اجرای پروداکشن                                        |
+| `npm run seed`                | دادهٔ اولیه؛ `npm run seed:dev` داده‌های نمایشی اضافه می‌کند |
+| `npm run lint`                | ESLint (شامل قواعد jsx-a11y و react-hooks)                   |
+| `npm run typecheck`           | `tsc --noEmit`                                               |
+| `npm run format`              | Prettier                                                     |
 
 ---
 
-## 📱 موبایل داک — انیمیشن زیبا
+## ✅ کیفیت و آزمون
 
-- شیشه‌ای `bg-white/85 backdrop-blur-2xl` با `border-white/60` و سایه تیل
-- پیل فعال گرادیان `teal-600→emerald-600` + `spring 400/30`
-- فیدبک لمسی `vibrate(10)`، `prefetch`، `safe-area` و ریسپانسیو 320px (`inset-x-2` در موبایل کوچک)
+```bash
+npx playwright install chromium        # یک‌بار
+npx playwright test                    # کل مجموعه
+npx playwright test e2e/overlays.spec.ts --ui
+```
+
+| چیزی که تست می‌شود        | چرا مهم است                                                                       |
+| :------------------------ | :-------------------------------------------------------------------------------- |
+| **جداسازی ادمین** (۶ تست) | ورود ادمین از `/login` باید او را کاربر عادی کند؛ پنل فقط از `/admin` باز شود     |
+| **مقاله‌ها** (۵ تست)      | برادکرمب در ۳۲۰px نشکند؛ فیلتر، اسکرول را جابه‌جا نکند                            |
+| **کاروسل RTL** (۶ تست)    | لبه‌های واقعی، دکمه‌های غیرفعال، مرکز اسلاید در موبایل، سوایپ، کیبورد             |
+| **اورلی‌ها** (۴ تست)      | `Select` باز باید با ضربهٔ دوم، Escape و ضربهٔ بیرون بسته شود — روی لمسی هم       |
+| **متادیتا** (۲ تست)       | تگ‌های OG را مثل کراولر می‌خواند و همان تصویری را که اعلام کرده‌اند دانلود می‌کند |
+
+**وضعیت فعلی:** `24 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
+
+| متریک                 | مقدار                       |
+| :-------------------- | :-------------------------- |
+| مسیرها (`next build`) | ۶۲ — ۵ استاتیک، ۵۷ داینامیک |
+| فایل `"use client"`   | ۶۶ از ۲۹۴ فایل `src`        |
+| فایل‌های Motion       | ۱۹                          |
+| تست‌های E2E           | ۲۴ در ۶ فایل                |
+
+---
+
+## ⚡ پرفورمنس و بهینه‌سازی
+
+- **Turbopack** پیش‌فرض — بیلد سریع، HMR زیر ۵۰ms
+- `optimizePackageImports` برای `lucide-react`، `motion`، `radix-ui`، `sonner`، `zod`
+- Server Components پیش‌فرض؛ داک، منو و فرم‌ها تنها بخش‌های کلاینتی
+- تصاویر `avif`/`webp` با `minimumCacheTTL`
+- هدرهای کش: فایل‌های `/assets/*` برای یک سال immutable؛ مسیرهای خصوصی `no-store`
+- فونت Vazirmatn با `next/font/local`، `preload` و `display: swap` — بدون CLS
+- `viewport-fit: cover` و `safe-area-inset` برای ناچ و نوار پایین iOS
 
 ---
 
 ## 🔒 امنیت
 
-- `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`
-- Server Actions همه مجوزها را دوباره چک می‌کنند
-- تصاویر آواتار در سرور به WebP بدون EXIF تبدیل می‌شوند
+- همهٔ Server Actions مجوز و مالکیت داده را **دوباره** بررسی می‌کنند؛ اعتماد به کلاینت وجود ندارد
+- محدودسازی تلاش ورود و ثبت‌نام با شمارندهٔ HMAC‌شده در Mongo
+- یادداشت‌های خصوصی با AES-256-GCM و کلید مشتق‌شده به ازای هر کاربر (HKDF)
+- آواتار در سرور بازنویسی می‌شود: WebP مربعی، حداکثر ۷۵۰KB، بدون EXIF
+- خروجی CSV در برابر فرمول‌تزریق (CSV injection) ایمن است
+- هدرهای `X-Content-Type-Options: nosniff`، `X-Frame-Options: SAMEORIGIN`، `Referrer-Policy`
+- هیچ مسیر خصوصی در Service Worker کش نمی‌شود
+- ❗ هیچ فایل `.env` در مخزن نیست؛ فقط `.env.example`
+
+---
+
+## 🌐 فارسی و راست‌به‌چپ
+
+- `<html dir="rtl" lang="fa">` در ریشهٔ چیدمان
+- اندازه‌گیری با واحدهای منطقی (`ms-*`, `me-*`, `text-start`) به‌جای چپ/راست فیزیکی
+- فونت Vazirmatn با وزن‌های ۴۰۰ و ۸۰۰
+- تقویم و تاریخ کاملاً شمسی؛ اعداد و پول به فرمت فارسی
+- شکستن خطوط و اعداد فارسی در متن‌های بلند کنترل شده است
+- فلش‌ها و آیکون‌های جهت‌دار در RTL هرگز آینه نمی‌شوند
+
+---
+
+## ♿ دسترس‌پذیری
+
+- طراحی با هدف WCAG 2.2 AA: کنتراست متن، نواحی لمسی ≥ ۴۴px، فوکوس دیدنی
+- `Select` سفارشی با `aria-invalid` و `aria-describedby`؛ خطای `required` به‌جای سکوت با پیام و فوکوس اعلام می‌شود
+- `role="status"` برای پیام‌های پویا، `role="alert"` برای خطاها
+- ناوبری کامل با کیبورد در کاروسل، شیت‌ها و دیالوگ‌ها؛ Escape همیشه می‌بندد
+- برچسب‌های واقعی فرم‌ها و پیوند پرش به محتوا (`#main`)
+
+---
+
+## 🚢 استقرار
+
+```bash
+# Vercel
+vercel --prod        # یا اتصال مخزن به Vercel
+```
+
+- دامنهٔ canonical روی Vercel به‌صورت خودکار از `VERCEL_PROJECT_PRODUCTION_URL` خوانده می‌شود؛ به‌محض اتصال دامنهٔ اختصاصی، canonical و sitemap و کارت اجتماعی همان را دنبال می‌کنند
+- `vercel.json` فقط کش `sitemap.xml` و `robots.txt` را تنظیم می‌کند
+- برای هاست غیر Vercel، `SITE_URL` را روی دامنهٔ واقعی بگذارید
+
+---
+
+## 🗺️ نقشهٔ راه
+
+- [x] وب‌سایت عمومی کامل و ریسپانسیو
+- [x] پنل مدیریت و پنل کاربر
+- [x] رزرو با تقویم شمسی و پرداخت
+- [x] PWA و آفلاین
+- [x] سئو، داده ساخت‌یافته و کارت اجتماعی
+- [x] ۲۴ تست سرتاسری Playwright
+- [ ] اعلان‌های Web Push
+- [ ] پرداخت آنلاین با درگاه
+- [ ] گزارش‌های تحلیلی برای مدیر
+
+---
+
+## 🤝 مشارکت
+
+```bash
+git switch -c feat/your-idea
+npm run typecheck && npm run lint && npx playwright test
+```
+
+پیش از ارسال PR: کد بدون `any`، متن‌های فارسی یکدست، و برای هر رفتار کاربرپسند یک تست E2E.
 
 ---
 
 ## 📄 لایسنس
 
-MIT — نمونه‌کار آموزشی، سامانه درمانی واقعی نیست.
+[MIT](LICENSE) © 2026 Rezaian
 
----
+> این پروژه یک نمونه‌کار مهندسی است. محتوای درمانی، تصاویر اشخاص و اطلاعات نمایشی، دادهٔ نمونه‌اند و سامانه‌ای برای ارائهٔ خدمات درمانی واقعی نیست.
 
-<p align="center">ساخته شده با 🤍 برای تجربه‌ای آرام و حرفه‌ای</p>
+<div align="center">
+
+**ساخته شده با 🤍 برای تجربه‌ای آرام، سریع و انسانی**
+
+<sub>Next.js 16 · React 19 · TypeScript · Tailwind 4 · MongoDB · Better Auth · Motion · PWA</sub>
+
+</div>

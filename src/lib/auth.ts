@@ -6,6 +6,7 @@ import { nextCookies } from "better-auth/next-js";
 import { username } from "better-auth/plugins";
 import { db, mongoClient } from "@/db/client";
 import { env } from "@/lib/env";
+import { SITE_ORIGIN } from "@/lib/site-urls";
 import { registerAuthAttempt } from "@/lib/auth-throttle";
 
 const authURL = env.BETTER_AUTH_URL;
@@ -15,7 +16,8 @@ export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   trustedOrigins: [
     authURL,
-    env.SITE_URL,
+    // The origin this deployment answers on, so sign-in also works on a preview URL.
+    SITE_ORIGIN,
     ...(env.AUTH_PREVIEW_ORIGIN ? [env.AUTH_PREVIEW_ORIGIN] : []),
   ],
   database: mongodbAdapter(db, { client: mongoClient }),
