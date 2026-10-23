@@ -50,6 +50,7 @@ export function PwaAddress() {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
   // A keyboard is the fastest way in on a desktop install; in a normal tab Ctrl+K
@@ -83,6 +84,7 @@ export function PwaAddress() {
     <>
       {installed && (
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setOpen(true)}
           aria-label="رفتن به آدرس"
@@ -102,6 +104,13 @@ export function PwaAddress() {
           onOpenAutoFocus={(event) => {
             event.preventDefault();
             inputRef.current?.focus();
+          }}
+          onCloseAutoFocus={(event) => {
+            // The sheet is a sibling of the button that opens it, so Radix has no
+            // trigger to hand focus back to. Returning it here keeps keyboard users
+            // where they were instead of dropping them on <body>.
+            event.preventDefault();
+            triggerRef.current?.focus();
           }}
         >
           <SheetTitle className="text-[.95rem] font-extrabold text-[var(--fg)]">

@@ -212,6 +212,44 @@ test.describe("installed app", () => {
     ).toHaveCount(0);
   });
 
+  test("closing the address sheet returns focus to the button that opened it", async ({
+    page,
+  }) => {
+    await asInstalledApp(page);
+    await page.goto("/");
+
+    const trigger = page.getByRole("button", { name: "رفتن به آدرس" });
+    await trigger.click();
+    await expect(
+      page.getByRole("textbox", { name: "مسیر داخلی" }),
+    ).toBeFocused();
+
+    await page.keyboard.press("Escape");
+    await expect(page.locator('[data-slot="sheet-content"]')).toHaveCount(0);
+    // Without this the keyboard user is dropped on <body> and must tab from the top.
+    await expect(trigger).toBeFocused();
+  });
+
+  test("the installed header still fits 320px and keeps 44px targets", async ({
+    page,
+  }) => {
+    await asInstalledApp(page);
+    await page.setViewportSize({ width: 320, height: 720 });
+    await page.goto("/");
+
+    const overflow = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }));
+    expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.clientWidth);
+
+    const targets = page.locator('header button[aria-label="رفتن به آدرس"]');
+    await expect(targets).toBeVisible();
+    const box = await targets.boundingBox();
+    expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+  });
+
   test("install is offered only while the browser offers it, and stays dismissed", async ({
     page,
   }) => {
