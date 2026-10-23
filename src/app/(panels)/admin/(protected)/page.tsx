@@ -23,7 +23,8 @@ import {
   adminContacts,
   adminMessages,
 } from "@/features/admin/queries";
-import { PanelHeading, appointmentLabels } from "@/components/panels/ui";
+import { PanelHeading } from "@/components/panels/panel-heading";
+import { appointmentLabels } from "@/components/panels/labels";
 import { adminLinks } from "@/features/admin/navigation";
 import { formatDate, formatNumber, formatTime } from "@/lib/format";
 

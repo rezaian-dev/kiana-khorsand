@@ -9,7 +9,7 @@ import { listMyMeetingNotes } from "@/features/dashboard/legacy-private-notes";
 import { listMyNotes } from "@/features/dashboard/queries";
 import { DeleteNoteButton } from "@/features/dashboard/ui/delete-note-button";
 import { NoteForm } from "@/features/dashboard/ui/note-form";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatDate } from "@/lib/format";
 export const metadata = { title: "یادداشت‌های من" };
 export default async function Page() {

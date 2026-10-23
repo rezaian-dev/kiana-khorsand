@@ -5,7 +5,7 @@ import {
 import type { ReceiptPageProps } from "@/types/routes";
 import { notFound } from "next/navigation";
 import { adminClient, adminClientHistory } from "@/features/admin/queries";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatDate, formatToman } from "@/lib/format";
 export const metadata = { title: "حساب مراجعه‌کننده" };
 export default async function Page({ searchParams }: ReceiptPageProps) {

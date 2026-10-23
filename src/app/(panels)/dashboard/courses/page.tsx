@@ -7,7 +7,7 @@ import {
 import { requireUser } from "@/lib/session";
 import { listMyEnrollments } from "@/features/dashboard/queries";
 import { listWorkshops } from "@/features/workshops/queries";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { MeetInviteNotice } from "@/components/shared/meet-invite-notice";
 import { formatDate } from "@/lib/format";
 export const metadata = { title: "کارگاه‌های من" };

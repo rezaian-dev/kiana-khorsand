@@ -13,7 +13,7 @@ import {
   weekStart,
 } from "@/lib/tehran-calendar";
 import { formatDate, formatDay, formatNumber, formatTime } from "@/lib/format";
-import { appointmentLabels } from "@/components/panels/ui";
+import { appointmentLabels } from "@/components/panels/labels";
 
 type Event = {
   id: string;

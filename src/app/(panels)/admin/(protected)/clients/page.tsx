@@ -9,7 +9,7 @@ import { adminUsers } from "@/features/admin/queries";
 import { AdminCsvExport } from "@/components/panels/admin-csv-export";
 import { CreateClientForm } from "@/features/admin/ui/create-client-form";
 import { FilterableList } from "@/components/panels/filterable-list";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatDate } from "@/lib/format";
 export const metadata = { title: "مراجعان" };
 export default async function Page() {

@@ -12,7 +12,8 @@ import {
   listMyResults,
   listMyMessages,
 } from "@/features/dashboard/queries";
-import { PanelHeading, appointmentLabels } from "@/components/panels/ui";
+import { PanelHeading } from "@/components/panels/panel-heading";
+import { appointmentLabels } from "@/components/panels/labels";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate, formatNumber, formatTime } from "@/lib/format";
 

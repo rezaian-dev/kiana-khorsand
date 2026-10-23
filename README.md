@@ -200,7 +200,8 @@ src/
 │   └── layout | manifest | robots | sitemap | providers
 ├── components/
 │   ├── ui/                   # پایهٔ shadcn/ui (Select، Sheet، Dialog، Input …)
-│   ├── layout/               # هدر، داک موبایل، فوتر، منوی حساب
+│   ├── motion/               # تنها چهار پریمیتیو متحرک: لینک، لنگر، کارت، ریویل
+│   ├── layout/               # هدر، داک موبایل، فوتر، نصب اپ، منوی حساب
 │   ├── panels/               # اسکلت پنل‌ها، جدول‌ها، Select فرم‌محور
 │   └── shared/               # برادکرمب، کارت، سکشن، پروز، داده ساخت‌یافته
 ├── features/                 # هر دامنه یک پوشه: queries + actions + ui
@@ -217,6 +218,8 @@ docs/                         # تصاویر README
 ```
 
 **قاعدهٔ چیدمان:** هر دامنه در `features/<domain>` با سه فایل هم‌نام — `queries.ts` (خواندن)، `actions.ts` (نوشتن)، `ui/` (نمایش). صفحه‌های `app/` فقط ترکیب می‌کنند.
+
+**قاعدهٔ استایل و حرکت:** رشته‌های Tailwind فقط در سه ماژول توکن زندگی می‌کنند — `layout/public-styles.ts`، `panels/panel-styles.ts` و `shared/site-styles.ts`؛ هر دامنه‌ای که توکن اختصاصی دارد یک `*-styles.ts` کنار خودش دارد. هیچ فایلی `*-classes.ts` نیست. حرکت هم فقط از `components/motion/` می‌آید و همهٔ زمان‌بندی‌ها از `lib/motion-tokens.ts`.
 
 ---
 
@@ -297,6 +300,7 @@ npx playwright test e2e/overlays.spec.ts --ui
 - هدرهای کش: فایل‌های `/assets/*` برای یک سال immutable؛ مسیرهای خصوصی `no-store`
 - فونت Vazirmatn با `next/font/local`، `preload` و `display: swap` — بدون CLS
 - `viewport-fit: cover` و `safe-area-inset` برای ناچ و نوار پایین iOS
+- **اندازه‌گیری‌شده در بیلد فعلی** (gzip): صفحهٔ خانه ≈۳۰۴KB جاوااسکریپت و ۵۹KB CSS؛ در همین صفحه هیچ کدی از پنل مدیریت، Zod، Better Auth یا درگاه پرداخت بار نمی‌شود — فقط فریم‌ورک، React، Motion (نسخهٔ `domMax` که انیمیشن layout می‌خواهد) و کد خودِ صفحه
 
 ---
 

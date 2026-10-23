@@ -10,7 +10,7 @@ import { testimonialExperience } from "@/lib/testimonial-experience";
 import { adminTestimonials } from "@/features/admin/queries";
 import { AdminStatus } from "@/components/panels/admin-status";
 import { FilterableList } from "@/components/panels/filterable-list";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 export const metadata = { title: "نظرها" };
 export default async function Page() {
   const rows = await adminTestimonials();

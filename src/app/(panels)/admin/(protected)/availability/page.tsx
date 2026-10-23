@@ -12,7 +12,7 @@ import { adminAvailability } from "@/features/admin/queries";
 import { saveAvailability, removeBlockedRange } from "@/actions/admin";
 import { SlotPicker } from "@/features/admin/ui/slot-picker";
 import { BlockedRangeForm } from "@/features/admin/ui/blocked-range-form";
-import { PanelHeading } from "@/components/panels/ui";
+import { PanelHeading } from "@/components/panels/panel-heading";
 import { dayKey } from "@/lib/tehran-calendar";
 import { formatDate } from "@/lib/format";
 const days = [

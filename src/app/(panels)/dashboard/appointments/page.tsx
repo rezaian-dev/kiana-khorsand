@@ -9,11 +9,8 @@ import Link from "next/link";
 import { requireUser } from "@/lib/session";
 import { listMyAppointments } from "@/features/dashboard/queries";
 import { listServices } from "@/features/services/queries";
-import {
-  PanelHeading,
-  PanelEmpty,
-  appointmentLabels,
-} from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
+import { appointmentLabels } from "@/components/panels/labels";
 import { MeetInviteNotice } from "@/components/shared/meet-invite-notice";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, formatTime, formatToman } from "@/lib/format";

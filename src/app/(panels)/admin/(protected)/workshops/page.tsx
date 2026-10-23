@@ -21,7 +21,7 @@ import { adminWorkshops } from "@/features/admin/queries";
 import { AdminStatus } from "@/components/panels/admin-status";
 import { SiteToaster } from "@/components/shared/site-toaster";
 import { FilterableList } from "@/components/panels/filterable-list";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatToman } from "@/lib/format";
 export const metadata = { title: "کارگاه‌ها" };
 export default async function Page({

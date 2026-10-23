@@ -7,7 +7,7 @@ import {
 import { requireUser } from "@/lib/session";
 import { listMyResults } from "@/features/dashboard/queries";
 import { listAssessments } from "@/features/assessments/queries";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatDate, formatNumber } from "@/lib/format";
 export const metadata = { title: "خودسنجی‌های من" };
 export default async function Page() {

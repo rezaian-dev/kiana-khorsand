@@ -12,7 +12,7 @@ import { adminServices } from "@/features/admin/queries";
 import { saveService } from "@/actions/admin";
 import { AdminStatus } from "@/components/panels/admin-status";
 import { FilterableList } from "@/components/panels/filterable-list";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatToman } from "@/lib/format";
 export const metadata = { title: "خدمات" };
 export default async function Page() {

@@ -7,11 +7,8 @@ import {
 } from "@/components/panels/panel-styles";
 import { requireUser } from "@/lib/session";
 import { listMyPayments } from "@/features/dashboard/queries";
-import {
-  PanelHeading,
-  PanelEmpty,
-  paymentLabels,
-} from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
+import { paymentLabels } from "@/components/panels/labels";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, formatToman } from "@/lib/format";
 export const metadata = { title: "پرداخت‌های من" };

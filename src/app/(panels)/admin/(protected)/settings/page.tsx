@@ -12,7 +12,7 @@ import {
   revokeOtherAdminSessions,
 } from "@/actions/admin-settings";
 import { requireAdmin } from "@/lib/session";
-import { PanelEmpty } from "@/components/panels/ui";
+import { PanelEmpty } from "@/components/panels/panel-heading";
 import { PasswordChangeForm } from "@/features/dashboard/ui/password-change-form";
 import type { AdminHoursRow, AdminSettingField } from "@/types/admin-settings";
 

@@ -1,4 +1,4 @@
-import { PanelHeading } from "@/components/panels/ui";
+import { PanelHeading } from "@/components/panels/panel-heading";
 import { SiteToaster } from "@/components/shared/site-toaster";
 import { listUsers, userTotals } from "@/features/admin/users/queries";
 import { UsersManager } from "@/features/admin/users/ui/users-manager";

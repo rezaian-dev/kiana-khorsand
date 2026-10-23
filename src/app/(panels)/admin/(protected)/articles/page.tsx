@@ -7,7 +7,7 @@ import Link from "next/link";
 import { adminArticles } from "@/features/admin/queries";
 import { AdminStatus } from "@/components/panels/admin-status";
 import { FilterableList } from "@/components/panels/filterable-list";
-import { PanelHeading, PanelEmpty } from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 export const metadata = { title: "مدیریت مقاله‌ها" };
 export default async function Page() {
   const articles = await adminArticles();

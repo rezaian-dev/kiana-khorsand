@@ -20,11 +20,8 @@ import {
 } from "@/features/admin/queries";
 import { setAppointmentStatus } from "@/actions/admin";
 import { CalendarBoard } from "@/features/admin/ui/calendar-board";
-import {
-  PanelHeading,
-  PanelEmpty,
-  appointmentLabels,
-} from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
+import { appointmentLabels } from "@/components/panels/labels";
 import { formatDate, formatTime, formatNumber } from "@/lib/format";
 import { dayKey, periodFor, validDayKey } from "@/lib/tehran-calendar";
 export const metadata = { title: "تقویم و نوبت‌ها" };

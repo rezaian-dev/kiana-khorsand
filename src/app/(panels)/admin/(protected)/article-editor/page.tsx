@@ -10,7 +10,7 @@ import {
   ArticleVisualPreview,
 } from "@/features/admin/ui/article-editor-form";
 import { articleVisual } from "@/features/articles/article-visual";
-import { PanelHeading } from "@/components/panels/ui";
+import { PanelHeading } from "@/components/panels/panel-heading";
 import { ArticleCoverUpload } from "@/features/admin/ui/article-cover-upload";
 import { ArticleMarkdownEditor } from "@/features/admin/ui/article-markdown-editor";
 import {

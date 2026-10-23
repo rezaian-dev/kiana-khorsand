@@ -1,3 +1,7 @@
+/**
+ * Panel chrome: the heading block every admin/dashboard page opens with, and the
+ * empty state it shows when a list has nothing in it yet.
+ */
 import {
   panelCardClassName,
   panelStackClassName,
@@ -44,6 +48,7 @@ export function PanelHeading({
     </div>
   );
 }
+
 export function PanelEmpty({
   message,
   href,
@@ -66,16 +71,3 @@ export function PanelEmpty({
     </div>
   );
 }
-export const appointmentLabels = {
-  pending: "در انتظار تأیید",
-  confirmed: "تأییدشده",
-  completed: "انجام‌شده",
-  cancelled: "لغوشده",
-  no_show: "عدم حضور",
-} as const;
-export const paymentLabels = {
-  pending: "در انتظار پرداخت",
-  paid: "پرداخت‌شده",
-  failed: "ناموفق",
-  refunded: "برگشت‌خورده",
-} as const;

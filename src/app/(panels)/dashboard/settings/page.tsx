@@ -1,5 +1,5 @@
 import { requireUser } from "@/lib/session";
-import { PanelHeading } from "@/components/panels/ui";
+import { PanelHeading } from "@/components/panels/panel-heading";
 import { ProfileSummary } from "@/features/dashboard/ui/profile-summary";
 import { AvatarForm } from "@/features/dashboard/ui/avatar-form";
 import { SettingsForm } from "@/features/dashboard/ui/settings-form";

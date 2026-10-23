@@ -18,11 +18,8 @@ import { setPaymentStatus, createAppointmentInvoice } from "@/actions/admin";
 import { AdminCsvExport } from "@/components/panels/admin-csv-export";
 import { ManualInvoiceForm } from "@/features/admin/ui/manual-invoice-form";
 import { FilterableList } from "@/components/panels/filterable-list";
-import {
-  PanelHeading,
-  PanelEmpty,
-  paymentLabels,
-} from "@/components/panels/ui";
+import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
+import { paymentLabels } from "@/components/panels/labels";
 import { formatDate, formatTime, formatToman } from "@/lib/format";
 export const metadata = { title: "پرداخت‌ها" };
 export default async function Page() {
