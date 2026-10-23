@@ -80,6 +80,14 @@ export default function RootLayout({
       <body
         className={`${vazirmatn.variable} bg-bg text-fg [font-family:var(--font-vazirmatn),Vazirmatn,Tahoma,sans-serif] antialiased has-[.site-shell]:overflow-x-clip! has-[.site-shell]:bg-[var(--bg)]! has-[.site-shell]:text-[var(--fg)]! data-[scroll-locked]:mr-0!`}
       >
+        {/* The launch screen belongs to a cold start. A reload caused by an offline
+            navigation, or any later entry in the same session, must not replay it —
+            and the decision has to be made before the first paint to avoid a flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem("kk:boot"))document.documentElement.dataset.splash="skip"}catch(e){}`,
+          }}
+        />
         <BootSplash />
         <Providers>
           {children}

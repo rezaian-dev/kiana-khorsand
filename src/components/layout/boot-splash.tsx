@@ -14,7 +14,7 @@ export function BootSplash() {
   return (
     <div
       id="boot-splash"
-      className="animate-boot-hide fixed inset-0 z-[200] hidden place-items-center overflow-hidden [background:radial-gradient(120%_90%_at_80%_-10%,#16333c_0%,transparent_58%),radial-gradient(90%_80%_at_0%_110%,#1d2a45_0%,transparent_60%),#0a1219] text-[#f2f6f5] transition-[opacity,visibility,transform,filter] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] [@media(display-mode:fullscreen)]:grid [@media(display-mode:minimal-ui)]:grid [@media(display-mode:standalone)]:grid [[data-splash=done]_&]:pointer-events-none [[data-splash=done]_&]:invisible [[data-splash=done]_&]:scale-[1.06] [[data-splash=done]_&]:opacity-0 [[data-splash=done]_&]:blur-[6px]"
+      className="animate-boot-hide fixed inset-0 z-[200] hidden place-items-center overflow-hidden text-[#f2f6f5] transition-[opacity,visibility,transform,filter] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] [background:radial-gradient(120%_90%_at_80%_-10%,#16333c_0%,transparent_58%),radial-gradient(90%_80%_at_0%_110%,#1d2a45_0%,transparent_60%),#0a1219] [@media(display-mode:fullscreen)]:grid [@media(display-mode:minimal-ui)]:grid [@media(display-mode:standalone)]:grid [[data-splash=done]_&]:pointer-events-none [[data-splash=done]_&]:invisible [[data-splash=done]_&]:scale-[1.06] [[data-splash=done]_&]:opacity-0 [[data-splash=done]_&]:blur-[6px] [[data-splash=skip]_&]:hidden!"
     >
       {/* Aurora: two slow glows and a grain, all decorative. */}
       <div

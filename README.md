@@ -15,7 +15,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
-[![Playwright](https://img.shields.io/badge/Playwright-48_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
+[![Playwright](https://img.shields.io/badge/Playwright-50_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
 
 [![PWA](https://img.shields.io/badge/PWA-ready-0d736b?style=for-the-badge&logo=pwa&logoColor=white)](#-pwa)
 [![RTL](https://img.shields.io/badge/RTL-fa__IR-6f42c1?style=for-the-badge)](#-فارسی-و-راستبهچپ)
@@ -185,7 +185,7 @@
 | **مارک‌داون**  | markdown-it 15 + react-markdown       | ویرایش و نمایش مقاله                      |
 | **تصویر**      | sharp                                 | تبدیل آواتار به WebP مربعی، حذف EXIF      |
 | **اعلان**      | Sonner                                | توست دسترس‌پذیر                           |
-| **تست**        | Playwright                            | ۴۸ تست سرتاسری روی دسکتاپ و موبایل        |
+| **تست**        | Playwright                            | ۵۰ تست سرتاسری روی دسکتاپ و موبایل        |
 
 ---
 
@@ -281,16 +281,16 @@ npx playwright test e2e/overlays.spec.ts --ui
 | **متادیتا** (۲ تست)            | تگ‌های OG را مثل کراولر می‌خواند و همان تصویری را که اعلام کرده‌اند دانلود می‌کند                                                                                               |
 | **ورود مدیران و PWA** (۱۳ تست) | شیشه و حلقهٔ فوکوس، دکمهٔ ورود، رد حساب غیرمدیر، رسیدن به `/admin` از فرمان آدرس، بازگشت فوکوس پس از بستن شیت، صفحهٔ آفلاین، و اینکه «نصب اپ» فقط با پیشنهاد واقعی مرورگر بیاید |
 | **تجربهٔ اجرا و فیلدها** (۴ تست) | صفحهٔ راه‌اندازی در نسخهٔ نصب‌شده هست و در تب مرورگر نه؛ آماده و برداشته‌شدنش؛ تبدیل‌شدن هر فیلد به شیشهٔ بلورین هنگام فوکوس، در سایت و پنل |
-| **قرارداد PWA** (۸ تست)        | شناسه و محدودهٔ مانیفست، آیکون ۱۹۲ و ۵۱۲ در دو حالت `any` و `maskable`، اسکرین‌شات نصب، شورتکات‌ها (بدون `/admin`)، هدرهای `sw.js`، و اینکه صفحهٔ شخصی هرگز کش نشود |
+| **قرارداد PWA** (۱۰ تست)       | شناسه و محدودهٔ مانیفست، آیکون ۱۹۲ و ۵۱۲ در دو حالت `any` و `maskable`، اسکرین‌شات نصب، شورتکات‌ها (بدون `/admin`)، هدرهای `sw.js`، و اینکه صفحهٔ شخصی هرگز کش نشود |
 
-**وضعیت فعلی:** `48 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
+**وضعیت فعلی:** `50 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
 
 | متریک                 | مقدار                       |
 | :-------------------- | :-------------------------- |
 | مسیرها (`next build`) | ۶۲ — ۵ استاتیک، ۵۷ داینامیک |
 | فایل `"use client"`   | ۶۶ از ۲۹۴ فایل `src`        |
 | فایل‌های Motion       | ۱۹                          |
-| تست‌های E2E           | ۴۸ در ۹ فایل                |
+| تست‌های E2E           | ۵۰ در ۹ فایل                |
 
 ---
 
@@ -361,7 +361,7 @@ vercel --prod        # یا اتصال مخزن به Vercel
 - [x] رزرو با تقویم شمسی و پرداخت
 - [x] PWA و آفلاین
 - [x] سئو، داده ساخت‌یافته و کارت اجتماعی
-- [x] ۴۸ تست سرتاسری Playwright
+- [x] ۵۰ تست سرتاسری Playwright
 - [ ] اعلان‌های Web Push
 - [ ] پرداخت آنلاین با درگاه
 - [ ] گزارش‌های تحلیلی برای مدیر

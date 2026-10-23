@@ -20,6 +20,11 @@ export function SplashGate() {
     const release = () => {
       if (released) return;
       released = true;
+      try {
+        sessionStorage.setItem("kk:boot", "1");
+      } catch {
+        // Storage can be unavailable; the splash then simply shows again.
+      }
       const wait = Math.max(0, MIN_VISIBLE_MS - (performance.now() - started));
       window.setTimeout(() => {
         document.documentElement.dataset.splash = "done";

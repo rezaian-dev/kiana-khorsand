@@ -112,6 +112,57 @@ test.describe("service worker", () => {
     expect(signedIn.headers()["x-offline-cacheable"]).toBeUndefined();
   });
 
+  test("installs everything it needs and never hands back a dead end", async ({
+    page,
+  }) => {
+    // The reported bug: moving between pages on a connection that cannot reach the
+    // server showed a screen saying "This page couldn't load" with two dead buttons.
+    // Both the browser's and Next.js's version of that screen are unacceptable.
+    await page.goto("/");
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.register("/sw.js", {
+        updateViaCache: "none",
+      });
+      await navigator.serviceWorker.ready;
+    });
+    await page.waitForTimeout(1500);
+
+    const warmed = await page.evaluate(async () => {
+      const cache = await caches.open("kiana-v2026-10-27-pages");
+      return (await cache.keys()).length;
+    });
+    expect(warmed).toBeGreaterThanOrEqual(10);
+
+    await page.context().setOffline(true);
+    for (const path of ["/about", "/fees", "/contact"]) {
+      await page.goto(path);
+      await expect(page.getByRole("heading", { level: 1 })).not.toHaveText("");
+      await expect(page.getByText("Reload to try again")).toHaveCount(0);
+      await expect(page.getByText("couldn't load")).toHaveCount(0);
+    }
+    await page.context().setOffline(false);
+  });
+
+  test("a tap that cannot reach the server still lands on the page", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.register("/sw.js", {
+        updateViaCache: "none",
+      });
+      await navigator.serviceWorker.ready;
+    });
+    await page.waitForTimeout(1500);
+
+    await page.context().setOffline(true);
+    await page.goto("/");
+    await page.locator('a[href="/contact"]:visible').first().click();
+    await expect(page).toHaveURL(/\/contact$/);
+    await expect(page.getByRole("heading", { level: 1 })).not.toHaveText("");
+    await page.context().setOffline(false);
+  });
+
   test("a navigation never lands on the browser's error page", async ({
     page,
     context,
@@ -131,10 +182,11 @@ test.describe("service worker", () => {
     });
 
     await context.setOffline(true);
-    await page.goto("/fees"); // never visited, nothing cached anywhere
+    await page.goto("/fees"); // nothing cached anywhere at all
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
       "آفلاین",
     );
+    await expect(page.getByText("Reload to try again")).toHaveCount(0);
     await context.setOffline(false);
   });
 
