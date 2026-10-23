@@ -6,7 +6,12 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "کیانا خرسند",
     description:
       "جایی امن برای فهمیدن و تغییر — مشاوره حضوری و آنلاین، کارگاه‌ها و نوشته‌های کوتاه.",
+    id: "/",
     start_url: "/",
+    // A link that belongs to the app should move the window that is already open
+    // instead of spawning a second one — this is what makes a typed `/admin` land
+    // in the installed app rather than beside it.
+    launch_handler: { client_mode: ["navigate-existing", "auto"] },
     display: "standalone",
     display_override: ["window-controls-overlay", "standalone", "browser"],
     orientation: "portrait",

@@ -1,5 +1,5 @@
 /* Kiana PWA — per https://nextjs.org/docs/app/guides/progressive-web-apps and Workbox strategies */
-const CACHE_VERSION = "kiana-v2026-10-23";
+const CACHE_VERSION = "kiana-v2026-10-24";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const OFFLINE_URL = "/offline";
 const PRECACHE = [OFFLINE_URL, "/manifest.webmanifest", "/icon.svg"];
@@ -11,7 +11,9 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(STATIC_CACHE)
-      .then((cache) => Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => {}))))
+      .then((cache) =>
+        Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => {}))),
+      )
       .then(() => self.skipWaiting()),
   );
 });
@@ -21,7 +23,11 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== STATIC_CACHE).map((k) => caches.delete(k))))
+      .then((keys) =>
+        Promise.all(
+          keys.filter((k) => k !== STATIC_CACHE).map((k) => caches.delete(k)),
+        ),
+      )
       .then(() => self.clients.claim()),
   );
 });
@@ -30,19 +36,52 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "CLEAR_PRIVATE_CACHE") {
     event.waitUntil(
-      caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k)))),
+      caches
+        .keys()
+        .then((keys) => Promise.all(keys.map((k) => caches.delete(k)))),
     );
   }
 });
 
-const PRIVATE_PREFIXES = ["/dashboard", "/admin", "/login", "/register", "/book", "/api/"];
+const PRIVATE_PREFIXES = [
+  "/dashboard",
+  "/admin",
+  "/login",
+  "/register",
+  "/book",
+  "/api/",
+];
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
-  // Never cache private navigations or API (F4)
-  if (PRIVATE_PREFIXES.some((p) => url.pathname === p || url.pathname.startsWith(`${p}/`))) return;
+  // Private pages are never cached (F4). They still get the offline page when the
+  // network is gone — otherwise the installed app would show the browser's error
+  // page, which looks like the panel itself is broken.
+  if (
+    PRIVATE_PREFIXES.some(
+      (p) => url.pathname === p || url.pathname.startsWith(`${p}/`),
+    )
+  ) {
+    if (req.mode === "navigate") {
+      event.respondWith(
+        fetch(req).catch(async () => {
+          // Show the offline page instead of the browser's error page, which in an
+          // installed app makes the panel itself look broken.
+          const offline = await caches.match(OFFLINE_URL);
+          return (
+            offline ||
+            new Response("Offline", {
+              status: 503,
+              headers: { "content-type": "text/plain; charset=utf-8" },
+            })
+          );
+        }),
+      );
+    }
+    return;
+  }
   // Only handle same-origin
   if (url.origin !== self.location.origin) return;
 
@@ -60,7 +99,9 @@ self.addEventListener("fetch", (event) => {
           caches.open(STATIC_CACHE).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req).then((c) => c || caches.match(OFFLINE_URL))),
+        .catch(() =>
+          caches.match(req).then((c) => c || caches.match(OFFLINE_URL)),
+        ),
     );
     return;
   }

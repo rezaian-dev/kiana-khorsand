@@ -14,6 +14,7 @@ import { DesktopNavigation } from "@/components/layout/desktop-navigation";
 import { PublicHoverLink } from "@/components/layout/public-hover-link";
 import { UserRoundPlus } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { PwaAddress } from "@/components/layout/pwa-address";
 import { supportPreview } from "@/features/dashboard/support-preview";
 
 export async function Header() {
@@ -41,6 +42,7 @@ export async function Header() {
             </Link>
             <DesktopNavigation />
             <div className="flex items-center gap-1.5 max-[350px]:gap-[.3rem]!">
+              <PwaAddress />
               <ThemeToggle className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--fg)] [box-shadow:var(--shadow-soft)]" />
               {session ? (
                 <AccountMenu

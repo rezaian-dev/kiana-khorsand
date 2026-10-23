@@ -15,7 +15,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
-[![Playwright](https://img.shields.io/badge/Playwright-24_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
+[![Playwright](https://img.shields.io/badge/Playwright-32_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
 
 [![PWA](https://img.shields.io/badge/PWA-ready-0d736b?style=for-the-badge&logo=pwa&logoColor=white)](#-pwa)
 [![RTL](https://img.shields.io/badge/RTL-fa__IR-6f42c1?style=for-the-badge)](#-فارسی-و-راستبهچپ)
@@ -60,6 +60,16 @@
 <img src="docs/screenshots/home-mobile.webp" alt="نمای موبایل" height="430" />
 &nbsp;&nbsp;
 <img src="docs/screenshots/admin-panel.webp" alt="پنل مدیریت" width="620" />
+</p>
+
+**ورود مدیران — شیشهٔ نازک، حلقهٔ فوکوس یک‌پیکسلی**
+
+<img src="docs/screenshots/admin-login.webp" alt="صفحه ورود مدیران" width="72%" />
+
+<p>
+<img src="docs/screenshots/admin-login-dark.webp" alt="ورود مدیران — تم تاریک" width="48%" />
+&nbsp;&nbsp;
+<img src="docs/screenshots/pwa-address.webp" alt="فرمان «رفتن به آدرس» در نسخه نصب‌شده" height="300" />
 </p>
 
 </div>
@@ -119,6 +129,7 @@
 - ورود/ثبت‌نام با **شمارهٔ موبایل + رمز عبور** روی [Better Auth](https://www.better-auth.com)
 - دو مسیر ورود مستقل: کاربر عادی از `/login` و مدیر فقط از `/admin/login`
 - ادمین بیرون از پنل مثل هر کاربر دیگری رفتار می‌کند — هیچ لینکی به پنل در منوی حساب او نیست
+- ورودی مدیران یک صفحهٔ مستقل با فیلدهای شیشه‌ای است: پلیت نیمه‌شفاف با بلور پس‌زمینه، خط مویی در حالت عادی و یک حلقهٔ یک‌پیکسلی همرنگ برند هنگام فوکوس
 - محافظت از مسیرها در سه لایه: `middleware`، چک نقش در Server Action و بررسی مالکیت داده
 - محدودسازی تلاش ورود (HMAC روی شمارهٔ موبایل + پنجرهٔ زمانی ۱۵ دقیقه)
 
@@ -138,6 +149,9 @@
   - **network-first** برای ناوبری، با صفحهٔ آفلاین به‌عنوان جایگزین
   - هیچ مسیر خصوصی (`/admin`, `/dashboard`, `/api`) هرگز کش نمی‌شود
 - پاک‌سازی کش خصوصی هنگام خروج
+- در نسخهٔ نصب‌شده نوار آدرس وجود ندارد؛ فرمان **«رفتن به آدرس»** در هدر همان کار را می‌کند. کافی است `/admin` وارد شود تا صفحهٔ ورود مدیران باز شود (یا `Ctrl/⌘ + K`). فقط مسیرهای همین سایت پذیرفته می‌شوند
+- `launch_handler: navigate-existing` — لینکی که به اپ تعلق دارد، پنجرهٔ بازِ همان اپ را هدایت می‌کند نه یک پنجرهٔ تازه
+- آفلاین: مسیرهای خصوصی هرگز کش نمی‌شوند، اما به‌جای خطای مرورگر صفحهٔ «شما آفلاین هستید» را نشان می‌دهند
 
 ### 🔎 سئو و اشتراک‌گذاری
 
@@ -257,14 +271,14 @@ npx playwright test e2e/overlays.spec.ts --ui
 | **اورلی‌ها** (۴ تست)      | `Select` باز باید با ضربهٔ دوم، Escape و ضربهٔ بیرون بسته شود — روی لمسی هم       |
 | **متادیتا** (۲ تست)       | تگ‌های OG را مثل کراولر می‌خواند و همان تصویری را که اعلام کرده‌اند دانلود می‌کند |
 
-**وضعیت فعلی:** `24 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
+**وضعیت فعلی:** `32 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
 
 | متریک                 | مقدار                       |
 | :-------------------- | :-------------------------- |
 | مسیرها (`next build`) | ۶۲ — ۵ استاتیک، ۵۷ داینامیک |
 | فایل `"use client"`   | ۶۶ از ۲۹۴ فایل `src`        |
 | فایل‌های Motion       | ۱۹                          |
-| تست‌های E2E           | ۲۴ در ۶ فایل                |
+| تست‌های E2E           | ۳۲ در ۷ فایل                |
 
 ---
 
@@ -334,7 +348,7 @@ vercel --prod        # یا اتصال مخزن به Vercel
 - [x] رزرو با تقویم شمسی و پرداخت
 - [x] PWA و آفلاین
 - [x] سئو، داده ساخت‌یافته و کارت اجتماعی
-- [x] ۲۴ تست سرتاسری Playwright
+- [x] ۳۲ تست سرتاسری Playwright
 - [ ] اعلان‌های Web Push
 - [ ] پرداخت آنلاین با درگاه
 - [ ] گزارش‌های تحلیلی برای مدیر

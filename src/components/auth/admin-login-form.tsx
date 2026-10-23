@@ -1,52 +1,80 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
-import { Eye, EyeOff, LoaderCircle, LogIn, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useActionState, useId, useState } from "react";
+import {
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  LoaderCircle,
+  Lock,
+  ShieldAlert,
+  Smartphone,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { adminLoginAction } from "@/actions/admin-auth";
 import type { AuthState } from "@/types/auth";
 
 const initial: AuthState = { error: "", fields: {} };
 
+/** Glass plate: hairline at rest, one precise ring plus a soft glow on focus. */
+const fieldClass =
+  "admin-gate-field h-12 w-full min-w-0 ps-11 pe-4 text-[.95rem] text-[var(--site-ink)] placeholder:text-[#98a1b6] focus-visible:ring-0 dark:text-[#eef3ff] dark:placeholder:text-[#8b93a8]";
+
+const fieldIconClass =
+  "pointer-events-none absolute inset-y-0 start-3.5 grid place-items-center text-[#8b94a9] transition-colors peer-focus:text-[var(--c-teal)] dark:text-[#8b93a8] dark:peer-focus:text-[#7de3d3]";
+
 const labelClass =
-  "mb-1.5 block text-[.82rem] font-bold text-[var(--site-ink)]";
-const fieldErrorClass =
-  "mt-1.5 text-[.78rem] font-bold text-[#a12441] dark:text-[#ff9eaf]";
-const inputClass =
-  "h-11 rounded-[.8rem] border-[var(--site-line)] bg-white/90 px-3 text-[.95rem] text-[var(--site-ink)] shadow-[inset_0_1px_0_#ffffff80] placeholder:text-[var(--site-muted)] focus-visible:border-[var(--c-teal)] focus-visible:ring-[color:color-mix(in_srgb,var(--c-teal)_28%,transparent)] dark:bg-white/5";
+  "mb-2 block text-[.8rem] font-extrabold tracking-[.01em] text-[var(--site-muted)]";
+
+const hintClass =
+  "mt-2 flex items-start gap-1.5 text-[.76rem] font-bold text-[#a12441] dark:text-[#ffb3c1]";
 
 /**
- * Administrator sign-in form. Deliberately separate from `AuthForm`: this entrance
- * never links to registration, never restores a forgotten password, and reports a
- * non-admin account as "no access" instead of signing it in.
+ * Administrator sign-in. Deliberately separate from `AuthForm`: no registration,
+ * no password recovery, and a non-admin account is rejected instead of signed in.
+ *
+ * In an installed PWA there is no address bar, so this page is also the landing spot
+ * for `/admin` entered through the in-app address command (see `PwaAddress`).
  */
 export function AdminLoginForm() {
   const [state, action, pending] = useActionState(adminLoginAction, initial);
   const [visible, setVisible] = useState(false);
+  const [capsLock, setCapsLock] = useState(false);
+  const errorId = useId();
 
   return (
-    <form action={action} noValidate className="grid gap-4">
+    <form action={action} noValidate className="grid gap-[1.15rem]">
       <div>
         <label className={labelClass} htmlFor="admin-phone">
           شمارهٔ موبایل مدیر
         </label>
-        <Input
-          id="admin-phone"
-          name="phone"
-          type="tel"
-          dir="ltr"
-          inputMode="numeric"
-          autoComplete="username"
-          placeholder="09XXXXXXXXX"
-          required
-          className={`${inputClass} text-start tracking-[.02em]`}
-          aria-invalid={Boolean(state.fields.phone)}
-          aria-describedby={state.fields.phone ? "admin-phone-error" : undefined}
-        />
+        <div className="relative">
+          <Input
+            id="admin-phone"
+            name="phone"
+            type="tel"
+            dir="ltr"
+            inputMode="numeric"
+            autoComplete="username"
+            placeholder="09XXXXXXXXX"
+            required
+            className={`peer ${fieldClass} text-start tracking-[.035em]`}
+            aria-invalid={Boolean(state.fields.phone)}
+            aria-describedby={
+              state.fields.phone ? "admin-phone-error" : undefined
+            }
+          />
+          <span className={fieldIconClass} aria-hidden="true">
+            <Smartphone className="size-[1.05rem]" />
+          </span>
+        </div>
         {state.fields.phone && (
-          <p id="admin-phone-error" className={fieldErrorClass}>
+          <p id="admin-phone-error" className={hintClass}>
+            <ShieldAlert
+              className="mt-px size-3.5 flex-none"
+              aria-hidden="true"
+            />
             {state.fields.phone}
           </p>
         )}
@@ -64,61 +92,93 @@ export function AdminLoginForm() {
             autoComplete="current-password"
             required
             minLength={8}
-            className={`${inputClass} pe-11`}
+            className={`peer ${fieldClass} pe-12`}
             aria-invalid={Boolean(state.fields.password)}
             aria-describedby={
               state.fields.password ? "admin-password-error" : undefined
             }
+            onKeyDown={(event) =>
+              setCapsLock(event.getModifierState("CapsLock"))
+            }
+            onKeyUp={(event) => setCapsLock(event.getModifierState("CapsLock"))}
+            onBlur={() => setCapsLock(false)}
           />
+          <span className={fieldIconClass} aria-hidden="true">
+            <Lock className="size-[1.05rem]" />
+          </span>
           <button
             type="button"
             onClick={() => setVisible((value) => !value)}
             aria-label={visible ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}
-            className="absolute inset-y-0 end-0 grid w-11 place-items-center rounded-e-[.8rem] text-[var(--site-muted)] transition-colors hover:text-[var(--site-ink)] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)]"
+            aria-pressed={visible}
+            className="absolute inset-y-0 end-0 grid w-12 cursor-pointer place-items-center rounded-e-[.95rem] text-[#8b94a9] transition-colors hover:text-[var(--site-ink)] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--c-teal)] dark:text-[#8b93a8] dark:hover:text-[#eef3ff]"
           >
-            {visible ? <EyeOff size={18} /> : <Eye size={18} />}
+            {visible ? (
+              <EyeOff className="size-[1.05rem]" />
+            ) : (
+              <Eye className="size-[1.05rem]" />
+            )}
           </button>
         </div>
         {state.fields.password && (
-          <p id="admin-password-error" className={fieldErrorClass}>
+          <p id="admin-password-error" className={hintClass}>
+            <ShieldAlert
+              className="mt-px size-3.5 flex-none"
+              aria-hidden="true"
+            />
             {state.fields.password}
+          </p>
+        )}
+        {capsLock && !state.fields.password && (
+          <p className="mt-2 text-[.76rem] font-bold text-[#8a5a00] dark:text-[#f0c982]">
+            کلید Caps Lock روشن است.
           </p>
         )}
       </div>
 
       {state.error && (
         <p
+          id={errorId}
           role="alert"
-          className="flex items-start gap-2 rounded-[.8rem] border border-[#e7b8c2] bg-[#fdf0f3] px-3 py-2.5 text-[.82rem] leading-6 font-bold text-[#8f1f3c] dark:border-[#7a3a4b] dark:bg-[#3a1f2a] dark:text-[#ffc6d2]"
+          className="flex items-start gap-2 rounded-[.9rem] border border-[#e7b8c2] bg-[#fdf0f3]/85 px-3.5 py-2.5 text-[.82rem] leading-6 font-bold text-[#8f1f3c] backdrop-blur-sm dark:border-[#7a3a4b] dark:bg-[#3a1f2a]/85 dark:text-[#ffc6d2]"
         >
-          <ShieldCheck className="mt-0.5 size-4 flex-none" aria-hidden="true" />
+          <ShieldAlert className="mt-0.5 size-4 flex-none" aria-hidden="true" />
           {state.error}
         </p>
       )}
 
-      <Button
+      <button
         type="submit"
         disabled={pending}
-        className="mt-1 h-11 w-full cursor-pointer gap-2 rounded-[.8rem] bg-[var(--c-teal)] text-[.95rem] font-extrabold text-white shadow-[0_14px_30px_-18px_var(--c-teal)] transition-[filter,transform] hover:brightness-105 active:translate-y-px disabled:cursor-wait disabled:opacity-80"
+        className="admin-gate-cta group mt-1 inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[.95rem] text-[.95rem] font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)] disabled:cursor-wait disabled:opacity-85 md:h-[3.15rem]"
       >
         {pending ? (
           <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
         ) : (
-          <LogIn className="size-4" aria-hidden="true" />
+          <Lock
+            className="size-4 transition-transform duration-200 group-hover:-rotate-6"
+            aria-hidden="true"
+          />
         )}
         {pending ? "در حال بررسی…" : "ورود به پنل مدیریت"}
-      </Button>
+        {!pending && (
+          <ArrowLeft
+            className="size-4 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+            aria-hidden="true"
+          />
+        )}
+      </button>
 
-      <div className="mt-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[var(--site-line)] pt-4 text-[.8rem]">
+      <div className="mt-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-white/60 pt-4 text-[.79rem] dark:border-white/10">
         <Link
           href="/login"
-          className="font-bold text-[var(--site-muted)] underline-offset-4 hover:text-[var(--c-teal)] hover:underline"
+          className="font-bold text-[var(--site-muted)] underline-offset-4 transition-colors hover:text-[var(--c-teal)] hover:underline"
         >
           ورود کاربران
         </Link>
         <Link
           href="/"
-          className="font-bold text-[var(--site-muted)] underline-offset-4 hover:text-[var(--c-teal)] hover:underline"
+          className="font-bold text-[var(--site-muted)] underline-offset-4 transition-colors hover:text-[var(--c-teal)] hover:underline"
         >
           بازگشت به سایت
         </Link>
