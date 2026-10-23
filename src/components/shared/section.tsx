@@ -3,8 +3,8 @@ import {
   siteContainerClassName,
   siteGridClassName,
   siteHeadingClassName,
-} from "@/components/shared/public-layout-classes";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+} from "@/components/shared/site-styles";
+import { ScrollReveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import { Prose } from "./prose";
 import type { SectionData } from "@/types/models";

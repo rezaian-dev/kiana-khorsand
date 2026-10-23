@@ -29,6 +29,10 @@ export const adminLinks: readonly PanelLink[] = [
   { href: "/admin/services", label: "خدمات درمانی", icon: Stethoscope },
   { href: "/admin/articles", label: "مقالات", icon: FileText },
   { href: "/admin/workshops", label: "کارگاه‌ها", icon: GraduationCap },
-  { href: "/admin/testimonials", label: "دیدگاه مراجعین", icon: MessagesSquare },
+  {
+    href: "/admin/testimonials",
+    label: "دیدگاه مراجعین",
+    icon: MessagesSquare,
+  },
   { href: "/admin/settings", label: "تنظیمات سایت", icon: Settings },
 ] as const;

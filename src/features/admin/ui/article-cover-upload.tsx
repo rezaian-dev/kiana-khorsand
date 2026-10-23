@@ -1,6 +1,7 @@
 "use client";
 
-import { panelErrorClassName } from "@/components/panels/panel-layout-classes";
+import { panelErrorClassName } from "@/components/panels/panel-styles";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 

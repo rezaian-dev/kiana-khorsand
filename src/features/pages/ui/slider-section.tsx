@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  publicContainerClassName,
+  publicSectionClassName,
+  publicEyebrowClassName,
+  publicH2ClassName,
+  publicButtonSoftClassName,
+} from "@/components/layout/public-styles";
+
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { useSlider } from "@/components/slider/use-slider";
@@ -10,15 +18,6 @@ import {
   SliderViewport,
 } from "@/components/slider/slider";
 import { SliderControls } from "@/components/slider/slider-controls";
-import {
-  publicContainerClassName,
-  publicSectionClassName,
-} from "@/components/layout/public-layout-classes";
-import {
-  publicEyebrowClassName,
-  publicH2ClassName,
-} from "@/components/layout/public-type-classes";
-import { publicButtonSoftClassName } from "@/components/layout/public-button-classes";
 
 /**
  * Client shell around the shared slider. All card content arrives as `slides`
@@ -85,8 +84,10 @@ export function SliderSection({
         <div
           className={`${publicContainerClassName} flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start`}
         >
-          <div className="min-w-0 max-w-[52ch]">
-            <p className={`${publicEyebrowClassName} ${editorial ? "text-[#19776e]! dark:text-[#9ce5d2]!" : ""}`}>
+          <div className="max-w-[52ch] min-w-0">
+            <p
+              className={`${publicEyebrowClassName} ${editorial ? "text-[#19776e]! dark:text-[#9ce5d2]!" : ""}`}
+            >
               {eyebrow}
             </p>
             <h2

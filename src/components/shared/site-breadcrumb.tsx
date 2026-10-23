@@ -2,7 +2,7 @@ import { House } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { absoluteUrl } from "@/lib/site-urls";
 import { StructuredData } from "./structured-data";
-import { BreadcrumbMotionLink } from "./breadcrumb-motion-link";
+import { MotionLink } from "@/components/motion/motion-link";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -68,10 +68,10 @@ export function SiteBreadcrumb({
         <BreadcrumbList className="flex min-w-0 flex-nowrap items-center gap-0.5">
           <BreadcrumbItem className="shrink-0">
             <BreadcrumbLink asChild className={link}>
-              <BreadcrumbMotionLink href="/" aria-label="صفحهٔ نخست">
+              <MotionLink href="/" aria-label="صفحهٔ نخست">
                 <House size={15} aria-hidden="true" className="shrink-0" />
                 <span className="hidden sm:inline">صفحهٔ نخست</span>
-              </BreadcrumbMotionLink>
+              </MotionLink>
             </BreadcrumbLink>
           </BreadcrumbItem>
 
@@ -81,9 +81,9 @@ export function SiteBreadcrumb({
             <>
               <BreadcrumbItem className="max-w-[42%] min-w-0 shrink-0 sm:max-w-[16rem]">
                 <BreadcrumbLink asChild className={link}>
-                  <BreadcrumbMotionLink href={parent.href}>
+                  <MotionLink href={parent.href}>
                     <span className="truncate">{parent.label}</span>
-                  </BreadcrumbMotionLink>
+                  </MotionLink>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className={separator} />

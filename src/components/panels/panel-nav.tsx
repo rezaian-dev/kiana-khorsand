@@ -1,13 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { panelSheetClassName } from "./panel-layout-classes";
-import { DockSpotlight } from "@/components/layout/dock-spotlight";
 import {
   mobileDockClassName,
   mobileDockIconClassName,
   mobileDockItemClassName,
-} from "@/components/layout/mobile-dock-classes";
+} from "@/components/layout/public-styles";
+
+import Link from "next/link";
+import { panelSheetClassName } from "./panel-styles";
+import { DockSpotlight } from "@/components/layout/dock-spotlight";
+
 import type { PanelLink } from "@/types/navigation";
 import { usePathname } from "next/navigation";
 import {
@@ -34,14 +36,26 @@ export const clientLinks = [
   { href: "/dashboard", label: "پیشخوان", icon: LayoutDashboard },
   { href: "/dashboard/appointments", label: "نوبت‌های من", icon: CalendarDays },
   { href: "/dashboard/notes", label: "یادداشت‌های شخصی", icon: FileText },
-  { href: "/dashboard/assessments", label: "ارزیابی‌های روان‌شناختی", icon: ClipboardList },
+  {
+    href: "/dashboard/assessments",
+    label: "ارزیابی‌های روان‌شناختی",
+    icon: ClipboardList,
+  },
   {
     href: "/dashboard/messages",
     label: "پیام‌ها و اعلان‌ها",
     icon: MessageCircle,
   },
-  { href: "/dashboard/payments", label: "پرداخت‌ها و صورتحساب‌ها", icon: CreditCard },
-  { href: "/dashboard/courses", label: "دوره‌های آموزشی من", icon: GraduationCap },
+  {
+    href: "/dashboard/payments",
+    label: "پرداخت‌ها و صورتحساب‌ها",
+    icon: CreditCard,
+  },
+  {
+    href: "/dashboard/courses",
+    label: "دوره‌های آموزشی من",
+    icon: GraduationCap,
+  },
   { href: "/dashboard/settings", label: "تنظیمات حساب کاربری", icon: Settings },
 ] as const;
 
@@ -111,8 +125,14 @@ export function PanelNav({
                 aria-current={path === href ? "page" : undefined}
               >
                 {path === href && <DockSpotlight />}
-                <span className={`${mobileDockIconClassName} relative z-10 ${path === href ? "text-white" : ""}`}>
-                  <Icon size={24} aria-hidden="true" className="relative z-10" />
+                <span
+                  className={`${mobileDockIconClassName} relative z-10 ${path === href ? "text-white" : ""}`}
+                >
+                  <Icon
+                    size={24}
+                    aria-hidden="true"
+                    className="relative z-10"
+                  />
                 </span>
                 <span className="relative z-10">
                   {href === "/dashboard"
@@ -133,8 +153,14 @@ export function PanelNav({
                 aria-current={extraActive ? "page" : undefined}
               >
                 {extraActive && <DockSpotlight />}
-                <span className={`${mobileDockIconClassName} relative z-10 ${extraActive ? "text-white" : ""}`}>
-                  <LayoutGrid size={24} aria-hidden="true" className="relative z-10" />
+                <span
+                  className={`${mobileDockIconClassName} relative z-10 ${extraActive ? "text-white" : ""}`}
+                >
+                  <LayoutGrid
+                    size={24}
+                    aria-hidden="true"
+                    className="relative z-10"
+                  />
                 </span>
                 <span className="relative z-10">بیشتر</span>
               </button>

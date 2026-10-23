@@ -4,7 +4,7 @@ import {
   panelStackClassName,
   panelMutedClassName,
   panelMetaClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { requireUser } from "@/lib/session";
 import { listMyAppointments } from "@/features/dashboard/queries";

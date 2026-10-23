@@ -20,7 +20,8 @@ export function parseAdminCredentials(form: FormData): AdminCredentials {
   const password = String(form.get("password") ?? "");
   const fields: AuthState["fields"] = {};
 
-  if (!PHONE.test(phone)) fields.phone = "شماره را به‌شکل ۰۹XXXXXXXXX وارد کنید.";
+  if (!PHONE.test(phone))
+    fields.phone = "شماره را به‌شکل ۰۹XXXXXXXXX وارد کنید.";
   if (password.length < 8) fields.password = "رمز عبور را کامل وارد کنید.";
 
   return { phone, password, fields };

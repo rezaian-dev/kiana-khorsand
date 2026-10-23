@@ -1,5 +1,7 @@
 "use client";
-import { publicCardClassName } from "@/components/layout/public-card-classes";
+
+import { publicCardClassName } from "@/components/layout/public-styles";
+
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 

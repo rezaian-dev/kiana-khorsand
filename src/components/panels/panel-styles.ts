@@ -1,7 +1,22 @@
+/**
+ * Design tokens for the account and admin panels.
+ *
+ * Same rule as the public site: every panel surface, form and control is described once,
+ * here, and the panel components stay readable.
+ */
+/** Shared admin heading and status skin used by the overview, calendar and availability pages. */
+export const adminOverviewHeadingClassName =
+  "admin-overview-panel-heading mb-4 flex items-center justify-between gap-4";
+export const adminOverviewTitleClassName = "text-[1.12rem]! font-extrabold";
+export const adminOverviewLinkClassName =
+  "inline-flex items-center gap-[.35rem] whitespace-nowrap text-[.82rem] font-bold text-[var(--ar-brand-ink)]";
+export const adminOverviewStatusClassName =
+  "admin-overview-status ms-auto rounded-[99px] bg-[var(--ar-brand-soft)] px-[.6rem] py-[.2rem] text-center text-[.75rem] font-bold text-[var(--ar-brand-ink)]! max-[480.02px]:ms-0 [&.status-cancelled]:bg-[var(--ar-danger-soft)] [&.status-cancelled]:text-[var(--ar-danger)]!";
+
 import {
   fieldPolishClassName,
   fieldReducedMotionClassName,
-} from "@/components/layout/field-polish-classes";
+} from "@/components/layout/public-styles";
 
 /** Shared panel shell for account and admin; native details and their pseudo-content keep a no-JS disclosure fallback. */
 export const panelShellClassName =

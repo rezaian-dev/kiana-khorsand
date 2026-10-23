@@ -1,4 +1,4 @@
-import { siteDetailClassName } from "@/components/shared/public-layout-classes";
+import { siteDetailClassName } from "@/components/shared/site-styles";
 import Link from "next/link";
 import { Intro } from "@/components/shared/intro";
 import { labels } from "@/lib/labels";

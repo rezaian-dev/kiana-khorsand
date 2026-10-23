@@ -27,7 +27,10 @@ export async function createBooking(
     status: "pending",
   });
   if (pendingCount >= BOOKING_PENDING_CAP) {
-    return { error: `حداکثر ${BOOKING_PENDING_CAP} نوبت در انتظار می‌توانید داشته باشید.`, id: "" };
+    return {
+      error: `حداکثر ${BOOKING_PENDING_CAP} نوبت در انتظار می‌توانید داشته باشید.`,
+      id: "",
+    };
   }
   const service = await collection("services").findOne({
     slug: parsed.data.serviceId,

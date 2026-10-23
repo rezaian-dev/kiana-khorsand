@@ -2,7 +2,7 @@ import {
   siteContainerClassName,
   siteDetailClassName,
   siteHeadingClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import type { ReceiptPageProps } from "@/types/routes";
 import Link from "next/link";
 import { ObjectId } from "mongodb";

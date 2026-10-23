@@ -1,21 +1,17 @@
-import { BrandMark } from "@/components/shared/brand-mark";
-import { publicButtonPrimaryClassName } from "@/components/layout/public-button-classes";
 import {
+  publicButtonPrimaryClassName,
   publicBlobClassName,
   publicGlassClassName,
-} from "@/components/layout/public-visual-classes";
-import {
   publicH2ClassName,
   publicLeadClassName,
-} from "@/components/layout/public-type-classes";
-import { publicContainerClassName } from "@/components/layout/public-layout-classes";
+  publicContainerClassName,
+} from "@/components/layout/public-styles";
+import { BrandMark } from "@/components/shared/brand-mark";
+
 import Link from "next/link";
-import {
-  FooterMotionLink,
-  FooterScrollTopLink,
-} from "@/components/layout/footer-motion-link";
+import { MotionLink } from "@/components/motion/motion-link";
 import { FooterSocialLink } from "@/components/layout/footer-social-link";
-import { PublicHoverLink } from "@/components/layout/public-hover-link";
+import { MotionAnchor } from "@/components/motion/motion-link";
 import { getSettings } from "@/features/settings/queries";
 import { listAreas } from "@/features/areas/queries";
 
@@ -54,7 +50,7 @@ export async function Footer() {
                   مسیر روشن‌تر شود.
                 </p>
               </div>
-              <PublicHoverLink
+              <MotionAnchor
                 href="/book"
                 className={`${publicButtonPrimaryClassName} w-full md:w-auto`}
               >
@@ -63,7 +59,7 @@ export async function Footer() {
                   aria-hidden="true"
                 />
                 انتخاب زمان جلسه
-              </PublicHoverLink>
+              </MotionAnchor>
             </div>
           </div>
         </div>
@@ -99,12 +95,12 @@ export async function Footer() {
                 <ul className="mt-4 flex flex-col gap-2.5">
                   {quick.map(([href, label]) => (
                     <li key={href}>
-                      <FooterMotionLink
+                      <MotionLink
                         className="footer-link text-sm text-[var(--muted)] no-underline hover:text-[var(--fg)]"
                         href={href}
                       >
                         {label}
-                      </FooterMotionLink>
+                      </MotionLink>
                     </li>
                   ))}
                 </ul>
@@ -114,12 +110,12 @@ export async function Footer() {
                 <ul className="mt-4 flex flex-col gap-2.5">
                   {areas.slice(0, 5).map((area) => (
                     <li key={area.slug}>
-                      <FooterMotionLink
+                      <MotionLink
                         className="footer-link text-sm text-[var(--muted)] no-underline hover:text-[var(--fg)]"
                         href={`/areas/${area.slug}`}
                       >
                         {area.title}
-                      </FooterMotionLink>
+                      </MotionLink>
                     </li>
                   ))}
                 </ul>
@@ -179,31 +175,37 @@ export async function Footer() {
               </p>
               <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
                 <li>
-                  <FooterMotionLink
+                  <MotionLink
                     href="/privacy"
                     className="footer-legal text-[var(--muted)] no-underline hover:text-[var(--fg)]"
                   >
                     حریم خصوصی
-                  </FooterMotionLink>
+                  </MotionLink>
                 </li>
                 <li>
-                  <FooterMotionLink
+                  <MotionLink
                     href="/terms"
                     className="footer-legal text-[var(--muted)] no-underline hover:text-[var(--fg)]"
                   >
                     شرایط استفاده
-                  </FooterMotionLink>
+                  </MotionLink>
                 </li>
                 <li>
-                  <FooterMotionLink
+                  <MotionLink
                     href="/cancellation"
                     className="footer-legal text-[var(--muted)] no-underline hover:text-[var(--fg)]"
                   >
                     شرایط لغو
-                  </FooterMotionLink>
+                  </MotionLink>
                 </li>
               </ul>
-              <FooterScrollTopLink />
+              <a
+                href="#main"
+                aria-label="بازگشت به بالای صفحه"
+                className="grid size-11 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] shadow-sm transition-colors hover:border-[var(--c-teal)] hover:text-[var(--c-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)]"
+              >
+                <i className="ph-bold ph-arrow-up" aria-hidden="true" />
+              </a>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import {
   panelButtonClassName,
   panelMutedClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 
 import Image from "next/image";
 import { safeAvatarUrl } from "@/lib/avatar-url";

@@ -1,7 +1,7 @@
 import {
   siteContainerClassName,
   siteDetailClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import Image from "next/image";
 import Link from "next/link";
 import {

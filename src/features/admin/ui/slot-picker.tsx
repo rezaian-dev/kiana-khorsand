@@ -1,6 +1,7 @@
 "use client";
 
-import { panelMutedClassName } from "@/components/panels/panel-layout-classes";
+import { panelMutedClassName } from "@/components/panels/panel-styles";
+
 import { useState } from "react";
 import { Clock3 } from "lucide-react";
 import { m } from "motion/react";

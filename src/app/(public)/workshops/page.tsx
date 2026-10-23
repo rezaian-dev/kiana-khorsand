@@ -1,7 +1,7 @@
 import {
   siteContainerClassName,
   siteGridClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import { publicMetadata } from "@/lib/public-metadata";
 import Link from "next/link";
 import { RotateCcw, Search } from "lucide-react";

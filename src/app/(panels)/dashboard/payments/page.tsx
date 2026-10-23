@@ -4,7 +4,7 @@ import {
   panelStackClassName,
   panelMutedClassName,
   panelMetaClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import { requireUser } from "@/lib/session";
 import { listMyPayments } from "@/features/dashboard/queries";
 import {

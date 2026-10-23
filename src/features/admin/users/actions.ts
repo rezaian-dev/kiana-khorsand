@@ -27,7 +27,8 @@ async function currentAdminId() {
   return session?.user.role === "admin" ? session.user.id : null;
 }
 
-const isLastAdmin = async () => (await collection("users").countDocuments({ role: "admin" })) <= 1;
+const isLastAdmin = async () =>
+  (await collection("users").countDocuments({ role: "admin" })) <= 1;
 
 function refresh() {
   revalidatePath("/admin/users");
@@ -41,8 +42,10 @@ export async function setUserRole(
 ): Promise<UserActionResult> {
   const adminId = await currentAdminId();
   if (!adminId) return DENIED;
-  if (role !== "admin" && role !== "user") return { ok: false, message: "نقش نامعتبر است." };
-  if (!ObjectId.isValid(userId)) return { ok: false, message: "کاربر یافت نشد." };
+  if (role !== "admin" && role !== "user")
+    return { ok: false, message: "نقش نامعتبر است." };
+  if (!ObjectId.isValid(userId))
+    return { ok: false, message: "کاربر یافت نشد." };
   if (userId === adminId)
     return {
       ok: false,
@@ -54,7 +57,8 @@ export async function setUserRole(
     { projection: { role: 1 } },
   );
   if (!target) return { ok: false, message: "کاربر یافت نشد." };
-  if (target.role === role) return { ok: true, message: "نقش این حساب از قبل همین بود." };
+  if (target.role === role)
+    return { ok: true, message: "نقش این حساب از قبل همین بود." };
   if (target.role === "admin" && (await isLastAdmin()))
     return { ok: false, message: "دست‌کم یک مدیر باید در سایت بماند." };
 
@@ -66,19 +70,28 @@ export async function setUserRole(
 
   return {
     ok: true,
-    message: role === "admin" ? "کاربر به مدیر ارتقا یافت." : "مدیر به کاربر عادی تبدیل شد.",
+    message:
+      role === "admin"
+        ? "کاربر به مدیر ارتقا یافت."
+        : "مدیر به کاربر عادی تبدیل شد.",
   };
 }
 
-export async function deleteUserAccount(userId: string): Promise<UserActionResult> {
+export async function deleteUserAccount(
+  userId: string,
+): Promise<UserActionResult> {
   const adminId = await currentAdminId();
   if (!adminId) return DENIED;
-  if (!ObjectId.isValid(userId)) return { ok: false, message: "کاربر یافت نشد." };
+  if (!ObjectId.isValid(userId))
+    return { ok: false, message: "کاربر یافت نشد." };
   if (userId === adminId)
     return { ok: false, message: "حساب خودتان را از این صفحه حذف نکنید." };
 
   const _id = new ObjectId(userId);
-  const target = await collection("users").findOne({ _id }, { projection: { role: 1 } });
+  const target = await collection("users").findOne(
+    { _id },
+    { projection: { role: 1 } },
+  );
   if (!target) return { ok: false, message: "کاربر یافت نشد." };
   if (target.role === "admin" && (await isLastAdmin()))
     return { ok: false, message: "آخرین مدیر سایت را نمی‌توان حذف کرد." };

@@ -8,7 +8,7 @@ import {
   adminCalendarPopoverClassName,
   adminDayPickerClassNames,
   adminJalaliCompactTriggerClassName,
-} from "./admin-daypicker-classes";
+} from "./admin-daypicker-styles";
 import "@daypicker/react/style.css";
 import { CalendarDays } from "lucide-react";
 

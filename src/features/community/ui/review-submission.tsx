@@ -3,7 +3,7 @@
 import {
   communityButtonClassName,
   communityFieldClassName,
-} from "./community-classes";
+} from "./community-styles";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState, useTransition, type FormEvent } from "react";
 import { MessageSquareHeart } from "lucide-react";

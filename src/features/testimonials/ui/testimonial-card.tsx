@@ -33,7 +33,7 @@ export function TestimonialCard({
           quote, so it never sits under the first line of text; decorative only. */}
       <span
         aria-hidden="true"
-        className="pointer-events-none -mb-4 select-none text-[2.6rem] leading-none font-bold text-[var(--c-teal)] opacity-30 dark:opacity-35"
+        className="pointer-events-none -mb-4 text-[2.6rem] leading-none font-bold text-[var(--c-teal)] opacity-30 select-none dark:opacity-35"
       >
         «
       </span>
@@ -42,7 +42,10 @@ export function TestimonialCard({
         {item.quote}
       </blockquote>
 
-      <div className="mt-6 h-px w-full bg-[var(--site-line)]" aria-hidden="true" />
+      <div
+        className="mt-6 h-px w-full bg-[var(--site-line)]"
+        aria-hidden="true"
+      />
 
       <figcaption className="flex min-w-0 items-center gap-3 pt-4">
         <span className="relative grid size-11 flex-none place-items-center overflow-hidden rounded-full bg-[color:color-mix(in_srgb,var(--c-teal)_12%,var(--surface))]">
@@ -56,7 +59,10 @@ export function TestimonialCard({
               className="absolute inset-0 size-full object-cover"
             />
           ) : (
-            <span aria-hidden="true" className="text-[.95rem] font-extrabold text-[var(--c-teal)]">
+            <span
+              aria-hidden="true"
+              className="text-[.95rem] font-extrabold text-[var(--c-teal)]"
+            >
               {item.name.trim().charAt(0)}
             </span>
           )}

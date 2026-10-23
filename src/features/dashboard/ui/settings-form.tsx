@@ -6,7 +6,8 @@ import {
   panelButtonClassName,
   panelMutedClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
+
 import { useActionState } from "react";
 import { updateProfile } from "@/actions/dashboard";
 import type { PanelState } from "@/types/dashboard";

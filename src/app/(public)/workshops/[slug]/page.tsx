@@ -1,9 +1,9 @@
 import {
   siteBadgeClassName,
   siteDetailClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import { readingSurfaceClassName } from "@/components/shared/reading-surface";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+import { ScrollReveal } from "@/components/motion/reveal";
 import { publicMetadata } from "@/lib/public-metadata";
 import type { SlugPageProps } from "@/types/routes";
 import { notFound } from "next/navigation";
@@ -27,7 +27,8 @@ export const revalidate = 3600;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   const workshops = await listWorkshops();
-  if (workshops.length > 0) return workshops.map((item) => ({ slug: item.slug }));
+  if (workshops.length > 0)
+    return workshops.map((item) => ({ slug: item.slug }));
   return [
     { slug: "emotion-regulation" },
     { slug: "couple-communication" },

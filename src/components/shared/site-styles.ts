@@ -1,3 +1,7 @@
+/**
+ * Design tokens shared by every public feature — page container, grids, cards, headings,
+ * badges and detail rows. Features import from here so no feature owns a layout primitive.
+ */
 /** Shared public content width. Keep the responsive Tailwind classes in one static, scanable source. */
 export const siteContainerClassName =
   "site-container mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8";

@@ -1,10 +1,12 @@
+import {
+  publicH3ClassName,
+  publicChipClassName,
+  publicCardClassName,
+  publicSpotClassName,
+} from "@/components/layout/public-styles";
 import Image from "next/image";
 import Link from "next/link";
 
-import { publicH3ClassName } from "@/components/layout/public-type-classes";
-import { publicChipClassName } from "@/components/layout/public-visual-classes";
-import { publicCardClassName } from "@/components/layout/public-card-classes";
-import { publicSpotClassName } from "@/components/layout/public-spot-classes";
 import {
   artMediaMaskClassName,
   artSealClassName,
@@ -18,12 +20,15 @@ import {
 } from "@/features/articles/article-action-styles";
 import type { ArticleVisual } from "@/features/articles/article-visual";
 import { TestimonialCard } from "@/features/testimonials/ui/testimonial-card";
-import { workshopPrice, type WorkshopDiscount } from "@/features/workshops/pricing";
+import {
+  workshopPrice,
+  type WorkshopDiscount,
+} from "@/features/workshops/pricing";
 import { formatToman } from "@/lib/format";
 import {
   neonArticleCardClassName,
   neonCarouselSectionClassName,
-} from "./carousel-neon-classes";
+} from "./carousel-neon-styles";
 import { SliderSection } from "./slider-section";
 
 type TestimonialItem = {
@@ -55,9 +60,24 @@ type WorkshopItem = {
 };
 
 type HomeSliderProps =
-  | { kind: "testimonials"; reviews: TestimonialItem[]; articles?: never; workshops?: never }
-  | { kind: "articles"; articles: ArticleItem[]; reviews?: never; workshops?: never }
-  | { kind: "workshops"; workshops: WorkshopItem[]; reviews?: never; articles?: never };
+  | {
+      kind: "testimonials";
+      reviews: TestimonialItem[];
+      articles?: never;
+      workshops?: never;
+    }
+  | {
+      kind: "articles";
+      articles: ArticleItem[];
+      reviews?: never;
+      workshops?: never;
+    }
+  | {
+      kind: "workshops";
+      workshops: WorkshopItem[];
+      reviews?: never;
+      articles?: never;
+    };
 
 const META = {
   testimonials: {
@@ -152,14 +172,22 @@ function ArticleCard({ item }: { item: ArticleItem }) {
             />
           )}
         </div>
-        <ArticleEmblem visual={item.visual} slug={item.slug} className={artSealCompactClassName} />
+        <ArticleEmblem
+          visual={item.visual}
+          slug={item.slug}
+          className={artSealCompactClassName}
+        />
       </div>
       <div className="mx-[0.65rem] mt-4 flex flex-wrap items-center gap-2.5">
-        <span className={`${publicChipClassName} !border-[#84b9aa]/55 !bg-[#87c3ad]/15 !py-1 !text-[.75rem] !text-[#2b7168] dark:!border-[#69c4b3]/35 dark:!bg-[#62c5a5]/10 dark:!text-[#b8f4dc]`}>
+        <span
+          className={`${publicChipClassName} !border-[#84b9aa]/55 !bg-[#87c3ad]/15 !py-1 !text-[.75rem] !text-[#2b7168] dark:!border-[#69c4b3]/35 dark:!bg-[#62c5a5]/10 dark:!text-[#b8f4dc]`}
+        >
           {item.category}
         </span>
       </div>
-      <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-3 break-words text-start text-[#244247]! dark:text-[#f0fcf8]!`}>
+      <h3
+        className={`${publicH3ClassName} mx-[0.65rem] mt-3 text-start break-words text-[#244247]! dark:text-[#f0fcf8]!`}
+      >
         {item.title}
       </h3>
       <p className="mx-[0.65rem] mt-3 text-start text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">
@@ -198,14 +226,19 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
             />
           )}
         </div>
-        <span className={`${artSealClassName} ${artSealCompactClassName}`} aria-hidden="true">
+        <span
+          className={`${artSealClassName} ${artSealCompactClassName}`}
+          aria-hidden="true"
+        >
           <i className="ph-duotone ph-users-three" />
         </span>
       </div>
       <span className="mx-[0.65rem] mt-4 text-start text-xs font-extrabold tracking-wide text-[var(--site-muted)]">
         {item.mode === "online" ? "آنلاین" : "حضوری"}
       </span>
-      <h3 className={`${publicH3ClassName} mx-[0.65rem] mt-2 break-words text-start`}>
+      <h3
+        className={`${publicH3ClassName} mx-[0.65rem] mt-2 text-start break-words`}
+      >
         {item.title}
       </h3>
       <p className="mx-[0.65rem] mt-2 text-start text-xs font-bold text-[var(--site-muted)]">

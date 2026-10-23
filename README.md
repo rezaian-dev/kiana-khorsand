@@ -15,7 +15,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
-[![Playwright](https://img.shields.io/badge/Playwright-36_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
+[![Playwright](https://img.shields.io/badge/Playwright-43_tests-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev)
 
 [![PWA](https://img.shields.io/badge/PWA-ready-0d736b?style=for-the-badge&logo=pwa&logoColor=white)](#-pwa)
 [![RTL](https://img.shields.io/badge/RTL-fa__IR-6f42c1?style=for-the-badge)](#-فارسی-و-راستبهچپ)
@@ -143,17 +143,19 @@
 
 ### 📲 PWA
 
-- `manifest.webmanifest` مستقل، RTL، با آیکون‌های ۱۹۲/۵۱۲/maskable
-- Service Worker دست‌نویس با راهبردهای Workbox:
-  - **cache-first** برای فایل‌های ثابت
+- `manifest.webmanifest` بر پایهٔ [راهنمای رسمی Next.js](https://nextjs.org/docs/app/guides/progressive-web-apps): `id`, `scope`, `start_url`, `display: standalone` با `display_override`, جهت `rtl`, زبان `fa`, رنگ تم، و `launch_handler: navigate-existing`
+- آیکون ۱۹۲ و ۵۱۲ در دو نسخه: `any` برای لانچر و `maskable` برای برش دایره‌ای اندروید؛ طرح داخل دایرهٔ ایمن ۸۰٪ می‌ماند تا هرگز نبُرد
+- دو اسکرین‌شات واقعی (باریک ۵۶۰×۱۱۴۰ و عریض ۱۴۰۰×۸۷۵) تا شیت نصب، خودِ اپ را نشان بدهد نه یک بنر خام
+- Service Worker دست‌نویس:
+  - **cache-first** برای فایل‌های ثابت (نام فایل‌ها hash دارند، پس هرگز کهنه نیستند)
   - **network-first** برای ناوبری، با صفحهٔ آفلاین به‌عنوان جایگزین
-  - هیچ مسیر خصوصی (`/admin`, `/dashboard`, `/api`) هرگز کش نمی‌شود
-- پاک‌سازی کش خصوصی هنگام خروج
+  - **هیچ صفحهٔ شخصی کش نمی‌شود**: سرور فقط برای پاسخ‌های بی‌نشست هدر `x-offline-cacheable` می‌گذارد و مرورگر بر اساس همان تصمیم می‌گیرد — نام کاربر روی دستگاه مشترک باقی نمی‌ماند
+  - مسیرهای خصوصی (`/admin`, `/dashboard`, `/api`, `/login`, `/book`) هرگز کش نمی‌شوند و هنگام خروج، کش پاک می‌شود
+- هدرهای امنیتیِ مخصوص worker طبق مستندات: `Content-Type` درست، `Cache-Control: no-store` و `CSP: default-src 'self'; script-src 'self'`؛ ثبت با `updateViaCache: "none"` تا نسخهٔ اصلاح‌شده بی‌درنگ به اپ نصب‌شده برسد
+- **نصب**: در کروم/اندروید همان پیشنهاد خود مرورگر استفاده می‌شود (`beforeinstallprompt`)؛ در Safari آیفون که چنین رویدادی ندارد، همان دکمه شیت راهنمای «Share → Add to Home Screen» را باز می‌کند. در نسخهٔ نصب‌شده یا پس از رد کردن، دکمه پنهان می‌ماند
 - در نسخهٔ نصب‌شده نوار آدرس وجود ندارد؛ فرمان **«رفتن به آدرس»** در هدر همان کار را می‌کند. کافی است `/admin` وارد شود تا صفحهٔ ورود مدیران باز شود (یا `Ctrl/⌘ + K`). فقط مسیرهای همین سایت پذیرفته می‌شوند
 - عمداً هیچ shortcut‌ای به `/admin` در `manifest` نیست: منیفست عمومی است و همهٔ نصب‌کننده‌ها آن را در منوی نگه‌داشتن آیکون می‌بینند، که با قاعدهٔ «ادمین بیرون پنل مثل کاربر عادی است» در تضاد می‌افتد
-- دکمهٔ **«نصب اپ»** فقط زمانی در هدر ظاهر می‌شود که مرورگر واقعاً پیشنهاد نصب بدهد؛ رد کردنش ذخیره می‌شود و دیگر مزاحم نمی‌شود (در Safari/Firefox و در نسخهٔ نصب‌شده دیده نمی‌شود)
-- `launch_handler: navigate-existing` — لینکی که به اپ تعلق دارد، پنجرهٔ بازِ همان اپ را هدایت می‌کند نه یک پنجرهٔ تازه
-- آفلاین: مسیرهای خصوصی هرگز کش نمی‌شوند، اما به‌جای خطای مرورگر صفحهٔ «شما آفلاین هستید» را نشان می‌دهند
+- صفحهٔ آفلاین کاملاً سمت سرور و بدون جاوااسکریپت است، با حرکت‌های CSS که در `prefers-reduced-motion` خاموش می‌شوند
 
 ### 🔎 سئو و اشتراک‌گذاری
 
@@ -181,7 +183,7 @@
 | **مارک‌داون**  | markdown-it 15 + react-markdown       | ویرایش و نمایش مقاله                      |
 | **تصویر**      | sharp                                 | تبدیل آواتار به WebP مربعی، حذف EXIF      |
 | **اعلان**      | Sonner                                | توست دسترس‌پذیر                           |
-| **تست**        | Playwright                            | ۲۴ تست سرتاسری روی دسکتاپ و موبایل        |
+| **تست**        | Playwright                            | ۴۳ تست سرتاسری روی دسکتاپ و موبایل        |
 
 ---
 
@@ -273,15 +275,16 @@ npx playwright test e2e/overlays.spec.ts --ui
 | **اورلی‌ها** (۴ تست)           | `Select` باز باید با ضربهٔ دوم، Escape و ضربهٔ بیرون بسته شود — روی لمسی هم                                                                                                     |
 | **متادیتا** (۲ تست)            | تگ‌های OG را مثل کراولر می‌خواند و همان تصویری را که اعلام کرده‌اند دانلود می‌کند                                                                                               |
 | **ورود مدیران و PWA** (۱۳ تست) | شیشه و حلقهٔ فوکوس، دکمهٔ ورود، رد حساب غیرمدیر، رسیدن به `/admin` از فرمان آدرس، بازگشت فوکوس پس از بستن شیت، صفحهٔ آفلاین، و اینکه «نصب اپ» فقط با پیشنهاد واقعی مرورگر بیاید |
+| **قرارداد PWA** (۷ تست)        | شناسه و محدودهٔ مانیفست، آیکون ۱۹۲ و ۵۱۲ در دو حالت `any` و `maskable`، اسکرین‌شات نصب، شورتکات‌ها (بدون `/admin`)، هدرهای `sw.js`، و اینکه صفحهٔ شخصی هرگز کش نشود |
 
-**وضعیت فعلی:** `36 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
+**وضعیت فعلی:** `43 passed` · `tsc --noEmit` پاک · `eslint` صفر خطا · `next build` موفق با ۶۲ مسیر.
 
 | متریک                 | مقدار                       |
 | :-------------------- | :-------------------------- |
 | مسیرها (`next build`) | ۶۲ — ۵ استاتیک، ۵۷ داینامیک |
 | فایل `"use client"`   | ۶۶ از ۲۹۴ فایل `src`        |
 | فایل‌های Motion       | ۱۹                          |
-| تست‌های E2E           | ۳۶ در ۷ فایل                |
+| تست‌های E2E           | ۴۳ در ۸ فایل                |
 
 ---
 
@@ -351,7 +354,7 @@ vercel --prod        # یا اتصال مخزن به Vercel
 - [x] رزرو با تقویم شمسی و پرداخت
 - [x] PWA و آفلاین
 - [x] سئو، داده ساخت‌یافته و کارت اجتماعی
-- [x] ۳۶ تست سرتاسری Playwright
+- [x] ۴۳ تست سرتاسری Playwright
 - [ ] اعلان‌های Web Push
 - [ ] پرداخت آنلاین با درگاه
 - [ ] گزارش‌های تحلیلی برای مدیر

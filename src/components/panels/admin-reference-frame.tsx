@@ -1,4 +1,4 @@
-import { PageReveal } from "@/components/layout/page-reveal";
+import { PageReveal } from "@/components/layout/page-entrance";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { AccountMenu } from "@/components/layout/account-menu";
 import {
@@ -7,7 +7,7 @@ import {
   adminFramePaletteClassName,
   adminFrameStaticStatesClassName,
   panelSkipClassName,
-} from "./panel-layout-classes";
+} from "./panel-styles";
 import { supportPreview } from "@/features/dashboard/support-preview";
 import {
   AdminReferenceNav,

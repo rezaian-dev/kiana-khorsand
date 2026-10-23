@@ -3,8 +3,8 @@ import {
   adminOverviewTitleClassName,
   adminOverviewLinkClassName,
   adminOverviewStatusClassName,
-} from "@/components/panels/admin-overview-classes";
-import { panelMutedClassName } from "@/components/panels/panel-layout-classes";
+  panelMutedClassName,
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { AdminStatLink } from "@/features/admin/ui/admin-stat-link";
 import {
@@ -27,7 +27,7 @@ import { PanelHeading, appointmentLabels } from "@/components/panels/ui";
 import { adminLinks } from "@/features/admin/navigation";
 import { formatDate, formatNumber, formatTime } from "@/lib/format";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 // Palette stays attached to the semantic stat icon; the parent tone is still a hook.

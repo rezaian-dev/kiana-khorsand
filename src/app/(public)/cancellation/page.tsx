@@ -1,13 +1,13 @@
 import {
   siteCardClassName,
   siteContainerClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import { publicMetadata } from "@/lib/public-metadata";
 import { notFound } from "next/navigation";
 import { getPage } from "@/features/pages/queries";
 import { getSettings } from "@/features/settings/queries";
 import { Intro } from "@/components/shared/intro";
-import { PublicCardMotion } from "@/components/shared/card-hover-motion";
+import { MotionCard } from "@/components/motion/motion-card";
 import { Section } from "@/components/shared/section";
 
 export const revalidate = 86400;
@@ -37,12 +37,10 @@ export default async function Page() {
       {settings?.cancellation && (
         <section className="site-section py-[clamp(3rem,6vw,6rem)]">
           <div className={siteContainerClassName}>
-            <PublicCardMotion
-              className={`${siteCardClassName} transition-none!`}
-            >
+            <MotionCard className={`${siteCardClassName} transition-none!`}>
               <h2>شرایط لغو و جابه‌جایی</h2>
               <p>{settings.cancellation}</p>
-            </PublicCardMotion>
+            </MotionCard>
           </div>
         </section>
       )}

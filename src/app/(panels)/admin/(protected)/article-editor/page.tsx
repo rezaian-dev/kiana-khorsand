@@ -1,4 +1,4 @@
-import { panelButtonClassName } from "@/components/panels/panel-layout-classes";
+import { panelButtonClassName } from "@/components/panels/panel-styles";
 import { PanelSelect } from "@/components/panels/panel-select";
 import { JalaliPublicationDate } from "@/features/admin/ui/jalali-publication-date";
 import type { LegacySlugPageProps } from "@/types/routes";

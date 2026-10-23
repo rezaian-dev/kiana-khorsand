@@ -1,15 +1,13 @@
 import {
   adminOverviewHeadingClassName,
   adminOverviewTitleClassName,
-} from "@/components/panels/admin-overview-classes";
-import {
   panelFormClassName,
   panelCardClassName,
   panelGridClassName,
   panelButtonClassName,
   panelButtonOutlineClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import { adminAvailability } from "@/features/admin/queries";
 import { saveAvailability, removeBlockedRange } from "@/actions/admin";
 import { SlotPicker } from "@/features/admin/ui/slot-picker";

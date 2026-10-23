@@ -7,7 +7,7 @@ import {
   adminCreatePanelSummaryClassName,
   panelButtonClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";

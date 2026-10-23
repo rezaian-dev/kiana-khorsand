@@ -6,7 +6,7 @@ import {
   adminCalendarDismissClassName,
   adminCalendarInlineClassName,
   adminDayPickerClassNames,
-} from "./admin-daypicker-classes";
+} from "./admin-daypicker-styles";
 import "@daypicker/react/style.css";
 import { dayKey } from "@/lib/tehran-calendar";
 

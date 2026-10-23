@@ -1,6 +1,7 @@
 "use client";
 
-import { siteContainerClassName } from "@/components/shared/public-layout-classes";
+import { siteContainerClassName } from "@/components/shared/site-styles";
+
 import { useArticleFilters } from "../use-article-filters";
 import { ArticleFilters } from "./article-filters";
 import { ArticleResults } from "./article-results";

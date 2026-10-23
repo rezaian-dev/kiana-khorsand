@@ -1,8 +1,8 @@
 import {
   siteBadgeClassName,
   siteCardClassName,
-} from "@/components/shared/public-layout-classes";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+} from "@/components/shared/site-styles";
+import { ScrollReveal } from "@/components/motion/reveal";
 import {
   artMediaMaskClassName,
   artSealClassName,

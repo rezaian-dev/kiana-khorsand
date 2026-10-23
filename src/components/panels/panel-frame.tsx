@@ -1,11 +1,8 @@
 import { BrandMark } from "@/components/shared/brand-mark";
 import Link from "next/link";
-import { PageReveal } from "@/components/layout/page-reveal";
+import { PageReveal } from "@/components/layout/page-entrance";
 import { AccountMenu } from "@/components/layout/account-menu";
-import {
-  panelShellClassName,
-  panelSkipClassName,
-} from "./panel-layout-classes";
+import { panelShellClassName, panelSkipClassName } from "./panel-styles";
 import { signOutAction } from "@/actions/auth";
 import { supportPreview } from "@/features/dashboard/support-preview";
 import { PanelNav, clientLinks } from "./panel-nav";
@@ -37,7 +34,7 @@ export async function PanelFrame({
           <PanelNav links={clientLinks} title="پنل کاربری" />
           <Link
             href="/"
-            className="panel-brand flex items-center gap-2 rounded-[.4rem] font-extrabold transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--panel-accent)] focus-visible:ring-offset-2 max-[480.02px]:text-[.9rem]"
+            className="panel-brand flex items-center gap-2 rounded-[.4rem] font-extrabold transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[var(--panel-accent)] focus-visible:ring-offset-2 focus-visible:outline-none max-[480.02px]:text-[.9rem]"
             aria-label="بازگشت به صفحه اصلی"
             title="بازگشت به صفحه اصلی"
           >

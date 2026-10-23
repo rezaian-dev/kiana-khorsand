@@ -1,20 +1,19 @@
 "use client";
 
-import { BrandMark } from "@/components/shared/brand-mark";
-
-import {
-  adminGlassClassName,
-  panelSheetClassName,
-} from "./panel-layout-classes";
-
-import Link from "next/link";
-import { m } from "motion/react";
-import { DockSpotlight } from "@/components/layout/dock-spotlight";
 import {
   mobileDockClassName,
   mobileDockIconClassName,
   mobileDockItemClassName,
-} from "@/components/layout/mobile-dock-classes";
+} from "@/components/layout/public-styles";
+
+import { BrandMark } from "@/components/shared/brand-mark";
+
+import { adminGlassClassName, panelSheetClassName } from "./panel-styles";
+
+import Link from "next/link";
+import { m } from "motion/react";
+import { DockSpotlight } from "@/components/layout/dock-spotlight";
+
 import { usePathname } from "next/navigation";
 import { LayoutGrid, ExternalLink, LogOut } from "lucide-react";
 import { adminSignOutAction } from "@/actions/admin-auth";

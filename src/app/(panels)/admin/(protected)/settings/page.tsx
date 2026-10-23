@@ -1,4 +1,4 @@
-import { adminGlassClassName } from "@/components/panels/panel-layout-classes";
+import { adminGlassClassName } from "@/components/panels/panel-styles";
 import { PanelSelect } from "@/components/panels/panel-select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { timeOptions } from "@/lib/time-options";

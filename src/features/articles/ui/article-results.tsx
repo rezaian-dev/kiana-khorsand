@@ -1,8 +1,10 @@
 "use client";
 
+import { siteGridClassName } from "@/components/shared/site-styles";
+
 import { AnimatePresence, m } from "motion/react";
 import { ContentCard } from "@/components/shared/card";
-import { siteGridClassName } from "@/components/shared/public-layout-classes";
+
 import {
   hoverLift,
   listItem,

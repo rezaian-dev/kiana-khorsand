@@ -2,7 +2,7 @@
 
 import type { MouseEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { PaginationAnchor } from "@/components/shared/pagination-link-motion";
+import { MotionAnchor } from "@/components/motion/motion-link";
 import {
   pageNavClass,
   pageNavDisabledClass,
@@ -64,14 +64,14 @@ export function ArticlePagination({
       </p>
       <div className={pageNavLinksClass}>
         {page > 1 ? (
-          <PaginationAnchor
+          <MotionAnchor
             href={href(page - 1)}
             className={pageNavItemClass}
             aria-label="صفحهٔ قبلی مقاله‌ها"
             onClick={handle(page - 1)}
           >
             <ChevronRight size={18} aria-hidden="true" />
-          </PaginationAnchor>
+          </MotionAnchor>
         ) : (
           <span className={pageNavDisabledClass} aria-hidden="true">
             <ChevronRight size={18} />
@@ -85,7 +85,7 @@ export function ArticlePagination({
                 …
               </span>
             )}
-            <PaginationAnchor
+            <MotionAnchor
               href={href(number)}
               className={pageNavItemClass}
               onClick={handle(number)}
@@ -93,19 +93,19 @@ export function ArticlePagination({
               aria-current={number === page ? "page" : undefined}
             >
               {fa.format(number)}
-            </PaginationAnchor>
+            </MotionAnchor>
           </span>
         ))}
 
         {page < pages ? (
-          <PaginationAnchor
+          <MotionAnchor
             href={href(page + 1)}
             className={pageNavItemClass}
             aria-label="صفحهٔ بعدی مقاله‌ها"
             onClick={handle(page + 1)}
           >
             <ChevronLeft size={18} aria-hidden="true" />
-          </PaginationAnchor>
+          </MotionAnchor>
         ) : (
           <span className={pageNavDisabledClass} aria-hidden="true">
             <ChevronLeft size={18} />

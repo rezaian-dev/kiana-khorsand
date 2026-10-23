@@ -1,6 +1,6 @@
-import { siteDetailClassName } from "@/components/shared/public-layout-classes";
+import { siteDetailClassName } from "@/components/shared/site-styles";
 import { readingSurfaceClassName } from "@/components/shared/reading-surface";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+import { ScrollReveal } from "@/components/motion/reveal";
 import { publicMetadata } from "@/lib/public-metadata";
 import type { SlugPageProps } from "@/types/routes";
 import { notFound } from "next/navigation";
@@ -14,7 +14,13 @@ export const dynamicParams = true;
 export async function generateStaticParams() {
   const areas = await listAreas();
   if (areas.length > 0) return areas.map((item) => ({ slug: item.slug }));
-  return [{ slug: "anxiety" }, { slug: "depression" }, { slug: "grief" }, { slug: "relationship-family" }, { slug: "self-esteem" }];
+  return [
+    { slug: "anxiety" },
+    { slug: "depression" },
+    { slug: "grief" },
+    { slug: "relationship-family" },
+    { slug: "self-esteem" },
+  ];
 }
 export async function generateMetadata({ params }: SlugPageProps) {
   const { slug } = await params;

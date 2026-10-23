@@ -3,9 +3,9 @@
 import {
   publicButtonPrimaryClassName,
   publicButtonSoftClassName,
-} from "@/components/layout/public-button-classes";
+  publicH3ClassName,
+} from "@/components/layout/public-styles";
 
-import { publicH3ClassName } from "@/components/layout/public-type-classes";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { PanelSelect } from "@/components/panels/panel-select";

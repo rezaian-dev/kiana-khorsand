@@ -3,7 +3,7 @@ import {
   panelGridClassName,
   panelStackClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import { requireUser } from "@/lib/session";
 import { listMyEnrollments } from "@/features/dashboard/queries";
 import { listWorkshops } from "@/features/workshops/queries";

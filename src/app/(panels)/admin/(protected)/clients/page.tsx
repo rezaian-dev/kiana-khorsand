@@ -3,7 +3,7 @@ import {
   panelCardClassName,
   panelButtonClassName,
   panelButtonOutlineClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { adminUsers } from "@/features/admin/queries";
 import { AdminCsvExport } from "@/components/panels/admin-csv-export";

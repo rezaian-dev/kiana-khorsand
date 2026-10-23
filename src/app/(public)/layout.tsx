@@ -1,8 +1,11 @@
+import {
+  publicLegacyClassName,
+  fieldReducedMotionClassName,
+} from "@/components/layout/public-styles";
 import "../public-foundation.css";
 import { Header } from "@/components/layout/header";
-import { publicLegacyClassName } from "@/components/layout/public-legacy-classes";
-import { fieldReducedMotionClassName } from "@/components/layout/field-polish-classes";
-import { PageReveal } from "@/components/layout/page-reveal";
+
+import { PageReveal } from "@/components/layout/page-entrance";
 import { Footer } from "@/components/layout/footer";
 
 export default function SiteLayout({

@@ -8,8 +8,14 @@ type MeetingKind = "appointment" | "workshop";
 const keyFor = (userId: string, version: string = "v1") => {
   // F10: derive from dedicated PRIVATE_NOTES_KEY via HKDF (OWASP Cryptographic Storage)
   // Keep read-compatibility with v1 (BETTER_AUTH_SECRET) for existing records
-  const secret = version === "v2" && env.PRIVATE_NOTES_KEY ? env.PRIVATE_NOTES_KEY : env.BETTER_AUTH_SECRET;
-  const info = version === "v2" ? "kiana-private-meeting-note-v2" : "kiana-private-meeting-note-v1";
+  const secret =
+    version === "v2" && env.PRIVATE_NOTES_KEY
+      ? env.PRIVATE_NOTES_KEY
+      : env.BETTER_AUTH_SECRET;
+  const info =
+    version === "v2"
+      ? "kiana-private-meeting-note-v2"
+      : "kiana-private-meeting-note-v1";
   return Buffer.from(hkdfSync("sha256", secret, userId, info, 32));
 };
 const aadFor = (userId: string, kind: MeetingKind, referenceId: string) =>

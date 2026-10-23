@@ -6,7 +6,7 @@ import {
   panelButtonClassName,
   panelMutedClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 
 import { useActionState, useEffect, useRef } from "react";
 import { changeAccountPassword } from "@/actions/account-security";

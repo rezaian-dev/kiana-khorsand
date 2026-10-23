@@ -4,7 +4,7 @@ import {
   panelCardClassName,
   panelButtonClassName,
   panelButtonOutlineClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import { setTestimonialExperience } from "@/actions/admin";
 import { testimonialExperience } from "@/lib/testimonial-experience";
 import { adminTestimonials } from "@/features/admin/queries";

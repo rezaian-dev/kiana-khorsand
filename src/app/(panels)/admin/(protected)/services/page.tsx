@@ -6,7 +6,7 @@ import {
   adminCreatePanelSummaryClassName,
   panelStackClassName,
   panelButtonClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import { PanelSelect } from "@/components/panels/panel-select";
 import { adminServices } from "@/features/admin/queries";
 import { saveService } from "@/actions/admin";

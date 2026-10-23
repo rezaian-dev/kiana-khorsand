@@ -3,7 +3,7 @@
 import {
   siteDetailClassName,
   siteHeadingClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 
 import { useActionState, useState } from "react";
 import { CircleCheck } from "lucide-react";

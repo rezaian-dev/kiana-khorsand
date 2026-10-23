@@ -1,4 +1,4 @@
-import { siteContainerClassName } from "@/components/shared/public-layout-classes";
+import { siteContainerClassName } from "@/components/shared/site-styles";
 import Image from "next/image";
 import {
   BookOpenText,

@@ -1,8 +1,8 @@
 import {
   siteContainerClassName,
   siteGridClassName,
-} from "@/components/shared/public-layout-classes";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+} from "@/components/shared/site-styles";
+import { ScrollReveal } from "@/components/motion/reveal";
 import { pageNumber } from "@/lib/list-search";
 import type { CategorySearchProps } from "@/types/routes";
 import { ListFilter, RotateCcw } from "lucide-react";
@@ -17,7 +17,7 @@ import { SiteToaster } from "@/components/shared/site-toaster";
 import { labels } from "@/lib/labels";
 import { TestimonialCard } from "@/features/testimonials/ui/testimonial-card";
 import { TestimonialStoryMotion } from "@/features/testimonials/ui/testimonial-card-motion";
-import { PaginationLink } from "@/components/shared/pagination-link-motion";
+import { MotionLink } from "@/components/motion/motion-link";
 import { publicMetadata } from "@/lib/public-metadata";
 import {
   pageNavClass,
@@ -192,13 +192,14 @@ export default async function Page({ searchParams }: CategorySearchProps) {
             </p>
             <div className={pageNavLinksClass}>
               {current > 1 ? (
-                <PaginationLink
+                <MotionLink
+                  effect="lift"
                   href={href(current - 1)}
                   aria-label="صفحهٔ قبل"
                   className={pageNavItemClass}
                 >
                   قبلی
-                </PaginationLink>
+                </MotionLink>
               ) : (
                 <span className={pageNavDisabledClass} aria-hidden="true">
                   قبلی
@@ -206,7 +207,8 @@ export default async function Page({ searchParams }: CategorySearchProps) {
               )}
               {Array.from({ length: pages }, (_, index) => index + 1).map(
                 (number) => (
-                  <PaginationLink
+                  <MotionLink
+                    effect="lift"
                     key={number}
                     href={href(number)}
                     className={pageNavItemClass}
@@ -214,17 +216,18 @@ export default async function Page({ searchParams }: CategorySearchProps) {
                     aria-current={number === current ? "page" : undefined}
                   >
                     {new Intl.NumberFormat("fa-IR").format(number)}
-                  </PaginationLink>
+                  </MotionLink>
                 ),
               )}
               {current < pages ? (
-                <PaginationLink
+                <MotionLink
+                  effect="lift"
                   href={href(current + 1)}
                   aria-label="صفحهٔ بعد"
                   className={pageNavItemClass}
                 >
                   بعدی
-                </PaginationLink>
+                </MotionLink>
               ) : (
                 <span className={pageNavDisabledClass} aria-hidden="true">
                   بعدی

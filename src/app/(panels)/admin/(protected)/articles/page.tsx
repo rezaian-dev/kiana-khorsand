@@ -2,7 +2,7 @@ import {
   panelListItemClassName,
   panelCardClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { adminArticles } from "@/features/admin/queries";
 import { AdminStatus } from "@/components/panels/admin-status";

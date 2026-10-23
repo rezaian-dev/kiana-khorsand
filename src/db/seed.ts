@@ -11,7 +11,10 @@ async function main() {
     const created = await seed();
     console.log(`✅ Core seed: ${created} new docs`);
     // Development fixtures (users, appointments) — skip in strict production unless SEED_ALLOW_DEMO=1
-    if (process.env.NODE_ENV !== "production" || process.env.SEED_ALLOW_DEMO === "1") {
+    if (
+      process.env.NODE_ENV !== "production" ||
+      process.env.SEED_ALLOW_DEMO === "1"
+    ) {
       try {
         await seedDevelopment();
       } catch (e) {

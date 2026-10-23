@@ -193,7 +193,7 @@ export function AccountMenu({
                   aria-hidden="true"
                   className={
                     notifications?.unread
-                      ? "text-teal-700 dark:text-teal-300 motion-safe:drop-shadow-[0_0_6px_rgba(13,148,136,0.35)]"
+                      ? "text-teal-700 motion-safe:drop-shadow-[0_0_6px_rgba(13,148,136,0.35)] dark:text-teal-300"
                       : ""
                   }
                 />
@@ -245,7 +245,9 @@ export function AccountMenu({
                     await Promise.all(keys.map((k) => caches.delete(k)));
                   }
                   if (navigator.serviceWorker?.controller) {
-                    navigator.serviceWorker.controller.postMessage({ type: "CLEAR_PRIVATE_CACHE" });
+                    navigator.serviceWorker.controller.postMessage({
+                      type: "CLEAR_PRIVATE_CACHE",
+                    });
                   }
                 } catch {}
                 await signOutInPlaceAction();

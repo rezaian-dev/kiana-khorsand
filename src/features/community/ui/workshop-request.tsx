@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { communityButtonClassName } from "./community-classes";
+import { communityButtonClassName } from "./community-styles";
 import { toast } from "sonner";
 import { CalendarHeart } from "lucide-react";
 import { requestWorkshop } from "@/actions/community";

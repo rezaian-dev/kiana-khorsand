@@ -1,7 +1,7 @@
 import {
   siteContainerClassName,
   siteGridClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import { listAreas } from "@/features/areas/queries";
 import { Intro } from "@/components/shared/intro";
 import { ContentCard } from "@/components/shared/card";

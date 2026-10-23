@@ -1,9 +1,9 @@
 import {
   siteBadgeClassName,
   siteDetailClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 import { readingSurfaceClassName } from "@/components/shared/reading-surface";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+import { ScrollReveal } from "@/components/motion/reveal";
 import { publicMetadata } from "@/lib/public-metadata";
 import type { SlugPageProps } from "@/types/routes";
 import { notFound } from "next/navigation";

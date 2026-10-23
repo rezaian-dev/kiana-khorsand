@@ -1,9 +1,10 @@
-import { BrandMark } from "@/components/shared/brand-mark";
-import Image from "next/image";
 import {
   fieldPolishClassName,
   fieldReducedMotionClassName,
-} from "@/components/layout/field-polish-classes";
+} from "@/components/layout/public-styles";
+import { BrandMark } from "@/components/shared/brand-mark";
+import Image from "next/image";
+
 import Link from "next/link";
 import { AuthCardReveal } from "./auth-card-reveal";
 

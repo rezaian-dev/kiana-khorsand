@@ -1,16 +1,14 @@
-import { publicSpotClassName } from "@/components/layout/public-spot-classes";
 import {
+  publicSpotClassName,
   publicCardClassName,
   publicRainbowCardClassName,
-} from "@/components/layout/public-card-classes";
-import { publicButtonPrimaryClassName } from "@/components/layout/public-button-classes";
-import {
+  publicButtonPrimaryClassName,
   publicTileToneClassName,
   publicIconTileArtClassName,
   publicIconTileBaseClassName,
   publicChipClassName,
-} from "@/components/layout/public-visual-classes";
-import { publicH3ClassName } from "@/components/layout/public-type-classes";
+  publicH3ClassName,
+} from "@/components/layout/public-styles";
 import Link from "next/link";
 import {
   artCornerClassName,

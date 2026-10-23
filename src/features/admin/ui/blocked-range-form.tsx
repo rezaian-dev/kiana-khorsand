@@ -4,7 +4,8 @@ import {
   panelAdminFormClassName,
   panelButtonClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
+
 import { useActionState } from "react";
 import { addBlockedRange } from "@/actions/admin";
 import type { AdminFeedback } from "@/types/admin";

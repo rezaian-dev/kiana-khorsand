@@ -7,7 +7,7 @@ import {
   panelStackClassName,
   panelButtonClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { pageNumber, searchText } from "@/lib/list-search";
 import { WorkshopForm } from "@/features/admin/ui/workshop-form";

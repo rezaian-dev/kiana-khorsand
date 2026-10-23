@@ -1,13 +1,9 @@
-import { publicSpotClassName } from "@/components/layout/public-spot-classes";
 import {
+  publicSpotClassName,
   publicCardClassName,
   publicRainbowCardClassName,
-} from "@/components/layout/public-card-classes";
-import {
   publicButtonPrimaryClassName,
   publicButtonSoftClassName,
-} from "@/components/layout/public-button-classes";
-import {
   publicArchedPortraitClassName,
   publicBlobClassName,
   publicPortraitCanvasClassName,
@@ -18,24 +14,21 @@ import {
   publicIconTileClassName,
   publicIconTileSizedClassName,
   publicChipClassName,
-} from "@/components/layout/public-visual-classes";
-import {
   publicEyebrowClassName,
   publicH1ClassName,
   publicH2ClassName,
   publicH3ClassName,
   publicLeadClassName,
-} from "@/components/layout/public-type-classes";
-import {
   publicContainerClassName,
   publicHeroSectionClassName,
   publicSectionClassName,
-} from "@/components/layout/public-layout-classes";
+} from "@/components/layout/public-styles";
 import {
   ctaPhotoClassName,
   ctaGlassClassName,
 } from "@/components/shared/cta-photo-styles";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+import { ScrollReveal } from "@/components/motion/reveal";
+import { MotionLink } from "@/components/motion/motion-link";
 import Image from "next/image";
 import { MessageCircleHeart, Waypoints } from "lucide-react";
 import Link from "next/link";
@@ -120,8 +113,9 @@ export function HomeReference({
                 بدون قضاوت، قدم‌به‌قدم مسیر را پیدا کنیم.{" "}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link
+                <MotionLink
                   href="/book"
+                  effect="lift"
                   className={`${publicButtonPrimaryClassName} w-full sm:w-auto`}
                 >
                   {" "}
@@ -130,9 +124,10 @@ export function HomeReference({
                     aria-hidden="true"
                   ></i>{" "}
                   رزرو وقت مشاوره{" "}
-                </Link>
-                <Link
+                </MotionLink>
+                <MotionLink
                   href="/approach"
+                  effect="lift"
                   className={`${publicButtonSoftClassName} w-full sm:w-auto`}
                 >
                   {" "}
@@ -141,7 +136,7 @@ export function HomeReference({
                     aria-hidden="true"
                   ></i>{" "}
                   آشنایی با روش کار من{" "}
-                </Link>
+                </MotionLink>
               </div>
               <p className="text-muted mt-4 text-sm leading-7">
                 {" "}
@@ -570,8 +565,9 @@ export function HomeReference({
                 است تا ببینی این مسیر برایت درست است یا نه.{" "}
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Link
+                <MotionLink
                   href="/book"
+                  effect="lift"
                   className={`${publicButtonPrimaryClassName} w-full sm:w-auto`}
                 >
                   {" "}
@@ -580,13 +576,14 @@ export function HomeReference({
                     aria-hidden="true"
                   ></i>{" "}
                   رزرو وقت مشاوره{" "}
-                </Link>
-                <Link
+                </MotionLink>
+                <MotionLink
                   href="/contact"
+                  effect="lift"
                   className={`${publicButtonSoftClassName} w-full sm:w-auto`}
                 >
                   تماس و پرسش
-                </Link>
+                </MotionLink>
               </div>
             </div>
           </div>

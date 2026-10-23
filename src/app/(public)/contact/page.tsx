@@ -1,11 +1,8 @@
-import { fieldPolishClassName } from "@/components/layout/field-polish-classes";
 import {
+  fieldPolishClassName,
   publicCardClassName,
   publicRainbowCardClassName,
-} from "@/components/layout/public-card-classes";
-import { publicButtonPrimaryClassName } from "@/components/layout/public-button-classes";
-import { PublicHoverLink } from "@/components/layout/public-hover-link";
-import {
+  publicButtonPrimaryClassName,
   publicBlobClassName,
   publicEditorialHeroClassName,
   publicTileToneClassName,
@@ -14,26 +11,24 @@ import {
   publicIconTileBaseClassName,
   publicIconTileSizedClassName,
   publicIconTileShadowClassName,
-} from "@/components/layout/public-visual-classes";
-import {
   publicEyebrowClassName,
   publicH1ClassName,
   publicH3ClassName,
   publicLeadClassName,
   publicGradTextClassName,
-} from "@/components/layout/public-type-classes";
-import {
   publicContainerClassName,
   publicHeroSectionClassName,
   publicSectionClassName,
-} from "@/components/layout/public-layout-classes";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+} from "@/components/layout/public-styles";
+import { MotionLink } from "@/components/motion/motion-link";
+
+import { ScrollReveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import { SiteBreadcrumb } from "@/components/shared/site-breadcrumb";
 import { getSettings } from "@/features/settings/queries";
 import { getRules } from "@/features/booking/queries";
 import { ContactForm } from "@/features/contact/ui/contact-form";
-import { HoverCard } from "@/components/shared/hover-card";
+import { MotionCard } from "@/components/motion/motion-card";
 import { publicMetadata } from "@/lib/public-metadata";
 
 export const revalidate = 86400;
@@ -149,7 +144,7 @@ export default async function Page() {
               </h2>
               <div id="contactCards" className="mt-6 grid gap-3">
                 {channels.map((item) => (
-                  <HoverCard
+                  <MotionCard
                     key={item.label}
                     className="flex min-w-0 gap-4 rounded-[20px] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)]"
                   >
@@ -176,7 +171,7 @@ export default async function Page() {
                         )}
                       </p>
                     </div>
-                  </HoverCard>
+                  </MotionCard>
                 ))}
               </div>
               <div className={`${publicCardClassName} mt-6`}>
@@ -230,13 +225,13 @@ export default async function Page() {
                   اگر سؤال خاصی نداری و آماده‌ای شروع کنی، می‌توانی بدون تماس،
                   وقت مشاوره رزرو کنی.
                 </p>
-                <PublicHoverLink
+                <MotionLink
                   className={`${publicButtonPrimaryClassName} mt-5 w-full`}
                   href="/book"
                 >
                   <Icon name="calendar-check" />
                   رزرو وقت مشاوره
-                </PublicHoverLink>
+                </MotionLink>
               </div>
             </div>
             <div className="min-w-0">

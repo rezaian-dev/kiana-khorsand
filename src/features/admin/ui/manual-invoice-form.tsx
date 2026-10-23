@@ -7,7 +7,7 @@ import {
   adminCreatePanelSummaryClassName,
   panelButtonClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 
 import { PanelSelect } from "@/components/panels/panel-select";
 

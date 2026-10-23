@@ -1,5 +1,5 @@
-import { siteContainerClassName } from "@/components/shared/public-layout-classes";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+import { siteContainerClassName } from "@/components/shared/site-styles";
+import { ScrollReveal } from "@/components/motion/reveal";
 import { publicMetadata } from "@/lib/public-metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";

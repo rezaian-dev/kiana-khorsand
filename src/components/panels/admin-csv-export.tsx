@@ -3,7 +3,8 @@
 import {
   panelButtonClassName,
   panelButtonOutlineClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
+
 import { Download } from "lucide-react";
 
 function csvCell(value: string) {

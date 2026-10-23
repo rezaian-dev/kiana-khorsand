@@ -108,7 +108,9 @@ export function useSlider({
     const playback = emblaApi.plugins().autoplay;
     if (playback) {
       // WCAG 2.2.2 / reduced-motion: never start the rotation when motion is reduced.
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
       const applyPolicy = () => {
         if (reducedMotion.matches) playback.stop();
         else playback.play();
@@ -159,7 +161,10 @@ export function useSlider({
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi],
+  );
 
   return {
     emblaRef,

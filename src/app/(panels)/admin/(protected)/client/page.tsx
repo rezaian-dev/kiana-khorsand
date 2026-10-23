@@ -1,7 +1,7 @@
 import {
   panelCardClassName,
   panelGridClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import type { ReceiptPageProps } from "@/types/routes";
 import { notFound } from "next/navigation";
 import { adminClient, adminClientHistory } from "@/features/admin/queries";

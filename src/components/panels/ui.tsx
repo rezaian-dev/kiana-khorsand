@@ -3,7 +3,7 @@ import {
   panelStackClassName,
   panelButtonClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 

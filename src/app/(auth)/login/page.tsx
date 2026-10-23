@@ -3,7 +3,7 @@ import { getSession, safeReturnPath } from "@/lib/session";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { AuthForm } from "@/components/auth/auth-form";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const metadata = {
   title: "ورود به حساب کاربری",

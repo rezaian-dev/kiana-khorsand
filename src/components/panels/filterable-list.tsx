@@ -5,7 +5,7 @@ import {
   panelCardClassName,
   panelButtonClassName,
   panelButtonOutlineClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 
 import { useId, useState } from "react";
 import { Search, X } from "lucide-react";

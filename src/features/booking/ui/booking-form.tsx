@@ -1,11 +1,10 @@
 "use client";
 
-import { fieldPolishClassName } from "@/components/layout/field-polish-classes";
-
+import { fieldPolishClassName } from "@/components/layout/public-styles";
 import {
   siteDetailClassName,
   siteHeadingClassName,
-} from "@/components/shared/public-layout-classes";
+} from "@/components/shared/site-styles";
 
 import {
   startTransition,

@@ -3,7 +3,7 @@ import {
   panelGridClassName,
   panelStatClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { requireUser } from "@/lib/session";
 import {
@@ -16,7 +16,7 @@ import { PanelHeading, appointmentLabels } from "@/components/panels/ui";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate, formatNumber, formatTime } from "@/lib/format";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = { title: "پنل کاربری" };

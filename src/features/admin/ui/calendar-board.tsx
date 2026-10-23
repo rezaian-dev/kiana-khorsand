@@ -1,4 +1,4 @@
-import { panelCardClassName } from "@/components/panels/panel-layout-classes";
+import { panelCardClassName } from "@/components/panels/panel-styles";
 import Link from "next/link";
 import { JalaliDatePicker } from "./jalali-date-picker";
 import clsx from "clsx";

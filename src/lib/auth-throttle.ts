@@ -60,6 +60,8 @@ export function isRateLimited(error: unknown) {
 /** Shared Persian copy so the four sign-in surfaces never drift apart. */
 export const authCopy = {
   credentials: "شماره یا رمز عبور درست نیست.",
-  throttled: "تلاش‌های ورود بیش از حد مجاز است؛ چند دقیقه بعد دوباره امتحان کنید.",
-  signUpThrottled: "ثبت‌نام‌های این شماره بیش از حد مجاز است؛ فردا دوباره تلاش کنید.",
+  throttled:
+    "تلاش‌های ورود بیش از حد مجاز است؛ چند دقیقه بعد دوباره امتحان کنید.",
+  signUpThrottled:
+    "ثبت‌نام‌های این شماره بیش از حد مجاز است؛ فردا دوباره تلاش کنید.",
 } as const;

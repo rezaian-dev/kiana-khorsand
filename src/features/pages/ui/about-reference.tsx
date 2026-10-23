@@ -1,13 +1,9 @@
-import { publicSpotClassName } from "@/components/layout/public-spot-classes";
 import {
+  publicSpotClassName,
   publicCardClassName,
   publicRainbowCardClassName,
-} from "@/components/layout/public-card-classes";
-import {
   publicButtonPrimaryClassName,
   publicButtonSoftClassName,
-} from "@/components/layout/public-button-classes";
-import {
   publicBlobClassName,
   publicPortraitCanvasClassName,
   publicEditorialHeroClassName,
@@ -19,25 +15,21 @@ import {
   publicIconTileClassName,
   publicIconTileSizedClassName,
   publicChipClassName,
-} from "@/components/layout/public-visual-classes";
-import {
   publicEyebrowClassName,
   publicH1ClassName,
   publicH2ClassName,
   publicH3ClassName,
   publicLeadClassName,
   publicGradTextClassName,
-} from "@/components/layout/public-type-classes";
-import {
   publicContainerClassName,
   publicHeroSectionClassName,
   publicSectionClassName,
-} from "@/components/layout/public-layout-classes";
+} from "@/components/layout/public-styles";
 import {
   ctaPhotoClassName,
   ctaGlassClassName,
 } from "@/components/shared/cta-photo-styles";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+import { ScrollReveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteBreadcrumb } from "@/components/shared/site-breadcrumb";

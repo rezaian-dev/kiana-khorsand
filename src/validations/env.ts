@@ -11,13 +11,11 @@ export const envSchema = z.object({
       "Invalid MongoDB URI",
     ),
   // Never write to a legacy database: normalize any misconfigured name to the canonical one.
-  MONGODB_DB: z.preprocess(
-    (value) => {
-      if (typeof value === "string" && value.trim() === "kiana-khorsand") return value;
-      return "kiana-khorsand";
-    },
-    z.literal("kiana-khorsand").default("kiana-khorsand"),
-  ),
+  MONGODB_DB: z.preprocess((value) => {
+    if (typeof value === "string" && value.trim() === "kiana-khorsand")
+      return value;
+    return "kiana-khorsand";
+  }, z.literal("kiana-khorsand").default("kiana-khorsand")),
   BETTER_AUTH_SECRET: z
     .string()
     .min(32)

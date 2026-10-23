@@ -27,7 +27,8 @@ const SliderContext = React.createContext<SliderContextValue | null>(null);
 
 export function useSliderContext() {
   const context = React.useContext(SliderContext);
-  if (!context) throw new Error("Slider components must be rendered inside <Slider>.");
+  if (!context)
+    throw new Error("Slider components must be rendered inside <Slider>.");
   return context;
 }
 
@@ -105,7 +106,8 @@ export function Slider({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
-      if (target?.closest("input, textarea, select, [contenteditable='true']")) return;
+      if (target?.closest("input, textarea, select, [contenteditable='true']"))
+        return;
 
       if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
         event.preventDefault();

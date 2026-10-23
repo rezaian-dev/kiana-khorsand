@@ -3,7 +3,8 @@
 import {
   panelMutedClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
+
 import {
   startTransition,
   useActionState,

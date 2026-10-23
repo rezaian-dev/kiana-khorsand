@@ -29,7 +29,8 @@ export async function listUsers(): Promise<AdminUserSummary[]> {
 
   return docs.map((doc) => ({
     id: String(doc._id),
-    name: typeof doc.name === "string" && doc.name.trim() ? doc.name : "بدون نام",
+    name:
+      typeof doc.name === "string" && doc.name.trim() ? doc.name : "بدون نام",
     phone: typeof doc.username === "string" ? doc.username : "",
     role: doc.role === "admin" ? "admin" : "user",
     createdAt: doc.createdAt ?? null,

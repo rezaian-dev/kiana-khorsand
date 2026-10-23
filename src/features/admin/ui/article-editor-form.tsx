@@ -5,7 +5,7 @@ import {
   panelCardClassName,
   panelMutedClassName,
   panelErrorClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 
 import {
   createContext,

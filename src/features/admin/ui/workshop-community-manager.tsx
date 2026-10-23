@@ -1,7 +1,7 @@
 import {
   panelButtonClassName,
   panelMutedClassName,
-} from "@/components/panels/panel-layout-classes";
+} from "@/components/panels/panel-styles";
 import { formatToman } from "@/lib/format";
 import {
   markWorkshopAttendance,

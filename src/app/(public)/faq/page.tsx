@@ -1,8 +1,8 @@
 import {
   siteContainerClassName,
   siteHeadingClassName,
-} from "@/components/shared/public-layout-classes";
-import { ScrollReveal } from "@/components/layout/page-reveal";
+} from "@/components/shared/site-styles";
+import { ScrollReveal } from "@/components/motion/reveal";
 import { publicMetadata } from "@/lib/public-metadata";
 import Link from "next/link";
 import { RotateCcw, Search } from "lucide-react";

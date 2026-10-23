@@ -39,7 +39,10 @@ export function FloatingTicket({
   floatY?: number;
   tone?: "teal" | "violet";
 }) {
-  const anim = floatY > 0 ? "ticket-float-down_5.8s_ease-in-out_infinite" : "ticket-float-up_5.2s_ease-in-out_infinite";
+  const anim =
+    floatY > 0
+      ? "ticket-float-down_5.8s_ease-in-out_infinite"
+      : "ticket-float-up_5.2s_ease-in-out_infinite";
   return (
     <div
       className={`${className} pointer-events-none absolute isolate z-[2] flex aspect-auto min-h-[66px] w-max max-w-[min(210px,75%)] items-center justify-start gap-[.65rem] rounded-[20px] border border-[color:color-mix(in_srgb,#cce9e4_80%,var(--site-surface))] bg-[color:color-mix(in_srgb,var(--site-surface)_95%,#d8f5f0)] px-[.85rem] py-[.48rem] text-start text-[var(--site-ink)] shadow-[0_17px_37px_-16px_#173a50a6,0_1px_4px_#173a5030] [direction:rtl] max-[480.02px]:min-h-[55px] max-[480.02px]:gap-[.4rem] max-[480.02px]:rounded-[15px] max-[480.02px]:px-[.5rem] max-[480.02px]:py-[.35rem]`}

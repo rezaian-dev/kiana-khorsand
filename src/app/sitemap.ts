@@ -39,7 +39,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
   } catch (error) {
     // Build on Vercel without DB — return static routes only
-    console.warn("[sitemap] DB unavailable during build, using static routes only", error);
+    console.warn(
+      "[sitemap] DB unavailable during build, using static routes only",
+      error,
+    );
   }
   const pages: MetadataRoute.Sitemap = publicPaths.map((path) => ({
     url: absoluteUrl(path),

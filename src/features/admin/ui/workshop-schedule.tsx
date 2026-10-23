@@ -1,13 +1,14 @@
 "use client";
 
-import { panelMutedClassName } from "@/components/panels/panel-layout-classes";
+import { panelMutedClassName } from "@/components/panels/panel-styles";
+
 import { useState } from "react";
 import { DayPicker } from "@daypicker/persian";
 import {
   adminCalendarDismissClassName,
   adminCalendarInlineClassName,
   adminDayPickerClassNames,
-} from "./admin-daypicker-classes";
+} from "./admin-daypicker-styles";
 import { PanelSelect } from "@/components/panels/panel-select";
 import { dayKey } from "@/lib/tehran-calendar";
 
