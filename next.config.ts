@@ -78,7 +78,12 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/assets/:path*",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
       },
       // Never cache private navigations per F4 — https://nextjs.org/docs/app/api-reference/config/next-config-js/headers
       {
@@ -92,6 +97,27 @@ const nextConfig: NextConfig = {
       {
         source: "/book/:path*",
         headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
+      // The worker is the most privileged script on the origin: never cache it, so an
+      // update cannot be missed, and pin it to this origin's scripts only.
+      // https://nextjs.org/docs/app/guides/progressive-web-apps#securing-your-application
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/javascript; charset=utf-8",
+          },
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self'",
+          },
+          { key: "Service-Worker-Allowed", value: "/" },
+        ],
       },
       {
         source: "/(.*)",

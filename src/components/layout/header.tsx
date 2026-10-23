@@ -1,9 +1,10 @@
-import { BrandMark } from "@/components/shared/brand-mark";
 import {
   publicHeaderShellClassName,
   publicHeaderRowClassName,
-} from "@/components/layout/public-header-classes";
-import { publicContainerClassName } from "@/components/layout/public-layout-classes";
+  publicContainerClassName,
+} from "@/components/layout/public-styles";
+import { BrandMark } from "@/components/shared/brand-mark";
+
 import Link from "next/link";
 import { getSettings } from "@/features/settings/queries";
 import { getSession } from "@/lib/session";
@@ -11,11 +12,11 @@ import { AccountMenu } from "@/components/layout/account-menu";
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
 import { HeaderProgress } from "@/components/layout/header-progress";
 import { DesktopNavigation } from "@/components/layout/desktop-navigation";
-import { PublicHoverLink } from "@/components/layout/public-hover-link";
+import { MotionLink } from "@/components/motion/motion-link";
 import { UserRoundPlus } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { PwaAddress } from "@/components/layout/pwa-address";
-import { PwaInstall } from "@/components/layout/pwa-install";
+import { InstallApp } from "@/components/layout/install-app";
 import { supportPreview } from "@/features/dashboard/support-preview";
 
 export async function Header() {
@@ -43,7 +44,7 @@ export async function Header() {
             </Link>
             <DesktopNavigation />
             <div className="flex items-center gap-1.5 max-[350px]:gap-[.3rem]!">
-              <PwaInstall />
+              <InstallApp />
               <PwaAddress />
               <ThemeToggle className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--fg)] [box-shadow:var(--shadow-soft)]" />
               {session ? (
@@ -55,7 +56,8 @@ export async function Header() {
                   notifications={notifications}
                 />
               ) : (
-                <PublicHoverLink
+                <MotionLink
+                  effect="lift"
                   href="/login"
                   className="header-login-action border-line bg-surface inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border px-3 text-[.79rem] font-extrabold whitespace-nowrap text-[var(--site-ink)] shadow-[var(--shadow-soft)] hover:border-[#388d92] hover:bg-[color:color-mix(in_srgb,#4bada6_10%,var(--site-surface))] motion-safe:transition-[border-color,background-color] motion-safe:duration-200 max-[480px]:px-[.55rem] max-[480px]:text-[.68rem] max-[350px]:px-[.4rem] max-[350px]:text-[.66rem]"
                   aria-label="ورود یا ثبت‌نام"
@@ -68,7 +70,7 @@ export async function Header() {
                     aria-hidden="true"
                   />
                   <span>ورود / ثبت‌نام</span>
-                </PublicHoverLink>
+                </MotionLink>
               )}
             </div>
           </div>

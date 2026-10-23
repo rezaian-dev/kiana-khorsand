@@ -25,3 +25,19 @@ function read() {
 export function useInstalledApp() {
   return useSyncExternalStore(subscribe, read, () => false);
 }
+
+const isIosDevice = () =>
+  /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  // iPadOS 13+ reports itself as a Mac; the touch points give it away.
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+/**
+ * Safari never fires `beforeinstallprompt`, so an iPhone has to be taught the manual
+ * route: Share → Add to Home Screen. Nothing is guessed until hydration is done.
+ * https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable
+ */
+export function useIosInstallable() {
+  const installed = useInstalledApp();
+  const ios = useSyncExternalStore(subscribe, isIosDevice, () => false);
+  return ios && !installed;
+}

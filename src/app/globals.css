@@ -439,3 +439,34 @@ html {
 .admin-gate-cta:active {
   transform: translateY(1px);
 }
+
+/* Offline screen: the only motion available when nothing loads — pure CSS, no JS. */
+@keyframes offline-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, -8%, 0) scale(1.12);
+  }
+}
+@keyframes offline-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-teal) 34%, transparent);
+  }
+  60% {
+    box-shadow: 0 0 0 14px color-mix(in srgb, var(--c-teal) 0%, transparent);
+  }
+}
+.offline-drift {
+  animation: offline-drift 18s ease-in-out infinite;
+  will-change: transform;
+}
+.offline-drift-slow {
+  animation: offline-drift 26s ease-in-out infinite reverse;
+  will-change: transform;
+}
+.offline-pulse {
+  animation: offline-pulse 3.2s ease-out infinite;
+}
