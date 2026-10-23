@@ -3,19 +3,36 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { useActionState, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { m } from "motion/react";
+import {
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  Lock,
+  Phone,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import { loginAction, registerAction } from "@/actions/auth";
 import type { AuthState } from "@/types/auth";
+import { motionTiming } from "@/lib/motion-tokens";
 
 const initial: AuthState = { error: "", fields: {} };
-const authInputClass =
-  "min-h-[42px] w-full rounded-[10px] border border-[#d8d0e2] bg-white px-[.8rem] py-2 text-[#26213f] outline-offset-2 placeholder:text-[#716b82] aria-invalid:border-[#aa2a46] dark:border-[#59456d] dark:bg-[#221c32] dark:text-[#f7f3ff] max-[359px]:min-h-10";
+
 const authLabelClass =
-  "mb-[.28rem] block text-[.83rem] font-bold [@media(max-width:359px)_and_(max-height:600px)]:mb-[.1rem]";
+  "mb-[.34rem] block text-[.82rem] font-extrabold tracking-[.01em] text-[#4b405d] dark:text-[#d5cce4] [@media(max-width:359px)_and_(max-height:600px)]:mb-[.1rem]";
 const authErrorClass =
   "mt-[.3rem] text-[.78rem] font-bold text-[#a12441] dark:text-[#ff9eaf]";
-const authSubmitClass =
-  "auth-new-submit grid min-h-11 w-full cursor-pointer place-items-center rounded-[10px] bg-[#5130ad] px-4 py-[.55rem] font-extrabold text-white disabled:cursor-wait disabled:opacity-65 dark:bg-[#ad99ff] dark:text-[#1e1731]";
+
+/** One field: a leading icon, the input itself, and its error line. */
+const authInputClass =
+  "min-h-[46px] w-full rounded-[12px] border border-[#d8d0e2] bg-white/85 py-2 pr-11 pl-[.85rem] text-[#26213f] transition-colors outline-offset-2 placeholder:text-[#8b83a1] hover:border-[#bdb2d0] aria-invalid:border-[#aa2a46] dark:border-[#59456d] dark:bg-[#221c32]/85 dark:text-[#f7f3ff] dark:placeholder:text-[#9b90b5] dark:hover:border-[#6c5a86] max-[359px]:min-h-10";
+
+/** The wrapper lights its icon when the field inside takes focus. */
+const fieldWrapClass = "group/field relative";
+
+const fieldIconClass =
+  "pointer-events-none absolute inset-y-0 right-0 my-auto mr-[.85rem] size-[18px] text-[#8b83a1] transition-colors group-focus-within/field:text-[var(--field-accent)] dark:text-[#9b90b5]";
 
 export function AuthForm({
   mode,
@@ -31,84 +48,102 @@ export function AuthForm({
   const [showPassword, setShowPassword] = useState(false);
   const register = mode === "register";
   const suffix = next ? `?next=${encodeURIComponent(next)}` : "";
+
   return (
     <>
+      {/* Two links, one glass pill that slides between them. */}
       <nav
-        className="mb-[.9rem] grid grid-cols-2 gap-1 rounded-[14px] bg-[#f1edf7] p-1 dark:bg-[#30283c] [@media(max-width:359px)_and_(max-height:600px)]:mb-[.4rem]"
+        className="relative mb-[1rem] grid grid-cols-2 gap-1 rounded-[14px] border border-[#e7e1f1] bg-[#f1edf7]/80 p-1 backdrop-blur-sm dark:border-white/10 dark:bg-[#2b2438]/80"
         aria-label="حساب کاربری"
       >
-        <Link
-          href={`/login${suffix}`}
-          className="grid min-h-10 place-items-center rounded-[10px] font-bold aria-[current=page]:bg-white aria-[current=page]:shadow-[0_1px_8px_#24194516] max-[359px]:min-h-[37px] dark:aria-[current=page]:bg-[#221c32] dark:aria-[current=page]:text-[#f7f3ff]"
-          aria-current={!register ? "page" : undefined}
-        >
-          ورود
-        </Link>
-        <Link
-          href={`/register${suffix}`}
-          className="grid min-h-10 place-items-center rounded-[10px] font-bold aria-[current=page]:bg-white aria-[current=page]:shadow-[0_1px_8px_#24194516] max-[359px]:min-h-[37px] dark:aria-[current=page]:bg-[#221c32] dark:aria-[current=page]:text-[#f7f3ff]"
-          aria-current={register ? "page" : undefined}
-        >
-          ثبت‌نام
-        </Link>
+        {[
+          { href: `/login${suffix}`, label: "ورود", active: !register },
+          { href: `/register${suffix}`, label: "ثبت‌نام", active: register },
+        ].map((tab) => (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            aria-current={tab.active ? "page" : undefined}
+            className="relative z-10 grid min-h-10 place-items-center rounded-[10px] text-[.9rem] font-extrabold text-[#5a5170] transition-colors aria-[current=page]:text-[#231a3d] dark:text-[#b7accb] dark:aria-[current=page]:text-white"
+          >
+            {tab.active && (
+              <m.span
+                layoutId="auth-tab-pill"
+                className="absolute inset-0 -z-10 rounded-[10px] border border-white/70 bg-white shadow-[0_6px_16px_-10px_#24194580,inset_0_1px_0_#fff] dark:border-white/10 dark:bg-white/10 dark:shadow-[0_6px_18px_-10px_#0009]"
+                transition={motionTiming.indicator}
+              />
+            )}
+            {tab.label}
+          </Link>
+        ))}
       </nav>
+
       <form
         action={action}
-        className="grid gap-[clamp(.5rem,1.4vh,.95rem)] [@media(max-height:680px)]:gap-[.45rem] [@media(max-width:359px)_and_(max-height:600px)]:gap-[.3rem]"
+        className="grid gap-[clamp(.55rem,1.4vh,.95rem)] [@media(max-height:680px)]:gap-[.45rem] [@media(max-width:359px)_and_(max-height:600px)]:gap-[.3rem]"
         noValidate
       >
         {next && <input type="hidden" name="next" value={next} />}
+
         {register && (
           <div>
             <label className={authLabelClass} htmlFor="auth-name">
               نام و نام خانوادگی
             </label>
-            <input
-              className={authInputClass}
-              id="auth-name"
-              name="name"
-              autoComplete="name"
-              required
-              minLength={3}
-              maxLength={120}
-              aria-invalid={Boolean(state.fields.name)}
-              aria-describedby={
-                state.fields.name ? "auth-name-error" : undefined
-              }
-            />
+            <div className={fieldWrapClass}>
+              <UserRound aria-hidden="true" className={fieldIconClass} />
+              <input
+                className={authInputClass}
+                id="auth-name"
+                name="name"
+                autoComplete="name"
+                required
+                minLength={3}
+                maxLength={120}
+                aria-invalid={Boolean(state.fields.name)}
+                aria-describedby={
+                  state.fields.name ? "auth-name-error" : undefined
+                }
+              />
+            </div>
             <FieldError id="auth-name-error" text={state.fields.name} />
           </div>
         )}
+
         <div>
           <label className={authLabelClass} htmlFor="auth-phone">
             شماره موبایل
           </label>
-          <input
-            className={authInputClass}
-            id="auth-phone"
-            name="phone"
-            type="tel"
-            dir="ltr"
-            inputMode="numeric"
-            autoComplete="tel"
-            placeholder="09123456789"
-            required
-            pattern="09[0-9]{9}"
-            aria-invalid={Boolean(state.fields.phone)}
-            aria-describedby={
-              state.fields.phone ? "auth-phone-error" : undefined
-            }
-          />
+          <div className={fieldWrapClass}>
+            <Phone aria-hidden="true" className={fieldIconClass} />
+            <input
+              className={`${authInputClass} text-left`}
+              id="auth-phone"
+              name="phone"
+              type="tel"
+              inputMode="numeric"
+              autoComplete="tel"
+              placeholder="09123456789"
+              required
+              pattern="09[0-9]{9}"
+              aria-invalid={Boolean(state.fields.phone)}
+              aria-describedby={
+                state.fields.phone ? "auth-phone-error" : undefined
+              }
+            />
+          </div>
           <FieldError id="auth-phone-error" text={state.fields.phone} />
         </div>
+
         <div>
           <label className={authLabelClass} htmlFor="auth-password">
             رمز عبور
           </label>
-          <div className="relative">
+          <div className={fieldWrapClass}>
+            <Lock aria-hidden="true" className={fieldIconClass} />
             <input
               id="auth-password"
-              className={`${authInputClass} pe-[3.4rem]`}
+              className={`${authInputClass} pl-[3.4rem]`}
               name="password"
               type={showPassword ? "text" : "password"}
               autoComplete={register ? "new-password" : "current-password"}
@@ -121,7 +156,7 @@ export function AuthForm({
             />
             <button
               type="button"
-              className="absolute inset-e-0 top-0 grid h-[42px] w-11 place-items-center text-[#4b405d]"
+              className="absolute inset-y-0 left-0 grid w-11 place-items-center rounded-l-[12px] text-[#5a5170] transition-colors hover:text-[var(--field-accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--field-accent)] dark:text-[#b7accb]"
               onClick={() => setShowPassword((value) => !value)}
               aria-label={
                 showPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"
@@ -132,30 +167,35 @@ export function AuthForm({
           </div>
           <FieldError id="auth-password-error" text={state.fields.password} />
         </div>
+
         {register && (
           <div>
             <label className={authLabelClass} htmlFor="auth-confirm">
               تکرار رمز عبور
             </label>
-            <input
-              className={authInputClass}
-              id="auth-confirm"
-              name="confirm"
-              type={showPassword ? "text" : "password"}
-              autoComplete="new-password"
-              required
-              aria-invalid={Boolean(state.fields.confirm)}
-              aria-describedby={
-                state.fields.confirm ? "auth-confirm-error" : undefined
-              }
-            />
+            <div className={fieldWrapClass}>
+              <ShieldCheck aria-hidden="true" className={fieldIconClass} />
+              <input
+                className={authInputClass}
+                id="auth-confirm"
+                name="confirm"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                aria-invalid={Boolean(state.fields.confirm)}
+                aria-describedby={
+                  state.fields.confirm ? "auth-confirm-error" : undefined
+                }
+              />
+            </div>
             <FieldError id="auth-confirm-error" text={state.fields.confirm} />
           </div>
         )}
+
         {register ? (
           <div>
             <label
-              className="flex items-center gap-[.55rem] text-[.83rem] leading-[1.6]"
+              className="flex items-center gap-[.55rem] text-[.82rem] leading-[1.7]"
               htmlFor="auth-consent"
             >
               <Checkbox
@@ -189,27 +229,49 @@ export function AuthForm({
         ) : (
           <Link
             href="/forgot-password"
-            className="inline-block text-[.82rem] font-bold text-[#5130ad] underline underline-offset-[3px] dark:text-[#c3b4ff]"
+            className="inline-flex w-fit items-center gap-1 text-[.82rem] font-bold text-[#5130ad] underline-offset-4 transition-colors hover:underline dark:text-[#c3b4ff]"
           >
             رمز عبور را فراموش کرده‌اید؟
           </Link>
         )}
+
         {state.error && (
           <p role="alert" className={authErrorClass}>
             {state.error}
           </p>
         )}
-        <button
+
+        <m.button
           type="submit"
-          className={`${authSubmitClass} ${register ? "rounded-[12px_12px_12px_3px] bg-[linear-gradient(105deg,#12665f,#275576)] shadow-[0_10px_24px_-13px_rgb(10_91_87/55%)] dark:bg-[linear-gradient(105deg,#8de2cc,#a6ceee)]" : ""}`}
           disabled={pending}
+          whileHover={pending ? undefined : { y: -1 }}
+          whileTap={pending ? undefined : { scale: 0.985 }}
+          transition={motionTiming.hover}
+          className={`group relative mt-1 grid min-h-12 w-full cursor-pointer place-items-center overflow-hidden rounded-[14px] bg-[linear-gradient(105deg,#12665f,#275576)] px-4 py-[.6rem] font-extrabold text-white shadow-[0_18px_36px_-20px_rgb(10_91_87/85%)] transition-colors disabled:cursor-wait disabled:opacity-70 dark:bg-[linear-gradient(105deg,#8de2cc,#a6ceee)] dark:text-[#10222a] ${
+            register ? "rounded-[14px_14px_14px_4px]" : ""
+          }`}
         >
-          {pending
-            ? "لطفاً صبر کنید…"
-            : register
-              ? "ایجاد حساب کاربری"
-              : "ورود به حساب کاربری"}
-        </button>
+          {/* A slow sheen across the button — pure CSS, gone the moment the user taps. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(100deg,transparent,rgb(255_255_255/28%),transparent)] transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden"
+          />
+          <span className="relative flex items-center gap-2">
+            {pending ? (
+              "لطفاً صبر کنید…"
+            ) : register ? (
+              <>
+                ایجاد حساب کاربری
+                <ArrowLeft className="size-4" aria-hidden="true" />
+              </>
+            ) : (
+              <>
+                ورود به حساب کاربری
+                <ArrowLeft className="size-4" aria-hidden="true" />
+              </>
+            )}
+          </span>
+        </m.button>
       </form>
     </>
   );

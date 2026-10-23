@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
+import { BootSplash } from "@/components/layout/boot-splash";
+import { SplashGate } from "@/components/layout/splash-gate";
 import { SITE_NAME, socialMetadata } from "@/lib/public-metadata";
 import { SITE_ORIGIN } from "@/lib/site-urls";
 
@@ -78,7 +80,11 @@ export default function RootLayout({
       <body
         className={`${vazirmatn.variable} bg-bg text-fg [font-family:var(--font-vazirmatn),Vazirmatn,Tahoma,sans-serif] antialiased has-[.site-shell]:overflow-x-clip! has-[.site-shell]:bg-[var(--bg)]! has-[.site-shell]:text-[var(--fg)]! data-[scroll-locked]:mr-0!`}
       >
-        <Providers>{children}</Providers>
+        <BootSplash />
+        <Providers>
+          {children}
+          <SplashGate />
+        </Providers>
       </body>
     </html>
   );

@@ -24,7 +24,8 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait",
     lang: "fa",
     dir: "rtl",
-    background_color: "#f8faf9",
+    // Matches the in-app launch screen, so the OS splash hands over invisibly.
+    background_color: "#0a1219",
     theme_color: "#0d736b",
     categories: ["health", "lifestyle", "medical"],
     // A link that belongs to the app moves the window that is already open.

@@ -55,7 +55,7 @@ async function withInstallOffer(page: Page) {
 }
 
 test.describe("administrator entrance", () => {
-  test("fields sit on a glass plate and answer focus with a thin ring", async ({
+  test("fields sit on a glass plate and answer focus with a soft halo", async ({
     page,
   }) => {
     await page.goto("/admin/login");
@@ -78,18 +78,32 @@ test.describe("administrator entrance", () => {
     expect(rest.radius).not.toBe("0px");
     expect(rest.shadow).not.toBe("none");
 
-    await phone.focus();
-    const focused = await phone.evaluate((el) => {
+    await phone.evaluate((el) => (el as HTMLElement).blur());
+    await page.waitForTimeout(120);
+    const resting = await phone.evaluate((el) => {
       const style = getComputedStyle(el);
       return { shadow: style.boxShadow, border: style.borderTopColor };
     });
 
-    // Focus must change more than the border: the ring is part of the shadow.
-    expect(focused.shadow).not.toBe(rest.shadow);
-    expect(focused.border).not.toBe(rest.border);
-    // "Thin" means a 1px hairline ring, not a fat default outline.
+    await phone.focus();
+    await page.waitForTimeout(450);
+    const focused = await phone.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        shadow: style.boxShadow,
+        border: style.borderTopColor,
+        blur: style.backdropFilter,
+      };
+    });
+
+    // Focus must change more than the border: a hairline ring, a wide halo, a lift.
+    expect(focused.shadow).not.toBe(resting.shadow);
+    expect(focused.border).not.toBe(resting.border);
     expect(focused.shadow).toMatch(/0px 0px 0px 1px/);
-    expect(focused.shadow).not.toMatch(/0px 0px 0px [3-9]px/);
+    expect(focused.shadow).toMatch(/0px 0px 0px 7px/);
+    expect(focused.shadow).toMatch(/inset/);
+    // The pane gets more glassy, not less.
+    expect(focused.blur).toContain("blur");
   });
 
   test("the submit button is visible, sized and named", async ({ page }) => {

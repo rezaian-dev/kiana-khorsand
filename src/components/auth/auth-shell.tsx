@@ -94,7 +94,7 @@ export function AuthShell({
       </aside>
       <section
         className={[
-          "grid place-items-center px-[clamp(.75rem,3vw,2.5rem)] py-[clamp(.75rem,3vh,2rem)] [direction:rtl] [@media(max-height:680px)]:py-2",
+          "relative isolate grid place-items-center overflow-hidden px-[clamp(.75rem,3vw,2.5rem)] py-[clamp(.75rem,3vh,2rem)] [direction:rtl] [@media(max-height:680px)]:py-2",
           loginVisual &&
             "[@media(max-width:850px)_and_(min-height:790px)]:[background:linear-gradient(180deg,rgb(255_255_255/85%)_0,#fcfafc_175px),url('/assets/images/login-calm-room.jpg')_center_top/100%_auto_no-repeat] dark:[@media(max-width:850px)_and_(min-height:790px)]:[background:linear-gradient(180deg,rgb(25_21_35/85%)_0,#191523_175px),url('/assets/images/login-calm-room.jpg')_center_top/100%_auto_no-repeat]",
           registerVisual &&
@@ -104,6 +104,10 @@ export function AuthShell({
           .join(" ")}
         aria-labelledby="auth-heading"
       >
+        <div className="auth-aurora" aria-hidden="true">
+          <span />
+          <span />
+        </div>
         {registerVisual && (
           <div
             className="auth-new-register-mobile-art hidden w-[min(100%,430px)] items-end justify-start rounded-[22px_22px_22px_6px] px-[.9rem] py-[.6rem] shadow-[0_12px_32px_-18px_rgb(10_55_52/50%)] [background:linear-gradient(90deg,rgb(10_50_47/66%),transparent_85%),url('/assets/images/register-new-beginning.webp')_center_57%/cover] [@media(max-width:359px)_and_(min-height:720px)]:min-h-[53px]! [@media(max-width:359px)_and_(min-height:720px)]:py-[.3rem] [@media(max-width:850px)_and_(min-height:720px)]:flex [@media(max-width:850px)_and_(min-height:720px)]:min-h-[clamp(75px,12vh,114px)] [@media(min-width:360px)_and_(max-width:420px)_and_(min-height:720px)_and_(max-height:759px)]:min-h-16"
