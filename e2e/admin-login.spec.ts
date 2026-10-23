@@ -34,6 +34,26 @@ async function asInstalledApp(page: Page) {
   });
 }
 
+/** Simulates the browser's install offer and records whether `prompt()` ran. */
+async function withInstallOffer(page: Page) {
+  await page.addInitScript(() => {
+    const fire = () => {
+      const event = new Event("beforeinstallprompt", {
+        cancelable: true,
+      }) as Event & {
+        prompt: () => Promise<void>;
+        userChoice: Promise<{ outcome: string }>;
+      };
+      event.prompt = async () => {
+        (window as unknown as { prompted?: boolean }).prompted = true;
+      };
+      event.userChoice = Promise.resolve({ outcome: "dismissed" });
+      window.dispatchEvent(event);
+    };
+    (window as unknown as { fireInstall?: () => void }).fireInstall = fire;
+  });
+}
+
 test.describe("administrator entrance", () => {
   test("fields sit on a glass plate and answer focus with a thin ring", async ({
     page,
@@ -190,5 +210,64 @@ test.describe("installed app", () => {
     await expect(
       page.getByRole("button", { name: "رفتن به آدرس" }),
     ).toHaveCount(0);
+  });
+
+  test("install is offered only while the browser offers it, and stays dismissed", async ({
+    page,
+  }) => {
+    await withInstallOffer(page);
+    await page.goto("/");
+    const install = page.getByRole("button", { name: "نصب اپ" });
+
+    // Nothing is promised before the browser actually offers an install.
+    await expect(install).toHaveCount(0);
+    // Hydration may still be settling; keep offering until the listener is live.
+    await expect
+      .poll(
+        async () => {
+          await page.evaluate(() =>
+            (window as unknown as { fireInstall: () => void }).fireInstall(),
+          );
+          return install.count();
+        },
+        { timeout: 10_000 },
+      )
+      .toBe(1);
+
+    await install.click();
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => (window as unknown as { prompted?: boolean }).prompted === true,
+        ),
+      )
+      .toBe(true);
+
+    // Dismissing hides it, and the choice survives another offer and a reload.
+    await page.evaluate(() =>
+      (window as unknown as { fireInstall: () => void }).fireInstall(),
+    );
+    await page.getByRole("button", { name: "بستن پیشنهاد نصب" }).click();
+    await page.reload();
+    await page.evaluate(() =>
+      (window as unknown as { fireInstall: () => void }).fireInstall(),
+    );
+    await expect(install).toHaveCount(0);
+  });
+
+  test("an installed app offers the address command instead of install", async ({
+    page,
+  }) => {
+    await asInstalledApp(page);
+    await withInstallOffer(page);
+    await page.goto("/");
+    await page.evaluate(() =>
+      (window as unknown as { fireInstall: () => void }).fireInstall(),
+    );
+
+    await expect(page.getByRole("button", { name: "نصب اپ" })).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "رفتن به آدرس" }),
+    ).toBeVisible();
   });
 });

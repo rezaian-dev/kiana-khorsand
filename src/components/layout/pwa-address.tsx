@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useInstalledApp } from "@/components/layout/use-installed-app";
 import { useRouter } from "next/navigation";
 import { CornerDownLeft, Link2 } from "lucide-react";
 import {
@@ -10,32 +11,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-const STANDALONE = "(display-mode: standalone)";
+/** Nothing to subscribe to: the host a page was served from cannot change. */
 const noSubscription = () => () => {};
 
-/** `display-mode` covers Android and desktop; iOS reports its own flag. */
-const INSTALLED_QUERY = STANDALONE;
-
-function subscribe(onChange: () => void) {
-  const media = window.matchMedia(INSTALLED_QUERY);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
-}
-
-function isInstalled() {
-  const ios = (window.navigator as Navigator & { standalone?: boolean })
-    .standalone;
-  return window.matchMedia(INSTALLED_QUERY).matches || ios === true;
-}
-
-/**
- * An installed app has no address bar, so `/admin` — the one entrance that must not
- * be linked from the site — would be unreachable. This command restores the address
- * bar and nothing else: it accepts a path on this origin and navigates there.
- *
- * Pasting the full URL works too; anything pointing at another host is refused, so
- * the box can never become an open redirect. `Ctrl`/`⌘` + `K` opens it anywhere.
- */
 function toInternalPath(raw: string): string | null {
   const value = raw.trim();
   if (!value) return null;
@@ -61,7 +39,7 @@ function toInternalPath(raw: string): string | null {
 }
 
 export function PwaAddress() {
-  const installed = useSyncExternalStore(subscribe, isInstalled, () => false);
+  const installed = useInstalledApp();
   // The host never changes during a page's life, so it needs no subscription.
   const host = useSyncExternalStore(
     noSubscription,
