@@ -112,6 +112,32 @@ test.describe("service worker", () => {
     expect(signedIn.headers()["x-offline-cacheable"]).toBeUndefined();
   });
 
+  test("a navigation never lands on the browser's error page", async ({
+    page,
+    context,
+  }) => {
+    // The reported bug: with an empty cache and no network the worker resolved the
+    // navigation with `undefined`, which Chrome shows as "This page couldn't load".
+    await page.goto("/");
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.register("/sw.js", {
+        updateViaCache: "none",
+      });
+      await navigator.serviceWorker.ready;
+    });
+    await page.reload({ waitUntil: "networkidle" });
+    await page.evaluate(async () => {
+      for (const key of await caches.keys()) await caches.delete(key);
+    });
+
+    await context.setOffline(true);
+    await page.goto("/fees"); // never visited, nothing cached anywhere
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      "آفلاین",
+    );
+    await context.setOffline(false);
+  });
+
   test("the offline screen is served without a network round trip", async ({
     page,
   }) => {

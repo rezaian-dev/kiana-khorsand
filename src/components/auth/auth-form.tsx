@@ -31,8 +31,17 @@ const authInputClass = `min-h-[46px] w-full rounded-[12px] border border-[#d8d0e
 /** The wrapper lights its icon when the field inside takes focus. */
 const fieldWrapClass = "group/field relative";
 
+/**
+ * The leading icon is a landmark, not a state: it keeps its weight and colour
+ * while the field is focused, so focus reads from the ring alone.
+ *
+ * `z-1` is required, not cosmetic: the focused field gets a `backdrop-blur`
+ * plate, and a backdrop filter promotes the input into its own stacking
+ * context, which would otherwise paint the translucent plate *over* the icon
+ * and wash it out.
+ */
 const fieldIconClass =
-  "pointer-events-none absolute inset-y-0 right-0 my-auto mr-[.85rem] size-[18px] text-[#8b83a1] transition-colors group-focus-within/field:text-[var(--field-accent)] dark:text-[#9b90b5]";
+  "pointer-events-none absolute inset-y-0 right-0 z-1 my-auto mr-[.85rem] size-[18px] text-[#544d66] dark:text-[#d6cfe4]";
 
 export function AuthForm({
   mode,

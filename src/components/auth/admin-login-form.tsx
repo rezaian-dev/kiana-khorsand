@@ -21,8 +21,12 @@ const initial: AuthState = { error: "", fields: {} };
 /** Glass plate: hairline at rest, one precise ring plus a soft glow on focus. */
 const fieldClass = `h-12 w-full min-w-0 ps-11 pe-4 text-[.95rem] text-[var(--site-ink)] placeholder:text-[#98a1b6] dark:text-[#eef3ff] dark:placeholder:text-[#8b93a8] ${fieldRingClassName} h-12 rounded-[.95rem] border border-[rgb(15_23_42/0.1)] bg-[rgb(255_255_255/0.68)] [box-shadow:inset_0_1px_0_#fff,0_1px_2px_rgb(22_35_61/0.04)] backdrop-blur-md hover:border-[rgb(15_23_42/0.18)] dark:border-white/15 dark:bg-white/5 dark:[box-shadow:inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.2)] dark:hover:border-white/25`;
 
+/**
+ * Fixed colour on purpose: focusing the field must not wash the icon out.
+ * `z-1` keeps it above the focused field's backdrop-blur plate.
+ */
 const fieldIconClass =
-  "pointer-events-none absolute inset-y-0 start-3.5 grid place-items-center text-[#8b94a9] transition-colors peer-focus:text-[var(--c-teal)] dark:text-[#8b93a8] dark:peer-focus:text-[#7de3d3]";
+  "pointer-events-none absolute inset-y-0 start-3.5 z-1 grid place-items-center text-[#4f586b] dark:text-[#cdd6e4]";
 
 const labelClass =
   "mb-2 block text-[.8rem] font-extrabold tracking-[.01em] text-[var(--site-muted)]";
