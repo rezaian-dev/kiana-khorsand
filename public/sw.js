@@ -73,8 +73,48 @@ const PRIVATE_PREFIXES = [
 const PAGE_LIMIT = 40;
 const STATIC_EXTENSION =
   /\.(?:css|js|png|jpe?g|gif|svg|webp|avif|ico|woff2?|ttf)$/i;
-/** Every asset a rendered page points at, so an offline open is a complete open. */
+/** Scripts and styles a rendered page points at, wherever they appear. */
 const CHUNK_PATTERN = /\/_next\/static\/[^\s"'<>()\\]+/g;
+/** Images a rendered page points at: `src` and every `srcset` candidate. */
+const IMAGE_PATTERN = /(?:src|srcset)="([^"]+)"/g;
+
+const IMAGE_OPTIMIZER = "/_next/image";
+
+/**
+ * The file behind an optimizer URL.
+ *
+ * `/_next/image?url=…&w=1080` is one rendition of a picture we can also keep whole.
+ * Storing the original once beats storing every width the layout might ask for, and
+ * it lets an offline request at any width be answered.
+ */
+function originalOf(url) {
+  const source = url.searchParams.get("url");
+  if (!source) return null;
+  try {
+    const decoded = decodeURIComponent(source);
+    return decoded.startsWith("/") ? decoded : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Everything a page needs to look finished rather than merely load. */
+function assetUrls(html) {
+  const urls = new Set(html.match(CHUNK_PATTERN) || []);
+  for (const [, value] of html.matchAll(IMAGE_PATTERN)) {
+    for (const candidate of value.split(",")) {
+      let url = candidate.trim().split(/\s+/)[0].replace(/&amp;/g, "&");
+      if (!url.startsWith("/")) continue;
+      // Keep the whole picture, not the rendition the layout happened to ask for.
+      if (url.startsWith(IMAGE_OPTIMIZER)) {
+        url = originalOf(new URL(url, self.location.origin)) || "";
+        if (!url) continue;
+      }
+      urls.add(url);
+    }
+  }
+  return urls;
+}
 
 const isPrivate = (path) =>
   PRIVATE_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`));
@@ -232,9 +272,9 @@ async function warmPage(pageCache, staticCache, url) {
     const html = await response.clone().text();
     await pageCache.put(url, response);
 
-    for (const chunk of new Set(html.match(CHUNK_PATTERN) || [])) {
-      if (await staticCache.match(chunk)) continue;
-      await staticCache.add(chunk).catch(() => {});
+    for (const asset of assetUrls(html)) {
+      if (await staticCache.match(asset)) continue;
+      await staticCache.add(asset).catch(() => {});
     }
   } catch {
     // A page that misses this round is cached the first time it is opened.
@@ -358,6 +398,23 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Static files: cache first — they are content-hashed, so a hit is always current.
+  // An optimized image: the exact rendition if it is stored, else the whole picture.
+  if (url.pathname === IMAGE_OPTIMIZER) {
+    event.respondWith(
+      (async () => {
+        const hit = await caches.match(request);
+        if (hit) return hit;
+        const fresh = await fetch(request).catch(() => null);
+        if (fresh) return fresh;
+        return (
+          (await caches.match(originalOf(url) || "")) ||
+          new Response(null, { status: 504 })
+        );
+      })(),
+    );
+    return;
+  }
+
   if (STATIC_EXTENSION.test(url.pathname)) {
     event.respondWith(
       caches.match(request).then(
