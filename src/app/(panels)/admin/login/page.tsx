@@ -49,13 +49,13 @@ export default async function AdminLoginPage() {
   const signedInAsUser = Boolean(session);
 
   return (
-    <main className="admin-gate relative isolate grid min-h-dvh place-items-center overflow-hidden bg-[#f3f6fa] px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] text-[var(--site-ink)] sm:px-6 dark:bg-[#070b14]">
+    <main className="relative isolate grid [--c-teal:#148b80] [--c-plum:#a63cad] dark:[--c-teal:#4ecdbc] dark:[--c-plum:#dfa0e6] min-h-dvh place-items-center overflow-hidden bg-[#f3f6fa] px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] text-[var(--site-ink)] sm:px-6 dark:bg-[#070b14]">
       {/* Ambient stage: three slow brand lights over a faint grid. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(60rem_40rem_at_80%_-10%,#bfe9e4cc,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#d8cdf6cc,transparent_60%)] dark:bg-[radial-gradient(60rem_40rem_at_80%_-10%,#0f4a4a99,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#2b1f5e99,transparent_60%)]" />
+        <div className="absolute inset-0 [background-image:radial-gradient(60rem_40rem_at_80%_-10%,#bfe9e4cc,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#d8cdf6cc,transparent_60%)] dark:[background-image:radial-gradient(60rem_40rem_at_80%_-10%,#0f4a4a99,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#2b1f5e99,transparent_60%)]" />
         <div className="admin-aurora absolute start-[18%] -top-24 size-[26rem] rounded-full bg-[#59c8bb]/30 blur-[90px] dark:bg-[#1fa596]/35" />
         <div className="admin-aurora admin-aurora-slow absolute end-[8%] -bottom-32 size-[30rem] rounded-full bg-[#a98cf0]/28 blur-[110px] dark:bg-[#6f4fd6]/35" />
         <div className="absolute inset-0 [background-image:linear-gradient(to_right,#0b1a3320_1px,transparent_1px),linear-gradient(to_bottom,#0b1a3320_1px,transparent_1px)] [mask-image:radial-gradient(70%_60%_at_50%_45%,#000,transparent)] [background-size:56px_56px] opacity-[.35] dark:[background-image:linear-gradient(to_right,#ffffff14_1px,transparent_1px),linear-gradient(to_bottom,#ffffff14_1px,transparent_1px)] dark:opacity-25" />
@@ -132,7 +132,7 @@ export default async function AdminLoginPage() {
         </section>
 
         {/* Editorial side — the "why", plus the installed-app route into this page. */}
-        <aside className="relative hidden flex-col justify-between overflow-hidden rounded-[1.9rem] border border-white/15 bg-[linear-gradient(160deg,#0f3f45,#16233f_58%,#241a3c)] p-8 text-[#eaf7f4] shadow-[0_40px_100px_-56px_#0b1626] lg:flex">
+        <aside className="relative hidden flex-col justify-between overflow-hidden rounded-[1.9rem] border border-white/15 [background-image:linear-gradient(160deg,#0f3f45,#16233f_58%,#241a3c)] p-8 text-[#eaf7f4] shadow-[0_40px_100px_-56px_#0b1626] lg:flex">
           <div
             aria-hidden="true"
             className="absolute inset-0 [background:radial-gradient(20rem_16rem_at_100%_0%,#4fd0c740,transparent_62%),radial-gradient(22rem_18rem_at_0%_100%,#b07bd83d,transparent_62%)]"

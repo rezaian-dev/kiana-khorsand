@@ -18,7 +18,7 @@ export function PortraitFloat({
       >
         <span
           aria-hidden="true"
-          className="absolute inset-0 -skew-x-[14deg] bg-[linear-gradient(90deg,transparent,#baf6ff16_25%,#ffffff7a_51%,#9ad9e63b_61%,transparent)] mix-blend-screen"
+          className="absolute inset-0 -skew-x-[14deg] [background-image:linear-gradient(90deg,transparent,#baf6ff16_25%,#ffffff7a_51%,#9ad9e63b_61%,transparent)] mix-blend-screen"
         />
       </span>
       <style>{`@keyframes photo-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}@keyframes photo-glint{0%,10%{transform:translateX(-130%);opacity:0}14%{opacity:.22}22%{transform:translateX(620%);opacity:.3}27%{opacity:0}28%,100%{transform:translateX(-130%);opacity:0}}`}</style>
@@ -49,7 +49,7 @@ export function FloatingTicket({
       aria-hidden="true"
     >
       <span
-        className={`home-ticket-halo pointer-events-none absolute -inset-[7px] z-0 rounded-[24px] border shadow-[0_9px_24px_-12px_#138b9680] motion-safe:animate-[${anim}] motion-reduce:animate-none ${tone === "violet" ? "border-[#bea8d49c] bg-[linear-gradient(125deg,#eee1f389,#dcecf58a)]" : "border-[#80c8c7a6] bg-[linear-gradient(125deg,#d9f4eb88,#e7e6f687)]"}`}
+        className={`home-ticket-halo pointer-events-none absolute -inset-[7px] z-0 rounded-[24px] border shadow-[0_9px_24px_-12px_#138b9680] motion-safe:animate-[${anim}] motion-reduce:animate-none ${tone === "violet" ? "border-[#bea8d49c] [background-image:linear-gradient(125deg,#eee1f389,#dcecf58a)]" : "border-[#80c8c7a6] [background-image:linear-gradient(125deg,#d9f4eb88,#e7e6f687)]"}`}
         aria-hidden="true"
         style={{ animationDelay: delay > 0.2 ? "0.35s" : "0.15s" }}
       />

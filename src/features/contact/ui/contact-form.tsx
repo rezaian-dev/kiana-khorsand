@@ -19,7 +19,7 @@ export function ContactForm() {
   if (state.success)
     return (
       <div role="status" className="px-4 py-12 text-center">
-        <span className="mx-auto grid size-[84px] place-items-center rounded-full bg-[linear-gradient(135deg,var(--c-teal),var(--c-indigo))] text-[2.4rem] text-white">
+        <span className="mx-auto grid size-[84px] place-items-center rounded-full [background-image:linear-gradient(135deg,var(--c-teal),var(--c-indigo))] text-[2.4rem] text-white">
           <i className="ph-duotone ph-check-circle" aria-hidden="true" />
         </span>
         <h3 className={`${publicH3ClassName} mt-5`}>پیام شما ثبت شد</h3>

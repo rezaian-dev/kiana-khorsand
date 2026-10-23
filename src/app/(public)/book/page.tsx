@@ -35,7 +35,7 @@ export default async function Page() {
   return (
     <>
       <section
-        className="booking-hero relative isolate overflow-hidden bg-[radial-gradient(circle_at_8%_84%,rgb(181_216_205_/_28%),transparent_32%),radial-gradient(circle_at_84%_4%,rgb(190_179_218_/_24%),transparent_35%),linear-gradient(150deg,var(--site-canvas),color-mix(in_srgb,var(--site-surface)_75%,#eaf3ef))] py-[clamp(2.5rem,5vw,4.7rem)] [padding-bottom:clamp(2.7rem,5vw,4rem)] before:pointer-events-none before:absolute before:inset-0 before:-z-[1] before:bg-[repeating-radial-gradient(circle_at_105%_-15%,transparent_0_38px,rgb(48_120_125_/_6%)_39px_40px,transparent_41px_70px)] before:opacity-45 max-[480.02px]:pt-8 max-[480.02px]:pb-[2.3rem]"
+        className="booking-hero relative isolate overflow-hidden [background-image:radial-gradient(circle_at_8%_84%,rgb(181_216_205_/_28%),transparent_32%),radial-gradient(circle_at_84%_4%,rgb(190_179_218_/_24%),transparent_35%),linear-gradient(150deg,var(--site-canvas),color-mix(in_srgb,var(--site-surface)_75%,#eaf3ef))] py-[clamp(2.5rem,5vw,4.7rem)] [padding-bottom:clamp(2.7rem,5vw,4rem)] before:pointer-events-none before:absolute before:inset-0 before:-z-[1] before:bg-[repeating-radial-gradient(circle_at_105%_-15%,transparent_0_38px,rgb(48_120_125_/_6%)_39px_40px,transparent_41px_70px)] before:opacity-45 max-[480.02px]:pt-8 max-[480.02px]:pb-[2.3rem]"
         aria-labelledby="booking-title"
       >
         <div
@@ -128,14 +128,14 @@ export default async function Page() {
               برای انتخاب زمان عجله‌ای نیست. درخواست شما ثبت می‌شود و وضعیت آن
               را در حساب خود خواهید دید.
             </p>
-            <ol className="booking-steps relative mt-[1.55rem] grid list-none gap-[0.9rem] [counter-reset:booking] before:absolute before:[inset-inline-start:17px] before:top-[19px] before:bottom-[18px] before:w-px before:bg-[linear-gradient(#398c88,#aeb7d7)] max-[760.02px]:grid-cols-3 max-[760.02px]:before:hidden max-[480.02px]:grid-cols-1 max-[480.02px]:gap-2">
-              <li className="relative flex items-center gap-[0.85rem] text-[0.91rem] leading-[1.7] font-[750] before:grid before:size-[35px] before:flex-none before:place-items-center before:rounded-[50%] before:border-[3px] before:border-[var(--site-surface)] before:bg-[linear-gradient(120deg,#257c81,#6c64a9)] before:text-white before:[box-shadow:0_3px_10px_rgb(35_76_80_/_15%)] before:content-[counter(booking)] before:[counter-increment:booking]">
+            <ol className="booking-steps relative mt-[1.55rem] grid list-none gap-[0.9rem] [counter-reset:booking] before:absolute before:[inset-inline-start:17px] before:top-[19px] before:bottom-[18px] before:w-px before:[background-image:linear-gradient(#398c88,#aeb7d7)] max-[760.02px]:grid-cols-3 max-[760.02px]:before:hidden max-[480.02px]:grid-cols-1 max-[480.02px]:gap-2">
+              <li className="relative flex items-center gap-[0.85rem] text-[0.91rem] leading-[1.7] font-[750] before:grid before:size-[35px] before:flex-none before:place-items-center before:rounded-[50%] before:border-[3px] before:border-[var(--site-surface)] before:[background-image:linear-gradient(120deg,#257c81,#6c64a9)] before:text-white before:[box-shadow:0_3px_10px_rgb(35_76_80_/_15%)] before:content-[counter(booking)] before:[counter-increment:booking]">
                 انتخاب خدمت مورد نیاز
               </li>
-              <li className="relative flex items-center gap-[0.85rem] text-[0.91rem] leading-[1.7] font-[750] before:grid before:size-[35px] before:flex-none before:place-items-center before:rounded-[50%] before:border-[3px] before:border-[var(--site-surface)] before:bg-[linear-gradient(120deg,#257c81,#6c64a9)] before:text-white before:[box-shadow:0_3px_10px_rgb(35_76_80_/_15%)] before:content-[counter(booking)] before:[counter-increment:booking]">
+              <li className="relative flex items-center gap-[0.85rem] text-[0.91rem] leading-[1.7] font-[750] before:grid before:size-[35px] before:flex-none before:place-items-center before:rounded-[50%] before:border-[3px] before:border-[var(--site-surface)] before:[background-image:linear-gradient(120deg,#257c81,#6c64a9)] before:text-white before:[box-shadow:0_3px_10px_rgb(35_76_80_/_15%)] before:content-[counter(booking)] before:[counter-increment:booking]">
                 انتخاب روز و ساعت آزاد
               </li>
-              <li className="relative flex items-center gap-[0.85rem] text-[0.91rem] leading-[1.7] font-[750] before:grid before:size-[35px] before:flex-none before:place-items-center before:rounded-[50%] before:border-[3px] before:border-[var(--site-surface)] before:bg-[linear-gradient(120deg,#257c81,#6c64a9)] before:text-white before:[box-shadow:0_3px_10px_rgb(35_76_80_/_15%)] before:content-[counter(booking)] before:[counter-increment:booking]">
+              <li className="relative flex items-center gap-[0.85rem] text-[0.91rem] leading-[1.7] font-[750] before:grid before:size-[35px] before:flex-none before:place-items-center before:rounded-[50%] before:border-[3px] before:border-[var(--site-surface)] before:[background-image:linear-gradient(120deg,#257c81,#6c64a9)] before:text-white before:[box-shadow:0_3px_10px_rgb(35_76_80_/_15%)] before:content-[counter(booking)] before:[counter-increment:booking]">
                 بررسی و تأیید درخواست
               </li>
             </ol>

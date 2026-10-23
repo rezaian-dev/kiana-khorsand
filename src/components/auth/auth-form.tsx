@@ -16,6 +16,7 @@ import {
 import { loginAction, registerAction } from "@/actions/auth";
 import type { AuthState } from "@/types/auth";
 import { motionTiming } from "@/lib/motion-tokens";
+import { fieldRingClassName } from "@/components/shared/field-styles";
 
 const initial: AuthState = { error: "", fields: {} };
 
@@ -25,8 +26,7 @@ const authErrorClass =
   "mt-[.3rem] text-[.78rem] font-bold text-[#a12441] dark:text-[#ff9eaf]";
 
 /** One field: a leading icon, the input itself, and its error line. */
-const authInputClass =
-  "min-h-[46px] w-full rounded-[12px] border border-[#d8d0e2] bg-white/85 py-2 pr-11 pl-[.85rem] text-[#26213f] transition-colors outline-offset-2 placeholder:text-[#8b83a1] hover:border-[#bdb2d0] aria-invalid:border-[#aa2a46] dark:border-[#59456d] dark:bg-[#221c32]/85 dark:text-[#f7f3ff] dark:placeholder:text-[#9b90b5] dark:hover:border-[#6c5a86] max-[359px]:min-h-10";
+const authInputClass = `min-h-[46px] w-full rounded-[12px] border border-[#d8d0e2] bg-white/85 py-2 pr-11 pl-[.85rem] text-[#26213f] placeholder:text-[#8b83a1] hover:border-[#bdb2d0] aria-invalid:border-[#aa2a46] dark:border-[#59456d] dark:bg-[#221c32]/85 dark:text-[#f7f3ff] dark:placeholder:text-[#9b90b5] dark:hover:border-[#6c5a86] max-[359px]:min-h-10 ${fieldRingClassName}`;
 
 /** The wrapper lights its icon when the field inside takes focus. */
 const fieldWrapClass = "group/field relative";
@@ -247,14 +247,14 @@ export function AuthForm({
           whileHover={pending ? undefined : { y: -1 }}
           whileTap={pending ? undefined : { scale: 0.985 }}
           transition={motionTiming.hover}
-          className={`group relative mt-1 grid min-h-12 w-full cursor-pointer place-items-center overflow-hidden rounded-[14px] bg-[linear-gradient(105deg,#12665f,#275576)] px-4 py-[.6rem] font-extrabold text-white shadow-[0_18px_36px_-20px_rgb(10_91_87/85%)] transition-colors disabled:cursor-wait disabled:opacity-70 dark:bg-[linear-gradient(105deg,#8de2cc,#a6ceee)] dark:text-[#10222a] ${
+          className={`group relative mt-1 grid min-h-12 w-full cursor-pointer place-items-center overflow-hidden rounded-[14px] [background-image:linear-gradient(105deg,#12665f,#275576)] px-4 py-[.6rem] font-extrabold text-white shadow-[0_18px_36px_-20px_rgb(10_91_87/85%)] transition-colors disabled:cursor-wait disabled:opacity-70 dark:[background-image:linear-gradient(105deg,#8de2cc,#a6ceee)] dark:text-[#10222a] ${
             register ? "rounded-[14px_14px_14px_4px]" : ""
           }`}
         >
           {/* A slow sheen across the button — pure CSS, gone the moment the user taps. */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(100deg,transparent,rgb(255_255_255/28%),transparent)] transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden"
+            className="pointer-events-none absolute inset-0 -translate-x-full [background-image:linear-gradient(100deg,transparent,rgb(255_255_255/28%),transparent)] transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden"
           />
           <span className="relative flex items-center gap-2">
             {pending ? (

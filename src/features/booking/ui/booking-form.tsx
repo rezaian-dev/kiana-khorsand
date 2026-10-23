@@ -1,6 +1,6 @@
 "use client";
 
-import { fieldPolishClassName } from "@/components/layout/public-styles";
+import { fieldScopeClassName } from "@/components/shared/field-styles";
 import {
   siteDetailClassName,
   siteHeadingClassName,
@@ -148,7 +148,7 @@ export function BookingForm({
     <form
       action={action}
       onSubmit={submit}
-      className={`${siteDetailClassName} ${fieldPolishClassName} site-form booking-form grid min-w-0 gap-[1.4rem]!`}
+      className={`${siteDetailClassName} ${fieldScopeClassName} site-form booking-form grid min-w-0 gap-[1.4rem]!`}
       aria-busy={pending}
     >
       <div className="booking-form-heading flex items-center gap-[0.8rem]">

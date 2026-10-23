@@ -1,0 +1,13 @@
+import { chromium, devices } from "@playwright/test";
+const b = await chromium.launch();
+const ctx = await b.newContext({ ...devices["iPhone 13"], javaScriptEnabled: false });
+const p = await ctx.newPage();
+await p.goto("http://127.0.0.1:3100/", { waitUntil: "networkidle" });
+await p.addStyleTag({ content: ".boot-splash{display:grid !important}" });
+await p.waitForTimeout(900);
+await p.screenshot({ path: "/tmp/splash-final.png" });
+const anim = await p.locator("#boot-splash").evaluate((el) => getComputedStyle(el).animationName);
+console.log("no-JS fallback animation:", anim);
+await p.waitForTimeout(4200);
+console.log("opacity after the fallback fires:", await p.locator("#boot-splash").evaluate((el) => getComputedStyle(el).opacity));
+await b.close(); process.exit(0);

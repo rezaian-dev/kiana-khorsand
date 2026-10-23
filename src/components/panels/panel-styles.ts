@@ -13,10 +13,8 @@ export const adminOverviewLinkClassName =
 export const adminOverviewStatusClassName =
   "admin-overview-status ms-auto rounded-[99px] bg-[var(--ar-brand-soft)] px-[.6rem] py-[.2rem] text-center text-[.75rem] font-bold text-[var(--ar-brand-ink)]! max-[480.02px]:ms-0 [&.status-cancelled]:bg-[var(--ar-danger-soft)] [&.status-cancelled]:text-[var(--ar-danger)]!";
 
-import {
-  fieldPolishClassName,
-  fieldReducedMotionClassName,
-} from "@/components/layout/public-styles";
+import { fieldReducedMotionClassName } from "@/components/layout/public-styles";
+import { fieldScopeClassName } from "@/components/shared/field-styles";
 
 /** Shared panel shell for account and admin; native details and their pseudo-content keep a no-JS disclosure fallback. */
 export const panelShellClassName =
@@ -31,7 +29,7 @@ export const panelShellClassName =
   "[&_details>summary]:transition-[color,background-color] [&_details>summary]:duration-[250ms] [&_details>summary]:ease-[ease] " +
   "[&_details:open>summary]:text-[var(--panel-accent,var(--c-teal))] [&_details>summary:hover]:text-[var(--panel-accent,var(--c-teal))] " +
   "motion-reduce:[&_details::details-content]:[transition:none] " +
-  fieldPolishClassName +
+  fieldScopeClassName +
   " " +
   fieldReducedMotionClassName;
 
@@ -83,12 +81,12 @@ export const panelCardClassName =
   "panel-card min-w-0 [.panel-shell_&]:[box-shadow:0_15px_35px_-30px_rgb(41_83_90_/_25%)] rounded-[1.2rem] border border-[var(--panel-line)] bg-[var(--panel-surface)] p-[clamp(1rem,2vw,1.4rem)] [&_h2]:mb-[.8rem] [&_h2]:text-[1.1rem] [&_h2]:font-extrabold [&_p]:leading-[1.8] [&_a:not(.panel-button)]:font-bold [&_a:not(.panel-button)]:text-[var(--panel-accent)] [.admin-ref-frame_&]:[overflow-wrap:anywhere] [.admin-ref-frame_&_h2]:text-[var(--panel-text)] [.admin-ref-frame_&]:not-[.admin-calendar-board]:[box-shadow:0_14px_35px_-28px_rgba(18,86,95,.25)]!";
 
 /** Shared account and scheduling forms; their hidden native inputs retain legacy styling. */
-export const panelFormClassName =
-  "panel-form grid gap-[.7rem] [&_label]:font-[750] [&_:is(input,textarea)]:min-h-11 [&_:is(input,textarea)]:w-full [&_:is(input,textarea)]:rounded-[.7rem] [&_:is(input,textarea)]:[padding:.6rem_.8rem] [&_:is(input,textarea)]:[border:1px_solid_var(--panel-line)] [&_:is(input,textarea)]:[background:var(--panel-surface)] [&_:is(input,textarea)]:text-[var(--panel-text)] [&_textarea]:min-h-[100px] [&_textarea]:resize-y";
+export const panelFormClassName = `
+  "panel-form grid gap-[.7rem] [&_label]:font-[750] [&_:is(input,textarea)]:min-h-11 [&_:is(input,textarea)]:w-full [&_:is(input,textarea)]:rounded-[.7rem] [&_:is(input,textarea)]:[padding:.6rem_.8rem] [&_:is(input,textarea)]:[border:1px_solid_var(--panel-line)] [&_:is(input,textarea)]:[background:var(--panel-surface)] [&_:is(input,textarea)]:text-[var(--panel-text)] [&_textarea]:min-h-[100px] [&_textarea]:resize-y ${fieldScopeClassName}`;
 
 /** Admin editor forms keep their existing label, field, help, and section rhythm. */
-export const panelAdminFormClassName =
-  "panel-admin-form grid max-w-[740px] gap-[.65rem] [&_label]:text-[.9rem] [&_label]:font-[750] [&_:is(input,textarea,select)]:min-h-11 [&_:is(input,textarea,select)]:w-full [&_:is(input,textarea,select)]:rounded-[.7rem] [&_:is(input,textarea,select)]:[padding:.6rem_.8rem] [&_:is(input,textarea,select)]:[border:1px_solid_var(--panel-line)] [&_:is(input,textarea,select)]:[background:var(--panel-surface)] [&_:is(input,textarea,select)]:text-[var(--panel-text)] [&_textarea]:min-h-[105px] [&_textarea]:resize-y [&_textarea[name=body]]:min-h-[260px] [&_.panel-help]:text-[.86rem] [&_.panel-help]:leading-[1.8] [&_.panel-help]:text-[var(--panel-muted)] [&_.panel-help]:[margin:-.3rem_0_.7rem] [&_h2:not(:first-child)]:mt-4 [&_h2:not(:first-child)]:[border-top:1px_solid_var(--panel-line)] [&_h2:not(:first-child)]:pt-6";
+export const panelAdminFormClassName = `
+  "panel-admin-form grid max-w-[740px] gap-[.65rem] [&_label]:text-[.9rem] [&_label]:font-[750] [&_:is(input,textarea,select)]:min-h-11 [&_:is(input,textarea,select)]:w-full [&_:is(input,textarea,select)]:rounded-[.7rem] [&_:is(input,textarea,select)]:[padding:.6rem_.8rem] [&_:is(input,textarea,select)]:[border:1px_solid_var(--panel-line)] [&_:is(input,textarea,select)]:[background:var(--panel-surface)] [&_:is(input,textarea,select)]:text-[var(--panel-text)] [&_textarea]:min-h-[105px] [&_textarea]:resize-y [&_textarea[name=body]]:min-h-[260px] [&_.panel-help]:text-[.86rem] [&_.panel-help]:leading-[1.8] [&_.panel-help]:text-[var(--panel-muted)] [&_.panel-help]:[margin:-.3rem_0_.7rem] [&_h2:not(:first-child)]:mt-4 [&_h2:not(:first-child)]:[border-top:1px_solid_var(--panel-line)] [&_h2:not(:first-child)]:pt-6 ${fieldScopeClassName}`;
 
 /** Shared action skin. Keep the semantic hook for active admin and inline-form overrides. */
 export const panelButtonClassName =

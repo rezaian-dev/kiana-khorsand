@@ -65,7 +65,7 @@ export function AboutTimeline() {
         aria-hidden="true"
       />
       <span
-        className={`about-journey-progress ${journeyLineClassName} origin-top bg-[linear-gradient(180deg,var(--c-indigo),var(--c-teal),var(--c-rose),var(--c-amber))] [box-shadow:0_0_16px_color-mix(in_srgb,var(--c-teal)_40%,transparent)]`}
+        className={`about-journey-progress ${journeyLineClassName} origin-top [background-image:linear-gradient(180deg,var(--c-indigo),var(--c-teal),var(--c-rose),var(--c-amber))] [box-shadow:0_0_16px_color-mix(in_srgb,var(--c-teal)_40%,transparent)]`}
         aria-hidden="true"
       />
       <ol

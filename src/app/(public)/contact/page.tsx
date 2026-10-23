@@ -1,5 +1,5 @@
+import { fieldScopeClassName } from "@/components/shared/field-styles";
 import {
-  fieldPolishClassName,
   publicCardClassName,
   publicRainbowCardClassName,
   publicButtonPrimaryClassName,
@@ -91,7 +91,7 @@ export default async function Page() {
     } => Boolean(item),
   );
   return (
-    <div className={`reference-contact ${fieldPolishClassName}`}>
+    <div className={`reference-contact ${fieldScopeClassName}`}>
       <section
         className={`${publicHeroSectionClassName} ${publicEditorialHeroClassName} contact-editorial-hero relative pb-10 md:pb-14`}
       >

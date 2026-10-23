@@ -198,7 +198,7 @@ export function HomeReference({
                 delay={0.35}
                 floatY={6}
               >
-                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] bg-[linear-gradient(140deg,#7c648f,#407e9a)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
+                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] [background-image:linear-gradient(140deg,#7c648f,#407e9a)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
                   <MessageCircleHeart size={20} strokeWidth={1.9} />
                 </span>
                 <span className="home-ticket-copy grid gap-[.06rem] leading-[1.35] whitespace-nowrap">
@@ -214,7 +214,7 @@ export function HomeReference({
                 className="home-photo-check home-photo-check-top end-[-.8rem] top-[9%]"
                 delay={0.15}
               >
-                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] bg-[linear-gradient(140deg,#177c80,#315a9c)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
+                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] [background-image:linear-gradient(140deg,#177c80,#315a9c)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
                   <Waypoints size={20} strokeWidth={1.9} />
                 </span>
                 <span className="home-ticket-copy grid gap-[.06rem] leading-[1.35] whitespace-nowrap">

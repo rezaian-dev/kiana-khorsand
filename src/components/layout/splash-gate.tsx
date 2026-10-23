@@ -2,15 +2,15 @@
 
 import { useEffect } from "react";
 
-const MIN_VISIBLE_MS = 520;
+const MIN_VISIBLE_MS = 900;
 
 /**
  * Lifts the launch screen.
  *
- * It waits for the shortest of: fonts ready, the window load event, or a hard cap — and
- * never less than `MIN_VISIBLE_MS`, so a fast device does not flash the logo for two
- * frames. The flag lives on `<html>` and the fade itself is CSS, which keeps this
- * component at a few hundred bytes.
+ * Waits for the quickest of: fonts ready, `load`, or a hard cap — and never less
+ * than `MIN_VISIBLE_MS`, so the logo does not flash for two frames on a fast
+ * device. The flag lives on `<html>`; the fade itself is a Tailwind transition on
+ * the splash element, so this file ships no styles.
  */
 export function SplashGate() {
   useEffect(() => {
@@ -23,13 +23,18 @@ export function SplashGate() {
       const wait = Math.max(0, MIN_VISIBLE_MS - (performance.now() - started));
       window.setTimeout(() => {
         document.documentElement.dataset.splash = "done";
+        // One frame after the fade, drop the node so it can never trap a tap.
+        window.setTimeout(() => {
+          document.getElementById("boot-splash")?.remove();
+        }, 700);
       }, wait);
     };
 
-    const fonts = document.fonts?.ready ?? Promise.resolve();
     Promise.race([
-      fonts,
-      new Promise((resolve) => window.addEventListener("load", resolve, { once: true })),
+      document.fonts?.ready ?? Promise.resolve(),
+      new Promise((resolve) =>
+        window.addEventListener("load", resolve, { once: true }),
+      ),
       new Promise((resolve) => window.setTimeout(resolve, 1600)),
     ]).then(release);
   }, []);

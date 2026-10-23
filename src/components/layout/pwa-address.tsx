@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  bareFieldClassName,
+  fieldShellClassName,
+} from "@/components/shared/field-styles";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useInstalledApp } from "@/components/layout/use-installed-app";
 import { useRouter } from "next/navigation";
@@ -124,7 +128,9 @@ export function PwaAddress() {
           </SheetDescription>
 
           <form onSubmit={go} className="grid gap-3">
-            <div className="flex items-center gap-2 rounded-[.9rem] border border-[var(--line)] bg-[color:color-mix(in_srgb,var(--c-teal)_4%,var(--site-surface))] px-3 transition-[border-color,box-shadow] focus-within:border-[var(--c-teal)] focus-within:shadow-[0_0_0_1px_color-mix(in_srgb,var(--c-teal)_35%,transparent),0_12px_30px_-24px_color-mix(in_srgb,var(--c-teal)_75%,transparent)]">
+            <div
+              className={`flex items-center gap-2 rounded-[.9rem] border border-[var(--line)] bg-[color-mix(in_srgb,var(--c-teal)_4%,var(--site-surface))] px-3 [--field-accent-dark:var(--c-teal)] [--field-accent:var(--c-teal)] [--field-surface-dark:#16202c] [--field-surface:var(--site-surface)] ${fieldShellClassName}`}
+            >
               {host && (
                 <span
                   dir="ltr"
@@ -148,7 +154,8 @@ export function PwaAddress() {
                 placeholder="/admin"
                 aria-label="مسیر داخلی"
                 aria-invalid={Boolean(error)}
-                className="h-11 min-w-0 flex-1 bg-transparent text-start font-mono text-[.95rem] text-[var(--fg)] outline-none placeholder:text-[var(--site-muted)]/70"
+                data-bare
+                className={`h-11 min-w-0 flex-1 text-start font-mono text-[.95rem] text-[var(--fg)] placeholder:text-[var(--site-muted)]/70 ${bareFieldClassName}`}
               />
               <button
                 type="submit"

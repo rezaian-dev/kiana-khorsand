@@ -14,12 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { adminLoginAction } from "@/actions/admin-auth";
 import type { AuthState } from "@/types/auth";
+import { fieldRingClassName } from "@/components/shared/field-styles";
 
 const initial: AuthState = { error: "", fields: {} };
 
 /** Glass plate: hairline at rest, one precise ring plus a soft glow on focus. */
-const fieldClass =
-  "admin-gate-field h-12 w-full min-w-0 ps-11 pe-4 text-[.95rem] text-[var(--site-ink)] placeholder:text-[#98a1b6] focus-visible:ring-0 dark:text-[#eef3ff] dark:placeholder:text-[#8b93a8]";
+const fieldClass = `h-12 w-full min-w-0 ps-11 pe-4 text-[.95rem] text-[var(--site-ink)] placeholder:text-[#98a1b6] dark:text-[#eef3ff] dark:placeholder:text-[#8b93a8] ${fieldRingClassName} h-12 rounded-[.95rem] border border-[rgb(15_23_42/0.1)] bg-[rgb(255_255_255/0.68)] [box-shadow:inset_0_1px_0_#fff,0_1px_2px_rgb(22_35_61/0.04)] backdrop-blur-md hover:border-[rgb(15_23_42/0.18)] dark:border-white/15 dark:bg-white/5 dark:[box-shadow:inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.2)] dark:hover:border-white/25`;
 
 const fieldIconClass =
   "pointer-events-none absolute inset-y-0 start-3.5 grid place-items-center text-[#8b94a9] transition-colors peer-focus:text-[var(--c-teal)] dark:text-[#8b93a8] dark:peer-focus:text-[#7de3d3]";
@@ -150,7 +150,7 @@ export function AdminLoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="admin-gate-cta group mt-1 inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[.95rem] text-[.95rem] font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)] disabled:cursor-wait disabled:opacity-85 md:h-[3.15rem]"
+        className="group mt-1 inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[.95rem] [background-image:linear-gradient(135deg,color-mix(in_srgb,var(--c-teal)_82%,#0b2f3a),color-mix(in_srgb,var(--c-teal)_96%,#06202a))] text-[.95rem] font-extrabold text-white shadow-[0_18px_34px_-22px_color-mix(in_srgb,var(--c-teal)_85%,transparent),inset_0_1px_0_rgb(255_255_255/0.34)] transition-[filter,transform,box-shadow] duration-200 hover:-translate-y-px hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)] active:translate-y-px disabled:cursor-wait disabled:opacity-85 md:h-[3.15rem] dark:[background-image:linear-gradient(135deg,#6fe0d0,#35b9ad)] dark:text-[#062a2a]"
       >
         {pending ? (
           <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />

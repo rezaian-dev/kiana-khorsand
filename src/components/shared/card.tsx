@@ -44,7 +44,7 @@ export function ContentCard({
     >
       <div className="art-card-media relative isolate min-w-0 flex-none">
         <div
-          className={`art-card-photo h-[clamp(170px,19vw,232px)] bg-[linear-gradient(135deg,#afcec0,#b3a4be)] ${artMediaMaskClassName}`}
+          className={`art-card-photo h-[clamp(170px,19vw,232px)] [background-image:linear-gradient(135deg,#afcec0,#b3a4be)] ${artMediaMaskClassName}`}
         >
           {image ? (
             <Image
@@ -57,7 +57,7 @@ export function ContentCard({
             />
           ) : (
             <div
-              className="site-card-fallback size-full! rounded-none! bg-[linear-gradient(135deg,#c7ded3,#7ca3a6_55%,#c29baf)]! object-cover!"
+              className="site-card-fallback size-full! rounded-none! [background-image:linear-gradient(135deg,#c7ded3,#7ca3a6_55%,#c29baf)]! object-cover!"
               aria-hidden="true"
             />
           )}

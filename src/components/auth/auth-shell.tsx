@@ -1,7 +1,5 @@
-import {
-  fieldPolishClassName,
-  fieldReducedMotionClassName,
-} from "@/components/layout/public-styles";
+import { fieldReducedMotionClassName } from "@/components/layout/public-styles";
+import { fieldScopeClassName } from "@/components/shared/field-styles";
 import { BrandMark } from "@/components/shared/brand-mark";
 import Image from "next/image";
 
@@ -24,9 +22,9 @@ export function AuthShell({
   return (
     <main
       className={[
-        fieldPolishClassName,
+        fieldScopeClassName,
         fieldReducedMotionClassName,
-        "auth-new-shell grid min-h-dvh grid-cols-1 text-[#26213f] [direction:ltr] motion-reduce:*:scroll-auto min-[851px]:grid-cols-[minmax(0,.9fr)_minmax(0,1fr)] dark:text-[#f7f3ff]",
+        "[--field-accent:#7a52c9] [--field-surface:#ffffff] dark:[--field-accent:#b9a3ff] [--field-surface-dark:#241c38] grid min-h-dvh grid-cols-1 text-[#26213f] [direction:ltr] motion-reduce:*:scroll-auto min-[851px]:grid-cols-[minmax(0,.9fr)_minmax(0,1fr)] dark:text-[#f7f3ff]",
         registerVisual
           ? "auth-new-shell-register bg-[#f8f7f3] dark:bg-[#191f23]"
           : "bg-[#fcfafc] dark:bg-[#191523]",
@@ -37,14 +35,14 @@ export function AuthShell({
     >
       <aside
         className={[
-          "relative hidden items-center bg-[radial-gradient(circle_at_25%_30%,#bc88d9_0%,#7352b8_43%,#352451_100%)] text-white [direction:rtl] min-[851px]:grid",
+          "relative hidden items-center [background-image:radial-gradient(circle_at_25%_30%,#bc88d9_0%,#7352b8_43%,#352451_100%)] text-white [direction:rtl] min-[851px]:grid",
           registerVisual
             ? "p-[clamp(1.2rem,3.5vw,3rem)]"
             : "p-[clamp(2rem,6vw,6rem)]",
           loginVisual &&
-            "isolate overflow-hidden before:pointer-events-none before:absolute before:inset-0 before:z-[1] before:bg-[linear-gradient(180deg,transparent_22%,rgb(13_40_40/30%)_54%,rgb(9_28_36/70%)_100%)] before:content-[''] min-[851px]:items-end",
+            "isolate overflow-hidden before:pointer-events-none before:absolute before:inset-0 before:z-[1] before:[background-image:linear-gradient(180deg,transparent_22%,rgb(13_40_40/30%)_54%,rgb(9_28_36/70%)_100%)] before:content-[''] min-[851px]:items-end",
           registerVisual &&
-            "isolate overflow-hidden bg-[#c7c7ab] bg-none before:pointer-events-none before:absolute before:inset-0 before:z-[1] before:bg-[linear-gradient(180deg,transparent_40%,rgb(11_43_43/16%)_68%,rgb(10_37_41/65%)_100%)] before:content-[''] min-[851px]:items-end",
+            "isolate overflow-hidden bg-[#c7c7ab] bg-none before:pointer-events-none before:absolute before:inset-0 before:z-[1] before:[background-image:linear-gradient(180deg,transparent_40%,rgb(11_43_43/16%)_68%,rgb(10_37_41/65%)_100%)] before:content-[''] min-[851px]:items-end",
         ]
           .filter(Boolean)
           .join(" ")}
@@ -104,9 +102,12 @@ export function AuthShell({
           .join(" ")}
         aria-labelledby="auth-heading"
       >
-        <div className="auth-aurora" aria-hidden="true">
-          <span />
-          <span />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-1 overflow-hidden"
+        >
+          <span className="absolute start-[6%] top-[8%] aspect-square w-[min(46vw,24rem)] animate-aurora rounded-full bg-[color-mix(in_srgb,#a78bfa_55%,transparent)] opacity-50 blur-[70px] motion-reduce:animate-none dark:opacity-30" />
+          <span className="absolute end-[2%] bottom-[6%] aspect-square w-[min(44vw,22rem)] animate-aurora-slow rounded-full bg-[color-mix(in_srgb,#34d3c0_45%,transparent)] opacity-50 blur-[70px] motion-reduce:animate-none dark:opacity-30" />
         </div>
         {registerVisual && (
           <div

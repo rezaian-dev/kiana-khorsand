@@ -27,7 +27,7 @@ export function ProfileSummary({
       aria-labelledby="profile-summary-title"
       className="overflow-hidden rounded-[1.2rem] border border-[var(--panel-line)] bg-[var(--panel-surface)]"
     >
-      <div className="h-20 bg-[linear-gradient(115deg,#0f6f6c,#27547a_58%,#5a3f86)]" />
+      <div className="h-20 [background-image:linear-gradient(115deg,#0f6f6c,#27547a_58%,#5a3f86)]" />
       <div className="-mt-9 grid gap-3 px-5 pb-5">
         <span className="grid size-[72px] place-items-center overflow-hidden rounded-full border-4 border-[var(--panel-surface)] bg-[#e8f4f2] text-[1.4rem] font-extrabold text-[var(--panel-accent)]">
           {avatar ? (

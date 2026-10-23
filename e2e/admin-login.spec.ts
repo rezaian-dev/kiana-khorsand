@@ -100,7 +100,9 @@ test.describe("administrator entrance", () => {
     expect(focused.shadow).not.toBe(resting.shadow);
     expect(focused.border).not.toBe(resting.border);
     expect(focused.shadow).toMatch(/0px 0px 0px 1px/);
-    expect(focused.shadow).toMatch(/0px 0px 0px 7px/);
+    // A halo that reads as glass, not as a slab: 3px, never the 7px it used to be.
+    expect(focused.shadow).toMatch(/0px 0px 0px 3px/);
+    expect(focused.shadow).not.toMatch(/0px 0px 0px [5-9]px/);
     expect(focused.shadow).toMatch(/inset/);
     // The pane gets more glassy, not less.
     expect(focused.blur).toContain("blur");

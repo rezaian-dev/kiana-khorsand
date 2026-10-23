@@ -7,23 +7,28 @@ test.describe("launch experience", () => {
   test("the launch screen exists on every page but stays out of a browser tab", async ({
     page,
   }) => {
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "commit" });
     // Server-rendered, so it is in the very first HTML byte — that is the whole
-    // point of a launch screen.
-    await expect(page.locator("#boot-splash")).toHaveCount(1);
-    await expect(page.locator("#boot-splash")).toBeHidden();
-    await expect(page.locator("#boot-splash")).toContainText("کیانا خرسند");
+    // point of a launch screen. The gate removes it once the app answers.
+    const splash = page.locator("#boot-splash");
+    await expect(splash).toHaveCount(1);
+    await expect(splash).toContainText("کیانا خرسند");
+    await expect(splash).toContainText("در حال آماده‌سازی");
+    // Then it leaves, and does not come back.
+    await expect(splash).toHaveCount(0, { timeout: 5000 });
   });
 
-  test("the launch screen releases itself once the app is ready", async ({
-    page,
-  }) => {
+  test("releases itself and never blocks a tap", async ({ page }) => {
     await page.goto("/");
     await page.waitForFunction(
       () => document.documentElement.dataset.splash === "done",
       undefined,
       { timeout: 5000 },
     );
+    // The hero call to action is clickable straight away.
+    await expect(
+      page.getByRole("link", { name: /رزرو وقت مشاوره/ }).first(),
+    ).toBeVisible();
   });
 });
 
