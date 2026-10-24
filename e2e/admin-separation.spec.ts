@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./test";
 import { SIGNED_OUT, clientPassword, clientPhone } from "./credentials";
 
 test.describe("signed-in administrator", () => {

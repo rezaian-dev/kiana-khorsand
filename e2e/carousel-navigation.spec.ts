@@ -1,4 +1,4 @@
-import { test, expect, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "./test";
 
 /**
  * Slider navigation contract (RTL):
@@ -10,10 +10,12 @@ import { test, expect, type Locator, type Page } from "@playwright/test";
  * phones the active slide is centred to within a pixel on every snap.
  */
 
-const carousel = (page: Page, name: string) => page.getByRole("region", { name, exact: true });
+const carousel = (page: Page, name: string) =>
+  page.getByRole("region", { name, exact: true });
 
 const regions = {
-  testimonials: (page: Page) => carousel(page, "از زبان کسانی که مسیر را آمده‌اند"),
+  testimonials: (page: Page) =>
+    carousel(page, "از زبان کسانی که مسیر را آمده‌اند"),
   articles: (page: Page) => carousel(page, "خواندنی‌های کوتاه برای روزهای سخت"),
   workshops: (page: Page) => carousel(page, "یادگیری گروهی، در فضایی امن"),
 };
@@ -24,9 +26,13 @@ const regions = {
  * zero; on wider screens several cards share the row and the offset is the half-width
  * of the visible run, which is expected.
  */
-async function activeSlide(region: Locator): Promise<{ index: number; offset: number; total: number }> {
+async function activeSlide(
+  region: Locator,
+): Promise<{ index: number; offset: number; total: number }> {
   return region.evaluate((root) => {
-    const viewport = root.querySelector(".slider-viewport")!.getBoundingClientRect();
+    const viewport = root
+      .querySelector(".slider-viewport")!
+      .getBoundingClientRect();
     const centre = viewport.x + viewport.width / 2;
     const index = Number(root.getAttribute("data-active-slide") ?? 0);
     const slides = [...root.querySelectorAll(".slider-slide")];
@@ -55,12 +61,18 @@ test.describe("Home sliders — RTL navigation", () => {
     await expect(region.getByRole("button", { name: "بعدی" })).toBeVisible();
 
     // No dots, no counter and no rotation button.
-    await expect(region.getByRole("group", { name: "انتخاب اسلاید" })).toHaveCount(0);
+    await expect(
+      region.getByRole("group", { name: "انتخاب اسلاید" }),
+    ).toHaveCount(0);
     await expect(region.locator(".slider-counter")).toHaveCount(0);
-    await expect(region.getByRole("button", { name: /پخش خودکار|توقف پخش/ })).toHaveCount(0);
+    await expect(
+      region.getByRole("button", { name: /پخش خودکار|توقف پخش/ }),
+    ).toHaveCount(0);
   });
 
-  test("testimonials: real edges, disabled states and APG roles", async ({ page }) => {
+  test("testimonials: real edges, disabled states and APG roles", async ({
+    page,
+  }) => {
     const region = regions.testimonials(page);
     await expect(region).toHaveAttribute("aria-roledescription", "carousel");
 
@@ -89,7 +101,9 @@ test.describe("Home sliders — RTL navigation", () => {
       await next.click();
       await page.waitForTimeout(250);
     }
-    await expect.poll(async () => (await activeSlide(region)).index).toBe(total - 1);
+    await expect
+      .poll(async () => (await activeSlide(region)).index)
+      .toBe(total - 1);
     await expect(next).toBeDisabled();
     await expect(prev).toBeEnabled();
 
@@ -193,7 +207,10 @@ test.describe("Home sliders — RTL navigation", () => {
     await page.mouse.move(box.x + box.width - 40, y);
     await page.mouse.down();
     for (let step = 1; step <= 24; step += 1) {
-      await page.mouse.move(box.x + box.width - 40 - ((box.width - 80) * step) / 24, y);
+      await page.mouse.move(
+        box.x + box.width - 40 - ((box.width - 80) * step) / 24,
+        y,
+      );
       await page.waitForTimeout(16);
     }
     await page.mouse.up();

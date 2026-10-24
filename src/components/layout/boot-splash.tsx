@@ -1,63 +1,84 @@
 import { BrandMark } from "@/components/shared/brand-mark";
 
 /**
- * Launch screen for the installed app.
+ * The first thing the app paints.
  *
- * Rendered on the server, hidden in a browser tab (`display-mode` variants), so it
- * paints before React, before the database and before the page underneath. Every rule
- * here is a Tailwind utility: the only thing this component "owns" is markup.
+ * Two rules make it impossible for the page to appear before this screen:
  *
- * The OS splash uses `background_color` from the manifest — the same ink as the base
- * layer below, so the hand-over is invisible.
+ * 1. it is rendered by the layout, so it is already in the first HTML bytes, and the
+ *    stylesheet that styles it blocks the first paint — the browser cannot show the
+ *    page underneath first;
+ * 2. it is **not** gated on `display-mode`. An installed app that starts life as a
+ *    browser tab (a deep link, a Custom Tab, the hand-off into the WebAPK) would
+ *    otherwise paint the page and then pop the splash in on top of it, which is the
+ *    flash this component exists to prevent.
+ *
+ * The only escapes are `data-splash="skip"` (set before paint by the inline script in
+ * the layout: not the entry page, or a second visit in the same session) and the
+ * CSS-only exit below, which covers a visitor whose JavaScript never runs.
+ *
+ * Everything is a Tailwind utility; the handful of keyframes live in `@theme`.
  */
 export function BootSplash() {
   return (
     <div
       id="boot-splash"
-      className="animate-boot-hide fixed inset-0 z-[200] hidden place-items-center overflow-hidden text-[#f2f6f5] transition-[opacity,visibility,transform,filter] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] [background:radial-gradient(120%_90%_at_80%_-10%,#16333c_0%,transparent_58%),radial-gradient(90%_80%_at_0%_110%,#1d2a45_0%,transparent_60%),#0a1219] [@media(display-mode:fullscreen)]:grid [@media(display-mode:minimal-ui)]:grid [@media(display-mode:standalone)]:grid [[data-splash=done]_&]:pointer-events-none [[data-splash=done]_&]:invisible [[data-splash=done]_&]:scale-[1.06] [[data-splash=done]_&]:opacity-0 [[data-splash=done]_&]:blur-[6px] [[data-splash=skip]_&]:hidden!"
+      className="dark animate-boot-hide fixed inset-0 z-[200] grid place-items-center overflow-hidden text-[#f2f6f5] transition-[opacity,visibility,transform,filter] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] [background:radial-gradient(120%_85%_at_76%_-10%,#1b4750_0%,#10242b_48%,transparent_74%),radial-gradient(95%_80%_at_2%_114%,#242a52_0%,transparent_58%),#0a1219] [[data-splash=done]_&]:pointer-events-none [[data-splash=done]_&]:invisible [[data-splash=done]_&]:scale-[1.04] [[data-splash=done]_&]:opacity-0 [[data-splash=done]_&]:blur-[8px] [[data-splash=skip]_&]:hidden!"
     >
-      {/* Aurora: two slow glows and a grain, all decorative. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-[10%]"
-      >
-        <span className="animate-boot-drift absolute start-[8%] top-[6%] aspect-square w-[min(58vw,26rem)] rounded-full bg-[color-mix(in_srgb,#14b8a6_55%,transparent)] opacity-70 blur-[70px] motion-reduce:animate-none" />
-        <span className="animate-boot-drift-slow absolute end-[4%] bottom-[4%] aspect-square w-[min(62vw,30rem)] rounded-full bg-[color-mix(in_srgb,#7c6cf0_48%,transparent)] opacity-70 blur-[70px] motion-reduce:animate-none" />
-        <span className="absolute inset-0 [background-image:radial-gradient(rgb(255_255_255/35%)_0.5px,transparent_0.6px)] [mask-image:radial-gradient(circle_at_50%_45%,#000_30%,transparent_72%)] bg-[length:3px_3px] opacity-[0.16]" />
+      {/* Depth: two slow aurora glows, a grain, a vignette and a light seam on top. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <span className="animate-boot-drift absolute start-[4%] top-[2%] aspect-square w-[min(64vw,30rem)] rounded-full bg-[color-mix(in_srgb,#14b8a6_46%,transparent)] opacity-80 blur-[90px] motion-reduce:animate-none" />
+        <span className="animate-boot-drift-slow absolute end-[0%] bottom-[0%] aspect-square w-[min(70vw,34rem)] rounded-full bg-[color-mix(in_srgb,#7c6cf0_40%,transparent)] opacity-80 blur-[90px] motion-reduce:animate-none" />
+        <span className="absolute inset-0 [background-image:radial-gradient(rgb(255_255_255/38%)_0.5px,transparent_0.6px)] [background-size:3px_3px] opacity-[0.09] [mask-image:radial-gradient(circle_at_50%_30%,#000_0%,transparent_52%)]" />
+        <span className="absolute inset-0 [background:radial-gradient(130%_100%_at_50%_46%,transparent_38%,rgb(4_9_12/78%)_100%)]" />
+        <span className="absolute inset-x-0 top-0 h-px [background:linear-gradient(90deg,transparent,rgb(255_255_255/22%),transparent)]" />
+        <span className="absolute inset-x-0 bottom-0 h-40 [background:linear-gradient(0deg,rgb(6_13_18/85%),transparent)]" />
       </div>
 
-      <div className="animate-boot-rise relative z-1 grid justify-items-center gap-2.5 px-6 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] text-center motion-reduce:animate-none">
-        <div className="relative mb-1.5 grid place-items-center">
+      <div className="relative z-1 grid w-full max-w-[21rem] justify-items-center gap-2 px-6 pb-[calc(2.5rem+env(safe-area-inset-bottom))] text-center">
+        {/* The mark sits in a glass tile, ringed by a breathing halo, with a slow
+            specular sweep — the one moving detail you notice while waiting. */}
+        <div className="relative mb-4 grid place-items-center">
           <span
             aria-hidden="true"
-            className="animate-boot-breathe absolute -inset-[18px] rounded-[34px] border border-white/20 shadow-[inset_0_0_0_1px_rgb(255_255_255/6%),0_22px_60px_-30px_rgb(20_184_166/85%)] motion-reduce:animate-none"
+            className="animate-boot-breathe absolute size-[7.5rem] rounded-full blur-[26px] [background:conic-gradient(from_210deg,rgb(111_224_208/30%),transparent_38%,rgb(124_108_240/28%)_62%,transparent_88%)] motion-reduce:animate-none"
           />
-          <BrandMark
-            size={52}
-            className="relative z-1 scale-[1.45] rounded-[16px]"
+          <span
+            aria-hidden="true"
+            className="[@media(prefers-reduced-motion:no-preference)]:animate-boot-breathe absolute size-[5.4rem] rounded-[32px] border border-white/15 shadow-[0_0_70px_-18px_rgb(20_184_166/80%)]"
           />
+          <span className="relative grid size-[5.1rem] place-items-center overflow-hidden rounded-[26px] border border-white/15 bg-white/[0.06] shadow-[inset_0_1px_0_rgb(255_255_255/22%),0_26px_60px_-34px_rgb(0_0_0/90%)] backdrop-blur-xl">
+            <BrandMark
+              size={52}
+              priority
+              className="rounded-[16px] shadow-[0_12px_28px_-16px_rgb(0_0_0/75%)]"
+            />
+            <span
+              aria-hidden="true"
+              className="animate-boot-shine absolute inset-y-[-30%] w-1/2 [background:linear-gradient(100deg,transparent,rgb(255_255_255/30%),transparent)] motion-reduce:animate-none"
+            />
+          </span>
         </div>
 
-        <p className="m-0 text-[clamp(1.35rem,5.4vw,1.7rem)] font-extrabold tracking-[-0.01em]">
+        <p className="animate-boot-rise m-0 bg-[linear-gradient(180deg,#ffffff_18%,#9fe8db)] bg-clip-text text-[clamp(1.6rem,6.4vw,2rem)] font-extrabold tracking-[-0.015em] text-transparent [animation-delay:110ms] motion-reduce:animate-none">
           کیانا خرسند
         </p>
-        <p className="m-0 text-[.82rem] text-[#e2f0ee]/70">
+        <p className="animate-boot-rise m-0 text-[.8rem] tracking-[0.02em] text-[#dff2ee]/65 [animation-delay:210ms] motion-reduce:animate-none">
           روان‌شناس بالینی · همراهِ مسیر
         </p>
 
-        {/* Loader: three dots and a light rail — the app is working, not frozen. */}
-        <div aria-hidden="true" className="relative mt-4 flex gap-1.5">
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              style={{ animationDelay: `${i * 0.14}s` }}
-              className="animate-boot-dot size-[.46rem] rounded-full [background-image:linear-gradient(180deg,#7df3e2,#2fb3a6)] shadow-[0_0_14px_color-mix(in_srgb,#5ee8d6_70%,transparent)] motion-reduce:animate-none"
-            />
-          ))}
-          <span className="animate-boot-sweep absolute inset-x-[30%] -bottom-[1.1rem] h-0.5 rounded-full [background-image:linear-gradient(90deg,transparent,color-mix(in_srgb,#6fe0d0_85%,transparent),transparent)] motion-reduce:animate-none" />
+        {/* Progress: a real 3px rail that fills as the app readies itself. */}
+        <div className="animate-boot-rise mt-6 w-[min(13rem,58vw)] [animation-delay:300ms] motion-reduce:animate-none">
+          <div className="relative h-[3px] overflow-hidden rounded-full bg-white/12">
+            <span className="animate-boot-fill absolute inset-y-0 right-0 w-full origin-right rounded-full bg-[linear-gradient(270deg,#8bf6e6,#2fb3a6)] shadow-[0_0_14px_rgb(111_224_208/75%)] motion-reduce:animate-none" />
+            <span className="animate-boot-sweep absolute inset-y-0 w-1/3 [background:linear-gradient(90deg,transparent,rgb(255_255_255/60%),transparent)] motion-reduce:animate-none" />
+          </div>
         </div>
 
-        <p role="status" className="mt-5 mb-0 text-[.72rem] text-[#e2f0ee]/55">
+        <p
+          role="status"
+          className="animate-boot-rise m-0 mt-1 text-[.73rem] text-[#dff2ee]/55 [animation-delay:390ms] motion-reduce:animate-none"
+        >
           در حال آماده‌سازی فضای امن شما…
         </p>
       </div>

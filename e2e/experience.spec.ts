@@ -4,7 +4,7 @@ import { SIGNED_OUT } from "./credentials";
 test.use({ storageState: SIGNED_OUT });
 
 test.describe("launch experience", () => {
-  test("the launch screen exists on every page but stays out of a browser tab", async ({
+  test("the app opens on its launch screen, then gets out of the way", async ({
     page,
   }) => {
     await page.goto("/", { waitUntil: "commit" });
@@ -14,8 +14,74 @@ test.describe("launch experience", () => {
     await expect(splash).toHaveCount(1);
     await expect(splash).toContainText("کیانا خرسند");
     await expect(splash).toContainText("در حال آماده‌سازی");
+    // It is on screen, not merely in the markup: this is the bug that used to let
+    // the page paint first and the splash pop in afterwards.
+    await expect(splash).toBeVisible();
+    await expect(splash).toHaveCSS("display", "grid");
+    await expect(splash).toHaveCSS("position", "fixed");
     // Then it leaves, and does not come back.
     await expect(splash).toHaveCount(0, { timeout: 5000 });
+  });
+
+  test("the launch screen covers the page at first paint, in any display mode", async ({
+    page,
+  }) => {
+    // Sampled at DOMContentLoaded, before the gate's timer can run — the question is
+    // what the browser had to paint first, not what is left a second later.
+    await page.addInitScript(() => {
+      const scope = window as unknown as { __launch: Promise<unknown> };
+      scope.__launch = new Promise((resolve) => {
+        document.addEventListener(
+          "DOMContentLoaded",
+          () => {
+            const splash = document.getElementById("boot-splash");
+            if (!splash) return resolve({ found: false });
+            const cs = getComputedStyle(splash);
+            resolve({
+              found: true,
+              standalone: matchMedia("(display-mode: standalone)").matches,
+              display: cs.display,
+              position: cs.position,
+              zIndex: cs.zIndex,
+              coversViewport:
+                splash.getBoundingClientRect().height >= innerHeight - 1,
+            });
+          },
+          { once: true },
+        );
+      });
+    });
+    await page.goto("/", { waitUntil: "load" });
+    const state = (await page.evaluate(
+      () => (window as unknown as { __launch: Promise<unknown> }).__launch,
+    )) as Record<string, unknown>;
+    // `display-mode` must play no part in the decision: gating on it is what made an
+    // installed app that starts as a browser tab show the page first.
+    expect(state.standalone).toBe(false);
+    expect(state.found).toBe(true);
+    expect(state.display).toBe("grid");
+    expect(state.position).toBe("fixed");
+    expect(state.zIndex).toBe("200");
+    expect(state.coversViewport).toBe(true);
+  });
+
+  test("a later entry skips it: a deep link and a reload never replay the splash", async ({
+    page,
+  }) => {
+    // A deep link is an entry into the middle of the app, not a cold start.
+    await page.goto("/fees");
+    await expect(page.locator("#boot-splash")).toHaveCount(0);
+
+    await page.goto("/", { waitUntil: "commit" });
+    await expect(page.locator("#boot-splash")).toHaveCount(1);
+    await page.waitForFunction(
+      () => document.documentElement.dataset.splash === "done",
+      undefined,
+      { timeout: 5000 },
+    );
+    // Same tab, same session: the reload must not replay the launch screen.
+    await page.reload();
+    await expect(page.locator("#boot-splash")).toHaveCount(0);
   });
 
   test("releases itself and never blocks a tap", async ({ page }) => {

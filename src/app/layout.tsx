@@ -80,12 +80,13 @@ export default function RootLayout({
       <body
         className={`${vazirmatn.variable} bg-bg text-fg [font-family:var(--font-vazirmatn),Vazirmatn,Tahoma,sans-serif] antialiased has-[.site-shell]:overflow-x-clip! has-[.site-shell]:bg-[var(--bg)]! has-[.site-shell]:text-[var(--fg)]! data-[scroll-locked]:mr-0!`}
       >
-        {/* The launch screen belongs to a cold start. A reload caused by an offline
-            navigation, or any later entry in the same session, must not replay it —
-            and the decision has to be made before the first paint to avoid a flash. */}
+        {/* The launch screen belongs to the app's entry point, once per session.
+            Deciding here — before the splash element is parsed — keeps the choice out
+            of a media query, which is what used to let the page paint first and the
+            splash pop in after it. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(sessionStorage.getItem("kk:boot"))document.documentElement.dataset.splash="skip"}catch(e){}`,
+            __html: `try{var s=document.documentElement;if(location.pathname!=="/"||sessionStorage.getItem("kk:boot"))s.dataset.splash="skip"}catch(e){}`,
           }}
         />
         <BootSplash />
