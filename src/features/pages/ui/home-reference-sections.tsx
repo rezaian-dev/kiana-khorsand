@@ -1,21 +1,33 @@
+import { formatNumber } from "@/lib/format";
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { ScrollReveal } from "@/components/motion/reveal";
+import { SectionReveal } from "./hero-visuals";
 import {
-  publicSpotClassName,
-  publicCardClassName,
-  publicRainbowCardClassName,
+  publicBlobClassName,
   publicButtonPrimaryClassName,
-  publicTileToneClassName,
+  publicButtonSoftClassName,
+  publicCardClassName,
+  publicChipClassName,
+  publicContainerClassName,
+  publicEyebrowClassName,
+  publicH2ClassName,
+  publicH3ClassName,
   publicIconTileArtClassName,
   publicIconTileBaseClassName,
-  publicChipClassName,
-  publicH3ClassName,
+  publicLeadClassName,
+  publicRainbowCardClassName,
+  publicSectionClassName,
+  publicSpotClassName,
+  publicTileToneClassName,
 } from "@/components/layout/public-styles";
-import Link from "next/link";
 import {
   artCornerClassName,
   artIconTileClassName,
   artSurfaceClassName,
 } from "@/components/shared/art-card-styles";
 import { FaqAccordion } from "@/components/shared/faq-accordion";
+import { cn } from "@/lib/utils";
 import type { listAreas } from "@/features/areas/queries";
 import type { listServices } from "@/features/services/queries";
 import type { listFaqs } from "@/features/faqs/queries";
@@ -54,6 +66,76 @@ const areaIcons = [
   "ph-flower",
 ];
 const tones = ["rose", "indigo", "plum", "teal", "amber"];
+
+/** Eyebrow/heading block on one side, the "see all" link on the other. */
+const referenceRowClassName =
+  "home-section-head flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start";
+
+/**
+ * The section skeleton the areas and fees strips share: an optional colour blob,
+ * eyebrow + heading + lede on one side, a soft "see all" link on the other, and a
+ * revealed grid as the body.
+ */
+export function ReferenceSection({
+  id,
+  eyebrow,
+  title,
+  lede,
+  href,
+  linkLabel,
+  gridId,
+  gridClassName,
+  blob,
+  eyebrowClassName,
+  children,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  lede: string;
+  href: string;
+  linkLabel: string;
+  gridId: string;
+  gridClassName: string;
+  /** Areas uses a dimmer eyebrow; everything else keeps the stock one. */
+  eyebrowClassName?: string;
+  blob?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className={publicSectionClassName} aria-labelledby={id}>
+      {blob && (
+        <div
+          className={`${publicBlobClassName} ${blob} size-72`}
+          aria-hidden="true"
+        />
+      )}
+      <div className={`${publicContainerClassName} relative`}>
+        <SectionReveal className={referenceRowClassName}>
+          <div className="max-w-[62ch]">
+            <p className={cn(publicEyebrowClassName, eyebrowClassName)}>
+              {eyebrow}
+            </p>
+            <h2 id={id} className={`${publicH2ClassName} mt-4`}>
+              {title}
+            </h2>
+            <p className={`${publicLeadClassName} mt-4`}>{lede}</p>
+          </div>
+          <Link
+            href={href}
+            className={`${publicButtonSoftClassName} home-section-link flex-none`}
+          >
+            {linkLabel}
+            <i className="ph-bold ph-arrow-left" aria-hidden="true" />
+          </Link>
+        </SectionReveal>
+        <ScrollReveal id={gridId} className={gridClassName}>
+          {children}
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
 
 export function ReferenceApproach() {
   return approach.map((item) => (
@@ -128,7 +210,7 @@ export function ReferenceFees({
       </p>
       <p className="mt-5 flex items-baseline gap-2">
         <span className="text-2xl font-extrabold wrap-break-word">
-          {new Intl.NumberFormat("fa-IR").format(service.price)}
+          {formatNumber(service.price)}
         </span>
         <span className="text-muted text-sm">تومان</span>
       </p>

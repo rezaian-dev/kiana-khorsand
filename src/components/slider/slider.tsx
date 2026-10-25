@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import type { SliderApi } from "./use-slider";
 
 /**
  * Slider primitives (Client Components) — the only interactive part of a slider.
@@ -11,19 +12,7 @@ import { cn } from "@/lib/utils";
  * https://www.w3.org/WAI/ARIA/apg/patterns/carousel/
  */
 
-type SliderContextValue = {
-  emblaRef: (node: HTMLElement | null) => void;
-  selectedIndex: number;
-  snapCount: number;
-  canPrev: boolean;
-  canNext: boolean;
-  isPlaying: boolean;
-  scrollPrev: () => void;
-  scrollNext: () => void;
-  scrollTo: (index: number) => void;
-};
-
-const SliderContext = React.createContext<SliderContextValue | null>(null);
+const SliderContext = React.createContext<SliderApi | null>(null);
 
 export function useSliderContext() {
   const context = React.useContext(SliderContext);
@@ -36,15 +25,8 @@ const faNumber = new Intl.NumberFormat("fa-IR");
 const toFaDigits = (value: number) => faNumber.format(value);
 
 type SliderProps = React.PropsWithChildren<{
-  emblaRef: (node: HTMLElement | null) => void;
-  selectedIndex: number;
-  snapCount: number;
-  canPrev: boolean;
-  canNext: boolean;
-  isPlaying: boolean;
-  scrollPrev: () => void;
-  scrollNext: () => void;
-  scrollTo: (index: number) => void;
+  /** Exactly what `useSlider` returns: the context value, passed as-is. */
+  slider: SliderApi;
   /** Accessible name. Prefer `labelId` so the visible heading names the carousel. */
   label?: string;
   labelId?: string;
@@ -53,43 +35,19 @@ type SliderProps = React.PropsWithChildren<{
 
 export function Slider({
   children,
-  emblaRef,
-  selectedIndex,
-  snapCount,
-  canPrev,
-  canNext,
-  isPlaying,
-  scrollPrev,
-  scrollNext,
-  scrollTo,
+  slider,
   label,
   labelId,
   className,
 }: SliderProps) {
-  const value = React.useMemo(
-    () => ({
-      emblaRef,
-      selectedIndex,
-      snapCount,
-      canPrev,
-      canNext,
-      isPlaying,
-      scrollPrev,
-      scrollNext,
-      scrollTo,
-    }),
-    [
-      emblaRef,
-      selectedIndex,
-      snapCount,
-      canPrev,
-      canNext,
-      isPlaying,
-      scrollPrev,
-      scrollNext,
-      scrollTo,
-    ],
-  );
+  const {
+    scrollPrev,
+    scrollNext,
+    scrollTo,
+    snapCount,
+    selectedIndex,
+    isPlaying,
+  } = slider;
 
   // `dir="rtl"` on the single root: the one source of direction. The viewport and
   // tracks inherit it; adding a second dir there is a competing source of truth.
@@ -130,7 +88,7 @@ export function Slider({
   }, [scrollNext, scrollPrev, scrollTo, snapCount]);
 
   return (
-    <SliderContext.Provider value={value}>
+    <SliderContext.Provider value={slider}>
       <div
         role="region"
         aria-roledescription="carousel"

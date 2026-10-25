@@ -22,7 +22,7 @@ import { AdminStatus } from "@/components/panels/admin-status";
 import { SiteToaster } from "@/components/shared/site-toaster";
 import { FilterableList } from "@/components/panels/filterable-list";
 import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
-import { formatToman } from "@/lib/format";
+import { formatToman, formatNumber } from "@/lib/format";
 
 /** One workshop in the admin list. */
 const workshopRowClassName =
@@ -165,9 +165,8 @@ export default async function Page({
         )}
       </form>
       <p className={`${panelMutedClassName} mt-2 mb-4`}>
-        {new Intl.NumberFormat("fa-IR").format(total)} کارگاه · صفحهٔ{" "}
-        {new Intl.NumberFormat("fa-IR").format(page)} از{" "}
-        {new Intl.NumberFormat("fa-IR").format(pages)}
+        {formatNumber(total)} کارگاه · صفحهٔ {formatNumber(page)} از{" "}
+        {formatNumber(pages)}
       </p>
       {workshops.length ? (
         <FilterableList
@@ -315,8 +314,7 @@ export default async function Page({
             </Link>
           )}
           <span>
-            صفحهٔ {new Intl.NumberFormat("fa-IR").format(page)} از{" "}
-            {new Intl.NumberFormat("fa-IR").format(pages)}
+            صفحهٔ {formatNumber(page)} از {formatNumber(pages)}
           </span>
           {page < pages && (
             <Link href={pageHref(page + 1)} className={workshopRowClassName}>

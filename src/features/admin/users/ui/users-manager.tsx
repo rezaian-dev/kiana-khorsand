@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { formatNumber } from "@/lib/format";
+import { useState } from "react";
 import { Search, ShieldCheck, UsersRound } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -34,14 +35,12 @@ export function UsersManager({
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
 
-  const visible = useMemo(() => {
-    const needle = normalize(query);
-    return users.filter((user) => {
-      if (filter !== "all" && user.role !== filter) return false;
-      if (!needle) return true;
-      return normalize(`${user.name} ${user.phone}`).includes(needle);
-    });
-  }, [users, query, filter]);
+  const needle = normalize(query);
+  const visible = users.filter((user) => {
+    if (filter !== "all" && user.role !== filter) return false;
+    if (!needle) return true;
+    return normalize(`${user.name} ${user.phone}`).includes(needle);
+  });
 
   return (
     <section
@@ -147,8 +146,8 @@ export function UsersManager({
       )}
 
       <p className="m-0 text-[.75rem] text-(--panel-muted)" aria-live="polite">
-        نمایش {new Intl.NumberFormat("fa-IR").format(visible.length)} از{" "}
-        {new Intl.NumberFormat("fa-IR").format(users.length)} حساب
+        نمایش {formatNumber(visible.length)} از {formatNumber(users.length)}{" "}
+        حساب
       </p>
     </section>
   );

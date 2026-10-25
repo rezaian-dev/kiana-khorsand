@@ -1,5 +1,6 @@
 "use client";
 
+import { formatNumber } from "@/lib/format";
 import { publicAccountTriggerClassName } from "@/components/layout/public-styles";
 import Link from "next/link";
 import { safeAvatarUrl } from "@/lib/avatar-url";
@@ -154,7 +155,7 @@ export function AccountMenu({
               href="/dashboard/messages"
               aria-label={
                 notifications?.unread
-                  ? `اعلان‌ها؛ ${new Intl.NumberFormat("fa-IR").format(notifications.unread)} پیام خوانده‌نشده`
+                  ? `اعلان‌ها؛ ${formatNumber(notifications.unread)} پیام خوانده‌نشده`
                   : "اعلان‌ها"
               }
             >
@@ -205,9 +206,7 @@ export function AccountMenu({
                 >
                   {(notifications?.unread ?? 0) > 9
                     ? "۹+"
-                    : new Intl.NumberFormat("fa-IR").format(
-                        notifications?.unread ?? 0,
-                      )}
+                    : formatNumber(notifications?.unread ?? 0)}
                 </span>
               )}
             </Link>

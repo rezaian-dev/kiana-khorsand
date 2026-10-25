@@ -1,5 +1,6 @@
 "use client";
 
+import { formatNumber } from "@/lib/format";
 import { panelMutedClassName } from "@/components/panels/panel-styles";
 
 import { useState } from "react";
@@ -25,7 +26,7 @@ export function SlotPicker({ id, initial }: { id: string; initial: string[] }) {
         <Clock3 size={16} aria-hidden="true" />
         <span>ساعت‌های قابل درخواست</span>
         <small className="ms-auto text-(--panel-muted)">
-          {new Intl.NumberFormat("fa-IR").format(slots.length)} زمان
+          {formatNumber(slots.length)} زمان
         </small>
       </div>
       <div

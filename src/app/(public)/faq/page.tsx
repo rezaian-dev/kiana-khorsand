@@ -5,11 +5,16 @@ import {
 import { ScrollReveal } from "@/components/motion/reveal";
 import { publicMetadata } from "@/lib/public-metadata";
 import Link from "next/link";
-import { RotateCcw, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { searchText } from "@/lib/list-search";
 import type { QueryPageProps } from "@/types/routes";
 import { listFaqs } from "@/features/faqs/queries";
 import { FaqAccordion } from "@/components/shared/faq-accordion";
+import {
+  SearchEmpty,
+  SearchInput,
+  SearchPanel,
+} from "@/components/shared/search-panel";
 import { Intro } from "@/components/shared/intro";
 import { labels } from "@/lib/labels";
 
@@ -49,50 +54,24 @@ export default async function Page({ searchParams }: QueryPageProps) {
         description={groups[0]?.questions[0]?.answer}
       />
       <div className={`${siteContainerClassName} site-section faq-page`}>
-        <form
-          method="get"
-          role="search"
-          className="public-search-panel mt-0 mb-[clamp(2rem,4vw,3.25rem)] grid items-stretch gap-[1.15rem] rounded-[23px] border border-[color-mix(in_srgb,#569b96_15%,var(--site-line))] bg-(--site-surface) bg-[radial-gradient(circle_at_96%_8%,color-mix(in_srgb,#67ad9b_8%,transparent),transparent_36%)] p-[clamp(1.05rem,2.7vw,1.8rem)] shadow-[0_18px_42px_-34px_#1b566250]"
-        >
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-[13px] bg-[color-mix(in_srgb,#318b85_13%,var(--site-surface))] text-[#257b78] dark:text-[#a6e4d7]">
-              <Search size={20} aria-hidden="true" />
-            </span>
-            <div className="grid min-w-0 gap-[.15rem]">
-              <label className="text-[1.06rem] font-[850]" htmlFor="faq-q">
-                پرسش خود را جست‌وجو کنید
-              </label>
-              <small className="text-[.8rem] leading-[1.7] text-(--site-muted)">
-                پاسخ‌های رایج را سریع‌تر پیدا کنید.
-              </small>
-            </div>
-          </div>
-          <div className="flex min-w-0 flex-wrap items-center gap-[.65rem] max-[620px]:grid max-[620px]:grid-cols-[minmax(0,1fr)]">
-            <input
-              className="min-h-[50px] w-auto min-w-0 flex-[1_1_250px] rounded-xl border border-[color-mix(in_srgb,#4e8d8d_18%,var(--site-line))] bg-(--site-surface) px-[.9rem] text-(--site-ink) shadow-[0_5px_18px_-16px_#24434a75] placeholder:text-(--site-muted) placeholder:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--c-teal) max-[620px]:w-full"
+        <SearchPanel
+          id="faq-q"
+          icon={<Search size={20} aria-hidden="true" />}
+          label="پرسش خود را جست‌وجو کنید"
+          hint="پاسخ‌های رایج را سریع‌تر پیدا کنید."
+          field={
+            <SearchInput
               id="faq-q"
-              type="search"
-              name="q"
-              maxLength={100}
               placeholder="مثلاً تعرفه یا زمان جلسه..."
               defaultValue={q}
             />
-            <button
-              type="submit"
-              className="site-button min-h-[50px] shrink-0 max-[620px]:w-full"
-            >
-              جست‌وجو
-            </button>
-            {q && (
-              <Link
-                href="/faq"
-                className="inline-flex min-h-[46px] items-center justify-center gap-[.35rem] rounded-[10px] px-[.6rem] py-[.4rem] text-[.83rem] font-extrabold text-[#22746e] no-underline hover:bg-[color-mix(in_srgb,#3d9486_10%,var(--site-surface))] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#22746e] max-[620px]:justify-self-start dark:text-[#a4e5d7]"
-              >
-                <RotateCcw size={16} aria-hidden="true" /> پاک‌کردن جست‌وجو
-              </Link>
-            )}
-          </div>
-        </form>
+          }
+          submitLabel="جست‌وجو"
+          clearHref="/faq"
+          clearLabel="پاک‌کردن جست‌وجو"
+          clearable={Boolean(q)}
+          className="mt-0 mb-[clamp(2rem,4vw,3.25rem)]"
+        />
         {visibleGroups.length > 0 && (
           <div className="faq-layout grid grid-cols-[minmax(0,1fr)_minmax(225px,260px)] items-start gap-[clamp(1.5rem,4vw,3rem)] max-[900px]:grid-cols-[minmax(0,1fr)]">
             <div className="faq-list min-w-0">
@@ -152,22 +131,12 @@ export default async function Page({ searchParams }: QueryPageProps) {
           </div>
         )}
         {!visibleGroups.length && (
-          <div
-            className="public-search-empty mt-[clamp(1.5rem,3vw,2.5rem)] mb-16 grid justify-items-start gap-2 rounded-[21px] border border-dashed border-(--site-line) bg-(--site-surface) p-[clamp(1.3rem,3vw,2.1rem)] leading-[1.8] text-(--site-muted)"
-            role="status"
-          >
-            <Search size={24} className="text-[#267f78]" aria-hidden="true" />
-            <h2 className="text-[1.15rem] font-[850] text-(--site-ink)">
-              پاسخی با این عبارت پیدا نشد
-            </h2>
-            <p>عبارت دیگری امتحان کنید یا همهٔ پرسش‌ها را ببینید.</p>
-            <Link
-              href="/faq"
-              className="font-extrabold text-[#267f78] underline underline-offset-[3px] dark:text-[#a4e5d7]"
-            >
-              نمایش همهٔ پرسش‌ها
-            </Link>
-          </div>
+          <SearchEmpty
+            title="پاسخی با این عبارت پیدا نشد"
+            body="عبارت دیگری امتحان کنید یا همهٔ پرسش‌ها را ببینید."
+            href="/faq"
+            linkLabel="نمایش همهٔ پرسش‌ها"
+          />
         )}
       </div>
     </>

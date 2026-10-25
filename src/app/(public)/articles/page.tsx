@@ -1,3 +1,4 @@
+import { formatNumber } from "@/lib/format";
 import { notFound, permanentRedirect } from "next/navigation";
 import type { ArticleSearchProps } from "@/types/routes";
 import { listArticles } from "@/features/articles/queries";
@@ -18,7 +19,7 @@ export async function generateMetadata({ searchParams }: ArticleSearchProps) {
   return publicMetadata({
     title:
       view.page > 1 && !view.filtered
-        ? `مقاله‌ها — صفحهٔ ${new Intl.NumberFormat("fa-IR").format(view.page)}`
+        ? `مقاله‌ها — صفحهٔ ${formatNumber(view.page)}`
         : labels.articles,
     description,
     path: view.href,

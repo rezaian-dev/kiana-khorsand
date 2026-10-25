@@ -96,3 +96,35 @@ test.describe("article list", () => {
     ).toBeVisible();
   });
 });
+
+/**
+ * One search panel serves the FAQ, workshops and testimonials pages. These tests
+ * pin the contract of that shared component: a real GET form, a labelled field, a
+ * working reset link, and an empty state that appears only when nothing matches.
+ */
+test.describe("shared search panel", () => {
+  const pages = [
+    { path: "/faq", field: "#faq-q", reset: "پاک‌کردن جست‌وجو" },
+    { path: "/workshops", field: "#workshop-q", reset: "پاک‌کردن جست‌وجو" },
+  ];
+
+  for (const { path, field, reset } of pages) {
+    test(`${path} submits as a plain GET and offers a way back`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      const panel = page.getByRole("search");
+      await expect(panel).toBeVisible();
+      // A real form: it works with JavaScript disabled and produces a shareable URL.
+      await expect(panel).toHaveAttribute("method", "get");
+
+      await page.locator(field).fill("zzz-بدون-نتیجه");
+      await panel.getByRole("button", { name: "جست‌وجو" }).click();
+      await expect(page).toHaveURL(/\?q=/);
+      await expect(page.getByRole("status")).toBeVisible();
+
+      await page.getByRole("link", { name: reset }).click();
+      await expect(page).not.toHaveURL(/q=/);
+    });
+  }
+});

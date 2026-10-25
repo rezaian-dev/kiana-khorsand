@@ -1,5 +1,6 @@
 "use client";
 
+import { formatNumber } from "@/lib/format";
 import { LayoutGroup, m } from "motion/react";
 import { RotateCcw, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -51,7 +52,7 @@ export function ArticleFilters({
           </h2>
         </div>
         <p className="text-[.85rem] text-(--muted)" aria-live="polite">
-          {new Intl.NumberFormat("fa-IR").format(resultCount)} مقاله
+          {formatNumber(resultCount)} مقاله
         </p>
       </div>
 

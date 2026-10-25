@@ -20,7 +20,7 @@ import { SiteToaster } from "@/components/shared/site-toaster";
 import { Prose } from "@/components/shared/prose";
 import { cleanEditorialBody } from "@/lib/clean-copy";
 import { workshopPrice } from "@/features/workshops/pricing";
-import { formatDate, formatToman } from "@/lib/format";
+import { formatDate, formatToman, formatNumber } from "@/lib/format";
 import { labels } from "@/lib/labels";
 
 export const revalidate = 3600;
@@ -97,8 +97,7 @@ export default async function Page({ params }: SlugPageProps) {
             <div className="workshop-price-display mb-[1.3rem] flex flex-wrap items-center gap-3">
               {pricing.percent > 0 && (
                 <span className="rounded-[999px] px-[.85rem] py-[.35rem] font-extrabold text-white [background:linear-gradient(105deg,#167870,#385f89)]">
-                  ٪{new Intl.NumberFormat("fa-IR").format(pricing.percent)}{" "}
-                  تخفیف
+                  ٪{formatNumber(pricing.percent)} تخفیف
                 </span>
               )}
               <strong className={`${siteBadgeClassName} font-[850]`}>

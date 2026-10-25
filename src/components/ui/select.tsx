@@ -27,20 +27,15 @@ export function Select({
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   const [uncontrolled, setUncontrolled] = React.useState(defaultOpen);
   const resolved = open ?? uncontrolled;
-  const change = React.useCallback(
-    (next: boolean) => {
-      if (open === undefined) setUncontrolled(next);
-      onOpenChange?.(next);
-    },
-    [open, onOpenChange],
-  );
-  const state = React.useMemo(
-    () => ({ open: resolved, close: () => change(false) }),
-    [resolved, change],
-  );
+  const change = (next: boolean) => {
+    if (open === undefined) setUncontrolled(next);
+    onOpenChange?.(next);
+  };
 
   return (
-    <SelectState.Provider value={state}>
+    <SelectState.Provider
+      value={{ open: resolved, close: () => change(false) }}
+    >
       <SelectPrimitive.Root open={resolved} onOpenChange={change} {...props} />
     </SelectState.Provider>
   );

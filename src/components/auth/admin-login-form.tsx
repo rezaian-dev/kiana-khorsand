@@ -16,14 +16,14 @@ import { adminLoginAction } from "@/actions/admin-auth";
 import type { AuthState } from "@/types/auth";
 import { fieldRingClassName } from "@/components/shared/field-styles";
 
-/** Admin field: same glass as the site, in the panel accent. */
-const adminFieldClassName =
+/** The quiet links under the form ("فراموشی رمز", "بازگشت به سایت"). */
+const authLinkClassName =
   "font-bold text-(--site-muted) underline-offset-4 transition-colors hover:text-(--c-teal) hover:underline";
 
 const initial: AuthState = { error: "", fields: {} };
 
 /** Glass plate: hairline at rest, one precise ring plus a soft glow on focus. */
-const fieldClass = `h-12 w-full min-w-0 ps-11 pe-4 text-[.95rem] text-[var(--site-ink)] placeholder:text-[#98a1b6] dark:text-[#eef3ff] dark:placeholder:text-[#8b93a8] ${fieldRingClassName} h-12 rounded-[.95rem] border border-[rgb(15_23_42/0.1)] bg-[rgb(255_255_255/0.68)] [box-shadow:inset_0_1px_0_#fff,0_1px_2px_rgb(22_35_61/0.04)] backdrop-blur-md hover:border-[rgb(15_23_42/0.18)] dark:border-white/15 dark:bg-white/5 dark:[box-shadow:inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.2)] dark:hover:border-white/25`;
+const fieldClass = `h-12 w-full min-w-0 ps-11 pe-4 text-[.95rem] text-[var(--site-ink)] placeholder:text-[#98a1b6] dark:text-[#eef3ff] dark:placeholder:text-[#8b93a8] ${fieldRingClassName} rounded-[.95rem] border border-[rgb(15_23_42/0.1)] bg-[rgb(255_255_255/0.68)] [box-shadow:inset_0_1px_0_#fff,0_1px_2px_rgb(22_35_61/0.04)] backdrop-blur-md hover:border-[rgb(15_23_42/0.18)] dark:border-white/15 dark:bg-white/5 dark:[box-shadow:inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.2)] dark:hover:border-white/25`;
 
 /**
  * Fixed colour on purpose: focusing the field must not wash the icon out.
@@ -178,10 +178,10 @@ export function AdminLoginForm() {
       </button>
 
       <div className="mt-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-white/60 pt-4 text-[.79rem] dark:border-white/10">
-        <Link href="/login" className={adminFieldClassName}>
+        <Link href="/login" className={authLinkClassName}>
           ورود کاربران
         </Link>
-        <Link href="/" className={adminFieldClassName}>
+        <Link href="/" className={authLinkClassName}>
           بازگشت به سایت
         </Link>
       </div>

@@ -1,3 +1,4 @@
+import { formatNumber } from "@/lib/format";
 import {
   siteContainerClassName,
   siteGridClassName,
@@ -5,10 +6,10 @@ import {
 import { ScrollReveal } from "@/components/motion/reveal";
 import { pageNumber } from "@/lib/list-search";
 import type { CategorySearchProps } from "@/types/routes";
-import { ListFilter, RotateCcw } from "lucide-react";
+import { ListFilter } from "lucide-react";
 import { permanentRedirect } from "next/navigation";
 import { PanelSelect } from "@/components/panels/panel-select";
-import Link from "next/link";
+import { SearchPanel } from "@/components/shared/search-panel";
 import { listTestimonials } from "@/features/testimonials/queries";
 import { getSession } from "@/lib/session";
 import { ReviewSubmission } from "@/features/community/ui/review-submission";
@@ -56,7 +57,7 @@ export async function generateMetadata({ searchParams }: CategorySearchProps) {
   return publicMetadata({
     title:
       current > 1
-        ? `${labels.testimonials} — صفحهٔ ${new Intl.NumberFormat("fa-IR").format(current)}`
+        ? `${labels.testimonials} — صفحهٔ ${formatNumber(current)}`
         : labels.testimonials,
     description:
       "روایت همراهان از تجربه مسیر مشاوره؛ با توجه به حریم خصوصی و رضایت.",
@@ -102,31 +103,15 @@ export default async function Page({ searchParams }: CategorySearchProps) {
       />
       <div className={siteContainerClassName}>
         <ReviewSubmission authenticated={Boolean(session)} />
-        <form
-          className="public-search-panel mt-[clamp(1.3rem,3vw,2.5rem)] grid items-stretch gap-[1.15rem] rounded-[23px] border border-[color-mix(in_srgb,#569b96_15%,var(--site-line))] bg-(--site-surface) bg-[radial-gradient(circle_at_96%_8%,color-mix(in_srgb,#67ad9b_8%,transparent),transparent_36%)] p-[clamp(1.05rem,2.7vw,1.8rem)] shadow-[0_18px_42px_-34px_#1b566250]"
-          method="get"
-          role="search"
-        >
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-[13px] bg-[color-mix(in_srgb,#318b85_13%,var(--site-surface))] text-[#257b78] dark:text-[#a6e4d7]">
-              <ListFilter size={20} aria-hidden="true" />
-            </span>
-            <div className="grid min-w-0 gap-[.15rem]">
-              <label
-                className="text-[1.06rem] font-[850]"
-                htmlFor="testimonial-category"
-              >
-                دسته‌بندی روایت‌ها
-              </label>
-              <small className="text-[.8rem] leading-[1.7] text-(--site-muted)">
-                روایت‌ها را بر اساس موضوع مرور کنید.
-              </small>
-            </div>
-          </div>
-          <div className="flex min-w-0 flex-wrap items-center gap-[.65rem] max-[620px]:grid max-[620px]:grid-cols-[minmax(0,1fr)]">
+        <SearchPanel
+          id="testimonial-category"
+          icon={<ListFilter size={20} aria-hidden="true" />}
+          label="دسته‌بندی روایت‌ها"
+          hint="روایت‌ها را بر اساس موضوع مرور کنید."
+          field={
             <PanelSelect
               id="testimonial-category"
-              triggerClassName="min-h-[50px]! min-w-0! w-auto! flex-[1_1_250px] rounded-xl! border-[color:color-mix(in_srgb,#4e8d8d_18%,var(--site-line))]! bg-[var(--site-surface)]! px-[.9rem]! text-[var(--site-ink)]! shadow-[0_5px_18px_-16px_#24434a75] max-[620px]:w-full!"
+              triggerClassName="min-h-[50px]! min-inline-0! w-auto! flex-[1_1_250px] rounded-xl! border-[color:color-mix(in_srgb,#4e8d8d_18%,var(--site-line))]! bg-[var(--site-surface)]! px-[.9rem]! text-[var(--site-ink)]! shadow-[0_5px_18px_-16px_#24434a75] max-[620px]:w-full!"
               name="category"
               defaultValue={selected || "all"}
               options={[
@@ -134,22 +119,12 @@ export default async function Page({ searchParams }: CategorySearchProps) {
                 ...categories.map((value) => ({ value, label: value })),
               ]}
             />
-            <button
-              type="submit"
-              className="site-button min-h-[50px] shrink-0 max-[620px]:w-full"
-            >
-              نمایش
-            </button>
-            {selected && (
-              <Link
-                href="/testimonials"
-                className="inline-flex min-h-[46px] items-center justify-center gap-[.35rem] rounded-[10px] px-[.6rem] py-[.4rem] text-[.83rem] font-extrabold text-[#22746e] no-underline hover:bg-[color-mix(in_srgb,#3d9486_10%,var(--site-surface))] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#22746e] max-[620px]:justify-self-start dark:text-[#a4e5d7]"
-              >
-                <RotateCcw size={16} aria-hidden="true" /> نمایش همه
-              </Link>
-            )}
-          </div>
-        </form>
+          }
+          submitLabel="نمایش"
+          clearHref="/testimonials"
+          clearLabel="نمایش همه"
+          clearable={Boolean(selected)}
+        />
         {visible.length ? (
           <section
             className="testimonial-list"
@@ -163,7 +138,7 @@ export default async function Page({ searchParams }: CategorySearchProps) {
                 روایت‌های همراهان
               </h2>
               <p className="rounded-full bg-[color-mix(in_srgb,var(--c-teal)_8%,var(--site-surface))] px-3 py-[.4rem] text-[.82rem] font-[750] text-(--site-ink)">
-                {new Intl.NumberFormat("fa-IR").format(filtered.length)} روایت
+                {formatNumber(filtered.length)} روایت
               </p>
             </div>
             <ScrollReveal
@@ -187,8 +162,7 @@ export default async function Page({ searchParams }: CategorySearchProps) {
         {pages > 1 && (
           <nav className={pageNavClass} aria-label="صفحه‌بندی روایت‌ها">
             <p className={pageNavLabelClass}>
-              صفحهٔ {new Intl.NumberFormat("fa-IR").format(current)} از{" "}
-              {new Intl.NumberFormat("fa-IR").format(pages)}
+              صفحهٔ {formatNumber(current)} از {formatNumber(pages)}
             </p>
             <div className={pageNavLinksClass}>
               {current > 1 ? (
@@ -212,10 +186,10 @@ export default async function Page({ searchParams }: CategorySearchProps) {
                     key={number}
                     href={href(number)}
                     className={pageNavItemClass}
-                    aria-label={`صفحهٔ ${new Intl.NumberFormat("fa-IR").format(number)}`}
+                    aria-label={`صفحهٔ ${formatNumber(number)}`}
                     aria-current={number === current ? "page" : undefined}
                   >
-                    {new Intl.NumberFormat("fa-IR").format(number)}
+                    {formatNumber(number)}
                   </MotionLink>
                 ),
               )}

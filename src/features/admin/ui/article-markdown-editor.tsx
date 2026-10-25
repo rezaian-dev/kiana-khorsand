@@ -1,5 +1,6 @@
 "use client";
 
+import { formatNumber } from "@/lib/format";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import MarkdownIt from "markdown-it";
@@ -69,8 +70,8 @@ export function ArticleMarkdownEditor({ initial = "" }: { initial?: string }) {
         ]}
       />
       <p className="panel-help mt-[0.7rem]!" aria-live="polite">
-        {new Intl.NumberFormat("fa-IR").format(value.length)} نویسه · حداقل ۴۰
-        نویسه برای ذخیره. متن Markdown در نمایش عمومی ایمن رندر می‌شود.
+        {formatNumber(value.length)} نویسه · حداقل ۴۰ نویسه برای ذخیره. متن
+        Markdown در نمایش عمومی ایمن رندر می‌شود.
       </p>
     </div>
   );

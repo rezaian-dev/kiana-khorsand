@@ -1,3 +1,4 @@
+import { formatNumber } from "@/lib/format";
 import { PanelHeading } from "@/components/panels/panel-heading";
 import { SiteToaster } from "@/components/shared/site-toaster";
 import { listUsers, userTotals } from "@/features/admin/users/queries";
@@ -20,19 +21,19 @@ export default async function AdminUsersPage() {
             <div className="flex items-center gap-1.5">
               <dt>کل حساب‌ها</dt>
               <dd className="m-0 font-extrabold text-(--panel-text)">
-                {new Intl.NumberFormat("fa-IR").format(totals.total)}
+                {formatNumber(totals.total)}
               </dd>
             </div>
             <div className="flex items-center gap-1.5">
               <dt>مدیر</dt>
               <dd className="m-0 font-extrabold text-(--panel-text)">
-                {new Intl.NumberFormat("fa-IR").format(totals.admins)}
+                {formatNumber(totals.admins)}
               </dd>
             </div>
             <div className="flex items-center gap-1.5">
               <dt>کاربر</dt>
               <dd className="m-0 font-extrabold text-(--panel-text)">
-                {new Intl.NumberFormat("fa-IR").format(totals.clients)}
+                {formatNumber(totals.clients)}
               </dd>
             </div>
           </dl>

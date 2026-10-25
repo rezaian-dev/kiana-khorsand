@@ -24,14 +24,14 @@ import {
   workshopPrice,
   type WorkshopDiscount,
 } from "@/features/workshops/pricing";
-import { formatToman } from "@/lib/format";
+import { formatToman, formatNumber } from "@/lib/format";
 import {
   neonArticleCardClassName,
   neonCarouselSectionClassName,
 } from "./carousel-neon-styles";
 import { SliderSection } from "./slider-section";
 
-/** Caption under a slide, readable on every theme. */
+/** Cover art that creeps forward on hover. */
 const slideImageClassName =
   "absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035] motion-reduce:transition-none motion-reduce:group-hover:scale-100";
 
@@ -252,7 +252,7 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
         {price.percent > 0 && (
           <span className="font-extrabold text-[#10665f] dark:text-[#8fe4d6]">
             {" "}
-            · ٪{new Intl.NumberFormat("fa-IR").format(price.percent)} تخفیف
+            · ٪{formatNumber(price.percent)} تخفیف
           </span>
         )}
       </p>

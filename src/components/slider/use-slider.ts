@@ -33,6 +33,9 @@ export type UseSliderOptions = {
   autoplayDelay?: number;
 };
 
+/** What the slider components consume: the hook's own return value, no copy. */
+export type SliderApi = ReturnType<typeof useSlider>;
+
 export function useSlider({
   slideCount,
   autoplay = false,

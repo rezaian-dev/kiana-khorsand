@@ -32,17 +32,13 @@ import { MotionLink } from "@/components/motion/motion-link";
 import Image from "next/image";
 import { MessageCircleHeart, Waypoints } from "lucide-react";
 import Link from "next/link";
-import {
-  HeroReveal,
-  PortraitFloat,
-  FloatingTicket,
-  SectionReveal,
-} from "./hero-visuals";
+import { HeroReveal, PortraitFloat, FloatingTicket } from "./hero-visuals";
 import {
   ReferenceApproach,
   ReferenceAreas,
   ReferenceFaq,
   ReferenceFees,
+  ReferenceSection,
 } from "./home-reference-sections";
 import { HomeSlider } from "./home-slider";
 import type { listAreas } from "@/features/areas/queries";
@@ -51,10 +47,6 @@ import type { listArticles } from "@/features/articles/queries";
 import type { listWorkshops } from "@/features/workshops/queries";
 import type { listTestimonials } from "@/features/testimonials/queries";
 import type { listFaqs } from "@/features/faqs/queries";
-
-/** A line of the reference strip. */
-const referenceRowClassName =
-  "home-section-head flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start";
 
 export function HomeReference({
   image,
@@ -98,7 +90,6 @@ export function HomeReference({
               </p>
               <HeroReveal delay={0.05} mode="text">
                 <h1 className={`${publicH1ClassName} mt-5`}>
-                  {" "}
                   <span className="inline-block">جایی</span>{" "}
                   <span className="inline-block">امن</span>{" "}
                   <span className="inline-block">برای</span>{" "}
@@ -111,7 +102,6 @@ export function HomeReference({
                 </h1>
               </HeroReveal>
               <p className={`${publicLeadClassName} mt-6 max-w-[52ch]`}>
-                {" "}
                 من کیانا خرسند هستم؛ روان‌شناس بالینی. اگر اضطراب، دلخوری‌های
                 رابطه یا سنگینی روزها امانت را بریده، اینجا می‌توانیم با هم و
                 بدون قضاوت، قدم‌به‌قدم مسیر را پیدا کنیم.{" "}
@@ -122,7 +112,6 @@ export function HomeReference({
                   effect="lift"
                   className={`${publicButtonPrimaryClassName} w-full sm:w-auto`}
                 >
-                  {" "}
                   <i
                     className="ph-duotone ph-calendar-check text-[1.2rem]"
                     aria-hidden="true"
@@ -134,7 +123,6 @@ export function HomeReference({
                   effect="lift"
                   className={`${publicButtonSoftClassName} w-full sm:w-auto`}
                 >
-                  {" "}
                   <i
                     className="ph-duotone ph-compass text-[1.2rem]"
                     aria-hidden="true"
@@ -143,7 +131,6 @@ export function HomeReference({
                 </MotionLink>
               </div>
               <p className="text-muted mt-4 text-sm/7">
-                {" "}
                 اولین گفت‌وگو فقط برای آشنایی است؛ ببینیم راحت هستی یا نه.{" "}
               </p>
               <ul className="mt-8 flex flex-wrap gap-2.5">
@@ -248,48 +235,20 @@ export function HomeReference({
           </ul>
         </div>
       </section>
-      <section
-        className={`${publicSectionClassName}`}
-        aria-labelledby="areas-title"
+      <ReferenceSection
+        id="areas-title"
+        eyebrow="حوزه‌های کار"
+        title="روی چه چیزهایی با هم کار می‌کنیم"
+        lede="هر مسیر شکل خودش را دارد. این‌ها رایج‌ترین موضوع‌هایی هستند که مراجعان با آن‌ها می‌آیند؛ اگر موضوع تو در این فهرست نیست، باز هم می‌توانیم درباره‌اش حرف بزنیم."
+        href="/areas"
+        linkLabel="همهٔ حوزه‌های کار"
+        gridId="areasGrid"
+        gridClassName="grid-cards mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        blob="-inset-s-24 top-10 bg-(--c-violet)"
+        eyebrowClassName="text-[#45425c]! dark:text-(--muted)!"
       >
-        <div
-          className={`${publicBlobClassName} -inset-s-24 top-10 size-72 bg-(--c-violet)`}
-          aria-hidden="true"
-        ></div>
-        <div className={`${publicContainerClassName} relative`}>
-          <SectionReveal className={referenceRowClassName}>
-            <div className="max-w-[62ch]">
-              <p
-                className={`${publicEyebrowClassName} text-[#45425c]! dark:text-(--muted)!`}
-              >
-                حوزه‌های کار
-              </p>
-              <h2 id="areas-title" className={`${publicH2ClassName} mt-4`}>
-                روی چه چیزهایی با هم کار می‌کنیم
-              </h2>
-              <p className={`${publicLeadClassName} mt-4`}>
-                {" "}
-                هر مسیر شکل خودش را دارد. این‌ها رایج‌ترین موضوع‌هایی هستند که
-                مراجعان با آن‌ها می‌آیند؛ اگر موضوع تو در این فهرست نیست، باز هم
-                می‌توانیم درباره‌اش حرف بزنیم.{" "}
-              </p>
-            </div>
-            <Link
-              href="/areas"
-              className={`${publicButtonSoftClassName} home-section-link flex-none`}
-            >
-              همهٔ حوزه‌های کار{" "}
-              <i className="ph-bold ph-arrow-left" aria-hidden="true" />
-            </Link>
-          </SectionReveal>
-          <ScrollReveal
-            id="areasGrid"
-            className="grid-cards mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {<ReferenceAreas areas={areas} />}
-          </ScrollReveal>
-        </div>
-      </section>
+        <ReferenceAreas areas={areas} />
+      </ReferenceSection>
       <section
         className={`${publicSectionClassName}`}
         aria-labelledby="how-title"
@@ -305,7 +264,6 @@ export function HomeReference({
             <li
               className={`${publicCardClassName} ${publicSpotClassName} group`}
             >
-              {" "}
               <span
                 className={`${publicIconTileClassName} tile-indigo ${publicTileToneClasses.indigo}`}
               >
@@ -319,7 +277,6 @@ export function HomeReference({
               </p>{" "}
               <h3 className={`${publicH3ClassName} mt-2`}>انتخاب وقت</h3>{" "}
               <p className="text-muted mt-3 text-sm/7">
-                {" "}
                 قالب جلسه و زمان مناسب را از تقویم انتخاب می‌کنی. چند سؤال کوتاه
                 هم می‌پرسم تا جلسه با آمادگی شروع شود.{" "}
               </p>{" "}
@@ -327,7 +284,6 @@ export function HomeReference({
             <li
               className={`${publicCardClassName} ${publicSpotClassName} group`}
             >
-              {" "}
               <span
                 className={`${publicIconTileClassName} tile-violet ${publicTileToneClasses.violet}`}
               >
@@ -341,7 +297,6 @@ export function HomeReference({
               </p>{" "}
               <h3 className={`${publicH3ClassName} mt-2`}>جلسه‌ی اول</h3>{" "}
               <p className="text-muted mt-3 text-sm/7">
-                {" "}
                 با هم آشنا می‌شویم، درباره‌ی آنچه آزارت می‌دهد حرف می‌زنیم و
                 هدف‌های واقع‌بینانه‌ای برای مسیر تعیین می‌کنیم.{" "}
               </p>{" "}
@@ -349,7 +304,6 @@ export function HomeReference({
             <li
               className={`${publicCardClassName} ${publicSpotClassName} group`}
             >
-              {" "}
               <span
                 className={`${publicIconTileClassName} tile-teal ${publicTileToneClasses.teal}`}
               >
@@ -360,7 +314,6 @@ export function HomeReference({
               </p>{" "}
               <h3 className={`${publicH3ClassName} mt-2`}>ادامه‌ی مسیر</h3>{" "}
               <p className="text-muted mt-3 text-sm/7">
-                {" "}
                 با فاصله‌ی منظم پیش می‌رویم، تمرین‌های کوچک بین جلسه‌ها را مرور
                 می‌کنیم و هر چند وقت یک‌بار مسیر را بازبینی می‌کنیم.{" "}
               </p>{" "}
@@ -398,7 +351,6 @@ export function HomeReference({
                     فضایی که در آن شنیده می‌شوی
                   </h3>
                   <p className="text-muted mt-3 text-sm/7">
-                    {" "}
                     بدون سرزنش، بدون عجله و بدون نصیحت‌های آماده. اول باید
                     بفهمیم چه چیزی برایت سخت است، بعد با هم راه‌های عملی پیدا
                     می‌کنیم.{" "}
@@ -454,7 +406,6 @@ export function HomeReference({
                     مسیر روشن و قابل بازبینی
                   </h3>
                   <p className="text-muted mt-3 text-sm/7">
-                    {" "}
                     در جلسه‌ی اول مشخص می‌کنیم روی چه چیزی کار می‌کنیم و از کجا
                     می‌فهمیم که مسیر درست پیش می‌رود. هر زمان لازم باشد، هدف‌ها
                     را با هم بازنویسی می‌کنیم.{" "}
@@ -468,42 +419,19 @@ export function HomeReference({
       {<HomeSlider kind="testimonials" reviews={testimonials} />}
       {<HomeSlider kind="articles" articles={articles} />}
       {<HomeSlider kind="workshops" workshops={workshops} />}
-      <section
-        className={`${publicSectionClassName}`}
-        aria-labelledby="fees-title"
+      <ReferenceSection
+        id="fees-title"
+        eyebrow="قالب و تعرفه"
+        title="جلسه‌ها و هزینه‌ها"
+        lede="مدت هر جلسه و مبلغ آن از قبل روشن است؛ بدون هزینه‌ی پنهان."
+        href="/fees"
+        linkLabel="جزئیات تعرفه‌ها"
+        gridId="feesGrid"
+        gridClassName="grid-cards-wide mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3"
+        blob="-inset-e-24 -top-10 bg-(--c-plum)"
       >
-        <div
-          className={`${publicBlobClassName} -inset-e-24 -top-10 size-72 bg-(--c-plum)`}
-          aria-hidden="true"
-        ></div>
-        <div className={`${publicContainerClassName} relative`}>
-          <SectionReveal className={referenceRowClassName}>
-            <div className="max-w-[62ch]">
-              <p className={publicEyebrowClassName}>قالب و تعرفه</p>
-              <h2 id="fees-title" className={`${publicH2ClassName} mt-4`}>
-                جلسه‌ها و هزینه‌ها
-              </h2>
-              <p className={`${publicLeadClassName} mt-4`}>
-                {" "}
-                مدت هر جلسه و مبلغ آن از قبل روشن است؛ بدون هزینه‌ی پنهان.{" "}
-              </p>
-            </div>
-            <Link
-              href="/fees"
-              className={`${publicButtonSoftClassName} home-section-link flex-none`}
-            >
-              جزئیات تعرفه‌ها{" "}
-              <i className="ph-bold ph-arrow-left" aria-hidden="true" />
-            </Link>
-          </SectionReveal>
-          <ScrollReveal
-            id="feesGrid"
-            className="grid-cards-wide mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3"
-          >
-            {<ReferenceFees services={services} />}
-          </ScrollReveal>
-        </div>
-      </section>
+        <ReferenceFees services={services} />
+      </ReferenceSection>
       <section
         className={`${publicSectionClassName}`}
         aria-labelledby="faq-title"
@@ -516,7 +444,6 @@ export function HomeReference({
                 چیزهایی که پیش از شروع خوب است بدانی
               </h2>
               <p className={`${publicLeadClassName} mt-4`}>
-                {" "}
                 اگر پاسخ سوالت را اینجا پیدا نکردی، در صفحه‌ی تماس بنویس؛ خودم
                 جواب می‌دهم.{" "}
               </p>
@@ -524,7 +451,6 @@ export function HomeReference({
                 href="/contact"
                 className={`${publicButtonSoftClassName} mt-6`}
               >
-                {" "}
                 <i
                   className="ph-duotone ph-chats-circle text-[1.15rem]"
                   aria-hidden="true"
@@ -554,7 +480,6 @@ export function HomeReference({
               <span
                 className={`${publicIconTileSizedClassName} tile-violet mx-auto size-14 text-[1.75rem] ${publicTileToneClasses.violet}`}
               >
-                {" "}
                 <i
                   className="ph-duotone ph-hand-heart"
                   aria-hidden="true"
@@ -564,7 +489,6 @@ export function HomeReference({
                 قدم اول را با هم برداریم
               </h2>
               <p className={`${publicLeadClassName} mt-4`}>
-                {" "}
                 لازم نیست از قبل بدانی چه می‌خواهی بگویی. یک گفت‌وگوی ساده کافی
                 است تا ببینی این مسیر برایت درست است یا نه.{" "}
               </p>
@@ -574,7 +498,6 @@ export function HomeReference({
                   effect="lift"
                   className={`${publicButtonPrimaryClassName} w-full sm:w-auto`}
                 >
-                  {" "}
                   <i
                     className="ph-duotone ph-calendar-check text-[1.2rem]"
                     aria-hidden="true"

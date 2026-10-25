@@ -50,31 +50,13 @@ export function SliderSection({
   mobileBasis = "basis-full sm:basis-[calc(50%-0.625rem)] lg:basis-[calc(33.333%-1rem)]",
   className = "",
 }: SliderSectionProps) {
-  const {
-    emblaRef,
-    selectedIndex,
-    snapCount,
-    canPrev,
-    canNext,
-    isPlaying,
-    scrollPrev,
-    scrollNext,
-    scrollTo,
-  } = useSlider({ slideCount: slides.length, autoplay });
+  const slider = useSlider({ slideCount: slides.length, autoplay });
 
   const editorial = variant === "editorial";
 
   return (
     <Slider
-      emblaRef={emblaRef}
-      selectedIndex={selectedIndex}
-      snapCount={snapCount}
-      canPrev={canPrev}
-      canNext={canNext}
-      isPlaying={isPlaying}
-      scrollPrev={scrollPrev}
-      scrollNext={scrollNext}
-      scrollTo={scrollTo}
+      slider={slider}
       labelId={id}
       className={editorial ? "editorial-slider" : undefined}
     >
@@ -132,7 +114,7 @@ export function SliderSection({
                       stays above the WCAG AA contrast floor in both themes. */}
                   <div
                     className={`h-full transition-transform duration-300 ease-out motion-reduce:transition-none ${
-                      index === selectedIndex
+                      index === slider.selectedIndex
                         ? "scale-100"
                         : "scale-[0.985] motion-reduce:scale-100"
                     }`}

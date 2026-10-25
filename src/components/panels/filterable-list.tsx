@@ -1,5 +1,6 @@
 "use client";
 
+import { formatNumber } from "@/lib/format";
 import {
   panelListClassName,
   panelCardClassName,
@@ -98,8 +99,7 @@ export function FilterableList({
           className="admin-list-filter-count w-full text-xs text-(--panel-muted)"
           aria-live="polite"
         >
-          {new Intl.NumberFormat("fa-IR").format(visible.length)} مورد از{" "}
-          {new Intl.NumberFormat("fa-IR").format(items.length)}
+          {formatNumber(visible.length)} مورد از {formatNumber(items.length)}
         </p>
       </div>
       <div className={panelListClassName}>
