@@ -1,42 +1,56 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
+/**
+ * Reading progress: a 3px bar that fills as the page scrolls.
+ *
+ * The bar is written straight to the element, not through state. A `setState` in
+ * the scroll handler re-rendered this component — and everything under it — on
+ * every animation frame of every scroll, which is exactly the work that makes
+ * INP and scroll smoothness suffer. One `style` write per frame costs nothing and
+ * the pixels are identical.
+ *
+ * `progress` is a percentage of a 3px bar, so no layout of consequence is
+ * triggered; the alternative (`transform: scaleX`) would stretch the gradient
+ * instead of revealing it, which is a different picture.
+ */
 export function HeaderProgress() {
-  const [progress, setProgress] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
+  const bar = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     let frame = 0;
-    const update = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const available =
-          document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(
-          available
-            ? Math.max(0, Math.min(100, (window.scrollY / available) * 100))
-            : 0,
-        );
-        setScrolled(window.scrollY > 16);
-      });
+
+    const write = () => {
+      frame = 0;
+      const el = bar.current;
+      if (!el) return;
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const percent = scrollable ? (window.scrollY / scrollable) * 100 : 0;
+      el.style.width = `${Math.min(100, Math.max(0, percent))}%`;
     };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+
+    const schedule = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(write);
+    };
+
+    write();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, []);
+
   return (
-    <>
-      <div
-        className="accent-bar h-[3px] [background-image:var(--grad-sunset)]"
-        style={{ width: `${progress}%` }}
-        aria-hidden="true"
-      />
-      {scrolled && <span className="header-progress-scrolled" hidden />}
-    </>
+    <div
+      ref={bar}
+      className="accent-bar h-[3px] w-0 [background-image:var(--grad-sunset)]"
+      aria-hidden="true"
+    />
   );
 }

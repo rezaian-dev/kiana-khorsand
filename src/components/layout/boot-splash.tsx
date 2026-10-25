@@ -23,7 +23,7 @@ export function BootSplash() {
   return (
     <div
       id="boot-splash"
-      className="dark animate-boot-hide fixed inset-0 z-200 grid place-items-center overflow-hidden text-[#f2f6f5] transition-[opacity,visibility,transform,filter] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] [background:radial-gradient(120%_85%_at_76%_-10%,#1b4750_0%,#10242b_48%,transparent_74%),radial-gradient(95%_80%_at_2%_114%,#242a52_0%,transparent_58%),#0a1219] in-data-[splash=done]:pointer-events-none in-data-[splash=done]:invisible in-data-[splash=done]:scale-[1.04] in-data-[splash=done]:opacity-0 in-data-[splash=done]:blur-sm in-data-[splash=skip]:hidden!"
+      className="dark animate-boot-hide fixed inset-0 z-200 grid place-items-center overflow-hidden text-[#f2f6f5] transition-[opacity,visibility,transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [background:radial-gradient(120%_85%_at_76%_-10%,#1b4750_0%,#10242b_48%,transparent_74%),radial-gradient(95%_80%_at_2%_114%,#242a52_0%,transparent_58%),#0a1219] in-data-[splash=done]:pointer-events-none in-data-[splash=done]:invisible in-data-[splash=done]:scale-[1.04] in-data-[splash=done]:opacity-0 in-data-[splash=done]:blur-sm in-data-[splash=skip]:hidden!"
     >
       {/* Depth: two slow aurora glows, a grain, a vignette and a light seam on top. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -60,15 +60,15 @@ export function BootSplash() {
           </span>
         </div>
 
-        <p className="animate-boot-rise m-0 bg-[linear-gradient(180deg,#ffffff_18%,#9fe8db)] bg-clip-text text-[clamp(1.6rem,6.4vw,2rem)] font-extrabold tracking-[-0.015em] text-transparent [animation-delay:110ms] motion-reduce:animate-none">
+        <p className="animate-boot-rise m-0 bg-[linear-gradient(180deg,#ffffff_18%,#9fe8db)] bg-clip-text text-[clamp(1.6rem,6.4vw,2rem)] font-extrabold tracking-[-0.015em] text-transparent [animation-delay:70ms] motion-reduce:animate-none">
           کیانا خرسند
         </p>
-        <p className="animate-boot-rise m-0 text-[.8rem] tracking-[0.02em] text-[#dff2ee]/65 [animation-delay:210ms] motion-reduce:animate-none">
+        <p className="animate-boot-rise m-0 text-[.8rem] tracking-[0.02em] text-[#dff2ee]/65 [animation-delay:140ms] motion-reduce:animate-none">
           روان‌شناس بالینی · همراهِ مسیر
         </p>
 
         {/* Progress: a real 3px rail that fills as the app readies itself. */}
-        <div className="animate-boot-rise mt-6 w-[min(13rem,58vw)] [animation-delay:300ms] motion-reduce:animate-none">
+        <div className="animate-boot-rise mt-6 w-[min(13rem,58vw)] [animation-delay:200ms] motion-reduce:animate-none">
           <div className="relative h-[3px] overflow-hidden rounded-full bg-white/12">
             <span className="animate-boot-fill absolute inset-y-0 inset-e-0 w-full origin-right rounded-full bg-[linear-gradient(270deg,#8bf6e6,#2fb3a6)] shadow-[0_0_14px_rgb(111_224_208/75%)] motion-reduce:animate-none" />
             <span className="animate-boot-sweep absolute inset-y-0 w-1/3 [background:linear-gradient(90deg,transparent,rgb(255_255_255/60%),transparent)] motion-reduce:animate-none" />
@@ -77,7 +77,7 @@ export function BootSplash() {
 
         <p
           role="status"
-          className="animate-boot-rise m-0 mt-1 text-[.73rem] text-[#dff2ee]/55 [animation-delay:390ms] motion-reduce:animate-none"
+          className="animate-boot-rise m-0 mt-1 text-[.73rem] text-[#dff2ee]/55 [animation-delay:260ms] motion-reduce:animate-none"
         >
           در حال آماده‌سازی فضای امن شما…
         </p>

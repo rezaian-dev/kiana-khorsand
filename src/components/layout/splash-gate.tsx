@@ -2,9 +2,20 @@
 
 import { useEffect } from "react";
 
-/** Long enough for the progress rail to reach its end, short enough to not annoy. */
-const MIN_VISIBLE_MS = 950;
-const CAP_MS = 1500;
+/**
+ * Both clocks are measured from the **navigation**, not from this effect.
+ *
+ * The intro's beats are CSS animations: the wordmark lands at 70ms + 450ms, the rail
+ * finishes at 600ms, the status line at 260ms + 450ms. `performance.now()` already
+ * counts from navigation start, which is when those animations began — so the floor
+ * is the moment the choreography has played, not 760ms *after hydration finished*.
+ * That distinction was the whole bug: hydration lands at ~600ms on a phone, so the
+ * old floor could not lift the screen before ~1.3s and taps stayed on the splash.
+ *
+ * The cap is the safety net for a font that never settles.
+ */
+const MIN_VISIBLE_MS = 760;
+const CAP_MS = 1400;
 
 /**
  * Lifts the launch screen.
@@ -29,7 +40,6 @@ export function SplashGate() {
       return;
     }
 
-    const started = performance.now();
     let released = false;
 
     // While the launch screen is up the status bar is part of it, not of the page.
@@ -53,23 +63,33 @@ export function SplashGate() {
       } catch {
         // Storage can be unavailable; the splash then simply shows again.
       }
-      const wait = Math.max(0, MIN_VISIBLE_MS - (performance.now() - started));
+      document.documentElement.dataset.splash = "done";
+      // Once the fade is over, drop the node so it can never trap a tap.
       window.setTimeout(() => {
-        document.documentElement.dataset.splash = "done";
-        // One frame after the fade, drop the node so it can never trap a tap.
-        window.setTimeout(() => {
-          document.getElementById("boot-splash")?.remove();
-        }, 700);
-      }, wait);
+        document.getElementById("boot-splash")?.remove();
+      }, 600);
     };
+
+    // `load` never fires if the document finished before this effect ran.
+    const loaded =
+      document.readyState === "complete"
+        ? Promise.resolve()
+        : new Promise((resolve) =>
+            window.addEventListener("load", resolve, { once: true }),
+          );
 
     Promise.race([
       document.fonts?.ready ?? Promise.resolve(),
+      loaded,
       new Promise((resolve) =>
-        window.addEventListener("load", resolve, { once: true }),
+        window.setTimeout(resolve, Math.max(0, CAP_MS - performance.now())),
       ),
-      new Promise((resolve) => window.setTimeout(resolve, CAP_MS)),
-    ]).then(release);
+    ]).then(() =>
+      window.setTimeout(
+        release,
+        Math.max(0, MIN_VISIBLE_MS - performance.now()),
+      ),
+    );
   }, []);
 
   return null;

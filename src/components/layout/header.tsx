@@ -5,6 +5,7 @@ import {
 } from "@/components/layout/public-styles";
 import { BrandMark } from "@/components/shared/brand-mark";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { getSettings } from "@/features/settings/queries";
 import { getSession } from "@/lib/session";
@@ -19,11 +20,36 @@ import { PwaAddress } from "@/components/layout/pwa-address";
 import { InstallApp } from "@/components/layout/install-app";
 import { supportPreview } from "@/features/dashboard/support-preview";
 
+/** The session, as Better Auth reports it for this request. */
+type Session = NonNullable<Awaited<ReturnType<typeof getSession>>>;
+
+/**
+ * The signed-in corner of the header, on its own.
+ *
+ * The unread count is the only private query the shell needs, and it cannot start
+ * until the session is known — so awaiting it here used to put a second database
+ * round-trip in front of *every* page's first byte. Split out behind `Suspense`, the
+ * header streams with the page and the bubble arrives when its count does; it is
+ * positioned inside a fixed-size trigger, so nothing moves when it lands.
+ */
+async function HeaderAccount({ session }: { session: Session }) {
+  const notifications = await supportPreview(
+    session.user.id,
+    session.user.role === "admin",
+  );
+  return (
+    <AccountMenu
+      publicScope
+      name={session.user.name}
+      image={session.user.image}
+      userId={session.user.id}
+      notifications={notifications}
+    />
+  );
+}
+
 export async function Header() {
   const [settings, session] = await Promise.all([getSettings(), getSession()]);
-  const notifications = session
-    ? await supportPreview(session.user.id, session.user.role === "admin")
-    : undefined;
   return (
     <header id="siteHeader" className="fixed inset-x-0 top-0 z-50">
       <div className={publicHeaderShellClassName}>
@@ -48,13 +74,18 @@ export async function Header() {
               <PwaAddress />
               <ThemeToggle className="grid size-11 place-items-center rounded-full border border-(--line) bg-(--surface) text-(--fg) [box-shadow:var(--shadow-soft)]" />
               {session ? (
-                <AccountMenu
-                  publicScope
-                  name={session.user.name}
-                  image={session.user.image}
-                  userId={session.user.id}
-                  notifications={notifications}
-                />
+                <Suspense
+                  fallback={
+                    <AccountMenu
+                      publicScope
+                      name={session.user.name}
+                      image={session.user.image}
+                      userId={session.user.id}
+                    />
+                  }
+                >
+                  <HeaderAccount session={session} />
+                </Suspense>
               ) : (
                 <MotionLink
                   effect="lift"
