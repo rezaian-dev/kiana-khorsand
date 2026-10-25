@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/cover.jpg" alt="کیانا خرسند — جایی امن برای فهمیدن و تغییر" width="100%" />
+<img src="public/screenshot-wide.jpg" alt="کیانا خرسند — جایی امن برای فهمیدن و تغییر" width="100%" />
 
 # 🌿 کیانا خرسند
 
@@ -48,29 +48,11 @@
 
 <div align="center">
 
-**صفحهٔ نخست — دسکتاپ**
+<img src="public/screenshot-wide.jpg" alt="صفحهٔ نخست — دسکتاپ" width="100%" />
 
-<img src="docs/screenshots/home-desktop.webp" alt="صفحه نخست" width="100%" />
+<img src="public/screenshot-narrow.jpg" alt="صفحهٔ نخست — موبایل" height="430" />
 
-**رزرو وقت با تقویم شمسی**
-
-<img src="docs/screenshots/booking.webp" alt="فرم رزرو" width="70%" />
-
-<p>
-<img src="docs/screenshots/home-mobile.webp" alt="نمای موبایل" height="430" />
-&nbsp;&nbsp;
-<img src="docs/screenshots/admin-panel.webp" alt="پنل مدیریت" width="620" />
-</p>
-
-**ورود مدیران — شیشهٔ نازک، حلقهٔ فوکوس یک‌پیکسلی**
-
-<img src="docs/screenshots/admin-login.webp" alt="صفحه ورود مدیران" width="72%" />
-
-<p>
-<img src="docs/screenshots/admin-login-dark.webp" alt="ورود مدیران — تم تاریک" width="48%" />
-&nbsp;&nbsp;
-<img src="docs/screenshots/pwa-address.webp" alt="فرمان «رفتن به آدرس» در نسخه نصب‌شده" height="300" />
-</p>
+<sub>همان دو تصویری که در مانیفست PWA هم استفاده می‌شوند.</sub>
 
 </div>
 
@@ -216,7 +198,6 @@ src/
 └── types/                    # قراردادهای دامنه
 
 e2e/                          # Playwright: اجرا، PWA، جداسازی نقش، مقاله‌ها، کاروسل، اورلی‌ها، متادیتا
-docs/                         # تصاویر README
 ```
 
 **قاعدهٔ چیدمان:** هر دامنه در `features/<domain>` با سه فایل هم‌نام — `queries.ts` (خواندن)، `actions.ts` (نوشتن)، `ui/` (نمایش). صفحه‌های `app/` فقط ترکیب می‌کنند.
