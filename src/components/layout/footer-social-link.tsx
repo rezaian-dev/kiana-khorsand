@@ -69,7 +69,7 @@ export function FooterSocialLink({
       transition={{ duration: reduce ? 0 : 0.45, ease: [0.2, 0.8, 0.2, 1] }}
     >
       <m.span
-        className="pointer-events-none absolute inset-0 -z-[1] rounded-[inherit] [background-image:linear-gradient(135deg,var(--sa,var(--c-violet)),var(--sb,var(--c-plum)))]"
+        className="pointer-events-none absolute inset-0 z-[-1] rounded-[inherit] bg-[linear-gradient(135deg,var(--sa,var(--c-violet)),var(--sb,var(--c-plum)))]"
         aria-hidden="true"
         initial={false}
         animate={{ opacity: active ? 1 : 0 }}

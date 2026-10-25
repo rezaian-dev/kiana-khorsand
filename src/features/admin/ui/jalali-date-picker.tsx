@@ -99,7 +99,7 @@ export function JalaliRangePicker({ today }: { today: string }) {
     to: localDate(today),
   });
   return (
-    <div className="admin-range-picker max-w-[370px] rounded-[20px] border border-[var(--panel-line)] bg-[var(--ar-surface2)] p-4">
+    <div className="admin-range-picker max-w-[370px] rounded-[20px] border border-(--panel-line) bg-(--ar-surface2) p-4">
       <p className="panel-help">
         شروع و پایان را روی تقویم شمسی انتخاب کنید؛ هر دو روز در بازه لحاظ
         می‌شوند.
@@ -116,7 +116,7 @@ export function JalaliRangePicker({ today }: { today: string }) {
         onSelect={(value) => setRange(value ?? { from: undefined })}
       />
       <div
-        className="admin-range-summary mt-3 flex flex-wrap justify-between gap-2 text-[.78rem] font-[750] text-[var(--ar-brand-ink)]"
+        className="admin-range-summary mt-3 flex flex-wrap justify-between gap-2 text-[.78rem] font-[750] text-(--ar-brand-ink)"
         aria-live="polite"
       >
         <span>

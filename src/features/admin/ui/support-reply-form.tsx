@@ -72,7 +72,7 @@ export function SupportReplyForm({
           required
           rows={3}
           placeholder="متن پیام خصوصی برای کاربر…"
-          className="text-fg w-full rounded-xl border border-slate-200 bg-white p-3 text-sm leading-7 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/15 dark:border-white/15 dark:bg-slate-900"
+          className="text-fg w-full rounded-xl border border-slate-200 bg-white p-3 text-sm/7 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/15 dark:border-white/15 dark:bg-slate-900"
         />
       </div>
       <div className="rounded-xl border border-blue-100 bg-blue-50/70 p-3 dark:border-blue-800/40 dark:bg-blue-900/10">
@@ -91,9 +91,9 @@ export function SupportReplyForm({
           inputMode="url"
           dir="ltr"
           placeholder="https://meet.google.com/abc-defg-hij"
-          className="text-fg w-full rounded-lg border border-blue-200 bg-white px-3 py-2.5 text-left text-sm outline-none focus:border-blue-500 dark:border-blue-800 dark:bg-slate-900"
+          className="text-fg w-full rounded-lg border border-blue-200 bg-white px-3 py-2.5 text-start text-sm outline-none focus:border-blue-500 dark:border-blue-800 dark:bg-slate-900"
         />
-        <p className="mt-2 text-xs leading-6 text-blue-800/80 dark:text-blue-200/80">
+        <p className="mt-2 text-xs/6 text-blue-800/80 dark:text-blue-200/80">
           لینک فقط در حساب همین کاربر نمایش داده می‌شود؛ زمان و توضیحات جلسه را
           در متن پیام بنویسید.
         </p>

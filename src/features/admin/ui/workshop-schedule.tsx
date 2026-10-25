@@ -47,7 +47,7 @@ export function WorkshopSchedule({
   );
   const [open, setOpen] = useState(false);
   return (
-    <div className="grid gap-3 rounded-[16px] border border-[var(--panel-line,var(--line))] p-4">
+    <div className="grid gap-3 rounded-[16px] border border-(--panel-line,var(--line)) p-4">
       <span>روز برگزاری (تقویم شمسی)</span>
       <input type="hidden" name="day" value={day ? keyOf(day) : ""} />
       <button

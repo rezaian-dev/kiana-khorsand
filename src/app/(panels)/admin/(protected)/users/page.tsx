@@ -16,22 +16,22 @@ export default async function AdminUsersPage() {
         title="مدیریت کاربران"
         description="مشخصات حساب‌ها، ارتقا به مدیر و حذف حساب — همه با تأیید صریح مدیر و به‌صورت برگشت‌ناپذیر."
         toolbar={
-          <dl className="m-0 flex flex-wrap items-center gap-x-5 gap-y-1 text-[.8rem] text-[var(--panel-muted)]">
+          <dl className="m-0 flex flex-wrap items-center gap-x-5 gap-y-1 text-[.8rem] text-(--panel-muted)">
             <div className="flex items-center gap-1.5">
               <dt>کل حساب‌ها</dt>
-              <dd className="m-0 font-extrabold text-[var(--panel-text)]">
+              <dd className="m-0 font-extrabold text-(--panel-text)">
                 {new Intl.NumberFormat("fa-IR").format(totals.total)}
               </dd>
             </div>
             <div className="flex items-center gap-1.5">
               <dt>مدیر</dt>
-              <dd className="m-0 font-extrabold text-[var(--panel-text)]">
+              <dd className="m-0 font-extrabold text-(--panel-text)">
                 {new Intl.NumberFormat("fa-IR").format(totals.admins)}
               </dd>
             </div>
             <div className="flex items-center gap-1.5">
               <dt>کاربر</dt>
-              <dd className="m-0 font-extrabold text-[var(--panel-text)]">
+              <dd className="m-0 font-extrabold text-(--panel-text)">
                 {new Intl.NumberFormat("fa-IR").format(totals.clients)}
               </dd>
             </div>

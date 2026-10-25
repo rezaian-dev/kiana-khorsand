@@ -9,7 +9,7 @@ const Editor = dynamic(() => import("react-markdown-editor-lite"), {
   ssr: false,
   loading: () => (
     <div
-      className="article-editor-loading grid min-h-[200px] place-items-center rounded-[18px] border border-dashed border-[var(--panel-line)]"
+      className="article-editor-loading grid min-h-[200px] place-items-center rounded-[18px] border border-dashed border-(--panel-line)"
       role="status"
     >
       ویرایشگر در حال آماده‌سازی است…
@@ -52,7 +52,7 @@ export function ArticleMarkdownEditor({ initial = "" }: { initial?: string }) {
         value={value}
         onChange={({ text }) => setValue(text)}
         renderHTML={(text) => parser.render(text)}
-        className="h-[500px] max-w-full overflow-hidden rounded-[18px] bg-[var(--panel-surface)]! text-[var(--panel-text)]! [border:1px_solid_var(--panel-line)]! max-[640.02px]:min-h-[440px]! [&_.button-wrap]:text-[var(--panel-text)]! [&_.button-wrap:hover]:text-[var(--panel-accent)]! max-[640.02px]:[&_.editor-container]:flex-col! [&_.rc-md-navigation]:border-[var(--panel-line)]! [&_.rc-md-navigation]:bg-[var(--ar-surface2)]! [&_.section]:bg-[var(--panel-surface)]! [&_.section]:text-[var(--panel-text)]! [&_.section-container]:text-right! [&_textarea]:text-right!"
+        className="h-[500px] max-w-full overflow-hidden rounded-[18px] bg-(--panel-surface)! text-(--panel-text)! [border:1px_solid_var(--panel-line)]! max-[640.02px]:min-h-[440px]! [&_.button-wrap]:text-(--panel-text)! [&_.button-wrap:hover]:text-(--panel-accent)! max-[640.02px]:[&_.editor-container]:flex-col! [&_.rc-md-navigation]:border-(--panel-line)! [&_.rc-md-navigation]:bg-(--ar-surface2)! [&_.section]:bg-(--panel-surface)! [&_.section]:text-(--panel-text)! [&_.section-container]:text-end! [&_textarea]:text-end!"
         htmlClass="custom-html-style [direction:rtl]! text-right! [font-family:inherit]! text-base! leading-8!"
         placeholder="متن مقاله را اینجا بنویسید…"
         plugins={[

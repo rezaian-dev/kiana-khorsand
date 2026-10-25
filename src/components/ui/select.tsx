@@ -47,8 +47,6 @@ export function Select({
 }
 
 export const SelectValue = SelectPrimitive.Value;
-export const SelectGroup = SelectPrimitive.Group;
-export const SelectLabel = SelectPrimitive.Label;
 
 export function SelectTrigger({
   className,
@@ -64,7 +62,7 @@ export function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "group flex min-h-[42px] w-full min-w-[110px] items-center justify-between gap-[.6rem] rounded-[11px] border border-[var(--panel-line,var(--line))] bg-[var(--panel-surface,var(--surface))] px-[.7rem] py-[.45rem] text-start text-[.84rem] text-[var(--panel-text,var(--fg))] hover:border-[var(--panel-accent,var(--c-teal))] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[color:color-mix(in_srgb,var(--panel-accent,var(--c-teal))_35%,transparent)] aria-[invalid=true]:border-[#c04a63] aria-[invalid=true]:bg-[color:color-mix(in_srgb,#c04a63_4%,var(--panel-surface,var(--surface)))] data-[state=open]:pointer-events-auto",
+        "group flex min-h-[42px] w-full min-w-[110px] items-center justify-between gap-[.6rem] rounded-[11px] border border-(--panel-line,var(--line)) bg-(--panel-surface,var(--surface)) px-[.7rem] py-[.45rem] text-start text-[.84rem] text-(--panel-text,var(--fg)) hover:border-(--panel-accent,var(--c-teal)) focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--panel-accent,var(--c-teal))_35%,transparent)] aria-invalid:border-[#c04a63] aria-invalid:bg-[color-mix(in_srgb,#c04a63_4%,var(--panel-surface,var(--surface)))] data-[state=open]:pointer-events-auto",
         className,
       )}
       onPointerDownCapture={(event) => {
@@ -112,7 +110,7 @@ export function SelectContent({
         position="popper"
         sideOffset={5}
         className={cn(
-          "z-[100] max-h-[min(300px,var(--radix-select-content-available-height))] min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-[14px] border border-[#e0e1ea] bg-white p-[.3rem] text-[#182039] shadow-[var(--ar-shadow,0_18px_40px_#13203625)] dark:border-[#43455a] dark:bg-[#1b2030] dark:text-[#f1f2fb] dark:[--ar-brand-ink:#cfc6ff] dark:[--ar-brand-soft:rgb(169_155_255_/_18%)]",
+          "z-100 max-h-[min(300px,var(--radix-select-content-available-height))] min-w-(--radix-select-trigger-width) overflow-hidden rounded-[14px] border border-[#e0e1ea] bg-white p-[.3rem] text-[#182039] shadow-(--ar-shadow,0_18px_40px_#13203625) dark:border-[#43455a] dark:bg-[#1b2030] dark:text-[#f1f2fb] dark:[--ar-brand-ink:#cfc6ff] dark:[--ar-brand-soft:rgb(169_155_255/18%)]",
           className,
         )}
         {...props}
@@ -140,7 +138,7 @@ export function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "flex min-h-9 cursor-pointer items-center justify-between gap-[.8rem] rounded-lg px-[.6rem] py-[.35rem] text-[.82rem] outline-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[highlighted]:bg-[var(--ar-brand-soft,#e5f4f1)] data-[highlighted]:text-[var(--ar-brand-ink,#186e66)]",
+        "flex min-h-9 cursor-pointer items-center justify-between gap-[.8rem] rounded-lg px-[.6rem] py-[.35rem] text-[.82rem] outline-none data-disabled:cursor-not-allowed data-disabled:opacity-50 data-highlighted:bg-(--ar-brand-soft,#e5f4f1) data-highlighted:text-(--ar-brand-ink,#186e66)",
         className,
       )}
       {...props}

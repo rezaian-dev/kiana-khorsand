@@ -23,6 +23,11 @@ import { SiteToaster } from "@/components/shared/site-toaster";
 import { FilterableList } from "@/components/panels/filterable-list";
 import { PanelHeading, PanelEmpty } from "@/components/panels/panel-heading";
 import { formatToman } from "@/lib/format";
+
+/** One workshop in the admin list. */
+const workshopRowClassName =
+  "rounded-[12px] border border-(--panel-line,var(--line)) px-4 py-2 text-(--panel-text,var(--fg)) hover:bg-[color-mix(in_srgb,var(--panel-accent)_10%,var(--panel-surface))]";
+
 export const metadata = { title: "کارگاه‌ها" };
 export default async function Page({
   searchParams,
@@ -141,7 +146,7 @@ export default async function Page({
         </label>
         <input
           id="admin-workshop-global-search"
-          className="min-w-0 flex-[1_1_200px] rounded-[12px] border border-[var(--panel-line,var(--line))] bg-[var(--panel-surface,var(--surface))] px-[.85rem] py-[.7rem] text-[var(--panel-text,var(--fg))]"
+          className="min-w-0 flex-[1_1_200px] rounded-[12px] border border-(--panel-line,var(--line)) bg-(--panel-surface,var(--surface)) px-[.85rem] py-[.7rem] text-(--panel-text,var(--fg))"
           type="search"
           name="q"
           defaultValue={q}
@@ -153,7 +158,7 @@ export default async function Page({
         {q && (
           <Link
             href="/admin/workshops"
-            className="text-[var(--panel-accent)] underline underline-offset-[3px]"
+            className="text-(--panel-accent) underline underline-offset-[3px]"
           >
             نمایش همه
           </Link>
@@ -305,10 +310,7 @@ export default async function Page({
           aria-label="صفحه‌بندی مدیریت کارگاه‌ها"
         >
           {page > 1 && (
-            <Link
-              href={pageHref(page - 1)}
-              className="rounded-[12px] border border-[var(--panel-line,var(--line))] px-4 py-2 text-[var(--panel-text,var(--fg))] hover:bg-[color-mix(in_srgb,var(--panel-accent)_10%,var(--panel-surface))]"
-            >
+            <Link href={pageHref(page - 1)} className={workshopRowClassName}>
               صفحهٔ قبل
             </Link>
           )}
@@ -317,10 +319,7 @@ export default async function Page({
             {new Intl.NumberFormat("fa-IR").format(pages)}
           </span>
           {page < pages && (
-            <Link
-              href={pageHref(page + 1)}
-              className="rounded-[12px] border border-[var(--panel-line,var(--line))] px-4 py-2 text-[var(--panel-text,var(--fg))] hover:bg-[color-mix(in_srgb,var(--panel-accent)_10%,var(--panel-surface))]"
-            >
+            <Link href={pageHref(page + 1)} className={workshopRowClassName}>
               صفحهٔ بعد
             </Link>
           )}

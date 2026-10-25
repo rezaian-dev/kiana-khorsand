@@ -13,6 +13,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
+/** Row inside the install card. */
+const installRowClassName =
+  "grid size-9 flex-none place-items-center rounded-[.7rem] border border-(--site-line) text-(--c-teal)";
+
 /** The shape Chromium passes to `beforeinstallprompt`; not in the DOM typings yet. */
 type InstallEvent = Event & {
   prompt: () => Promise<void>;
@@ -102,7 +106,7 @@ export function InstallApp() {
           type="button"
           onClick={dismiss}
           aria-label="بستن پیشنهاد نصب"
-          className="grid size-6 cursor-pointer place-items-center rounded-full text-[var(--site-muted)] transition-colors hover:bg-[color:color-mix(in_srgb,var(--c-teal)_10%,transparent)] hover:text-[var(--site-ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)] max-[419px]:hidden"
+          className="grid size-6 cursor-pointer place-items-center rounded-full text-(--site-muted) transition-colors hover:bg-[color-mix(in_srgb,var(--c-teal)_10%,transparent)] hover:text-(--site-ink) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--c-teal) max-[419px]:hidden"
         >
           <X className="size-3.5" aria-hidden="true" />
         </button>
@@ -111,26 +115,26 @@ export function InstallApp() {
       <Sheet open={explain} onOpenChange={setExplain}>
         <SheetContent
           side="bottom"
-          className="gap-0 rounded-t-[1.4rem] border-[var(--site-line)] bg-[var(--site-surface)] px-5 pt-5 pb-[max(1.2rem,env(safe-area-inset-bottom))]"
+          className="gap-0 rounded-t-[1.4rem] border-(--site-line) bg-(--site-surface) px-5 pt-5 pb-[max(1.2rem,env(safe-area-inset-bottom))]"
         >
-          <SheetTitle className="text-[.95rem] font-extrabold text-[var(--site-ink)]">
+          <SheetTitle className="text-[.95rem] font-extrabold text-(--site-ink)">
             افزودن به صفحهٔ اصلی
           </SheetTitle>
-          <SheetDescription className="mt-1 text-[.78rem] leading-6 text-[var(--site-muted)]">
+          <SheetDescription className="mt-1 text-[.78rem]/6 text-(--site-muted)">
             در Safari، نصب از منوی اشتراک‌گذاری انجام می‌شود.
           </SheetDescription>
 
           <ol className="mt-5 mb-0 grid list-none gap-4 p-0">
-            <li className="flex items-center gap-3 text-[.84rem] leading-7">
-              <span className="grid size-9 flex-none place-items-center rounded-[.7rem] border border-[var(--site-line)] text-[var(--c-teal)]">
+            <li className="flex items-center gap-3 text-[.84rem]/7">
+              <span className={installRowClassName}>
                 <Share className="size-4" aria-hidden="true" />
               </span>
               <span>
                 دکمهٔ <b>اشتراک‌گذاری</b> را در نوار پایین Safari بزنید.
               </span>
             </li>
-            <li className="flex items-center gap-3 text-[.84rem] leading-7">
-              <span className="grid size-9 flex-none place-items-center rounded-[.7rem] border border-[var(--site-line)] text-[var(--c-teal)]">
+            <li className="flex items-center gap-3 text-[.84rem]/7">
+              <span className={installRowClassName}>
                 <SquarePlus className="size-4" aria-hidden="true" />
               </span>
               <span>

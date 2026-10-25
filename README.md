@@ -167,7 +167,7 @@
 | **مارک‌داون**  | markdown-it 15 + react-markdown       | ویرایش و نمایش مقاله                      |
 | **تصویر**      | sharp                                 | تبدیل آواتار به WebP مربعی، حذف EXIF      |
 | **اعلان**      | Sonner                                | توست دسترس‌پذیر                           |
-| **تست**        | Playwright                            | ۵۲ تست سرتاسری روی دسکتاپ و موبایل        |
+| **تست**        | Playwright + ESLint                   | ۵۲ تست سرتاسری · صفر خطای لینت روی ۳۰۲ فایل |
 
 ---
 
@@ -204,6 +204,8 @@ e2e/                          # Playwright: اجرا، PWA، جداسازی نق
 
 **قاعدهٔ استایل و حرکت:** رشته‌های Tailwind فقط در سه ماژول توکن زندگی می‌کنند — `layout/public-styles.ts`، `panels/panel-styles.ts` و `shared/site-styles.ts`؛ هر دامنه‌ای که توکن اختصاصی دارد یک `*-styles.ts` کنار خودش دارد. هیچ فایلی `*-classes.ts` نیست. حرکت هم فقط از `components/motion/` می‌آید و همهٔ زمان‌بندی‌ها از `lib/motion-tokens.ts`.
 
+**قاعدهٔ خوانایی کلاس‌ها:** هر رشتهٔ کلاس که از ۲۰۰ کاراکتر بگذرد یا بیش از یک‌بار تکرار شود از JSX بیرون می‌رود — یا به توکن‌های همان لایه، یا به یک تابع کوچک کنار همان کامپوننت (`triggerClass(home)`). لینت این را اجباری می‌کند: شکل کانونیک (`w-25` نه `w-[100px]`، `text-(--token)` نه `text-[var(--token)]`)، بدون کلاس تکراری یا متضاد (مثل `grid!` همراه `inline-flex`)، شورت‌هند (`p-4` نه `px-4 py-4`)، و ویژگی‌های منطقی روی محور inline برای RTL.
+
 ---
 
 ## 🚀 شروع سریع
@@ -239,7 +241,7 @@ npm run dev                    # http://localhost:3000
 | `npm run dev`                 | اجرای توسعه با Turbopack                                     |
 | `npm run build` / `npm start` | بیلد و اجرای پروداکشن                                        |
 | `npm run seed`                | دادهٔ اولیه؛ `npm run seed:dev` داده‌های نمایشی اضافه می‌کند |
-| `npm run lint`                | ESLint (شامل قواعد jsx-a11y و react-hooks)                   |
+| `npm run lint`                | ESLint: jsx-a11y، react-hooks، و **better-tailwindcss** (کلاس کانونیک، بدون تضاد، شورت‌هند، ویژگی‌های منطقی RTL) |
 | `npm run typecheck`           | `tsc --noEmit`                                               |
 | `npm run format`              | Prettier                                                     |
 

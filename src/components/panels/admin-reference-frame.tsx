@@ -48,7 +48,7 @@ export async function AdminReferenceFrame({
           <AdminTopbarTitle />
           <div className="admin-ref-top-actions ms-auto flex items-center gap-2 max-[480.02px]:gap-[.3rem]">
             <ThemeToggle
-              className="admin-ref-icon-btn grid size-11 flex-none cursor-pointer place-items-center rounded-[14px] bg-[var(--ar-surface2)] text-[var(--ar-text2)] [border:1px_solid_var(--panel-line)] hover:bg-[var(--ar-brand-soft)] hover:text-[var(--ar-brand-ink)] max-[480.02px]:size-10!"
+              className="admin-ref-icon-btn grid size-11 flex-none cursor-pointer place-items-center rounded-[14px] bg-(--ar-surface2) text-(--ar-text2) [border:1px_solid_var(--panel-line)] hover:bg-(--ar-brand-soft) hover:text-(--ar-brand-ink) max-[480.02px]:size-10!"
               id="admin-theme"
             />
             <AccountMenu

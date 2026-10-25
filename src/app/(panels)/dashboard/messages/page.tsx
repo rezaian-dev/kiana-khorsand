@@ -22,15 +22,15 @@ export default async function Page() {
   ).length;
   return (
     <div className="mx-auto max-w-5xl space-y-6 pb-10">
-      <header className="relative overflow-hidden rounded-[2rem] bg-gradient-to-bl from-[#0c5660] via-[#183c64] to-[#273966] p-6 text-white shadow-2xl shadow-slate-800/10 sm:p-9">
-        <div className="pointer-events-none absolute -top-16 -left-16 size-60 rounded-full bg-cyan-300/15 blur-3xl" />
+      <header className="relative overflow-hidden rounded-[2rem] bg-linear-to-bl from-[#0c5660] via-[#183c64] to-[#273966] p-6 text-white shadow-2xl shadow-slate-800/10 sm:p-9">
+        <div className="pointer-events-none absolute -inset-s-16 -top-16 size-60 rounded-full bg-cyan-300/15 blur-3xl" />
         <span className="relative inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold">
           <Headset size={16} aria-hidden="true" /> همراه شما در هر قدم
         </span>
-        <h1 className="relative mt-4 text-2xl leading-relaxed font-black sm:text-3xl">
+        <h1 className="relative mt-4 text-2xl/relaxed font-black sm:text-3xl">
           تیکت و اعلان‌های شما
         </h1>
-        <p className="relative mt-2 max-w-[65ch] text-sm leading-8 text-white/85">
+        <p className="relative mt-2 max-w-[65ch] text-sm/8 text-white/85">
           پرسش‌ها و پاسخ‌های پشتیبان، از جمله لینک دعوت جلسه‌های آنلاین، فقط در
           حساب شما نمایش داده می‌شوند.
         </p>
@@ -60,7 +60,7 @@ export default async function Page() {
               <h2 id="support-history" className="text-fg font-extrabold">
                 گفت‌وگو با پشتیبان
               </h2>
-              <p className="text-xs leading-6 text-slate-600 dark:text-slate-300">
+              <p className="text-xs/6 text-slate-600 dark:text-slate-300">
                 تاریخچهٔ پیام‌های همین حساب
               </p>
             </div>
@@ -87,7 +87,7 @@ export default async function Page() {
               return (
                 <article
                   key={item.id}
-                  className={`max-w-[min(100%,45rem)] rounded-2xl border p-4 shadow-sm sm:p-5 ${own ? "mr-auto border-blue-100 bg-blue-50/80 dark:border-blue-900/50 dark:bg-blue-950/30" : "ml-auto border-teal-100 bg-teal-50/70 dark:border-teal-900/50 dark:bg-teal-950/30"}`}
+                  className={`max-w-[min(100%,45rem)] rounded-2xl border p-4 shadow-sm sm:p-5 ${own ? "me-auto border-blue-100 bg-blue-50/80 dark:border-blue-900/50 dark:bg-blue-950/30" : "ms-auto border-teal-100 bg-teal-50/70 dark:border-teal-900/50 dark:bg-teal-950/30"}`}
                 >
                   <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
                     <span>{own ? "شما" : "پشتیبان"}</span>
@@ -96,7 +96,7 @@ export default async function Page() {
                       {formatTime(item.createdAt)}
                     </time>
                   </div>
-                  <p className="text-fg text-sm leading-8 break-words whitespace-pre-wrap">
+                  <p className="text-fg text-sm/8 wrap-break-word whitespace-pre-wrap">
                     {item.body}
                   </p>
                   {invite?.success && (
@@ -104,7 +104,7 @@ export default async function Page() {
                       href={invite.data}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-l from-teal-700 to-blue-700 px-4 text-sm font-extrabold text-white shadow-md shadow-blue-900/15 transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 motion-safe:hover:-translate-y-0.5"
+                      className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-linear-to-l from-teal-700 to-blue-700 px-4 text-sm font-extrabold text-white shadow-md shadow-blue-900/15 transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 motion-safe:hover:-translate-y-0.5"
                     >
                       ورود به جلسه در Google Meet{" "}
                       <ArrowUpLeft size={16} aria-hidden="true" />

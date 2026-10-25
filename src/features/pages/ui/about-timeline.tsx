@@ -61,11 +61,11 @@ export function AboutTimeline() {
   return (
     <div className="about-journey-shell relative min-w-0">
       <span
-        className={`about-journey-track ${journeyLineClassName} bg-[color:color-mix(in_srgb,var(--c-indigo)_22%,var(--line))]`}
+        className={`about-journey-track ${journeyLineClassName} bg-[color-mix(in_srgb,var(--c-indigo)_22%,var(--line))]`}
         aria-hidden="true"
       />
       <span
-        className={`about-journey-progress ${journeyLineClassName} origin-top [background-image:linear-gradient(180deg,var(--c-indigo),var(--c-teal),var(--c-rose),var(--c-amber))] [box-shadow:0_0_16px_color-mix(in_srgb,var(--c-teal)_40%,transparent)]`}
+        className={`about-journey-progress ${journeyLineClassName} origin-top bg-[linear-gradient(180deg,var(--c-indigo),var(--c-teal),var(--c-rose),var(--c-amber))] [box-shadow:0_0_16px_color-mix(in_srgb,var(--c-teal)_40%,transparent)]`}
         aria-hidden="true"
       />
       <ol
@@ -85,19 +85,19 @@ export function AboutTimeline() {
               transition={{ ...motionTiming.standard, delay: index * 0.06 }}
             >
               <span
-                className="about-milestone-node absolute start-[14px] top-[2.2rem] z-1 size-[19px] rounded-[50%] border-4 border-[var(--milestone)] bg-[var(--surface)] [box-shadow:0_0_0_6px_color-mix(in_srgb,var(--milestone)_14%,transparent)] max-[400.02px]:start-2"
+                className="about-milestone-node absolute inset-s-[14px] top-[2.2rem] z-1 size-[19px] rounded-[50%] border-4 border-(--milestone) bg-(--surface) [box-shadow:0_0_0_6px_color-mix(in_srgb,var(--milestone)_14%,transparent)] max-[400.02px]:inset-s-2"
                 aria-hidden="true"
               />
               <div className={milestoneCardClassName}>
                 <div className="about-milestone-heading flex items-center justify-between gap-4">
                   <span
-                    className="about-milestone-icon grid size-[46px] place-items-center rounded-[15px] bg-[color:color-mix(in_srgb,var(--milestone)_13%,var(--surface))] text-[var(--milestone)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-[3px]"
+                    className="about-milestone-icon grid size-[46px] place-items-center rounded-[15px] bg-[color-mix(in_srgb,var(--milestone)_13%,var(--surface))] text-(--milestone) motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:translate-y-[-3px]"
                     aria-hidden="true"
                   >
                     <Icon size={23} strokeWidth={1.85} />
                   </span>
                   <span
-                    className="about-milestone-index text-[1.1rem] font-black text-[var(--milestone)] tabular-nums"
+                    className="about-milestone-index text-[1.1rem] font-black text-(--milestone) tabular-nums"
                     aria-hidden="true"
                   >
                     {new Intl.NumberFormat("fa-IR", {
@@ -113,7 +113,7 @@ export function AboutTimeline() {
                 <h3 className="mt-[.35rem] text-[clamp(1.02rem,1.9vw,1.22rem)] leading-[1.6] font-[850]">
                   {milestone.title}
                 </h3>
-                <p className="about-milestone-body mt-[.6rem] text-[.9rem] leading-[1.95] text-[var(--muted)]">
+                <p className="about-milestone-body mt-[.6rem] text-[.9rem] leading-[1.95] text-(--muted)">
                   {milestone.body}
                 </p>
               </div>

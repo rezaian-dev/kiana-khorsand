@@ -67,12 +67,12 @@ function Card({
 }) {
   return (
     <section
-      className={`glass card ${adminGlassClassName} min-w-0 p-4 sm:px-[1.375rem] sm:py-5`}
+      className={`glass card ${adminGlassClassName} min-w-0 p-4 sm:px-5.5 sm:py-5`}
       aria-labelledby={id}
     >
       <div className="card-head mb-4 flex items-start gap-3 pb-3.5 [border-bottom:1px_solid_var(--border)]">
         <span
-          className="card-ico grid size-[42px] flex-none place-items-center rounded-[14px] bg-[var(--brand-soft)] text-[1.25rem] text-[var(--brand-ink)]"
+          className="card-ico grid size-[42px] flex-none place-items-center rounded-[14px] bg-(--brand-soft) text-[1.25rem] text-(--brand-ink)"
           aria-hidden="true"
         >
           <Icon name={icon} />
@@ -81,7 +81,7 @@ function Card({
           <h2 id={id} className="m-0 text-[1.02rem] leading-[1.6] font-bold">
             {title}
           </h2>
-          <p className="mt-[.15rem] mb-0 text-[.82rem] leading-[1.7] text-[var(--muted)]">
+          <p className="mt-[.15rem] mb-0 text-[.82rem] leading-[1.7] text-(--muted)">
             {intro}
           </p>
         </div>
@@ -226,16 +226,16 @@ export default async function Page({
   ];
   return (
     <div
-      className={`admin-settings-reference ${settingsPaletteClassName} [&_.btn:active]:[transform:translateY(1px)]! [&_:where(button,a):focus-visible]:[outline:2px_solid_var(--brand)]! [&_:where(button,input,textarea,a):focus-visible]:outline-offset-2! [&_:where(input,textarea):focus-visible]:[outline:2px_solid_var(--brand)]`}
+      className={`admin-settings-reference ${settingsPaletteClassName} [&_.btn:active]:transform-[translateY(1px)]! [&_:where(button,a):focus-visible]:[outline:2px_solid_var(--brand)]! [&_:where(button,input,textarea,a):focus-visible]:outline-offset-2! [&_:where(input,textarea):focus-visible]:[outline:2px_solid_var(--brand)]`}
     >
       <div className="page-head mb-4 px-1 pt-1 pb-0">
-        <p className="eyebrow mb-[.4rem] inline-flex items-center gap-[.4rem] rounded-[999px] bg-[var(--brand-soft)] px-[.7rem] py-1 text-[.75rem] font-semibold text-[var(--brand-ink)]">
+        <p className="eyebrow mb-[.4rem] inline-flex items-center gap-[.4rem] rounded-[999px] bg-(--brand-soft) px-[.7rem] py-1 text-[.75rem] font-semibold text-(--brand-ink)">
           <Icon name="gear-six" /> پیکربندی
         </p>
-        <h1 className="m-0 text-2xl leading-normal font-bold sm:text-[1.75rem]">
+        <h1 className="m-0 text-2xl/normal font-bold sm:text-[1.75rem]">
           تنظیمات سایت
         </h1>
-        <p className="lead mt-[.4rem] mr-0 mb-0 ml-0 max-w-[62ch] text-[.9rem] text-[var(--text-2)]">
+        <p className="lead mx-0 mt-[.4rem] mb-0 max-w-[62ch] text-[.9rem] text-(--text-2)">
           پروفایل حرفه‌ای، ساعات کاری، تعرفه جلسه‌ها، اطلاعات تماس و تنظیمات
           امنیتی را از این صفحه مدیریت کنید. فیلدهای نشان‌دار با{" "}
           <span className={requiredClass} aria-hidden="true">
@@ -347,7 +347,7 @@ export default async function Page({
                     required
                   />
                   <span
-                    className="sep text-[.75rem] text-[var(--muted)]"
+                    className="sep text-[.75rem] text-(--muted)"
                     aria-hidden="true"
                   >
                     تا
@@ -479,7 +479,7 @@ export default async function Page({
           title="دارایی‌های برند"
           intro="مسیر تصاویر لوگو، فاوآیکون و تصاویر صفحه‌ها"
         >
-          <div className="meta-box mb-4 flex items-start gap-2 rounded-[14px] bg-[var(--brand-soft)] p-[.7rem] text-[.82rem]">
+          <div className="meta-box mb-4 flex items-start gap-2 rounded-[14px] bg-(--brand-soft) p-[.7rem] text-[.82rem]">
             <Icon name="info" />
             <span>
               تصاویر باید در مسیر /assets/images یا /assets/logo موجود باشند؛
@@ -571,7 +571,7 @@ export default async function Page({
             <hr className="divider w-full [border-top:1px_solid_var(--border)]! [border:0]" />
             <div className="flex flex-wrap items-center gap-3">
               <button
-                className={`${buttonClassName} btn-danger bg-[var(--danger-soft)] text-[var(--danger)]`}
+                className={`${buttonClassName} btn-danger bg-(--danger-soft) text-(--danger)`}
                 type="submit"
                 formAction={revokeOtherAdminSessions}
               >
@@ -588,20 +588,20 @@ export default async function Page({
           </div>
         </Card>
         <div
-          className="savebar sticky bottom-[calc(8rem+env(safe-area-inset-bottom,0px))] z-[35] mt-2 lg:bottom-4"
+          className="savebar sticky bottom-[calc(8rem+env(safe-area-inset-bottom,0px))] z-35 mt-2 lg:bottom-4"
           role="region"
           aria-label="نوار ذخیره تغییرات"
         >
           <div
             className={`savebar-inner glass ${adminGlassClassName} flex flex-wrap items-center gap-[.6rem] rounded-[18px]! px-3 py-[.6rem] max-[390.02px]:items-stretch`}
           >
-            <p className="savebar-note m-0 inline-flex items-center gap-[.4rem] text-[.8rem] text-[var(--muted)] max-[390.02px]:w-full">
+            <p className="savebar-note m-0 inline-flex items-center gap-[.4rem] text-[.8rem] text-(--muted) max-[390.02px]:w-full">
               <Icon name="floppy-disk" />
               <span>تغییرات را برای اعمال ذخیره کنید</span>
             </p>
             <div className="savebar-actions ms-auto flex gap-2 max-[390.02px]:w-full max-[390.02px]:[&_.btn]:flex-1 max-[390.02px]:[&_.btn]:px-[.3rem]!">
               <button
-                className={`${buttonClassName} btn-ghost [border-color:var(--border-strong)]! bg-[var(--surface-solid)] text-[var(--text-2)]`}
+                className={`${buttonClassName} btn-ghost border-(--border-strong)! bg-(--surface-solid) text-(--text-2)`}
                 type="reset"
               >
                 <Icon name="arrow-counter-clockwise" />

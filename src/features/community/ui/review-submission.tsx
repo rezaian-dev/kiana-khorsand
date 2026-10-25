@@ -55,7 +55,7 @@ export function ReviewSubmission({
       {open && (
         <form
           id="review-form"
-          className="community-review-form mt-4 grid max-w-[590px] gap-3 rounded-[22px] border border-[var(--line)] bg-[var(--surface)] p-[clamp(1rem,3vw,1.5rem)] [box-shadow:var(--shadow-soft)]"
+          className="community-review-form mt-4 grid max-w-[590px] gap-3 rounded-[22px] border border-(--line) bg-(--surface) p-[clamp(1rem,3vw,1.5rem)] [box-shadow:var(--shadow-soft)]"
           onSubmit={onSubmit}
         >
           <label className="font-[750]" htmlFor="review-experience">
@@ -82,7 +82,7 @@ export function ReviewSubmission({
             placeholder="تجربه‌تان را با کلمات خودتان بنویسید…"
           />
           <label
-            className="community-consent flex [align-items:start] gap-[.6rem] text-[.88rem] font-[750] [&_input]:mt-[.2rem] [&_input]:size-[18px] [&_input]:shrink-0 [&_input]:accent-[var(--c-teal)]"
+            className="community-consent flex [align-items:start] gap-[.6rem] text-[.88rem] font-[750] [&_input]:mt-[.2rem] [&_input]:size-[18px] [&_input]:shrink-0 [&_input]:accent-(--c-teal)"
             htmlFor="review-consent"
           >
             <Checkbox

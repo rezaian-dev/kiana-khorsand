@@ -31,6 +31,14 @@ import {
 } from "./carousel-neon-styles";
 import { SliderSection } from "./slider-section";
 
+/** Caption under a slide, readable on every theme. */
+const slideImageClassName =
+  "absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035] motion-reduce:transition-none motion-reduce:group-hover:scale-100";
+
+/** Caption under a slide, readable on every theme. */
+const slideCaptionClassName =
+  "mx-[0.65rem] mt-3 text-start text-sm/7 wrap-break-word text-[#516e6a]! dark:text-[#b9d0cc]!";
+
 type TestimonialItem = {
   slug: string;
   name: string;
@@ -120,7 +128,7 @@ export function HomeSlider(props: HomeSliderProps) {
           <TestimonialCard key={item.slug} item={item} />
         ))}
         autoplay={props.reviews.length > 1}
-        className="pt-10! pb-10! md:pt-16! md:pb-16!"
+        className="py-10! md:py-16!"
       />
     );
   }
@@ -156,7 +164,7 @@ function ArticleCard({ item }: { item: ArticleItem }) {
   return (
     <Link
       href={`/articles/${item.slug}`}
-      className={`${publicCardClassName} ${publicSpotClassName} group flex h-full w-full min-w-0 flex-col !p-4 hover:no-underline! focus-visible:no-underline! focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#247d72] ${artSurfaceClassName} ${neonArticleCardClassName}`}
+      className={`${publicCardClassName} ${publicSpotClassName} group flex size-full min-w-0 flex-col p-4! hover:no-underline! focus-visible:no-underline! focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#247d72] ${artSurfaceClassName} ${neonArticleCardClassName}`}
     >
       <div className="relative isolate min-w-0 flex-none">
         <div className={coverClassName}>
@@ -168,7 +176,7 @@ function ArticleCard({ item }: { item: ArticleItem }) {
               height={450}
               sizes="(max-width: 640px) 88vw, (max-width: 1024px) 46vw, 31vw"
               alt={`تصویر مقالهٔ ${item.title}`}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              className={slideImageClassName}
             />
           )}
         </div>
@@ -180,25 +188,23 @@ function ArticleCard({ item }: { item: ArticleItem }) {
       </div>
       <div className="mx-[0.65rem] mt-4 flex flex-wrap items-center gap-2.5">
         <span
-          className={`${publicChipClassName} !border-[#84b9aa]/55 !bg-[#87c3ad]/15 !py-1 !text-[.75rem] !text-[#2b7168] dark:!border-[#69c4b3]/35 dark:!bg-[#62c5a5]/10 dark:!text-[#b8f4dc]`}
+          className={`${publicChipClassName} border-[#84b9aa]/55! bg-[#87c3ad]/15! py-1! text-[.75rem]! text-[#2b7168]! dark:border-[#69c4b3]/35! dark:bg-[#62c5a5]/10! dark:text-[#b8f4dc]!`}
         >
           {item.category}
         </span>
       </div>
       <h3
-        className={`${publicH3ClassName} mx-[0.65rem] mt-3 text-start break-words text-[#244247]! dark:text-[#f0fcf8]!`}
+        className={`${publicH3ClassName} mx-[0.65rem] mt-3 text-start wrap-break-word text-[#244247]! dark:text-[#f0fcf8]!`}
       >
         {item.title}
       </h3>
-      <p className="mx-[0.65rem] mt-3 text-start text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">
-        {item.excerpt}
-      </p>
+      <p className={slideCaptionClassName}>{item.excerpt}</p>
       <span
         className={`mx-[.65rem]! mt-auto! group-hover:motion-safe:-translate-y-0.5 motion-reduce:transform-none! ${articleActionClassName} hover:no-underline! [&&]:border-[#9eb6dc]! [&&]:bg-[#ebf1fd]! [&&]:text-[#294d80]! [&&]:hover:bg-[#dce7fa]! [&&]:hover:text-[#213e70]! dark:[&&]:border-[#7287b2]! dark:[&&]:bg-[#293654]! dark:[&&]:text-[#e0eafb]! dark:[&&]:hover:bg-[#3a4b73]! dark:[&&]:hover:text-white!`}
       >
         خواندن مقاله
         <i
-          className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:-translate-x-[3px]`}
+          className={`ph-bold ph-arrow-left ${articleActionIconClassName} group-hover:motion-safe:translate-x-[-3px]`}
           aria-hidden="true"
         />
       </span>
@@ -211,7 +217,7 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
   return (
     <Link
       href={`/workshops/${item.slug}`}
-      className={`${publicCardClassName} ${publicSpotClassName} group flex h-full w-full min-w-0 flex-col !p-4 ${artSurfaceClassName}`}
+      className={`${publicCardClassName} ${publicSpotClassName} group flex size-full min-w-0 flex-col p-4! ${artSurfaceClassName}`}
     >
       <div className="relative isolate min-w-0 flex-none">
         <div className={coverClassName}>
@@ -222,7 +228,7 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
               height={450}
               sizes="(max-width: 640px) 88vw, (max-width: 1024px) 46vw, 31vw"
               alt={`تصویر کارگاه ${item.title}`}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              className={slideImageClassName}
             />
           )}
         </div>
@@ -233,15 +239,15 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
           <i className="ph-duotone ph-users-three" />
         </span>
       </div>
-      <span className="mx-[0.65rem] mt-4 text-start text-xs font-extrabold tracking-wide text-[var(--site-muted)]">
+      <span className="mx-[0.65rem] mt-4 text-start text-xs font-extrabold tracking-wide text-(--site-muted)">
         {item.mode === "online" ? "آنلاین" : "حضوری"}
       </span>
       <h3
-        className={`${publicH3ClassName} mx-[0.65rem] mt-2 text-start break-words`}
+        className={`${publicH3ClassName} mx-[0.65rem] mt-2 text-start wrap-break-word`}
       >
         {item.title}
       </h3>
-      <p className="mx-[0.65rem] mt-2 text-start text-xs font-bold text-[var(--site-muted)]">
+      <p className="mx-[0.65rem] mt-2 text-start text-xs font-bold text-(--site-muted)">
         {formatToman(price.total)}
         {price.percent > 0 && (
           <span className="font-extrabold text-[#10665f] dark:text-[#8fe4d6]">
@@ -250,9 +256,7 @@ function WorkshopCard({ item }: { item: WorkshopItem }) {
           </span>
         )}
       </p>
-      <p className="mx-[0.65rem] mt-3 text-start text-sm leading-7 break-words text-[#516e6a]! dark:text-[#b9d0cc]!">
-        {item.description}
-      </p>
+      <p className={slideCaptionClassName}>{item.description}</p>
       <span className="mx-[0.65rem] mt-auto inline-flex items-center gap-1.5 pt-5 text-start text-sm font-bold text-[#126c68] dark:text-[#8fe4d6]">
         جزئیات کارگاه
         <i className="ph-bold ph-arrow-left" aria-hidden="true" />

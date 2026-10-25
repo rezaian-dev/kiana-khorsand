@@ -28,7 +28,7 @@ export function PasswordChangeForm() {
     <form
       ref={ref}
       action={action}
-      className={`${panelCardClassName} ${panelFormClassName} account-password-form gap-4! [.admin-ref-frame_&]:max-w-[640px]`}
+      className={`${panelCardClassName} ${panelFormClassName} account-password-form gap-4! in-[.admin-ref-frame]:max-w-[640px]`}
     >
       <h2>تغییر رمز عبور</h2>
       <p className={panelMutedClassName}>

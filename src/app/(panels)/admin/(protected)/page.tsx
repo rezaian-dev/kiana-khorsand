@@ -142,13 +142,13 @@ export default async function Page() {
             >
               <Icon size={21} aria-hidden="true" />
             </span>
-            <span className="admin-overview-label text-[.84rem] font-bold text-[var(--panel-muted)]">
+            <span className="admin-overview-label text-[.84rem] font-bold text-(--panel-muted)">
               {label}
             </span>
             <strong className="text-[clamp(1.65rem,2vw,2.15rem)] leading-none font-extrabold">
               {formatNumber(value)}
             </strong>
-            <span className="admin-overview-more mt-auto inline-flex items-center gap-[.35rem] text-[.75rem] font-bold text-[var(--ar-brand-ink)]">
+            <span className="admin-overview-more mt-auto inline-flex items-center gap-[.35rem] text-[.75rem] font-bold text-(--ar-brand-ink)">
               مشاهده <ArrowLeft size={15} aria-hidden="true" />
             </span>
           </AdminStatLink>
@@ -206,14 +206,14 @@ export default async function Page() {
             <Link
               href={href}
               key={href}
-              className="flex min-w-0 items-center gap-[.8rem] rounded-[15px] bg-[var(--ar-surface2)] p-4 text-[var(--ar-brand-ink)] [border:1px_solid_var(--panel-line)] hover:bg-[var(--ar-brand-soft)]"
+              className="flex min-w-0 items-center gap-[.8rem] rounded-[15px] bg-(--ar-surface2) p-4 text-(--ar-brand-ink) [border:1px_solid_var(--panel-line)] hover:bg-(--ar-brand-soft)"
             >
               <Icon size={22} aria-hidden="true" />
               <span className="flex min-w-0 flex-1 flex-col gap-[.15rem]">
-                <strong className="text-[.86rem] text-[var(--panel-text)]">
+                <strong className="text-[.86rem] text-(--panel-text)">
                   {label}
                 </strong>
-                <small className="text-[.73rem] text-[var(--panel-muted)]">
+                <small className="text-[.73rem] text-(--panel-muted)">
                   {hint}
                 </small>
               </span>
@@ -221,7 +221,7 @@ export default async function Page() {
             </Link>
           ))}
         </div>
-        <p className="admin-overview-footnote mt-4 text-[.75rem] text-[var(--panel-muted)]">
+        <p className="admin-overview-footnote mt-4 text-[.75rem] text-(--panel-muted)">
           همهٔ {formatNumber(adminLinks.length)} بخش مدیریتی از فهرست کناری در
           دسترس‌اند.
         </p>

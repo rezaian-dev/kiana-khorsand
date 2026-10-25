@@ -108,7 +108,7 @@ export default async function Page() {
                     {formatDate(block.from)} تا{" "}
                     {formatDate(new Date(block.to.getTime() - 1))}
                   </strong>
-                  <p className="text-[.78rem] text-[var(--panel-muted)]">
+                  <p className="text-[.78rem] text-(--panel-muted)">
                     {block.reason}
                   </p>
                 </div>

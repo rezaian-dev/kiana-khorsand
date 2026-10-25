@@ -12,6 +12,8 @@ import {
   mobileDockIconClassName,
   mobileDockItemClassName,
   publicMovingDockClassName,
+  mobileSheetPanelClassName,
+  mobileSheetLinkClassName,
 } from "./public-styles";
 import { House, Compass, BookOpen, CalendarDays, Grid2X2 } from "lucide-react";
 import {
@@ -180,18 +182,18 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
         customAnimation
         showCloseButton={false}
         overlayClassName="bg-[rgba(14,13,24,0.55)]! backdrop-filter-none! [&:where([data-state=open],[data-open]:not([data-open=false]))]:animate-ref-overlay-in [&:where([data-state=closed],[data-closed]:not([data-closed=false]))]:animate-ref-overlay-out motion-reduce:animate-none!"
-        className="ref-menu-sheet [&:where([data-state=open],[data-open]:not([data-open=false]))]:animate-ref-menu-open [&:where([data-state=closed],[data-closed]:not([data-closed=false]))]:animate-ref-menu-close right-0! left-auto! flex! h-dvh! w-[min(88vw,380px)]! max-w-none! min-w-0 flex-col! gap-0! overflow-hidden! rounded-[28px_0_0_28px]! border! border-r-0! border-[var(--line)]! bg-[var(--glass-strong)]! px-[.875rem]! pt-[env(safe-area-inset-top,0px)]! pb-[calc(.55rem+env(safe-area-inset-bottom,0px))]! text-[var(--fg)]! shadow-[-14px_0_50px_rgba(18,15,43,0.18)]! backdrop-blur-[24px]! backdrop-saturate-[180%]! transition-none! motion-reduce:animate-none!"
+        className={mobileSheetPanelClassName}
         aria-describedby={undefined}
       >
         <m.div
           data-menu-topline
-          className="absolute inset-x-5 top-0 z-[2] h-[3px] origin-right rounded-b-[99px] [background-image:var(--grad-sunset)]"
+          className="absolute inset-x-5 top-0 z-2 h-[3px] origin-right rounded-b-[99px] [background-image:var(--grad-sunset)]"
           initial={reduceMotion ? false : { scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={lineTransition}
           aria-hidden="true"
         />
-        <div className="ref-menu-content min-h-0 flex-1 [scrollbar-width:thin] [scrollbar-color:var(--line)_transparent] overflow-x-hidden overflow-y-auto overscroll-contain pt-4 pb-[.35rem] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[var(--line)] [&::-webkit-scrollbar-track]:bg-transparent">
+        <div className="ref-menu-content min-h-0 flex-1 scrollbar-thin [scrollbar-color:var(--line)_transparent] overflow-x-hidden overflow-y-auto overscroll-contain pt-4 pb-[.35rem] [&::-webkit-scrollbar]:inline-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-(--line) [&::-webkit-scrollbar-track]:bg-transparent">
           <m.div
             className="mb-2 flex items-center justify-between gap-2"
             data-menu-item=""
@@ -199,12 +201,12 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
             animate={itemVisible}
             transition={itemTransition}
           >
-            <SheetTitle className="text-base font-extrabold! text-[var(--fg)]!">
+            <SheetTitle className="text-base font-extrabold! text-(--fg)!">
               <SheetClose asChild>
-                <Link href="/" className="flex items-center gap-2.5 px-1 py-1">
+                <Link href="/" className="flex items-center gap-2.5 p-1">
                   <BrandMark
                     size={32}
-                    className="h-8 w-8 flex-none rounded-xl object-cover"
+                    className="size-8 flex-none rounded-xl object-cover"
                   />
                   <span className="text-base font-extrabold">کیانا خرسند</span>
                 </Link>
@@ -214,10 +216,10 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
               <button
                 type="button"
                 aria-label="بستن فهرست"
-                className="border-line bg-surface group/close grid h-10 w-10 shrink-0 cursor-pointer place-items-center rounded-full border text-[var(--fg)]!"
+                className="border-line bg-surface group/close grid size-10 shrink-0 cursor-pointer place-items-center rounded-full border text-(--fg)!"
               >
                 <i
-                  className="ph-bold ph-x text-[1.1rem] transition-[transform] duration-[450ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover/close:[transform:rotate(90deg)] motion-reduce:transition-none motion-reduce:group-hover/close:[transform:none]"
+                  className="ph-bold ph-x text-[1.1rem] transition-[transform] duration-450 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover/close:transform-[rotate(90deg)] motion-reduce:transition-none motion-reduce:group-hover/close:transform-none"
                   aria-hidden="true"
                 />
               </button>
@@ -234,21 +236,18 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
                   transition={itemTransition}
                 >
                   <SheetClose asChild>
-                    <Link
-                      href={item.href}
-                      className="sheet-link group/link relative isolate flex min-h-12 items-center justify-between gap-3 overflow-hidden rounded-[14px] py-[.35rem] pr-[.55rem] pl-5 text-base font-bold text-[var(--fg)] no-underline transition-[transform] duration-[400ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] before:absolute before:inset-0 before:-z-1 before:origin-right before:[transform:scaleX(0)] before:rounded-[inherit] before:[background-image:linear-gradient(-90deg,color-mix(in_srgb,var(--c-violet)_12%,transparent),color-mix(in_srgb,var(--c-plum)_12%,transparent))] before:transition-[transform] before:duration-[500ms] before:ease-[cubic-bezier(0.2,0.8,0.2,1)] before:content-[''] hover:[transform:translateX(-4px)] hover:before:[transform:scaleX(1)] focus-visible:[transform:translateX(-4px)] focus-visible:before:[transform:scaleX(1)] motion-reduce:transition-none motion-reduce:before:transition-none motion-reduce:hover:[transform:none] motion-reduce:hover:before:[transform:none] motion-reduce:focus-visible:[transform:none] motion-reduce:focus-visible:before:[transform:none]"
-                    >
+                    <Link href={item.href} className={mobileSheetLinkClassName}>
                       <span className="inline-flex min-w-0 items-center gap-[.7rem]">
                         <span
-                          className={`grid h-[34px] w-[34px] flex-none place-items-center rounded-[11px] text-[1.05rem] text-white [box-shadow:inset_0_1px_0_rgba(255,255,255,0.28),0_6px_14px_-8px_rgba(25,23,49,0.45)] transition-[transform] duration-[450ms] ease-[ease] group-hover/link:[transform:scale(1.08)_rotate(-6deg)] group-focus-visible/link:[transform:scale(1.08)_rotate(-6deg)] motion-reduce:transition-none motion-reduce:group-hover/link:[transform:none] motion-reduce:group-focus-visible/link:[transform:none] ${menuTileClasses[item.tone]}`}
+                          className={`grid size-[34px] flex-none place-items-center rounded-[11px] text-[1.05rem] text-white [box-shadow:inset_0_1px_0_rgba(255,255,255,0.28),0_6px_14px_-8px_rgba(25,23,49,0.45)] transition-[transform] duration-450 ease-[ease] group-hover/link:transform-[scale(1.08)_rotate(-6deg)] group-focus-visible/link:transform-[scale(1.08)_rotate(-6deg)] motion-reduce:transition-none motion-reduce:group-hover/link:transform-none motion-reduce:group-focus-visible/link:transform-none ${menuTileClasses[item.tone]}`}
                           aria-hidden="true"
                         >
                           <i className={`ph-duotone ${item.icon}`} />
                         </span>
-                        <span className="break-words">{item.label}</span>
+                        <span className="wrap-break-word">{item.label}</span>
                       </span>
                       <i
-                        className="ph-bold ph-arrow-left flex-none text-[.9rem] text-[var(--muted)] transition-[transform,color] [transition-duration:450ms,300ms] [transition-timing-function:ease,ease] group-hover/link:[transform:translateX(-8px)] group-hover/link:text-[var(--fg)] group-focus-visible/link:[transform:translateX(-8px)] group-focus-visible/link:text-[var(--fg)] motion-reduce:transition-none motion-reduce:group-hover/link:[transform:none] motion-reduce:group-focus-visible/link:[transform:none]"
+                        className="ph-bold ph-arrow-left flex-none text-[.9rem] text-(--muted) transition-[transform,color] duration-[450ms,300ms] ease-[ease,ease] group-hover/link:transform-[translateX(-8px)] group-hover/link:text-(--fg) group-focus-visible/link:transform-[translateX(-8px)] group-focus-visible/link:text-(--fg) motion-reduce:transition-none motion-reduce:group-hover/link:transform-none motion-reduce:group-focus-visible/link:transform-none"
                         aria-hidden="true"
                       />
                     </Link>
@@ -263,7 +262,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
             aria-hidden="true"
           />
           <m.div
-            className="mb-2 text-xs leading-[1.428571] font-extrabold text-[var(--muted)]"
+            className="mb-2 text-xs leading-[1.428571] font-extrabold text-(--muted)"
             data-menu-item=""
             initial={reduceMotion ? false : itemInitial}
             animate={itemVisible}
@@ -286,7 +285,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
                       href={social[item.key]!}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`social-btn grid h-11 w-11 place-items-center overflow-hidden rounded-[14px] border border-[var(--line)] bg-[var(--surface)] text-[1.15rem] transition-[transform,box-shadow,background,color] [transition-duration:450ms,450ms,450ms,450ms] [transition-timing-function:ease,ease,ease,ease] hover:[transform:translateY(-3px)_rotate(-5deg)] hover:text-white hover:[box-shadow:var(--shadow-soft)] hover:[background:linear-gradient(135deg,var(--c-plum),var(--c-violet))] focus-visible:ring-2 focus-visible:ring-[var(--c-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--glass-strong)] motion-reduce:transition-none motion-reduce:hover:[transform:none] ${socialToneClasses[item.key]}`}
+                      className={`social-btn grid size-11 place-items-center overflow-hidden rounded-[14px] border border-(--line) bg-(--surface) text-[1.15rem] transition-[transform,box-shadow,background,color] duration-[450ms,450ms,450ms,450ms] ease-[ease,ease,ease,ease] hover:transform-[translateY(-3px)_rotate(-5deg)] hover:text-white hover:[box-shadow:var(--shadow-soft)] hover:[background:linear-gradient(135deg,var(--c-plum),var(--c-violet))] focus-visible:ring-2 focus-visible:ring-(--c-violet) focus-visible:ring-offset-2 focus-visible:ring-offset-(--glass-strong) motion-reduce:transition-none motion-reduce:hover:transform-none ${socialToneClasses[item.key]}`}
                       aria-label={item.label}
                     >
                       <i

@@ -85,14 +85,14 @@ export function ArticleEmblem({
     ) >>> 0;
   return (
     <span
-      className={`${artSealClassName} article-emblem ${className} ${palette[visual.tone]} ${engraving[variant % 3]} [background-image:linear-gradient(145deg,var(--emblem-light),var(--emblem-shade))]! text-[var(--emblem-ink)]! [box-shadow:inset_0_0_0_1px_color-mix(in_srgb,var(--emblem-ink)_14%,transparent),0_8px_20px_-12px_color-mix(in_srgb,var(--emblem-ink)_45%,transparent)]! before:pointer-events-none before:absolute before:inset-[5px] before:rounded-[inherit] before:border before:border-[color:color-mix(in_srgb,var(--emblem-ink)_28%,transparent)] before:content-[''] after:pointer-events-none after:absolute after:size-[3px] after:rounded-full after:bg-current after:opacity-65 after:content-[''] motion-safe:transition-transform motion-safe:duration-[360ms] motion-safe:ease-[cubic-bezier(.2,.75,.3,1)] motion-safe:group-focus-within:scale-[1.07] motion-safe:group-focus-within:-rotate-[7deg] motion-safe:group-hover:scale-[1.07] motion-safe:group-hover:-rotate-[7deg] motion-reduce:transition-none`}
+      className={`${artSealClassName} article-emblem ${className} ${palette[visual.tone]} ${engraving[variant % 3]} bg-[linear-gradient(145deg,var(--emblem-light),var(--emblem-shade))]! text-(--emblem-ink)! [box-shadow:inset_0_0_0_1px_color-mix(in_srgb,var(--emblem-ink)_14%,transparent),0_8px_20px_-12px_color-mix(in_srgb,var(--emblem-ink)_45%,transparent)]! before:pointer-events-none before:absolute before:inset-[5px] before:rounded-[inherit] before:border before:border-[color-mix(in_srgb,var(--emblem-ink)_28%,transparent)] before:content-[''] after:pointer-events-none after:absolute after:size-[3px] after:rounded-full after:bg-current after:opacity-65 after:content-[''] motion-safe:transition-transform motion-safe:duration-360 motion-safe:ease-[cubic-bezier(.2,.75,.3,1)] motion-safe:group-focus-within:scale-[1.07] motion-safe:group-focus-within:rotate-[-7deg] motion-safe:group-hover:scale-[1.07] motion-safe:group-hover:rotate-[-7deg] motion-reduce:transition-none`}
       data-article-icon={visual.icon}
       data-tone={visual.tone}
       data-engraving={variant % 3}
       aria-hidden="true"
     >
       <Glyph
-        className="relative z-[1] shrink-0 [filter:drop-shadow(0_2px_1px_rgb(255_255_255/30%))]"
+        className="relative z-1 shrink-0 filter-[drop-shadow(0_2px_1px_rgb(255_255_255/30%))]"
         size={31}
         strokeWidth={1.75}
       />

@@ -13,7 +13,7 @@ export default function ErrorPage({
   return (
     <main
       id="main"
-      className="grid min-h-[100svh] place-items-center px-4 text-center"
+      className="grid min-h-svh place-items-center px-4 text-center"
       dir="rtl"
     >
       <div className="card-rainbow w-full max-w-lg">

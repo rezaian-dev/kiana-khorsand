@@ -73,12 +73,12 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className="scroll-smooth font-sans has-[.reference-home]:overflow-x-clip max-[1023.02px]:[scrollbar-width:none] min-[1024px]:has-[.panel-shell]:[scrollbar-gutter:stable] max-[1023.02px]:[&::-webkit-scrollbar]:hidden"
+      className="scroll-smooth font-sans has-[.reference-home]:overflow-x-clip max-[1023.02px]:scrollbar-none min-[1024px]:has-[.panel-shell]:scrollbar-gutter-stable max-[1023.02px]:[&::-webkit-scrollbar]:hidden"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body
-        className={`${vazirmatn.variable} bg-bg text-fg [font-family:var(--font-vazirmatn),Vazirmatn,Tahoma,sans-serif] antialiased has-[.site-shell]:overflow-x-clip! has-[.site-shell]:bg-[var(--bg)]! has-[.site-shell]:text-[var(--fg)]! data-[scroll-locked]:mr-0!`}
+        className={`${vazirmatn.variable} bg-bg text-fg [font-family:var(--font-vazirmatn),Vazirmatn,Tahoma,sans-serif] antialiased has-[.site-shell]:overflow-x-clip! has-[.site-shell]:bg-(--bg)! has-[.site-shell]:text-(--fg)! data-scroll-locked:me-0!`}
       >
         {/* The launch screen belongs to the app's entry point, once per session.
             Deciding here — before the splash element is parsed — keeps the choice out

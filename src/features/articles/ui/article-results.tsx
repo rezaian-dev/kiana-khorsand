@@ -71,16 +71,16 @@ export function ArticleResults({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={motionTiming.standard}
-            className="px-4 pt-12 pb-20 text-center text-[var(--muted)]"
+            className="px-4 pt-12 pb-20 text-center text-(--muted)"
           >
-            <h2 className="text-xl font-extrabold text-[var(--fg)]">
+            <h2 className="text-xl font-extrabold text-(--fg)">
               مقاله‌ای پیدا نشد
             </h2>
             <p>عبارت کوتاه‌تری بنویسید یا دسته‌بندی را تغییر دهید.</p>
             <button
               type="button"
               onClick={onReset}
-              className="mt-4 min-h-11 cursor-pointer rounded-[13px] border border-[var(--line)] bg-[var(--surface)] px-5 text-[.9rem] font-extrabold text-[var(--fg)] transition-colors hover:border-[#248178] hover:text-[#08665d]"
+              className="mt-4 min-h-11 cursor-pointer rounded-[13px] border border-(--line) bg-(--surface) px-5 text-[.9rem] font-extrabold text-(--fg) transition-colors hover:border-[#248178] hover:text-[#08665d]"
             >
               نمایش همهٔ مقاله‌ها
             </button>

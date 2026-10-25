@@ -35,7 +35,7 @@ export function WorkshopDiscount({
   });
   const [open, setOpen] = useState(false);
   return (
-    <fieldset className="workshop-discount-editor grid min-w-0 gap-[.7rem] rounded-[20px] bg-[var(--surface)] p-4 [border:1px_solid_var(--line)]">
+    <fieldset className="workshop-discount-editor grid min-w-0 gap-[.7rem] rounded-[20px] bg-(--surface) p-4 [border:1px_solid_var(--line)]">
       <legend className="px-[.4rem] font-extrabold">
         تخفیف درصدی زمان‌دار
       </legend>

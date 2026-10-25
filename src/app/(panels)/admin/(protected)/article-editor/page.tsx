@@ -207,7 +207,7 @@ export default async function Page({ searchParams }: LegacySlugPageProps) {
           {item?.status === "published" && (
             <Link
               href={`/articles/${item.slug}`}
-              className="panel-editor-preview font-bold text-[var(--panel-accent,#6840c8)] underline underline-offset-[.25em]"
+              className="panel-editor-preview font-bold text-(--panel-accent,#6840c8) underline underline-offset-[.25em]"
             >
               پیش‌نمایش منتشرشده ←
             </Link>

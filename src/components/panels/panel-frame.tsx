@@ -29,12 +29,12 @@ export async function PanelFrame({
       <a href="#panel-main" className={panelSkipClassName}>
         پرش به محتوای اصلی
       </a>
-      <header className="panel-top sticky top-0 z-30 h-[76px] border-b border-[var(--panel-line)] bg-[var(--panel-surface)] max-[320px]:h-[64px]">
+      <header className="panel-top sticky top-0 z-30 h-[76px] border-b border-(--panel-line) bg-(--panel-surface) max-[320px]:h-[64px]">
         <div className="panel-top-inner flex h-full items-center gap-4 px-[clamp(1rem,3vw,2rem)] max-[480.02px]:gap-2 max-[320px]:gap-1 max-[320px]:px-2">
           <PanelNav links={clientLinks} title="پنل کاربری" />
           <Link
             href="/"
-            className="panel-brand flex items-center gap-2 rounded-[.4rem] font-extrabold transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[var(--panel-accent)] focus-visible:ring-offset-2 focus-visible:outline-none max-[480.02px]:text-[.9rem]"
+            className="panel-brand flex items-center gap-2 rounded-[.4rem] font-extrabold transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-(--panel-accent) focus-visible:ring-offset-2 focus-visible:outline-none max-[480.02px]:text-[.9rem]"
             aria-label="بازگشت به صفحه اصلی"
             title="بازگشت به صفحه اصلی"
           >
@@ -50,7 +50,7 @@ export async function PanelFrame({
             <span>{name}</span>
             <form action={signOutAction}>
               <button
-                className="min-h-11 cursor-pointer font-extrabold text-[var(--panel-accent)]"
+                className="min-h-11 cursor-pointer font-extrabold text-(--panel-accent)"
                 type="submit"
               >
                 خروج

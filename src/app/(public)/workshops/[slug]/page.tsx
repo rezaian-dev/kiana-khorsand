@@ -89,9 +89,9 @@ export default async function Page({ params }: SlugPageProps) {
         as="article"
         className={`${siteDetailClassName} reading-surface reading-surface-workshop ${readingSurfaceClassName}`}
       >
-        <div className="workshop-detail-summary mb-[clamp(1.6rem,3vw,2rem)] flex flex-wrap items-center justify-between gap-x-8 gap-y-[.9rem] rounded-[18px] border border-[color:color-mix(in_srgb,#328f82_17%,var(--site-line))] bg-[color:color-mix(in_srgb,#44998b_6%,var(--site-surface))] p-[clamp(1rem,2.4vw,1.4rem)]">
+        <div className="workshop-detail-summary mb-[clamp(1.6rem,3vw,2rem)] flex flex-wrap items-center justify-between gap-x-8 gap-y-[.9rem] rounded-[18px] border border-[color-mix(in_srgb,#328f82_17%,var(--site-line))] bg-[color-mix(in_srgb,#44998b_6%,var(--site-surface))] p-[clamp(1rem,2.4vw,1.4rem)]">
           <div>
-            <span className="mb-[.65rem] block text-[.78rem] font-[750] text-[var(--site-muted)]">
+            <span className="mb-[.65rem] block text-[.78rem] font-[750] text-(--site-muted)">
               هزینهٔ ثبت‌نام
             </span>
             <div className="workshop-price-display mb-[1.3rem] flex flex-wrap items-center gap-3">
@@ -105,24 +105,24 @@ export default async function Page({ params }: SlugPageProps) {
                 {formatToman(pricing.total)}
               </strong>
               {pricing.percent > 0 && (
-                <del className="text-[var(--muted)] decoration-[2px]">
+                <del className="text-(--muted) decoration-2">
                   {formatToman(pricing.original)}
                 </del>
               )}
             </div>
           </div>
           {item.startsAt && (
-            <div className="flex min-w-0 items-center gap-[.6rem] border-s border-[var(--site-line)] ps-4 max-[560px]:w-full max-[560px]:border-0 max-[560px]:p-0">
+            <div className="flex min-w-0 items-center gap-[.6rem] border-s border-(--site-line) ps-4 max-[560px]:w-full max-[560px]:border-0 max-[560px]:p-0">
               <CalendarDays
                 size={19}
                 className="shrink-0 text-[#27827a]"
                 aria-hidden="true"
               />
               <span className="grid gap-[.2rem]">
-                <small className="text-[.76rem] text-[var(--site-muted)]">
+                <small className="text-[.76rem] text-(--site-muted)">
                   زمان برگزاری
                 </small>
-                <strong className="text-[.84rem] text-[var(--site-ink)]">
+                <strong className="text-[.84rem] text-(--site-ink)">
                   {formatDate(item.startsAt)}
                 </strong>
               </span>
@@ -130,7 +130,7 @@ export default async function Page({ params }: SlugPageProps) {
           )}
         </div>
         <Prose reading body={cleanEditorialBody(item.body, "workshop")} />
-        <div className="workshop-detail-actions mt-8 flex flex-wrap items-center gap-4 max-[560.02px]:grid [&>*]:static [&>*]:max-w-full [&>*]:flex-[0_1_auto] [&>*]:text-center max-[560.02px]:[&>*]:w-full max-[560.02px]:[&>*]:justify-center">
+        <div className="workshop-detail-actions mt-8 flex flex-wrap items-center gap-4 *:static *:max-w-full *:flex-[0_1_auto] *:text-center max-[560.02px]:grid max-[560.02px]:*:w-full max-[560.02px]:*:justify-center">
           <WorkshopRequest
             key={session ? "member" : "visitor"}
             slug={item.slug}
@@ -142,7 +142,7 @@ export default async function Page({ params }: SlugPageProps) {
           />
           <Link
             href="/contact"
-            className="site-button border! border-[color:color-mix(in_srgb,var(--site-ink)_16%,transparent)]! text-[var(--site-ink)]! [box-shadow:0_9px_26px_-19px_#243452]! [background:color-mix(in_srgb,var(--site-surface)_82%,transparent)]!"
+            className="site-button border! border-[color-mix(in_srgb,var(--site-ink)_16%,transparent)]! text-(--site-ink)! [box-shadow:0_9px_26px_-19px_#243452]! [background:color-mix(in_srgb,var(--site-surface)_82%,transparent)]!"
           >
             {labels.contact}
           </Link>

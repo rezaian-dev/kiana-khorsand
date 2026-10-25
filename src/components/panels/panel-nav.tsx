@@ -32,6 +32,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+/** One row of the panel's own navigation. */
+const panelNavItemClassName =
+  "panel-nav-item flex min-h-11 items-center gap-3 rounded-[.8rem] px-[.85rem] py-[.55rem] text-[.87rem] font-[650] text-(--panel-muted) hover:bg-[#ede6f8] hover:text-[#3e227e] aria-[current=page]:bg-[#ede6f8] aria-[current=page]:text-[#3e227e] dark:hover:bg-[#392b53] dark:hover:text-[#eee6ff] dark:aria-[current=page]:bg-[#392b53] dark:aria-[current=page]:text-[#eee6ff]";
+
 export const clientLinks = [
   { href: "/dashboard", label: "پیشخوان", icon: LayoutDashboard },
   { href: "/dashboard/appointments", label: "نوبت‌های من", icon: CalendarDays },
@@ -86,7 +90,7 @@ export function PanelNav({
         <Link
           key={href}
           href={href}
-          className="panel-nav-item flex min-h-11 items-center gap-3 rounded-[.8rem] px-[.85rem] py-[.55rem] text-[.87rem] font-[650] text-[var(--panel-muted)] hover:bg-[#ede6f8] hover:text-[#3e227e] aria-[current=page]:bg-[#ede6f8] aria-[current=page]:text-[#3e227e] dark:hover:bg-[#392b53] dark:hover:text-[#eee6ff] dark:aria-[current=page]:bg-[#392b53] dark:aria-[current=page]:text-[#eee6ff]"
+          className={panelNavItemClassName}
           aria-current={path === href ? "page" : undefined}
         >
           <Icon size={19} aria-hidden="true" />
@@ -97,8 +101,8 @@ export function PanelNav({
   );
   return (
     <>
-      <aside className="panel-sidebar fixed start-0 top-[76px] bottom-0 w-[244px] overflow-y-auto border-e border-[var(--panel-line)] bg-[var(--panel-surface)] px-[.8rem] py-[1.4rem] max-[900.02px]:hidden">
-        <div className="panel-sidebar-title px-[.85rem] pt-[.4rem] pb-4 font-extrabold text-[var(--panel-muted)]">
+      <aside className="panel-sidebar fixed inset-s-0 top-[76px] bottom-0 w-[244px] overflow-y-auto border-e border-(--panel-line) bg-(--panel-surface) px-[.8rem] py-[1.4rem] max-[900.02px]:hidden">
+        <div className="panel-sidebar-title px-[.85rem] pt-[.4rem] pb-4 font-extrabold text-(--panel-muted)">
           {title}
         </div>
         <nav
@@ -182,7 +186,7 @@ export function PanelNav({
                 <SheetClose asChild key={href}>
                   <Link
                     href={href}
-                    className="panel-nav-item flex min-h-11 items-center gap-3 rounded-[.8rem] px-[.85rem] py-[.55rem] text-[.87rem] font-[650] text-[var(--panel-muted)] hover:bg-[#ede6f8] hover:text-[#3e227e] aria-[current=page]:bg-[#ede6f8] aria-[current=page]:text-[#3e227e] dark:hover:bg-[#392b53] dark:hover:text-[#eee6ff] dark:aria-[current=page]:bg-[#392b53] dark:aria-[current=page]:text-[#eee6ff]"
+                    className={panelNavItemClassName}
                     aria-current={path === href ? "page" : undefined}
                   >
                     <Icon size={19} aria-hidden="true" />

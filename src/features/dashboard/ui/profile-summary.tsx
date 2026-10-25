@@ -25,11 +25,11 @@ export function ProfileSummary({
   return (
     <section
       aria-labelledby="profile-summary-title"
-      className="overflow-hidden rounded-[1.2rem] border border-[var(--panel-line)] bg-[var(--panel-surface)]"
+      className="overflow-hidden rounded-[1.2rem] border border-(--panel-line) bg-(--panel-surface)"
     >
-      <div className="h-20 [background-image:linear-gradient(115deg,#0f6f6c,#27547a_58%,#5a3f86)]" />
+      <div className="h-20 bg-[linear-gradient(115deg,#0f6f6c,#27547a_58%,#5a3f86)]" />
       <div className="-mt-9 grid gap-3 px-5 pb-5">
-        <span className="grid size-[72px] place-items-center overflow-hidden rounded-full border-4 border-[var(--panel-surface)] bg-[#e8f4f2] text-[1.4rem] font-extrabold text-[var(--panel-accent)]">
+        <span className="grid size-[72px] place-items-center overflow-hidden rounded-full border-4 border-(--panel-surface) bg-[#e8f4f2] text-[1.4rem] font-extrabold text-(--panel-accent)">
           {avatar ? (
             <Image
               src={avatar}
@@ -55,20 +55,20 @@ export function ProfileSummary({
               کاربر
             </span>
           </h2>
-          <p className="m-0 flex items-center gap-1.5 text-[.85rem] text-[var(--panel-muted)]">
+          <p className="m-0 flex items-center gap-1.5 text-[.85rem] text-(--panel-muted)">
             <Phone className="size-3.5" aria-hidden="true" />
             <span dir="ltr" className="tabular-nums">
               {phone || "—"}
             </span>
           </p>
           {createdAt && (
-            <p className="m-0 text-[.75rem] text-[var(--panel-muted)]">
+            <p className="m-0 text-[.75rem] text-(--panel-muted)">
               عضو از {formatDate(new Date(createdAt))}
             </p>
           )}
         </div>
 
-        <p className="m-0 flex items-start gap-2 rounded-[.8rem] border border-[var(--panel-line)] bg-[var(--panel-bg)] px-3 py-2.5 text-[.76rem] leading-6 text-[var(--panel-muted)]">
+        <p className="m-0 flex items-start gap-2 rounded-[.8rem] border border-(--panel-line) bg-(--panel-bg) px-3 py-2.5 text-[.76rem]/6 text-(--panel-muted)">
           <ShieldCheck className="mt-0.5 size-4 flex-none" aria-hidden="true" />
           اطلاعات این بخش خصوصی است و فقط برای همین حساب نمایش داده می‌شود.
         </p>

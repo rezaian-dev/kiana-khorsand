@@ -8,7 +8,11 @@ import {
 
 import { BrandMark } from "@/components/shared/brand-mark";
 
-import { adminGlassClassName, panelSheetClassName } from "./panel-styles";
+import {
+  adminGlassClassName,
+  adminSidebarClassName,
+  panelSheetClassName,
+} from "./panel-styles";
 
 import Link from "next/link";
 import { m } from "motion/react";
@@ -68,7 +72,7 @@ export function AdminTopbarTitle() {
       <p className="admin-ref-top-title m-0 text-[.95rem] font-bold max-[480.02px]:text-[.9rem] max-[480.02px]:whitespace-nowrap">
         {title}
       </p>
-      <p className="admin-ref-top-subtitle m-0 text-[.75rem] text-[var(--panel-muted)] max-[480.02px]:hidden">
+      <p className="admin-ref-top-subtitle m-0 text-[.75rem] text-(--panel-muted) max-[480.02px]:hidden">
         مدیریت نوبت‌ها، محتوا و تنظیمات سایت
       </p>
     </div>
@@ -83,11 +87,11 @@ export function AdminReferenceNav() {
   return (
     <>
       <aside
-        className={`admin-ref-sidebar admin-ref-glass ${adminGlassClassName} fixed inset-y-4 start-4 z-40 hidden w-[264px] flex-col gap-[.35rem] overflow-y-auto p-[.875rem] min-[1024px]:flex min-[1024px]:border-[#cee0e2] min-[1024px]:[padding:.9rem_.7rem] min-[1024px]:[box-shadow:-12px_16px_40px_-24px_#36657672] min-[1024px]:[backdrop-filter:none] min-[1024px]:[background:radial-gradient(circle_at_12%_6%,#d7e8f8a8,transparent_34%),radial-gradient(circle_at_100%_95%,#ebdff59c,transparent_38%),linear-gradient(157deg,#f6fbfb_0%,#edf5f7_55%,#f7f3fa_100%)] dark:min-[1024px]:border-[#365464] dark:min-[1024px]:[box-shadow:-12px_16px_40px_-24px_#030c1bc9] dark:min-[1024px]:[background:radial-gradient(circle_at_12%_6%,#31536980,transparent_34%),radial-gradient(circle_at_100%_95%,#403b6b55,transparent_38%),linear-gradient(157deg,#213743_0%,#172b38_55%,#1b283a_100%)] min-[1024px]:[&_.admin-ref-nav-item]:relative min-[1024px]:[&_.admin-ref-nav-item]:isolate min-[1024px]:[&_.admin-ref-nav-item]:min-h-11 min-[1024px]:[&_.admin-ref-nav-item]:rounded-none min-[1024px]:[&_.admin-ref-nav-item]:font-bold min-[1024px]:[&_.admin-ref-nav-item]:text-[#345368] min-[1024px]:[&_.admin-ref-nav-item]:[border:1px_solid_transparent] dark:min-[1024px]:[&_.admin-ref-nav-item]:text-[#d2e7eb] min-[1024px]:[&_.admin-ref-nav-item_svg]:size-[22px] min-[1024px]:[&_.admin-ref-nav-item_svg]:rounded-[7px] min-[1024px]:[&_.admin-ref-nav-item_svg]:bg-[#cfe5e58a] min-[1024px]:[&_.admin-ref-nav-item_svg]:p-[2px] dark:min-[1024px]:[&_.admin-ref-nav-item_svg]:bg-[#385767] min-[1024px]:[&_.admin-ref-nav-item:focus-visible]:[outline:3px_solid_#146e83] min-[1024px]:[&_.admin-ref-nav-item:focus-visible]:[outline-offset:-3px] min-[1024px]:[&_.admin-ref-nav-item:hover]:bg-[#dcefee] min-[1024px]:[&_.admin-ref-nav-item:hover]:text-[#165e69] dark:min-[1024px]:[&_.admin-ref-nav-item:hover]:bg-[#304f5c] dark:min-[1024px]:[&_.admin-ref-nav-item:hover]:text-[#f6fffc] min-[1024px]:[&_.admin-ref-nav-item>svg]:relative min-[1024px]:[&_.admin-ref-nav-item>svg]:z-[1] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]]:rounded-[18px_0_0_18px] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]]:[border-color:transparent] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]]:text-[#144e60] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]]:[background:transparent] dark:min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]]:text-[#effffb] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]_svg]:bg-[#c5e5e1] dark:min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]_svg]:bg-[#397879] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:absolute min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:[inset-inline-start:2px] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:top-1/2 min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:z-[2] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:h-[22px] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:w-1 min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:[transform:translateY(-50%)] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:rounded-[9px] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:bg-[#138c8f] min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:content-[''] dark:min-[1024px]:[&_.admin-ref-nav-item[aria-current=page]::before]:bg-[#91ead8] min-[1024px]:[&_.admin-ref-nav-label]:relative min-[1024px]:[&_.admin-ref-nav-label]:z-[1]`}
+        className={`admin-ref-sidebar admin-ref-glass ${adminGlassClassName} ${adminSidebarClassName}`}
         aria-label="ناوبری اصلی"
       >
         <Link
-          className="admin-ref-brand mb-1 flex items-center gap-2.5 rounded-[.4rem] border-b border-[var(--panel-line)] px-2 pt-1.5 pb-3.5 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
+          className="admin-ref-brand mb-1 flex items-center gap-2.5 rounded-[.4rem] border-b border-(--panel-line) px-2 pt-1.5 pb-3.5 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
           href="/"
           aria-label="بازگشت به صفحه اصلی"
           title="بازگشت به صفحه اصلی"
@@ -98,19 +102,19 @@ export function AdminReferenceNav() {
           />
           <span className="flex min-w-0 flex-col">
             <strong className="text-[.95rem] font-bold">کیانا خرسند</strong>
-            <small className="text-[.72rem] text-[var(--panel-muted)] min-[1024px]:text-[#547082] dark:min-[1024px]:text-[#b7d0da]">
+            <small className="text-[.72rem] text-(--panel-muted) min-[1024px]:text-[#547082] dark:min-[1024px]:text-[#b7d0da]">
               پنل مدیریت
             </small>
           </span>
         </Link>
         <p
-          className="admin-ref-nav-kicker min-[1024px]:[margin:.05rem_.7rem_.15rem_0] min-[1024px]:text-[.68rem] min-[1024px]:font-[750] min-[1024px]:tracking-[.01em] min-[1024px]:text-[#617b87] dark:min-[1024px]:text-[#b7d0da]"
+          className="admin-ref-nav-kicker min-[1024px]:m-[.05rem_.7rem_.15rem_0] min-[1024px]:text-[.68rem] min-[1024px]:font-[750] min-[1024px]:tracking-[.01em] min-[1024px]:text-[#617b87] dark:min-[1024px]:text-[#b7d0da]"
           aria-hidden="true"
         >
           فضای مدیریت
         </p>
         <nav
-          className="admin-ref-side-nav flex flex-col gap-[.2rem] min-[1024px]:-ms-[.58rem] min-[1024px]:min-h-0 min-[1024px]:[scrollbar-width:thin] min-[1024px]:[scrollbar-color:#92b7bf78_transparent] min-[1024px]:overflow-x-hidden min-[1024px]:overflow-y-auto min-[1024px]:overscroll-contain min-[1024px]:[padding:.25rem_.15rem_.25rem_.25rem]"
+          className="admin-ref-side-nav flex flex-col gap-[.2rem] min-[1024px]:ms-[-0.58rem] min-[1024px]:min-h-0 min-[1024px]:scrollbar-thin min-[1024px]:[scrollbar-color:#92b7bf78_transparent] min-[1024px]:overflow-x-hidden min-[1024px]:overflow-y-auto min-[1024px]:overscroll-contain min-[1024px]:p-[.25rem_.15rem_.25rem_.25rem]"
           aria-label="بخش‌های پنل"
         >
           {adminLinks.map(({ href, label, icon: Icon }) => (
@@ -175,7 +179,7 @@ export function AdminMobileTrigger() {
     <div className="admin-ref-menu-trigger block lg:hidden">
       <Sheet>
         <nav
-          className={`${mobileDockClassName} admin-ref-mobnav z-[45]! lg:hidden!`}
+          className={`${mobileDockClassName} admin-ref-mobnav z-45! lg:hidden!`}
           data-dock-active={
             extraActive ? 4 : prominent.findIndex((href) => selected(href))
           }
@@ -227,13 +231,13 @@ export function AdminMobileTrigger() {
         <SheetContent
           side="right"
           showCloseButton={true}
-          className={`${panelSheetClassName} ${adminSheetPaletteClassName} admin-ref-sheet box-border h-dvh min-h-0 w-[min(340px,calc(100vw-16px))]! max-w-none! overflow-hidden rounded-[22px_0_0_22px]! [padding:1rem_.85rem_calc(1rem+env(safe-area-inset-bottom,0px))]! text-[var(--panel-text)]! [box-shadow:-18px_0_52px_rgb(18_35_48_/_17%)] [background:#fff]! [border-inline-start:0]! [border:1px_solid_#dfe7ec] motion-reduce:animate-none! motion-reduce:[transition:none]! dark:[border-color:#344052]! dark:[background:#151a27]! [&_:is(a,button):focus-visible]:[outline:3px_solid_var(--ar-brand-ink)]! [&_:is(a,button):focus-visible]:outline-offset-2! [&_:is(a,button):focus-visible]:outline-[#186778]! dark:[&_:is(a,button):focus-visible]:outline-[#bcefe4]! [&_[data-slot=sheet-close]]:rounded-[10px] [&_[data-slot=sheet-close]]:text-[var(--panel-text)]`}
+          className={`${panelSheetClassName} ${adminSheetPaletteClassName} admin-ref-sheet box-border h-dvh min-h-0 w-[min(340px,calc(100vw-16px))]! max-w-none! overflow-hidden rounded-[22px_0_0_22px]! p-[1rem_.85rem_calc(1rem+env(safe-area-inset-bottom,0px))]! text-(--panel-text)! [box-shadow:-18px_0_52px_rgb(18_35_48/17%)] [background:#fff]! [border-inline-start:0]! [border:1px_solid_#dfe7ec] **:data-[slot=sheet-close]:rounded-[10px] **:data-[slot=sheet-close]:text-(--panel-text) motion-reduce:animate-none! motion-reduce:[transition:none]! dark:border-[#344052]! dark:[background:#151a27]! [&_:is(a,button):focus-visible]:[outline:3px_solid_var(--ar-brand-ink)]! [&_:is(a,button):focus-visible]:outline-offset-2! [&_:is(a,button):focus-visible]:outline-[#186778]! dark:[&_:is(a,button):focus-visible]:outline-[#bcefe4]!`}
           overlayClassName="admin-ref-overlay motion-reduce:animate-none! motion-reduce:[transition:none]! [background:rgb(10_19_34_/_42%)]! [backdrop-filter:blur(2px)]!"
         >
-          <div className="admin-sheet-head flex min-h-[45px]! flex-none items-center [padding:.4rem_.35rem_.7rem] px-1! pt-1! pb-[.8rem]! [border-bottom:1px_solid_var(--panel-line)]!">
+          <div className="admin-sheet-head flex min-h-[45px]! flex-none items-center p-[.4rem_.35rem_.7rem] px-1! pt-1! pb-[.8rem]! [border-bottom:1px_solid_var(--panel-line)]!">
             <div className="admin-sheet-brand flex min-w-0 items-center gap-[.65rem] pe-9">
               <BrandMark size={36} className="flex-none rounded-[11px]" />
-              <SheetTitle className="font-extrabold! text-[var(--panel-text)]">
+              <SheetTitle className="font-extrabold! text-(--panel-text)">
                 بخش‌های پنل مدیریت
               </SheetTitle>
             </div>
@@ -243,7 +247,7 @@ export function AdminMobileTrigger() {
           </div>
           <nav
             aria-label="سایر بخش‌های پنل مدیریت"
-            className="admin-ref-side-nav admin-sheet-links flex min-h-0 flex-[1_1_auto] [scrollbar-width:thin] [scrollbar-color:#abbcc4_transparent] flex-col gap-[.2rem] overflow-x-hidden overflow-y-auto overscroll-contain px-[.1rem] py-[.35rem]"
+            className="admin-ref-side-nav admin-sheet-links flex min-h-0 flex-[1_1_auto] scrollbar-thin [scrollbar-color:#abbcc4_transparent] flex-col gap-[.2rem] overflow-x-hidden overflow-y-auto overscroll-contain px-[.1rem] py-[.35rem]"
           >
             {adminLinks
               .filter(({ href }) => !prominent.includes(href))

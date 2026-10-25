@@ -136,7 +136,7 @@ export function BookingForm({
       >
         <CalendarDays size={34} className="text-[#227b75]" aria-hidden="true" />
         <h2 className={siteHeadingClassName}>درخواست رزرو ثبت شد</h2>
-        <p className="leading-[1.8] text-[var(--site-muted)]">
+        <p className="leading-[1.8] text-(--site-muted)">
           برای دیدن وضعیت درخواست و جزئیات زمان انتخابی به حساب خود بروید.
         </p>
         <Link className="site-button" href={`/book/done?id=${state.id}`}>
@@ -152,7 +152,7 @@ export function BookingForm({
       aria-busy={pending}
     >
       <div className="booking-form-heading flex items-center gap-[0.8rem]">
-        <span className="booking-form-heading-icon grid size-12 flex-none place-items-center rounded-[15px] bg-[color:color-mix(in_srgb,#389b92_13%,var(--site-surface))] text-[#217c75]">
+        <span className="booking-form-heading-icon grid size-12 flex-none place-items-center rounded-[15px] bg-[color-mix(in_srgb,#389b92_13%,var(--site-surface))] text-[#217c75]">
           <CalendarDays size={23} aria-hidden="true" />
         </span>
         <div>
@@ -164,13 +164,13 @@ export function BookingForm({
           </h2>
         </div>
       </div>
-      <div className="booking-account flex min-w-0 flex-wrap items-center gap-x-[0.65rem] gap-y-[0.35rem] rounded-[14px] bg-[color:color-mix(in_srgb,var(--site-violet)_5%,var(--site-surface))] px-4 py-3 text-[0.86rem]">
+      <div className="booking-account flex min-w-0 flex-wrap items-center gap-x-[0.65rem] gap-y-[0.35rem] rounded-[14px] bg-[color-mix(in_srgb,var(--site-violet)_5%,var(--site-surface))] px-4 py-3 text-[0.86rem]">
         <span
-          className="booking-account-dot size-[9px] flex-none rounded-[50%] bg-[#368f82] [box-shadow:0_0_0_4px_rgb(54_143_130_/_12%)]"
+          className="booking-account-dot size-[9px] flex-none rounded-[50%] bg-[#368f82] [box-shadow:0_0_0_4px_rgb(54_143_130/12%)]"
           aria-hidden="true"
         />
         <span>در حال رزرو برای {name}</span>
-        <span dir="ltr" className="ms-auto text-[var(--site-muted)]">
+        <span dir="ltr" className="ms-auto text-(--site-muted)">
           {phone}
         </span>
       </div>
@@ -195,7 +195,7 @@ export function BookingForm({
           }))}
         />
         <div
-          className="booking-service-summary flex min-h-[60px] items-center gap-[0.7rem] rounded-[13px] bg-[color:color-mix(in_srgb,#4c9b91_7%,var(--site-surface))] px-[0.9rem] py-3 text-[0.82rem] leading-[1.75] text-[var(--site-muted)]"
+          className="booking-service-summary flex min-h-[60px] items-center gap-[0.7rem] rounded-[13px] bg-[color-mix(in_srgb,#4c9b91_7%,var(--site-surface))] px-[0.9rem] py-3 text-[0.82rem] leading-[1.75] text-(--site-muted)"
           aria-live="polite"
         >
           {selectedService ? (
@@ -206,7 +206,7 @@ export function BookingForm({
                 aria-hidden="true"
               />
               <span>
-                <strong className="block text-[var(--site-ink)]">
+                <strong className="block text-(--site-ink)">
                   {selectedService.name}
                 </strong>
                 <small className="block text-[0.78rem]">
@@ -222,7 +222,7 @@ export function BookingForm({
           )}
         </div>
       </div>
-      <div className="booking-field-group booking-date-field grid min-w-0 gap-[0.65rem] border-t border-[var(--site-line)] pt-[0.4rem]">
+      <div className="booking-field-group booking-date-field grid min-w-0 gap-[0.65rem] border-t border-(--site-line) pt-[0.4rem]">
         <div className="booking-field-header flex flex-wrap items-center justify-between gap-2">
           <div>
             <h3
@@ -231,14 +231,14 @@ export function BookingForm({
             >
               ۲. روز و ساعت جلسه
             </h3>
-            <p className="mt-[0.35rem] text-[0.8rem] leading-[1.7] text-[var(--site-muted)]">
+            <p className="mt-[0.35rem] text-[0.8rem] leading-[1.7] text-(--site-muted)">
               روزهای رنگی وقت آزاد دارند؛ ساعت‌ها به وقت تهران هستند.
             </p>
           </div>
           {slots.length > 0 && (
             <button
               type="button"
-              className="booking-refresh inline-flex min-h-9 items-center gap-[0.3rem] rounded-[9px] px-[0.55rem] py-[0.35rem] text-[0.78rem] font-extrabold text-[#176b68] hover:bg-[color:color-mix(in_srgb,#3b8e85_10%,var(--site-surface))] dark:text-[#a0e2d6]"
+              className="booking-refresh inline-flex min-h-9 items-center gap-[0.3rem] rounded-[9px] px-[0.55rem] py-[0.35rem] text-[0.78rem] font-extrabold text-[#176b68] hover:bg-[color-mix(in_srgb,#3b8e85_10%,var(--site-surface))] dark:text-[#a0e2d6]"
               onClick={() => router.refresh()}
               aria-label="به‌روزرسانی وقت‌های آزاد"
             >
@@ -249,7 +249,7 @@ export function BookingForm({
         {slots.length ? (
           <div className="booking-calendar-layout grid min-w-0 grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-[0.8rem] max-[1000.02px]:grid-cols-1">
             <div
-              className="booking-calendar min-w-0 rounded-[17px] border border-[var(--site-line)] bg-[color:color-mix(in_srgb,var(--site-violet)_2%,var(--site-surface))] p-[0.8rem] max-[480.02px]:p-2"
+              className="booking-calendar min-w-0 rounded-[17px] border border-(--site-line) bg-[color-mix(in_srgb,var(--site-violet)_2%,var(--site-surface))] p-[0.8rem] max-[480.02px]:p-2"
               role="group"
               aria-labelledby="booking-calendar-title"
             >
@@ -273,7 +273,7 @@ export function BookingForm({
                 }}
               />
             </div>
-            <div className="booking-times min-w-0 rounded-[17px] border border-[var(--site-line)] bg-[color:color-mix(in_srgb,var(--site-violet)_2%,var(--site-surface))] p-[0.8rem] max-[1000.02px]:min-h-[120px] max-[480.02px]:p-2">
+            <div className="booking-times min-w-0 rounded-[17px] border border-(--site-line) bg-[color-mix(in_srgb,var(--site-violet)_2%,var(--site-surface))] p-[0.8rem] max-[1000.02px]:min-h-[120px] max-[480.02px]:p-2">
               <div className="booking-times-heading flex items-center gap-[0.4rem] text-[0.84rem]">
                 <Clock3
                   size={17}
@@ -293,7 +293,7 @@ export function BookingForm({
                   <m.button
                     key={slot.startsAt}
                     type="button"
-                    className="booking-time-option min-h-11 min-w-0 rounded-[11px] border border-[color:color-mix(in_srgb,#388f86_22%,var(--site-line))] bg-[var(--site-surface)] px-[.4rem] py-2 text-[.88rem] font-extrabold hover:border-[#277d75] focus-visible:outline-2! focus-visible:outline-offset-2! focus-visible:outline-[#277d75]! aria-pressed:border-[#176d6c] aria-pressed:bg-[#176d6c] aria-pressed:text-white aria-pressed:hover:border-[#176d6c]"
+                    className="booking-time-option min-h-11 min-w-0 rounded-[11px] border border-[color-mix(in_srgb,#388f86_22%,var(--site-line))] bg-(--site-surface) px-[.4rem] py-2 text-[.88rem] font-extrabold hover:border-[#277d75] focus-visible:outline-2! focus-visible:outline-offset-2! focus-visible:outline-[#277d75]! aria-pressed:border-[#176d6c] aria-pressed:bg-[#176d6c] aria-pressed:text-white aria-pressed:hover:border-[#176d6c]"
                     whileHover={{ y: reduceMotion ? 0 : -1 }}
                     transition={{
                       duration: reduceMotion ? 0 : 0.2,
@@ -309,7 +309,7 @@ export function BookingForm({
                   </m.button>
                 ))}
               </div>
-              <p className="booking-time-hint mt-[0.85rem] text-[0.78rem] leading-[1.8] text-[var(--site-muted)]">
+              <p className="booking-time-hint mt-[0.85rem] text-[0.78rem] leading-[1.8] text-(--site-muted)">
                 {activeTime
                   ? `انتخاب شما: ${dayLabel(activeDay)}، ساعت ${formatTime(activeTime)} به وقت تهران`
                   : `یکی از ${formatNumber(times.length)} زمان آزاد این روز را انتخاب کنید.`}
@@ -318,15 +318,15 @@ export function BookingForm({
           </div>
         ) : (
           <div
-            className="booking-empty-slots grid justify-items-start gap-2 rounded-[17px] border border-dashed border-[var(--site-line)] p-[1.2rem] leading-[1.8] text-[var(--site-muted)]"
+            className="booking-empty-slots grid justify-items-start gap-2 rounded-[17px] border border-dashed border-(--site-line) p-[1.2rem] leading-[1.8] text-(--site-muted)"
             role="status"
           >
             <CalendarDays
               size={24}
-              className="text-[var(--site-ink)]"
+              className="text-(--site-ink)"
               aria-hidden="true"
             />
-            <strong className="text-[var(--site-ink)]">
+            <strong className="text-(--site-ink)">
               فعلاً وقت آزادی در ۲۱ روز آینده ثبت نشده است.
             </strong>
             <p>
@@ -348,7 +348,7 @@ export function BookingForm({
           یادداشت برای جلسه (اختیاری)
         </label>
         <textarea
-          className="min-h-[92px]! w-full! rounded-[13px]! border-[color:color-mix(in_srgb,var(--site-violet)_17%,var(--site-line))]! bg-[var(--site-surface)]! text-[var(--site-ink)]!"
+          className="min-h-[92px]! w-full! rounded-[13px]! border-[color-mix(in_srgb,var(--site-violet)_17%,var(--site-line))]! bg-(--site-surface)! text-(--site-ink)!"
           id="note"
           name="note"
           maxLength={1000}
@@ -385,7 +385,7 @@ export function BookingForm({
       >
         {pending ? "در حال ثبت درخواست…" : "ثبت درخواست رزرو"}
       </button>
-      <p className="booking-form-disclaimer text-center text-[0.75rem] leading-[1.8] text-[var(--site-muted)]">
+      <p className="booking-form-disclaimer text-center text-[0.75rem] leading-[1.8] text-(--site-muted)">
         ثبت درخواست به معنی قطعی‌شدن نوبت یا پرداخت هزینه نیست.
       </p>
     </form>

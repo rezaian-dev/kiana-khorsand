@@ -41,9 +41,9 @@ export function Section({
   const withArt = Boolean(section.image || groups.length);
   return (
     <section
-      className={`site-section editorial-section relative isolate border-t border-[color:color-mix(in_srgb,var(--site-line)_68%,transparent)] py-[clamp(2.75rem,5vw,5rem)]! max-[600px]:py-10! ${
+      className={`site-section editorial-section relative isolate border-t border-[color-mix(in_srgb,var(--site-line)_68%,transparent)] py-[clamp(2.75rem,5vw,5rem)]! max-[600px]:py-10! ${
         index % 2
-          ? "bg-[color:color-mix(in_srgb,var(--c-teal)_3%,var(--site-canvas))] [background-image:radial-gradient(ellipse_at_91%_16%,color-mix(in_srgb,#5d9f9a_8%,transparent),transparent_40%),radial-gradient(ellipse_at_7%_85%,color-mix(in_srgb,var(--site-violet)_7%,transparent),transparent_44%)]"
+          ? "bg-[color-mix(in_srgb,var(--c-teal)_3%,var(--site-canvas))] bg-[radial-gradient(ellipse_at_91%_16%,color-mix(in_srgb,#5d9f9a_8%,transparent),transparent_40%),radial-gradient(ellipse_at_7%_85%,color-mix(in_srgb,var(--site-violet)_7%,transparent),transparent_44%)]"
           : ""
       }`}
     >
@@ -51,7 +51,7 @@ export function Section({
         {!withArt && (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute end-[clamp(1rem,4vw,4rem)] top-1/2 hidden aspect-square w-[min(28vw,330px)] -translate-y-1/2 rounded-full [background-image:radial-gradient(circle_at_50%_50%,color-mix(in_srgb,var(--c-teal)_13%,var(--site-surface))_0_19%,transparent_19.5%),repeating-radial-gradient(circle_at_50%_50%,transparent_0_24px,color-mix(in_srgb,var(--c-teal)_13%,transparent)_25px_26px,transparent_27px_47px)] min-[960px]:block"
+            className="pointer-events-none absolute inset-e-[clamp(1rem,4vw,4rem)] top-1/2 hidden aspect-square w-[min(28vw,330px)] -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,color-mix(in_srgb,var(--c-teal)_13%,var(--site-surface))_0_19%,transparent_19.5%),repeating-radial-gradient(circle_at_50%_50%,transparent_0_24px,color-mix(in_srgb,var(--c-teal)_13%,transparent)_25px_26px,transparent_27px_47px)] min-[960px]:block"
           />
         )}
         <ScrollReveal
@@ -62,12 +62,12 @@ export function Section({
           }`}
         >
           <div
-            className={`site-section-copy relative min-w-0 flex-1 border-s-2 border-[color:color-mix(in_srgb,var(--c-teal)_32%,var(--site-line))] ps-[clamp(1.15rem,2.2vw,2rem)] max-[600px]:ps-[1.05rem] ${
+            className={`site-section-copy relative min-w-0 flex-1 border-s-2 border-[color-mix(in_srgb,var(--c-teal)_32%,var(--site-line))] ps-[clamp(1.15rem,2.2vw,2rem)] max-[600px]:ps-[1.05rem] ${
               section.image ? "" : "max-w-[80ch]"
             }`}
           >
             <div
-              className="mb-[clamp(1rem,2.5vw,1.4rem)] flex w-fit items-center gap-[.8rem] text-[.88rem] leading-none font-extrabold tracking-[.06em] text-[#176c65] dark:text-[var(--c-teal)]"
+              className="mb-[clamp(1rem,2.5vw,1.4rem)] flex w-fit items-center gap-[.8rem] text-[.88rem] leading-none font-extrabold tracking-[.06em] text-[#176c65] dark:text-(--c-teal)"
               aria-hidden="true"
             >
               <span>
@@ -89,7 +89,7 @@ export function Section({
             {preface.length > 0 && (
               <Prose
                 body={preface.join("\n\n")}
-                className={`text-[clamp(.99rem,1.15vw,1.06rem)] leading-[2.05]! text-[var(--site-muted)] [&>p:first-child]:mt-0 ${
+                className={`text-[clamp(.99rem,1.15vw,1.06rem)] leading-[2.05]! text-(--site-muted) [&>p:first-child]:mt-0 ${
                   index === 0 ? "text-[clamp(1.04rem,1.35vw,1.14rem)]!" : ""
                 }`}
               />
@@ -98,7 +98,7 @@ export function Section({
               <ul className="site-pills mt-[1.4rem]! flex list-none flex-wrap gap-[.6rem]! p-0">
                 {list.map((item) => (
                   <li
-                    className="inline-flex min-h-[2.6rem] items-center gap-[.55rem] rounded-[999px] border border-[color:color-mix(in_srgb,var(--c-teal)_18%,var(--site-line))]! bg-[color:color-mix(in_srgb,var(--c-teal)_4%,var(--site-surface))]! px-[.85rem]! py-[.45rem]! text-[.93rem] leading-[1.6] font-[650] break-words text-[var(--site-ink)] before:size-[.38rem] before:shrink-0 before:rounded-full before:bg-[var(--c-teal)] before:content-['']"
+                    className="inline-flex min-h-[2.6rem] items-center gap-[.55rem] rounded-[999px] border border-[color-mix(in_srgb,var(--c-teal)_18%,var(--site-line))]! bg-[color-mix(in_srgb,var(--c-teal)_4%,var(--site-surface))]! px-[.85rem]! py-[.45rem]! text-[.93rem] leading-[1.6] font-[650] wrap-break-word text-(--site-ink) before:size-[.38rem] before:shrink-0 before:rounded-full before:bg-(--c-teal) before:content-['']"
                     key={item}
                   >
                     {item.slice(2)}
@@ -111,7 +111,7 @@ export function Section({
                 {section.items.map((item) => (
                   <li
                     key={item}
-                    className="relative min-w-0 rounded-[14px] border border-[var(--site-line)] bg-[var(--site-surface)] py-[.8rem] ps-8 pe-4 leading-[1.8] break-words before:absolute before:start-[.95rem] before:top-6 before:size-[.42rem] before:rounded-full before:bg-[var(--c-teal)] before:content-['']"
+                    className="relative min-w-0 rounded-[14px] border border-(--site-line) bg-(--site-surface) py-[.8rem] ps-8 pe-4 leading-[1.8] wrap-break-word before:absolute before:inset-s-[.95rem] before:top-6 before:size-[.42rem] before:rounded-full before:bg-(--c-teal) before:content-['']"
                   >
                     {item}
                   </li>
@@ -125,7 +125,7 @@ export function Section({
               width={520}
               height={420}
               alt={section.title}
-              className="site-section-image aspect-[5/4] h-auto max-h-[390px]! w-full rounded-[75px_22px_75px_22px]! border-[5px] border-[var(--site-surface)] object-cover shadow-[var(--shadow-soft)] max-[600px]:max-h-[280px]! max-[600px]:rounded-[55px_18px_55px_18px]!"
+              className="site-section-image aspect-5/4 h-auto max-h-[390px]! w-full rounded-[75px_22px_75px_22px]! border-[5px] border-(--site-surface) object-cover shadow-(--shadow-soft) max-[600px]:max-h-[280px]! max-[600px]:rounded-[55px_18px_55px_18px]!"
             />
           )}
         </ScrollReveal>
@@ -135,12 +135,12 @@ export function Section({
           >
             {groups.map((group, position) => (
               <article
-                className={`${siteCardClassName} relative gap-[.55rem]! overflow-hidden border-[color:color-mix(in_srgb,var(--c-teal)_13%,var(--site-line))]! bg-[var(--site-surface)]! p-[clamp(1.15rem,2.4vw,1.7rem)]! transition-none! before:absolute before:inset-y-[1.35rem] before:start-0 before:w-[3px] before:rounded-[5px] before:content-[''] ${
+                className={`${siteCardClassName} relative gap-[.55rem]! overflow-hidden border-[color-mix(in_srgb,var(--c-teal)_13%,var(--site-line))]! bg-(--site-surface)! p-[clamp(1.15rem,2.4vw,1.7rem)]! transition-none! before:absolute before:inset-y-[1.35rem] before:inset-s-0 before:w-[3px] before:rounded-[5px] before:content-[''] ${
                   position % 3 === 1
-                    ? "before:bg-[var(--c-violet)]"
+                    ? "before:bg-(--c-violet)"
                     : position % 3 === 2
-                      ? "before:bg-[var(--c-plum)]"
-                      : "before:bg-[var(--c-teal)]"
+                      ? "before:bg-(--c-plum)"
+                      : "before:bg-(--c-teal)"
                 }`}
                 key={group.heading}
               >

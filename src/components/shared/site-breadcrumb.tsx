@@ -91,7 +91,7 @@ export function SiteBreadcrumb({
           )}
 
           <BreadcrumbItem className="min-w-0 flex-1">
-            <BreadcrumbPage className="block truncate px-2 py-1 font-extrabold text-[var(--site-ink)]">
+            <BreadcrumbPage className="block truncate px-2 py-1 font-extrabold text-(--site-ink)">
               {current}
             </BreadcrumbPage>
           </BreadcrumbItem>

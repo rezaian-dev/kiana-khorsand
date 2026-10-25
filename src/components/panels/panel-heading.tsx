@@ -25,15 +25,15 @@ export function PanelHeading({
   return (
     <div className="panel-heading mb-6 flex flex-wrap [align-items:end] justify-between gap-4">
       <div>
-        <h1 className="text-[clamp(1.6rem,2.5vw,2.25rem)] font-[850] [.admin-ref-frame_&]:text-[clamp(1.45rem,2vw,2rem)] [.admin-ref-frame_&]:tracking-[-.025em]">
+        <h1 className="text-[clamp(1.6rem,2.5vw,2.25rem)] font-[850] in-[.admin-ref-frame]:text-[clamp(1.45rem,2vw,2rem)] in-[.admin-ref-frame]:tracking-tight">
           {title}
         </h1>
-        <p className="leading-[1.9] text-[var(--panel-muted)] [.admin-ref-frame_&]:max-w-[65ch]">
+        <p className="leading-[1.9] text-(--panel-muted) in-[.admin-ref-frame]:max-w-[65ch]">
           {description}
         </p>
       </div>
       {(action || toolbar) && (
-        <div className="panel-heading-actions [.admin-ref-frame_&]:flex [.admin-ref-frame_&]:flex-wrap [.admin-ref-frame_&]:items-center [.admin-ref-frame_&]:gap-[.6rem] [.admin-ref-frame_&_.panel-button]:gap-[.45rem]">
+        <div className="panel-heading-actions in-[.admin-ref-frame]:flex in-[.admin-ref-frame]:flex-wrap in-[.admin-ref-frame]:items-center in-[.admin-ref-frame]:gap-[.6rem] [.admin-ref-frame_&_.panel-button]:gap-[.45rem]">
           {toolbar}
           {action && (
             <Button

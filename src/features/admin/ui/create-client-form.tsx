@@ -95,7 +95,7 @@ export function CreateClientForm() {
           </div>
         </div>
         <label
-          className="admin-client-permission flex items-start gap-[.65rem] text-[.83rem]! leading-[1.9] [&_input]:mt-[.2rem] [&_input]:h-[19px] [&_input]:min-h-0! [&_input]:w-[19px] [&_input]:flex-none [&_input]:accent-[var(--panel-accent)]"
+          className="admin-client-permission flex items-start gap-[.65rem] text-[.83rem]! leading-[1.9] [&_input]:mt-[.2rem] [&_input]:size-[19px] [&_input]:min-h-0! [&_input]:flex-none [&_input]:accent-(--panel-accent)"
           htmlFor="new-client-permission"
         >
           <Checkbox

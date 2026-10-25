@@ -15,6 +15,10 @@ import {
 import { formatDate, formatDay, formatNumber, formatTime } from "@/lib/format";
 import { appointmentLabels } from "@/components/panels/labels";
 
+/** Sticky toolbar above the calendar grid. */
+const boardHeaderClassName =
+  "flex flex-wrap items-center justify-between gap-[.35rem] rounded-[16px] bg-(--ar-surface2) px-4 py-[.7rem] [border:1px_solid_var(--panel-line)] max-[420.02px]:p-[.55rem]";
+
 type Event = {
   id: string;
   startsAt: Date;
@@ -75,10 +79,10 @@ function EventItem({
       </strong>
       {!compact && (
         <>
-          <small className="leading-[1.5] text-[var(--panel-muted)]">
+          <small className="leading-normal text-(--panel-muted)">
             {item.service}
           </small>
-          <small className="leading-[1.5] text-[var(--panel-muted)]">
+          <small className="leading-normal text-(--panel-muted)">
             {appointmentLabels[item.status]}
           </small>
         </>
@@ -159,7 +163,7 @@ export function CalendarBoard({
     >
       <div className="admin-calendar-toolbar flex flex-wrap items-center justify-between gap-3 max-[360px]:gap-2 max-[320px]:gap-1.5">
         <div
-          className="admin-calendar-tabs flex flex-wrap items-center gap-[.4rem] rounded-[14px] bg-[var(--ar-surface2)] p-1 [border:1px_solid_var(--panel-line)] max-[320px]:gap-[.2rem] max-[320px]:p-0.5"
+          className="admin-calendar-tabs flex flex-wrap items-center gap-[.4rem] rounded-[14px] bg-(--ar-surface2) p-1 [border:1px_solid_var(--panel-line)] max-[320px]:gap-[.2rem] max-[320px]:p-0.5"
           role="navigation"
           aria-label="نمای تقویم"
         >
@@ -198,11 +202,11 @@ export function CalendarBoard({
           </Link>
         </div>
       </div>
-      <h2 className="admin-calendar-period [margin:1.6rem_0_1rem]! flex items-center gap-[.55rem] text-[clamp(1.2rem,2.3vw,1.7rem)]! font-extrabold text-[var(--panel-text)]">
+      <h2 className="admin-calendar-period m-[1.6rem_0_1rem]! flex items-center gap-[.55rem] text-[clamp(1.2rem,2.3vw,1.7rem)]! font-extrabold text-(--panel-text)">
         <CalendarDays
           size={20}
           aria-hidden="true"
-          className="text-[var(--ar-brand-ink)]"
+          className="text-(--ar-brand-ink)"
         />
         {label}
       </h2>
@@ -210,29 +214,29 @@ export function CalendarBoard({
         className="admin-calendar-insights mb-[1.4rem] grid grid-cols-3 gap-[.7rem] max-[420.02px]:gap-[.3rem] max-[360px]:gap-[.25rem] max-[320px]:grid-cols-1 max-[320px]:gap-[.35rem]"
         aria-label="خلاصهٔ زمان‌بندی"
       >
-        <div className="flex flex-wrap items-center justify-between gap-[.35rem] rounded-[16px] bg-[var(--ar-surface2)] px-4 py-[.7rem] [border:1px_solid_var(--panel-line)] max-[420.02px]:p-[.55rem]">
-          <span className="text-[.78rem] text-[var(--panel-muted)] max-[420.02px]:text-[.65rem]">
+        <div className={boardHeaderClassName}>
+          <span className="text-[.78rem] text-(--panel-muted) max-[420.02px]:text-[.65rem]">
             نوبت‌های این بازه
           </span>
-          <strong className="text-[1.2rem] text-[var(--ar-brand-ink)]">
+          <strong className="text-[1.2rem] text-(--ar-brand-ink)">
             {formatNumber(items.length)}
           </strong>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-[.35rem] rounded-[16px] bg-[var(--ar-surface2)] px-4 py-[.7rem] [border:1px_solid_var(--panel-line)] max-[420.02px]:p-[.55rem]">
-          <span className="text-[.78rem] text-[var(--panel-muted)] max-[420.02px]:text-[.65rem]">
+        <div className={boardHeaderClassName}>
+          <span className="text-[.78rem] text-(--panel-muted) max-[420.02px]:text-[.65rem]">
             تأییدشده
           </span>
-          <strong className="text-[1.2rem] text-[var(--ar-brand-ink)]">
+          <strong className="text-[1.2rem] text-(--ar-brand-ink)">
             {formatNumber(
               items.filter((item) => item.status === "confirmed").length,
             )}
           </strong>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-[.35rem] rounded-[16px] bg-[var(--ar-surface2)] px-4 py-[.7rem] [border:1px_solid_var(--panel-line)] max-[420.02px]:p-[.55rem]">
-          <span className="text-[.78rem] text-[var(--panel-muted)] max-[420.02px]:text-[.65rem]">
+        <div className={boardHeaderClassName}>
+          <span className="text-[.78rem] text-(--panel-muted) max-[420.02px]:text-[.65rem]">
             در انتظار
           </span>
-          <strong className="text-[1.2rem] text-[var(--ar-brand-ink)]">
+          <strong className="text-[1.2rem] text-(--ar-brand-ink)">
             {formatNumber(
               items.filter((item) => item.status === "pending").length,
             )}
@@ -250,7 +254,7 @@ export function CalendarBoard({
                 className="admin-calendar-hour grid min-h-[49px] grid-cols-[60px_minmax(0,1fr)] [align-items:start] gap-[.65rem] py-[.4rem] [border-bottom:1px_solid_var(--panel-line)]"
                 key={hour}
               >
-                <time className="text-center text-[.8rem] text-[var(--panel-muted)] [direction:ltr]!">
+                <time className="text-center text-[.8rem] text-(--panel-muted) [direction:ltr]!">
                   {formatNumber(hour).padStart(2, "۰")}:۰۰
                 </time>
                 <div className="grid gap-[.4rem]">
@@ -283,7 +287,7 @@ export function CalendarBoard({
               aria-label={formatDay(tehranInstant(key, "12:00"))}
             >
               <Link
-                className="admin-calendar-dayhead block min-h-16 content-center px-[.35rem] py-[.65rem] text-center text-[.8rem] leading-[1.7] font-extrabold! [border-bottom:1px_solid_var(--panel-line)] hover:text-[var(--ar-brand-ink)]! hover:[background:var(--ar-brand-soft)]!"
+                className="admin-calendar-dayhead block min-h-16 content-center px-[.35rem] py-[.65rem] text-center text-[.8rem] leading-[1.7] font-extrabold! [border-bottom:1px_solid_var(--panel-line)] hover:text-(--ar-brand-ink)! hover:[background:var(--ar-brand-soft)]!"
                 href={href("day", key)}
               >
                 {formatDay(tehranInstant(key, "12:00"))}
@@ -294,7 +298,7 @@ export function CalendarBoard({
                     .get(key)!
                     .map((item) => <EventItem key={item.id} item={item} />)
                 ) : (
-                  <span className="admin-calendar-no-events mx-auto my-[.9rem] block text-center text-[.7rem] text-[var(--panel-muted)]">
+                  <span className="admin-calendar-no-events mx-auto my-[.9rem] block text-center text-[.7rem] text-(--panel-muted)">
                     بدون نوبت
                   </span>
                 )}
@@ -312,7 +316,7 @@ export function CalendarBoard({
             {weekdays.map((label, index) => (
               <span
                 key={index}
-                className="grid min-h-8 place-items-center text-[.78rem] font-bold text-[var(--panel-muted)]"
+                className="grid min-h-8 place-items-center text-[.78rem] font-bold text-(--panel-muted)"
               >
                 {label}
               </span>
@@ -336,7 +340,7 @@ export function CalendarBoard({
                     className={clsx(
                       "admin-calendar-daynumber font-extrabold",
                       key === today &&
-                        "grid min-h-[26px] min-w-[26px] place-items-center rounded-[50%] bg-[var(--ar-brand-ink)] px-1 text-[var(--panel-surface)]",
+                        "grid min-h-[26px] min-w-[26px] place-items-center rounded-[50%] bg-(--ar-brand-ink) px-1 text-(--panel-surface)",
                     )}
                   >
                     {new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
@@ -346,7 +350,7 @@ export function CalendarBoard({
                   </span>
                   {events.length > 0 && (
                     <>
-                      <span className="admin-calendar-count inline-flex items-center gap-[.2rem] rounded-[99px] bg-[var(--ar-brand-soft)] px-[.4rem] py-[.1rem] text-[.69rem] text-[var(--ar-brand-ink)]">
+                      <span className="admin-calendar-count inline-flex items-center gap-[.2rem] rounded-[99px] bg-(--ar-brand-soft) px-[.4rem] py-[.1rem] text-[.69rem] text-(--ar-brand-ink)">
                         <Clock3
                           size={12}
                           aria-hidden="true"
@@ -354,12 +358,9 @@ export function CalendarBoard({
                         />
                         {formatNumber(events.length)}
                       </span>
-                      <span className="admin-calendar-monthpreview grid max-w-full gap-[.15rem] text-[.68rem] text-[var(--panel-muted)] max-[767.02px]:hidden">
+                      <span className="admin-calendar-monthpreview grid max-w-full gap-[.15rem] text-[.68rem] text-(--panel-muted) max-[767.02px]:hidden">
                         {events.slice(0, 2).map((item) => (
-                          <span
-                            key={item.id}
-                            className="overflow-hidden text-ellipsis whitespace-nowrap"
-                          >
+                          <span key={item.id} className="truncate">
                             {formatTime(item.startsAt)} {item.name}
                           </span>
                         ))}
@@ -372,7 +373,7 @@ export function CalendarBoard({
           </div>
         </div>
       )}
-      <p className="admin-calendar-hint mt-[.85rem] text-[.73rem] text-[var(--panel-muted)]">
+      <p className="admin-calendar-hint mt-[.85rem] text-[.73rem] text-(--panel-muted)">
         برای دیدن جزئیات یک روز، روی تاریخ آن بزنید. ساعت‌ها بر اساس منطقهٔ
         زمانی تهران نمایش داده می‌شوند.
       </p>

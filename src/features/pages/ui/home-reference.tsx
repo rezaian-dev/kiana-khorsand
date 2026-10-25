@@ -52,6 +52,10 @@ import type { listWorkshops } from "@/features/workshops/queries";
 import type { listTestimonials } from "@/features/testimonials/queries";
 import type { listFaqs } from "@/features/faqs/queries";
 
+/** A line of the reference strip. */
+const referenceRowClassName =
+  "home-section-head flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start";
+
 export function HomeReference({
   image,
   areas,
@@ -75,15 +79,15 @@ export function HomeReference({
         className={`${publicHeroSectionClassName} ${publicEditorialHeroClassName} ${publicEditorialOrnamentClassName} home-editorial-hero relative pb-14 md:pb-24`}
       >
         <div
-          className={`${publicBlobClassName} -start-20 -top-16 h-72 w-72 bg-[var(--c-violet)]`}
+          className={`${publicBlobClassName} -inset-s-20 -top-16 size-72 bg-(--c-violet)`}
           aria-hidden="true"
         ></div>
         <div
-          className={`${publicBlobClassName} -end-24 top-24 h-80 w-80 bg-[var(--c-plum)]`}
+          className={`${publicBlobClassName} -inset-e-24 top-24 size-80 bg-(--c-plum)`}
           aria-hidden="true"
         ></div>
         <div
-          className={`${publicBlobClassName} start-1/3 bottom-0 h-64 w-64 bg-[var(--c-amber)]`}
+          className={`${publicBlobClassName} inset-s-1/3 bottom-0 size-64 bg-(--c-amber)`}
           aria-hidden="true"
         ></div>
         <div className={`${publicContainerClassName} relative`}>
@@ -101,7 +105,7 @@ export function HomeReference({
                   <span className="inline-block">حرف‌زدن،</span>{" "}
                   <span className="inline-block">فهمیدن</span>{" "}
                   <span className="inline-block">و</span>{" "}
-                  <span className="home-hero-keyword [box-decoration-break:clone] text-[#146478] [-webkit-box-decoration-break:clone] [background:linear-gradient(90deg,#8b6cae,#50b5a9)_bottom/100%_.11em_no-repeat] dark:text-[#96e6db]">
+                  <span className="home-hero-keyword box-decoration-clone text-[#146478] [background:linear-gradient(90deg,#8b6cae,#50b5a9)_bottom/100%_.11em_no-repeat] dark:text-[#96e6db]">
                     تغییر
                   </span>{" "}
                 </h1>
@@ -138,7 +142,7 @@ export function HomeReference({
                   آشنایی با روش کار من{" "}
                 </MotionLink>
               </div>
-              <p className="text-muted mt-4 text-sm leading-7">
+              <p className="text-muted mt-4 text-sm/7">
                 {" "}
                 اولین گفت‌وگو فقط برای آشنایی است؛ ببینیم راحت هستی یا نه.{" "}
               </p>
@@ -146,7 +150,7 @@ export function HomeReference({
                 <li>
                   <span className={publicChipClassName}>
                     <i
-                      className="ph-duotone ph-video-camera text-accent-violet text-[1.05rem] [color:var(--c-violet)]"
+                      className="ph-duotone ph-video-camera text-accent-violet text-[1.05rem] text-(--c-violet)"
                       aria-hidden="true"
                     ></i>
                     آنلاین و حضوری
@@ -155,7 +159,7 @@ export function HomeReference({
                 <li>
                   <span className={publicChipClassName}>
                     <i
-                      className="ph-duotone ph-clock text-accent-indigo text-[1.05rem] [color:var(--c-indigo)]"
+                      className="ph-duotone ph-clock text-accent-indigo text-[1.05rem] text-(--c-indigo)"
                       aria-hidden="true"
                     ></i>
                     جلسه‌ی ۵۰ دقیقه‌ای
@@ -164,7 +168,7 @@ export function HomeReference({
                 <li>
                   <span className={publicChipClassName}>
                     <i
-                      className="ph-duotone ph-sparkle text-accent-amber text-[1.05rem] [color:var(--c-amber)]"
+                      className="ph-duotone ph-sparkle text-accent-amber text-[1.05rem] text-(--c-amber)"
                       aria-hidden="true"
                     ></i>
                     رزرو آنلاین در چند دقیقه
@@ -177,7 +181,7 @@ export function HomeReference({
               className="relative mx-auto w-full max-w-[440px] lg:max-w-none"
             >
               <PortraitFloat
-                className={`${publicPortraitCanvasClassName} border-line home-hero-photo relative aspect-[4/5] overflow-hidden ${publicArchedPortraitClassName} border shadow-[var(--shadow-lift)] ${publicHeroPortraitFrameClassName}`}
+                className={`${publicPortraitCanvasClassName} border-line home-hero-photo relative aspect-4/5 overflow-hidden ${publicArchedPortraitClassName} border shadow-(--shadow-lift) ${publicHeroPortraitFrameClassName}`}
               >
                 {image && (
                   <Image
@@ -187,41 +191,41 @@ export function HomeReference({
                     alt="تصویر هنری فضای مشاوره، نه عکس واقعی درمانگر"
                     preload
                     sizes="(max-width: 480px) 90vw, (max-width: 1023px) 440px, (max-width: 1440px) 40vw, 560px"
-                    className={`${publicArchedPortraitClassName} absolute inset-0 h-full w-full object-cover`}
+                    className={`${publicArchedPortraitClassName} absolute inset-0 size-full object-cover`}
                   />
                 )}
                 <div className="pointer-events-none absolute inset-0 rounded-[42px] ring-1 ring-white/40 ring-inset"></div>
               </PortraitFloat>
               <FloatingTicket
-                className="home-photo-check home-photo-check-bottom start-[-.8rem] bottom-[7%] bg-[color:color-mix(in_srgb,var(--site-surface)_95%,#f3eaf6)]!"
+                className="home-photo-check home-photo-check-bottom inset-s-[-.8rem] bottom-[7%] bg-[color-mix(in_srgb,var(--site-surface)_95%,#f3eaf6)]!"
                 tone="violet"
                 delay={0.35}
                 floatY={6}
               >
-                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] [background-image:linear-gradient(140deg,#7c648f,#407e9a)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
+                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] bg-[linear-gradient(140deg,#7c648f,#407e9a)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
                   <MessageCircleHeart size={20} strokeWidth={1.9} />
                 </span>
                 <span className="home-ticket-copy grid gap-[.06rem] leading-[1.35] whitespace-nowrap">
                   <strong className="text-[.83rem] font-extrabold max-[480.02px]:text-[.7rem]">
                     گفت‌وگوی امن
                   </strong>
-                  <small className="text-[.69rem] font-[650] text-[var(--site-muted)] max-[480.02px]:text-[.61rem]">
+                  <small className="text-[.69rem] font-[650] text-(--site-muted) max-[480.02px]:text-[.61rem]">
                     بدون قضاوت
                   </small>
                 </span>
               </FloatingTicket>
               <FloatingTicket
-                className="home-photo-check home-photo-check-top end-[-.8rem] top-[9%]"
+                className="home-photo-check home-photo-check-top inset-e-[-.8rem] top-[9%]"
                 delay={0.15}
               >
-                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] [background-image:linear-gradient(140deg,#177c80,#315a9c)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
+                <span className="home-ticket-icon grid size-[38px] shrink-0 place-items-center rounded-[13px] bg-[linear-gradient(140deg,#177c80,#315a9c)] text-white shadow-[0_7px_15px_-7px_#1b5c82] max-[480.02px]:size-[30px] max-[480.02px]:rounded-[10px] max-[480.02px]:[&_svg]:size-[17px]">
                   <Waypoints size={20} strokeWidth={1.9} />
                 </span>
                 <span className="home-ticket-copy grid gap-[.06rem] leading-[1.35] whitespace-nowrap">
                   <strong className="text-[.83rem] font-extrabold max-[480.02px]:text-[.7rem]">
                     همراه مسیرت
                   </strong>
-                  <small className="text-[.69rem] font-[650] text-[var(--site-muted)] max-[480.02px]:text-[.61rem]">
+                  <small className="text-[.69rem] font-[650] text-(--site-muted) max-[480.02px]:text-[.61rem]">
                     قدم‌به‌قدم
                   </small>
                 </span>
@@ -249,14 +253,14 @@ export function HomeReference({
         aria-labelledby="areas-title"
       >
         <div
-          className={`${publicBlobClassName} -start-24 top-10 h-72 w-72 bg-[var(--c-violet)]`}
+          className={`${publicBlobClassName} -inset-s-24 top-10 size-72 bg-(--c-violet)`}
           aria-hidden="true"
         ></div>
         <div className={`${publicContainerClassName} relative`}>
-          <SectionReveal className="home-section-head flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start">
+          <SectionReveal className={referenceRowClassName}>
             <div className="max-w-[62ch]">
               <p
-                className={`${publicEyebrowClassName} text-[#45425c]! dark:text-[var(--muted)]!`}
+                className={`${publicEyebrowClassName} text-[#45425c]! dark:text-(--muted)!`}
               >
                 حوزه‌های کار
               </p>
@@ -314,7 +318,7 @@ export function HomeReference({
                 گام یک
               </p>{" "}
               <h3 className={`${publicH3ClassName} mt-2`}>انتخاب وقت</h3>{" "}
-              <p className="text-muted mt-3 text-sm leading-7">
+              <p className="text-muted mt-3 text-sm/7">
                 {" "}
                 قالب جلسه و زمان مناسب را از تقویم انتخاب می‌کنی. چند سؤال کوتاه
                 هم می‌پرسم تا جلسه با آمادگی شروع شود.{" "}
@@ -336,7 +340,7 @@ export function HomeReference({
                 گام دو
               </p>{" "}
               <h3 className={`${publicH3ClassName} mt-2`}>جلسه‌ی اول</h3>{" "}
-              <p className="text-muted mt-3 text-sm leading-7">
+              <p className="text-muted mt-3 text-sm/7">
                 {" "}
                 با هم آشنا می‌شویم، درباره‌ی آنچه آزارت می‌دهد حرف می‌زنیم و
                 هدف‌های واقع‌بینانه‌ای برای مسیر تعیین می‌کنیم.{" "}
@@ -355,7 +359,7 @@ export function HomeReference({
                 گام سه
               </p>{" "}
               <h3 className={`${publicH3ClassName} mt-2`}>ادامه‌ی مسیر</h3>{" "}
-              <p className="text-muted mt-3 text-sm leading-7">
+              <p className="text-muted mt-3 text-sm/7">
                 {" "}
                 با فاصله‌ی منظم پیش می‌رویم، تمرین‌های کوچک بین جلسه‌ها را مرور
                 می‌کنیم و هر چند وقت یک‌بار مسیر را بازبینی می‌کنیم.{" "}
@@ -369,7 +373,7 @@ export function HomeReference({
         aria-labelledby="benefits-title"
       >
         <div
-          className={`${publicBlobClassName} -end-24 -bottom-16 h-80 w-80 bg-[var(--c-teal)]`}
+          className={`${publicBlobClassName} -inset-e-24 -bottom-16 size-80 bg-(--c-teal)`}
           aria-hidden="true"
         ></div>
         <div className={`${publicContainerClassName} relative`}>
@@ -385,7 +389,7 @@ export function HomeReference({
             >
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
                 <span
-                  className={`${publicIconTileSizedClassName} tile-plum h-14 w-14 text-[1.75rem] ${publicTileToneClasses.plum}`}
+                  className={`${publicIconTileSizedClassName} tile-plum size-14 text-[1.75rem] ${publicTileToneClasses.plum}`}
                 >
                   <i className="ph-duotone ph-heart" aria-hidden="true"></i>
                 </span>
@@ -393,7 +397,7 @@ export function HomeReference({
                   <h3 className={publicH3ClassName}>
                     فضایی که در آن شنیده می‌شوی
                   </h3>
-                  <p className="text-muted mt-3 text-sm leading-7">
+                  <p className="text-muted mt-3 text-sm/7">
                     {" "}
                     بدون سرزنش، بدون عجله و بدون نصیحت‌های آماده. اول باید
                     بفهمیم چه چیزی برایت سخت است، بعد با هم راه‌های عملی پیدا
@@ -414,7 +418,7 @@ export function HomeReference({
                 ></i>
               </span>
               <h3 className={`${publicH3ClassName} mt-5`}>آنلاین یا حضوری</h3>
-              <p className="text-muted mt-3 text-sm leading-7">
+              <p className="text-muted mt-3 text-sm/7">
                 هر قالبی که راحت‌تری؛ از خانه یا در مطب.
               </p>
             </article>
@@ -429,7 +433,7 @@ export function HomeReference({
               <h3 className={`${publicH3ClassName} mt-5`}>
                 تمرین‌های کوچک و واقعی
               </h3>
-              <p className="text-muted mt-3 text-sm leading-7">
+              <p className="text-muted mt-3 text-sm/7">
                 کارهای کوتاه و شدنی بین جلسه‌ها، نه لیست‌های طولانی.
               </p>
             </article>
@@ -438,7 +442,7 @@ export function HomeReference({
             >
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
                 <span
-                  className={`${publicIconTileSizedClassName} tile-rose h-14 w-14 text-[1.75rem] ${publicTileToneClasses.rose}`}
+                  className={`${publicIconTileSizedClassName} tile-rose size-14 text-[1.75rem] ${publicTileToneClasses.rose}`}
                 >
                   <i
                     className="ph-duotone ph-note-pencil"
@@ -449,7 +453,7 @@ export function HomeReference({
                   <h3 className={publicH3ClassName}>
                     مسیر روشن و قابل بازبینی
                   </h3>
-                  <p className="text-muted mt-3 text-sm leading-7">
+                  <p className="text-muted mt-3 text-sm/7">
                     {" "}
                     در جلسه‌ی اول مشخص می‌کنیم روی چه چیزی کار می‌کنیم و از کجا
                     می‌فهمیم که مسیر درست پیش می‌رود. هر زمان لازم باشد، هدف‌ها
@@ -469,11 +473,11 @@ export function HomeReference({
         aria-labelledby="fees-title"
       >
         <div
-          className={`${publicBlobClassName} -end-24 -top-10 h-72 w-72 bg-[var(--c-plum)]`}
+          className={`${publicBlobClassName} -inset-e-24 -top-10 size-72 bg-(--c-plum)`}
           aria-hidden="true"
         ></div>
         <div className={`${publicContainerClassName} relative`}>
-          <SectionReveal className="home-section-head flex items-end justify-between gap-5 max-[620.02px]:flex-col max-[620.02px]:items-start">
+          <SectionReveal className={referenceRowClassName}>
             <div className="max-w-[62ch]">
               <p className={publicEyebrowClassName}>قالب و تعرفه</p>
               <h2 id="fees-title" className={`${publicH2ClassName} mt-4`}>
@@ -543,12 +547,12 @@ export function HomeReference({
             className={`${ctaPhotoClassName} border-line relative overflow-hidden rounded-[28px] border p-8 text-center sm:rounded-[32px] sm:p-12 md:p-16`}
           >
             <div
-              className={`${publicBlobClassName} start-1/4 -top-16 h-56 w-56 bg-[var(--c-violet)]`}
+              className={`${publicBlobClassName} inset-s-1/4 -top-16 size-56 bg-(--c-violet)`}
               aria-hidden="true"
             ></div>
             <div className={ctaGlassClassName}>
               <span
-                className={`${publicIconTileSizedClassName} tile-violet mx-auto h-14 w-14 text-[1.75rem] ${publicTileToneClasses.violet}`}
+                className={`${publicIconTileSizedClassName} tile-violet mx-auto size-14 text-[1.75rem] ${publicTileToneClasses.violet}`}
               >
                 {" "}
                 <i

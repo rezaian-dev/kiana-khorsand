@@ -89,14 +89,14 @@ export default async function Page({
             {pending.map((item) => (
               <Link
                 key={item.id}
-                className="grid gap-[.3rem] rounded-[12px] px-[.85rem] py-[.7rem] text-[.78rem] text-[var(--panel-text)] [border:1px_solid_var(--panel-line)] hover:[background:var(--ar-brand-soft)]!"
+                className="grid gap-[.3rem] rounded-[12px] px-[.85rem] py-[.7rem] text-[.78rem] text-(--panel-text) [border:1px_solid_var(--panel-line)] hover:[background:var(--ar-brand-soft)]!"
                 href={`/admin/calendar?view=day&date=${dayKey(item.startsAt)}`}
               >
                 <span>
                   {nameFor(item.userId)} · {serviceFor(item.serviceId)}
                 </span>
                 <time
-                  className="text-[var(--panel-muted)]"
+                  className="text-(--panel-muted)"
                   dateTime={item.startsAt.toISOString()}
                 >
                   {formatDate(item.startsAt)} · {formatTime(item.startsAt)}
@@ -135,7 +135,7 @@ export default async function Page({
                     {nameFor(item.userId)} · {serviceFor(item.serviceId)}
                   </p>
                   <p
-                    className={`${adminOverviewStatusClassName} status-${item.status} [margin:.45rem_0_0] inline-block`}
+                    className={`${adminOverviewStatusClassName} status-${item.status} m-[.45rem_0_0] inline-block`}
                   >
                     {appointmentLabels[item.status]}
                   </p>

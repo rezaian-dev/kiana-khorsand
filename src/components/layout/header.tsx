@@ -36,7 +36,7 @@ export async function Header() {
             >
               <BrandMark
                 size={34}
-                className="h-[34px] w-[34px] flex-none rounded-xl object-cover"
+                className="size-[34px] flex-none rounded-xl object-cover"
               />
               <span className="text-[1.0625rem] font-extrabold tracking-tight whitespace-nowrap max-[350px]:text-[.94rem]!">
                 {settings?.profile.name || "کیانا خرسند"}
@@ -46,7 +46,7 @@ export async function Header() {
             <div className="flex items-center gap-1.5 max-[350px]:gap-[.3rem]!">
               <InstallApp />
               <PwaAddress />
-              <ThemeToggle className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--fg)] [box-shadow:var(--shadow-soft)]" />
+              <ThemeToggle className="grid size-11 place-items-center rounded-full border border-(--line) bg-(--surface) text-(--fg) [box-shadow:var(--shadow-soft)]" />
               {session ? (
                 <AccountMenu
                   publicScope
@@ -59,7 +59,7 @@ export async function Header() {
                 <MotionLink
                   effect="lift"
                   href="/login"
-                  className="header-login-action border-line bg-surface inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border px-3 text-[.79rem] font-extrabold whitespace-nowrap text-[var(--site-ink)] shadow-[var(--shadow-soft)] hover:border-[#388d92] hover:bg-[color:color-mix(in_srgb,#4bada6_10%,var(--site-surface))] motion-safe:transition-[border-color,background-color] motion-safe:duration-200 max-[480px]:px-[.55rem] max-[480px]:text-[.68rem] max-[350px]:px-[.4rem] max-[350px]:text-[.66rem]"
+                  className="header-login-action border-line bg-surface inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border px-3 text-[.79rem] font-extrabold whitespace-nowrap text-(--site-ink) shadow-(--shadow-soft) hover:border-[#388d92] hover:bg-[color-mix(in_srgb,#4bada6_10%,var(--site-surface))] motion-safe:transition-[border-color,background-color] motion-safe:duration-200 max-[480px]:px-[.55rem] max-[480px]:text-[.68rem] max-[350px]:px-[.4rem] max-[350px]:text-[.66rem]"
                   aria-label="ورود یا ثبت‌نام"
                   title="ورود یا ثبت‌نام"
                 >

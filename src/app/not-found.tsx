@@ -6,7 +6,7 @@ export default function NotFound() {
     <main
       id="main"
       dir="rtl"
-      className="grid min-h-[100svh] place-items-center px-4 text-center"
+      className="grid min-h-svh place-items-center px-4 text-center"
     >
       <div className="card-rainbow w-full max-w-lg">
         <span className="icon-tile tile-violet mx-auto" aria-hidden="true">

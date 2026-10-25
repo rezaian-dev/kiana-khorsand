@@ -87,7 +87,7 @@ export default async function Page({ params }: SlugPageProps) {
         as="article"
         className={`${siteDetailClassName} reading-surface reading-surface-article ${readingSurfaceClassName}`}
       >
-        <div className="article-detail-meta mb-[1.2rem] flex flex-wrap items-center gap-[0.8rem] border-b border-[var(--site-line)] pb-4">
+        <div className="article-detail-meta mb-[1.2rem] flex flex-wrap items-center gap-[0.8rem] border-b border-(--site-line) pb-4">
           <span
             className="article-detail-symbol relative block size-[68px] flex-none [--art-surface:var(--site-surface)]"
             role="img"
@@ -99,7 +99,7 @@ export default async function Page({ params }: SlugPageProps) {
             <p className={siteBadgeClassName}>{article.category}</p>
             {article.publishedAt && (
               <time
-                className="my-0! block text-[var(--site-muted)]"
+                className="my-0! block text-(--site-muted)"
                 dateTime={article.publishedAt}
               >
                 {formatDate(article.publishedAt)}
@@ -115,7 +115,7 @@ export default async function Page({ params }: SlugPageProps) {
             {article.tags.map((tag) => (
               <li
                 key={tag}
-                className="rounded-[999px] border border-[color:color-mix(in_srgb,var(--c-teal)_30%,var(--line))] bg-[color:color-mix(in_srgb,var(--c-teal)_8%,var(--surface))] px-[.85rem] py-[.35rem] text-[.83rem] font-bold text-[var(--fg)]"
+                className="rounded-[999px] border border-[color-mix(in_srgb,var(--c-teal)_30%,var(--line))] bg-[color-mix(in_srgb,var(--c-teal)_8%,var(--surface))] px-[.85rem] py-[.35rem] text-[.83rem] font-bold text-(--fg)"
               >
                 {tag}
               </li>

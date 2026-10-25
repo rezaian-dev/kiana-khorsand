@@ -114,13 +114,13 @@ export default async function Page() {
               >
                 تیکت‌ها و اعلان‌ها
               </h2>
-              <p className="text-muted mt-1 text-sm leading-7">
+              <p className="text-muted mt-1 text-sm/7">
                 پاسخ‌ها و لینک دعوت Google Meet را برای حساب درست ارسال کنید.
               </p>
             </div>
             <Headset size={30} className="text-teal-700" aria-hidden="true" />
           </div>
-          <details className="rounded-3xl border border-teal-200 bg-gradient-to-bl from-teal-50 via-white to-blue-50 p-5 shadow-sm dark:border-teal-800 dark:from-teal-950/40 dark:via-slate-900 dark:to-blue-950/30">
+          <details className="rounded-3xl border border-teal-200 bg-linear-to-bl from-teal-50 via-white to-blue-50 p-5 shadow-sm dark:border-teal-800 dark:from-teal-950/40 dark:via-slate-900 dark:to-blue-950/30">
             <summary className="text-fg cursor-pointer text-sm font-extrabold">
               ارسال پیام یا لینک دعوت به کاربر جدید
             </summary>
@@ -173,16 +173,16 @@ export default async function Page() {
                       </form>
                     )}
                   </div>
-                  <div className="max-h-[32rem] space-y-3 overflow-y-auto pe-1">
+                  <div className="max-h-128 space-y-3 overflow-y-auto pe-1">
                     {entries.map((item) => (
                       <div
                         key={item.id}
-                        className={`max-w-[min(100%,40rem)] rounded-2xl border px-4 py-3 ${item.sender === "client" ? "ml-auto border-blue-100 bg-blue-50/70 dark:border-blue-900 dark:bg-blue-950/20" : "mr-auto border-teal-100 bg-teal-50/70 dark:border-teal-900 dark:bg-teal-950/20"}`}
+                        className={`max-w-[min(100%,40rem)] rounded-2xl border px-4 py-3 ${item.sender === "client" ? "ms-auto border-blue-100 bg-blue-50/70 dark:border-blue-900 dark:bg-blue-950/20" : "me-auto border-teal-100 bg-teal-50/70 dark:border-teal-900 dark:bg-teal-950/20"}`}
                       >
                         <p className="text-muted mb-1 text-xs font-bold">
                           {item.sender === "client" ? "کاربر" : "پشتیبان"}
                         </p>
-                        <p className="text-fg text-sm leading-7 break-words whitespace-pre-wrap">
+                        <p className="text-fg text-sm/7 wrap-break-word whitespace-pre-wrap">
                           {item.body}
                         </p>
                         {item.meetUrl &&

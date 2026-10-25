@@ -93,11 +93,11 @@ export function AboutReference({
         className={`${publicHeroSectionClassName} ${publicEditorialHeroClassName} ${publicEditorialOrnamentClassName} about-editorial-hero relative pb-14 md:pb-20`}
       >
         <div
-          className={`${publicBlobClassName} -start-20 -top-16 h-72 w-72 bg-[var(--c-violet)]`}
+          className={`${publicBlobClassName} -inset-s-20 -top-16 size-72 bg-(--c-violet)`}
           aria-hidden="true"
         />
         <div
-          className={`${publicBlobClassName} -end-24 top-24 h-80 w-80 bg-[var(--c-plum)]`}
+          className={`${publicBlobClassName} -inset-e-24 top-24 size-80 bg-(--c-plum)`}
           aria-hidden="true"
         />
         <div className={`${publicContainerClassName} relative`}>
@@ -136,7 +136,7 @@ export function AboutReference({
                 <li>
                   <span className={publicChipClassName}>
                     <i
-                      className="ph-duotone ph-brain text-accent-violet text-[1.05rem] [color:var(--c-violet)]"
+                      className="ph-duotone ph-brain text-accent-violet text-[1.05rem] text-(--c-violet)"
                       aria-hidden="true"
                     />
                     درمان شناختی‌رفتاری
@@ -145,7 +145,7 @@ export function AboutReference({
                 <li>
                   <span className={publicChipClassName}>
                     <i
-                      className="ph-duotone ph-compass text-accent-indigo text-[1.05rem] [color:var(--c-indigo)]"
+                      className="ph-duotone ph-compass text-accent-indigo text-[1.05rem] text-(--c-indigo)"
                       aria-hidden="true"
                     />
                     پذیرش و تعهد
@@ -154,7 +154,7 @@ export function AboutReference({
                 <li>
                   <span className={publicChipClassName}>
                     <i
-                      className="ph-duotone ph-users-three text-accent-plum text-[1.05rem] [color:var(--c-plum)]"
+                      className="ph-duotone ph-users-three text-accent-plum text-[1.05rem] text-(--c-plum)"
                       aria-hidden="true"
                     />
                     زوج و خانواده
@@ -164,7 +164,7 @@ export function AboutReference({
             </div>
             <div className="relative mx-auto w-full max-w-[440px] lg:max-w-none">
               <div
-                className={`${publicPortraitCanvasClassName} border-line relative aspect-[4/5] overflow-hidden rounded-[42px] border ${publicHeroPortraitFrameClassName}`}
+                className={`${publicPortraitCanvasClassName} border-line relative aspect-4/5 overflow-hidden rounded-[42px] border ${publicHeroPortraitFrameClassName}`}
               >
                 <Image
                   src={image}
@@ -172,15 +172,15 @@ export function AboutReference({
                   width={880}
                   height={1100}
                   priority
-                  className="absolute inset-0 h-full w-full rounded-[42px] object-cover"
+                  className="absolute inset-0 size-full rounded-[42px] object-cover"
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-[32px] ring-1 ring-white/40 ring-inset" />
               </div>
               <div
-                className={`${publicGlassClassName} absolute start-0 -bottom-5 flex max-w-[220px] items-center gap-3 rounded-3xl p-3.5 shadow-[var(--shadow-lift)] sm:-start-6`}
+                className={`${publicGlassClassName} absolute inset-s-0 -bottom-5 flex max-w-[220px] items-center gap-3 rounded-3xl p-3.5 shadow-(--shadow-lift) sm:-inset-s-6`}
               >
                 <span
-                  className={`${publicIconTileSizedClassName} tile-teal h-11 w-11 text-[1.25rem] ${publicTileToneClasses.teal}`}
+                  className={`${publicIconTileSizedClassName} tile-teal size-11 text-[1.25rem] ${publicTileToneClasses.teal}`}
                 >
                   <Icon name="hand-heart" />
                 </span>
@@ -188,7 +188,7 @@ export function AboutReference({
                   <span className="block text-sm font-extrabold">
                     گوش دادن واقعی
                   </span>
-                  <span className="text-muted block text-xs leading-6">
+                  <span className="text-muted block text-xs/6">
                     بدون قضاوت و بدون نصیحت
                   </span>
                 </span>
@@ -220,7 +220,7 @@ export function AboutReference({
                   <Icon name={item.icon} />
                 </span>
                 <h3 className={`${publicH3ClassName} mt-5`}>{item.title}</h3>
-                <p className="text-muted mt-3 text-sm leading-7">{item.body}</p>
+                <p className="text-muted mt-3 text-sm/7">{item.body}</p>
               </article>
             ))}
           </ScrollReveal>
@@ -231,7 +231,7 @@ export function AboutReference({
         aria-labelledby="journey-title"
       >
         <div
-          className={`${publicBlobClassName} -start-24 -bottom-10 h-72 w-72 bg-[var(--c-teal)]`}
+          className={`${publicBlobClassName} -inset-s-24 -bottom-10 size-72 bg-(--c-teal)`}
           aria-hidden="true"
         />
         <div className={`${publicContainerClassName} relative`}>
@@ -282,7 +282,7 @@ export function AboutReference({
                   <Icon name={item.icon} />
                 </span>
                 <h3 className={`${publicH3ClassName} mt-5`}>{item.title}</h3>
-                <p className="text-muted mt-3 text-sm leading-7">{item.body}</p>
+                <p className="text-muted mt-3 text-sm/7">{item.body}</p>
               </article>
             ))}
           </ScrollReveal>
@@ -298,7 +298,7 @@ export function AboutReference({
           >
             <div className={ctaGlassClassName}>
               <span
-                className={`${publicIconTileSizedClassName} tile-violet mx-auto h-14 w-14 text-[1.75rem] ${publicTileToneClasses.violet}`}
+                className={`${publicIconTileSizedClassName} tile-violet mx-auto size-14 text-[1.75rem] ${publicTileToneClasses.violet}`}
               >
                 <Icon name="hand-heart" />
               </span>

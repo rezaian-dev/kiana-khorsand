@@ -1,5 +1,6 @@
 "use client";
 
+import { publicAccountTriggerClassName } from "@/components/layout/public-styles";
 import Link from "next/link";
 import { safeAvatarUrl } from "@/lib/avatar-url";
 import Image from "next/image";
@@ -77,7 +78,7 @@ export function AccountMenu({
           initial={false}
           animate="rest"
           whileHover={publicScope ? "hover" : undefined}
-          className="site-account-trigger group/account relative grid! inline-flex size-11! min-h-11! flex-none! cursor-pointer place-items-center! items-center justify-center gap-[.55rem] overflow-visible! rounded-full! border! border-[#bdd9da]! bg-[#e9f5f3]! p-0! text-[.85rem] font-extrabold whitespace-nowrap text-[#175c6b]! shadow-[0_5px_14px_-10px_#1a556875]! transition-[background-color,border-color,box-shadow]! duration-200! ease-[ease]! focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#167d8d] data-[state=closed]:hover:border-[#7db7b6]! data-[state=closed]:hover:bg-[#d8efec]! motion-safe:transition-[background-color,border-color,transform] motion-safe:duration-200 data-[state=closed]:motion-safe:hover:-translate-y-0.5 data-[state=closed]:motion-safe:active:scale-[.97] motion-reduce:transition-none! dark:border-[#587885]! dark:bg-[#263d4a]! dark:text-[#e6f8f4]! dark:shadow-none! dark:focus-visible:outline-[#bcefe4] dark:data-[state=closed]:hover:border-[#85bdb7]! dark:data-[state=closed]:hover:bg-[#315261]!"
+          className={publicAccountTriggerClassName}
           aria-label={`باز کردن منوی حساب کاربری${notifications?.unread ? `؛ ${notifications.unread} پیام خوانده‌نشده` : ""}`}
           title="حساب کاربری"
         >
@@ -109,7 +110,7 @@ export function AccountMenu({
                   : { scale: [0.6, 1.15, 1], opacity: [0.65, 1, 1] }
               }
               transition={{ duration: 0.55, ease: [0.2, 1, 0.4, 1] }}
-              className="absolute -top-1 -left-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-teal-700 px-1 text-[10px] font-bold text-white ring-2 ring-white dark:ring-slate-900"
+              className="absolute -inset-s-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-teal-700 px-1 text-[10px] font-bold text-white ring-2 ring-white dark:ring-slate-900"
               aria-hidden="true"
             >
               {(notifications?.unread ?? 0) > 9 ? "۹+" : notifications?.unread}
@@ -121,7 +122,7 @@ export function AccountMenu({
         <DropdownMenu.Content
           align="end"
           sideOffset={10}
-          className="site-account-dropdown data-[state=open]:animate-account-menu-in data-[state=closed]:animate-account-menu-out z-65 min-w-[min(90vw,260px)] rounded-[1.1rem] border border-[var(--site-line)] bg-[var(--site-surface)] p-[.55rem] text-[var(--site-ink)] [box-shadow:0_22px_56px_#1b143730] [direction:rtl] motion-reduce:animate-none [&_[role=menuitem]]:flex [&_[role=menuitem]]:min-h-[42px] [&_[role=menuitem]]:w-full [&_[role=menuitem]]:cursor-pointer [&_[role=menuitem]]:items-center [&_[role=menuitem]]:gap-[.7rem] [&_[role=menuitem]]:rounded-[.65rem] [&_[role=menuitem]]:p-[.55rem_.65rem] [&_[role=menuitem]]:text-right [&_[role=menuitem]]:text-[.84rem] [&_[role=menuitem]]:font-bold [&_[role=menuitem]]:outline-none [&_[role=menuitem]:hover]:bg-[color:color-mix(in_srgb,var(--site-violet)_10%,var(--site-surface))] [&_[role=menuitem][data-highlighted]]:bg-[color:color-mix(in_srgb,var(--site-violet)_10%,var(--site-surface))] [body:has(.site-shell)_&]:origin-top-left [body:has(.site-shell)_&]:will-change-[transform,opacity]"
+          className="site-account-dropdown data-[state=open]:animate-account-menu-in data-[state=closed]:animate-account-menu-out z-65 min-w-[min(90vw,260px)] rounded-[1.1rem] border border-(--site-line) bg-(--site-surface) p-[.55rem] text-(--site-ink) [box-shadow:0_22px_56px_#1b143730] [direction:rtl] motion-reduce:animate-none [&_[role=menuitem]:hover]:bg-[color-mix(in_srgb,var(--site-violet)_10%,var(--site-surface))] [&_[role=menuitem][data-highlighted]]:bg-[color-mix(in_srgb,var(--site-violet)_10%,var(--site-surface))] **:[[role=menuitem]]:flex **:[[role=menuitem]]:min-h-[42px] **:[[role=menuitem]]:w-full **:[[role=menuitem]]:cursor-pointer **:[[role=menuitem]]:items-center **:[[role=menuitem]]:gap-[.7rem] **:[[role=menuitem]]:rounded-[.65rem] **:[[role=menuitem]]:p-[.55rem_.65rem] **:[[role=menuitem]]:text-end **:[[role=menuitem]]:text-[.84rem] **:[[role=menuitem]]:font-bold **:[[role=menuitem]]:outline-none [body:has(.site-shell)_&]:origin-top-left [body:has(.site-shell)_&]:will-change-[transform,opacity]"
           aria-label="منوی حساب کاربری"
         >
           <div className="site-account-identity flex min-w-0 items-center gap-[.7rem] p-[.65rem_.55rem]">
@@ -143,13 +144,11 @@ export function AccountMenu({
               )}
             </span>
             <div className="grid min-w-0">
-              <strong className="overflow-hidden text-[.86rem] text-ellipsis whitespace-nowrap">
-                {name}
-              </strong>
-              <small className="text-[var(--site-muted)]">حساب کاربری</small>
+              <strong className="truncate text-[.86rem]">{name}</strong>
+              <small className="text-(--site-muted)">حساب کاربری</small>
             </div>
           </div>
-          <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-[var(--site-line)]" />
+          <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-(--site-line)" />
           <DropdownMenu.Item asChild>
             <Link
               href="/dashboard/messages"
@@ -213,7 +212,7 @@ export function AccountMenu({
               )}
             </Link>
           </DropdownMenu.Item>
-          <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-[var(--site-line)]" />
+          <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-(--site-line)" />
           <DropdownMenu.Item asChild>
             <Link href="/dashboard">
               <LayoutDashboard size={18} aria-hidden="true" />
@@ -232,7 +231,7 @@ export function AccountMenu({
               حساب کاربری من
             </Link>
           </DropdownMenu.Item>
-          <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-[var(--site-line)]" />
+          <DropdownMenu.Separator className="site-account-separator my-[.4rem] h-px bg-(--site-line)" />
           <DropdownMenu.Item
             className="site-account-logout text-[#aa2d50] dark:text-[#ffafc1]"
             disabled={pending}

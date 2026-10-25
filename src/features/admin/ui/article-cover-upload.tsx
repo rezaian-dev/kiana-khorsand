@@ -15,7 +15,7 @@ export function ArticleCoverUpload({ current }: { current: string | null }) {
   }, [preview]);
   const image = preview || current;
   return (
-    <div className="admin-article-cover-upload grid min-w-0 gap-[.7rem] rounded-[20px] bg-[var(--surface)] p-4 [border:1px_solid_var(--line)]">
+    <div className="admin-article-cover-upload grid min-w-0 gap-[.7rem] rounded-[20px] bg-(--surface) p-4 [border:1px_solid_var(--line)]">
       <label className="font-extrabold!" htmlFor="article-cover-upload">
         یا کاور اختصاصی بارگذاری کنید
       </label>

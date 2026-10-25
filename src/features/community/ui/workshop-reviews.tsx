@@ -54,18 +54,18 @@ function WorkshopReviewForm({
       <h3 className="mb-4">تجربهٔ شما از این کارگاه</h3>
       {!authenticated ? (
         <button
-          className="site-button border! border-current! text-[var(--fg)]!"
+          className="site-button border! border-current! text-(--fg)!"
           type="button"
           onClick={() => showSignInToast("برای ثبت نظر ابتدا وارد حساب شوید.")}
         >
           ورود برای ثبت نظر
         </button>
       ) : alreadyReviewed || sent ? (
-        <p role="status" className="leading-[2]">
+        <p role="status" className="leading-loose">
           نظر شما ثبت شده است؛ انتشار آن پس از بررسی انجام می‌شود.
         </p>
       ) : !eligible ? (
-        <p className="leading-[2]">
+        <p className="leading-loose">
           بعد از پایان کارگاه و تأیید ثبت‌نام و حضور شما توسط مدیر، امکان ثبت
           نظر فعال می‌شود.
         </p>
@@ -93,7 +93,7 @@ function WorkshopReviewForm({
           </label>
           <textarea
             id="workshop-review-body"
-            className="w-full rounded-[14px] border border-[color:color-mix(in_srgb,var(--fg)_17%,transparent)] bg-[var(--surface)] p-4 text-[var(--fg)]"
+            className="w-full rounded-[14px] border border-[color-mix(in_srgb,var(--fg)_17%,transparent)] bg-(--surface) p-4 text-(--fg)"
             name="body"
             minLength={30}
             maxLength={1000}
@@ -146,7 +146,7 @@ export function WorkshopReviews({
         >
           نظرها دربارهٔ این کارگاه
         </h2>
-        <p className="leading-[2] opacity-[0.78]">
+        <p className="leading-loose opacity-[0.78]">
           نظرهای منتشرشده متعلق به شرکت‌کنندگانِ دارای حضور تأییدشده است.
         </p>
       </div>
@@ -171,7 +171,7 @@ export function WorkshopReviews({
                   />
                 ))}
               </div>
-              <blockquote className="flex-1 leading-[2] [overflow-wrap:anywhere]">
+              <blockquote className="flex-1 leading-loose wrap-anywhere">
                 {review.body}
               </blockquote>
               <footer className="flex flex-wrap items-center justify-between gap-2 text-[0.82rem]">
@@ -202,7 +202,7 @@ export function WorkshopReviews({
         </div>
       ) : (
         <p
-          className={`workshop-review-empty leading-[2] opacity-[0.78] ${reviewSurface}`}
+          className={`workshop-review-empty leading-loose opacity-[0.78] ${reviewSurface}`}
         >
           هنوز نظری برای این کارگاه منتشر نشده است. اگر در آن شرکت کرده‌اید،
           نخستین تجربه را ثبت کنید.

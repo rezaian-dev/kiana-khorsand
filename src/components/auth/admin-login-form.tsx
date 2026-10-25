@@ -16,6 +16,10 @@ import { adminLoginAction } from "@/actions/admin-auth";
 import type { AuthState } from "@/types/auth";
 import { fieldRingClassName } from "@/components/shared/field-styles";
 
+/** Admin field: same glass as the site, in the panel accent. */
+const adminFieldClassName =
+  "font-bold text-(--site-muted) underline-offset-4 transition-colors hover:text-(--c-teal) hover:underline";
+
 const initial: AuthState = { error: "", fields: {} };
 
 /** Glass plate: hairline at rest, one precise ring plus a soft glow on focus. */
@@ -115,7 +119,7 @@ export function AdminLoginForm() {
             onClick={() => setVisible((value) => !value)}
             aria-label={visible ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}
             aria-pressed={visible}
-            className="absolute inset-y-0 end-0 grid w-12 cursor-pointer place-items-center rounded-e-[.95rem] text-[#8b94a9] transition-colors hover:text-[var(--site-ink)] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--c-teal)] dark:text-[#8b93a8] dark:hover:text-[#eef3ff]"
+            className="absolute inset-y-0 inset-e-0 grid w-12 cursor-pointer place-items-center rounded-e-[.95rem] text-[#8b94a9] transition-colors hover:text-(--site-ink) focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-(--c-teal) dark:text-[#8b93a8] dark:hover:text-[#eef3ff]"
           >
             {visible ? (
               <EyeOff className="size-[1.05rem]" />
@@ -144,7 +148,7 @@ export function AdminLoginForm() {
         <p
           id={errorId}
           role="alert"
-          className="flex items-start gap-2 rounded-[.9rem] border border-[#e7b8c2] bg-[#fdf0f3]/85 px-3.5 py-2.5 text-[.82rem] leading-6 font-bold text-[#8f1f3c] backdrop-blur-sm dark:border-[#7a3a4b] dark:bg-[#3a1f2a]/85 dark:text-[#ffc6d2]"
+          className="flex items-start gap-2 rounded-[.9rem] border border-[#e7b8c2] bg-[#fdf0f3]/85 px-3.5 py-2.5 text-[.82rem]/6 font-bold text-[#8f1f3c] backdrop-blur-sm dark:border-[#7a3a4b] dark:bg-[#3a1f2a]/85 dark:text-[#ffc6d2]"
         >
           <ShieldAlert className="mt-0.5 size-4 flex-none" aria-hidden="true" />
           {state.error}
@@ -154,7 +158,7 @@ export function AdminLoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="group mt-1 inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[.95rem] [background-image:linear-gradient(135deg,color-mix(in_srgb,var(--c-teal)_82%,#0b2f3a),color-mix(in_srgb,var(--c-teal)_96%,#06202a))] text-[.95rem] font-extrabold text-white shadow-[0_18px_34px_-22px_color-mix(in_srgb,var(--c-teal)_85%,transparent),inset_0_1px_0_rgb(255_255_255/0.34)] transition-[filter,transform,box-shadow] duration-200 hover:-translate-y-px hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)] active:translate-y-px disabled:cursor-wait disabled:opacity-85 md:h-[3.15rem] dark:[background-image:linear-gradient(135deg,#6fe0d0,#35b9ad)] dark:text-[#062a2a]"
+        className="group mt-1 inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[.95rem] bg-[linear-gradient(135deg,color-mix(in_srgb,var(--c-teal)_82%,#0b2f3a),color-mix(in_srgb,var(--c-teal)_96%,#06202a))] text-[.95rem] font-extrabold text-white shadow-[0_18px_34px_-22px_color-mix(in_srgb,var(--c-teal)_85%,transparent),inset_0_1px_0_rgb(255_255_255/0.34)] transition-[filter,transform,box-shadow] duration-200 hover:-translate-y-px hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--c-teal) active:translate-y-px disabled:cursor-wait disabled:opacity-85 md:h-[3.15rem] dark:bg-[linear-gradient(135deg,#6fe0d0,#35b9ad)] dark:text-[#062a2a]"
       >
         {pending ? (
           <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
@@ -174,16 +178,10 @@ export function AdminLoginForm() {
       </button>
 
       <div className="mt-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-white/60 pt-4 text-[.79rem] dark:border-white/10">
-        <Link
-          href="/login"
-          className="font-bold text-[var(--site-muted)] underline-offset-4 transition-colors hover:text-[var(--c-teal)] hover:underline"
-        >
+        <Link href="/login" className={adminFieldClassName}>
           ورود کاربران
         </Link>
-        <Link
-          href="/"
-          className="font-bold text-[var(--site-muted)] underline-offset-4 transition-colors hover:text-[var(--c-teal)] hover:underline"
-        >
+        <Link href="/" className={adminFieldClassName}>
           بازگشت به سایت
         </Link>
       </div>

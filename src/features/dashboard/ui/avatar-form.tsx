@@ -86,7 +86,7 @@ export function AvatarForm({
       encType="multipart/form-data"
     >
       <div className="flex items-center gap-[1.1rem] max-[440.02px]:items-start">
-        <span className="grid size-[100px] shrink-0 place-items-center overflow-hidden rounded-[28px] border-[3px] border-[var(--panel-surface)] bg-[color-mix(in_srgb,var(--panel-accent)_9%,var(--panel-surface))] text-[var(--panel-accent)] shadow-[0_0_0_2px_color-mix(in_srgb,var(--panel-accent)_25%,transparent),0_18px_32px_-20px_#1f344783] max-[440.02px]:size-[72px] max-[440.02px]:rounded-[22px]">
+        <span className="grid size-[100px] shrink-0 place-items-center overflow-hidden rounded-[28px] border-[3px] border-(--panel-surface) bg-[color-mix(in_srgb,var(--panel-accent)_9%,var(--panel-surface))] text-(--panel-accent) shadow-[0_0_0_2px_color-mix(in_srgb,var(--panel-accent)_25%,transparent),0_18px_32px_-20px_#1f344783] max-[440.02px]:size-[72px] max-[440.02px]:rounded-[22px]">
           {source ? (
             <Image
               src={source}
@@ -113,7 +113,7 @@ export function AvatarForm({
       <div className="grid gap-2">
         <label
           htmlFor="avatar-upload"
-          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-[14px] border border-[var(--panel-line)] bg-[var(--panel-bg)] px-4 py-[.65rem] font-[750] text-[var(--panel-text)] transition-colors duration-200 ease-[ease] focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-[var(--panel-accent)] hover:bg-[color-mix(in_srgb,var(--panel-accent)_8%,var(--panel-surface))] motion-reduce:transition-none"
+          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-[14px] border border-(--panel-line) bg-(--panel-bg) px-4 py-[.65rem] font-[750] text-(--panel-text) transition-colors duration-200 ease-[ease] focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-(--panel-accent) hover:bg-[color-mix(in_srgb,var(--panel-accent)_8%,var(--panel-surface))] motion-reduce:transition-none"
         >
           <Camera size={18} aria-hidden="true" />
           انتخاب تصویر JPG، PNG یا WebP
@@ -127,7 +127,7 @@ export function AvatarForm({
           />
         </label>
         <p
-          className="m-0 truncate text-[.78rem] text-[var(--panel-muted)]"
+          className="m-0 truncate text-[.78rem] text-(--panel-muted)"
           aria-live="polite"
         >
           {file ? `فایل انتخاب‌شده: ${file.name}` : "فایلی انتخاب نشده است."}

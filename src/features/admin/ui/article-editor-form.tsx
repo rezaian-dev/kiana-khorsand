@@ -127,21 +127,21 @@ export function ArticleVisualPreview() {
   if (!preview) return null;
   return (
     <section
-      className="admin-article-visual-preview flex min-w-0 items-center gap-4 rounded-[20px] border border-[color:color-mix(in_srgb,var(--panel-accent)_19%,var(--panel-line))] bg-[color:color-mix(in_srgb,var(--panel-accent)_4%,var(--panel-surface))] px-4 py-[.85rem] max-[359.02px]:gap-[.65rem] max-[359.02px]:px-[.7rem]"
+      className="admin-article-visual-preview flex min-w-0 items-center gap-4 rounded-[20px] border border-[color-mix(in_srgb,var(--panel-accent)_19%,var(--panel-line))] bg-[color-mix(in_srgb,var(--panel-accent)_4%,var(--panel-surface))] px-4 py-[.85rem] max-[359.02px]:gap-[.65rem] max-[359.02px]:px-[.7rem]"
       aria-labelledby="editor-icon-title"
     >
       <span className="admin-article-visual-icon block flex-none">
         <ArticleEmblem
           visual={preview.visual}
           slug={preview.slug || "new-article"}
-          className="relative! inset-auto! grid! size-[68px]! place-items-center! rounded-[50%]! border-[6px]! border-[var(--panel-surface)]! max-[359.02px]:size-[68px]!"
+          className="relative! inset-auto! grid! size-[68px]! place-items-center! rounded-[50%]! border-[6px]! border-(--panel-surface)! max-[359.02px]:size-[68px]!"
         />
       </span>
       <div className="min-w-0">
         <h3 className="text-[.95rem] font-extrabold" id="editor-icon-title">
           نشان موضوعی مقاله
         </h3>
-        <p className="mt-[.3rem] text-[.83rem] leading-[1.75]! text-[var(--panel-muted)]">
+        <p className="mt-[.3rem] text-[.83rem] leading-[1.75]! text-(--panel-muted)">
           {preview.visual.icon === "BookOpenText"
             ? "هنوز موضوع مشخصی شناسایی نشده؛ عنوان و متن دقیق‌تر، نشان مناسب‌تری پیشنهاد می‌کند."
             : `موضوع پیشنهادی: ${preview.visual.label}؛ این نشان پس از انتشار، خودکار روی کارت مقاله دیده می‌شود.`}

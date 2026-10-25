@@ -24,19 +24,19 @@ export function SlotPicker({ id, initial }: { id: string; initial: string[] }) {
       <div className="admin-slot-picker-caption mb-[.65rem] flex items-center gap-2 font-[750]">
         <Clock3 size={16} aria-hidden="true" />
         <span>ساعت‌های قابل درخواست</span>
-        <small className="ms-auto text-[var(--panel-muted)]">
+        <small className="ms-auto text-(--panel-muted)">
           {new Intl.NumberFormat("fa-IR").format(slots.length)} زمان
         </small>
       </div>
       <div
-        className="admin-slot-picker-grid grid max-h-[205px] [scrollbar-width:thin] grid-cols-[repeat(auto-fit,minmax(65px,1fr))] gap-[.35rem] overflow-auto rounded-[12px] p-1"
+        className="admin-slot-picker-grid grid max-h-[205px] scrollbar-thin grid-cols-[repeat(auto-fit,minmax(65px,1fr))] gap-[.35rem] overflow-auto rounded-[12px] p-1"
         role="group"
         aria-label="ساعت‌های قابل درخواست"
       >
         {options.map((time) => (
           <m.button
             type="button"
-            className="min-h-9 rounded-[9px] bg-[var(--panel-surface)] text-[.78rem] text-[var(--panel-text)] [border:1px_solid_var(--panel-line)] hover:border-[var(--ar-accent)]! disabled:transform-none! disabled:cursor-not-allowed! disabled:opacity-[.42]! aria-[pressed=true]:border-[var(--ar-brand-ink)]! aria-[pressed=true]:bg-[var(--ar-brand-ink)]! aria-[pressed=true]:text-[var(--panel-surface)]! [@media(scripting:none)]:hover:[transform:translateY(-2px)]!"
+            className="min-h-9 rounded-[9px] bg-(--panel-surface) text-[.78rem] text-(--panel-text) [border:1px_solid_var(--panel-line)] hover:border-(--ar-accent)! disabled:transform-none! disabled:cursor-not-allowed! disabled:opacity-[.42]! aria-pressed:border-(--ar-brand-ink)! aria-pressed:bg-(--ar-brand-ink)! aria-pressed:text-(--panel-surface)! noscript:hover:transform-[translateY(-2px)]!"
             key={time}
             initial={false}
             whileHover={{ y: -2 }}

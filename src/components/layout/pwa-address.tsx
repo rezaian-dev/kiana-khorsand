@@ -94,7 +94,7 @@ export function PwaAddress() {
           aria-label="رفتن به آدرس"
           aria-keyshortcuts="Control+K Meta+K"
           title="رفتن به آدرس"
-          className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--fg)] [box-shadow:var(--shadow-soft)] transition-colors hover:border-[#388d92] hover:text-[var(--c-teal)] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)]"
+          className="grid size-11 cursor-pointer place-items-center rounded-full border border-(--line) bg-(--surface) text-(--fg) [box-shadow:var(--shadow-soft)] transition-colors hover:border-[#388d92] hover:text-(--c-teal) focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-(--c-teal)"
         >
           <Link2 className="size-[18px]" aria-hidden="true" />
         </button>
@@ -104,7 +104,7 @@ export function PwaAddress() {
         <SheetContent
           side="bottom"
           aria-describedby="pwa-address-note"
-          className="gap-0 rounded-t-[1.4rem] border-[var(--line)] bg-[var(--surface)] px-4 pt-5 pb-[max(1.1rem,env(safe-area-inset-bottom))] shadow-[0_-24px_60px_-30px_#0b1626] sm:px-6"
+          className="gap-0 rounded-t-[1.4rem] border-(--line) bg-(--surface) px-4 pt-5 pb-[max(1.1rem,env(safe-area-inset-bottom))] shadow-[0_-24px_60px_-30px_#0b1626] sm:px-6"
           onOpenAutoFocus={(event) => {
             event.preventDefault();
             inputRef.current?.focus();
@@ -117,24 +117,24 @@ export function PwaAddress() {
             triggerRef.current?.focus();
           }}
         >
-          <SheetTitle className="text-[.95rem] font-extrabold text-[var(--fg)]">
+          <SheetTitle className="text-[.95rem] font-extrabold text-(--fg)">
             رفتن به آدرس
           </SheetTitle>
           <SheetDescription
             id="pwa-address-note"
-            className="mt-1 mb-4 text-[.78rem] leading-6 text-[var(--site-muted)]"
+            className="mt-1 mb-4 text-[.78rem]/6 text-(--site-muted)"
           >
             نسخهٔ نصب‌شده نوار آدرس ندارد. مسیر داخلی سایت را وارد کنید.
           </SheetDescription>
 
           <form onSubmit={go} className="grid gap-3">
             <div
-              className={`flex items-center gap-2 rounded-[.9rem] border border-[var(--line)] bg-[color-mix(in_srgb,var(--c-teal)_4%,var(--site-surface))] px-3 [--field-accent-dark:var(--c-teal)] [--field-accent:var(--c-teal)] [--field-surface-dark:#16202c] [--field-surface:var(--site-surface)] ${fieldShellClassName}`}
+              className={`flex items-center gap-2 rounded-[.9rem] border border-(--line) bg-[color-mix(in_srgb,var(--c-teal)_4%,var(--site-surface))] px-3 [--field-accent-dark:var(--c-teal)] [--field-accent:var(--c-teal)] [--field-surface-dark:#16202c] [--field-surface:var(--site-surface)] ${fieldShellClassName}`}
             >
               {host && (
                 <span
                   dir="ltr"
-                  className="shrink-0 font-mono [font-feature-settings:'ss01'] text-[.78rem] text-[var(--site-muted)]"
+                  className="shrink-0 font-mono font-features-['ss01'] text-[.78rem] text-(--site-muted)"
                 >
                   {host}
                 </span>
@@ -155,12 +155,12 @@ export function PwaAddress() {
                 aria-label="مسیر داخلی"
                 aria-invalid={Boolean(error)}
                 data-bare
-                className={`h-11 min-w-0 flex-1 text-start font-mono text-[.95rem] text-[var(--fg)] placeholder:text-[var(--site-muted)]/70 ${bareFieldClassName}`}
+                className={`h-11 min-w-0 flex-1 text-start font-mono text-[.95rem] text-(--fg) placeholder:text-(--site-muted)/70 ${bareFieldClassName}`}
               />
               <button
                 type="submit"
                 aria-label="برو"
-                className="grid size-9 flex-none cursor-pointer place-items-center rounded-[.7rem] bg-[var(--c-teal)] text-white transition-[filter] hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--c-teal)]"
+                className="grid size-9 flex-none cursor-pointer place-items-center rounded-[.7rem] bg-(--c-teal) text-white transition-[filter] hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--c-teal)"
               >
                 <CornerDownLeft className="size-4" aria-hidden="true" />
               </button>
@@ -176,9 +176,9 @@ export function PwaAddress() {
             )}
           </form>
 
-          <p className="mt-4 mb-0 text-[.74rem] leading-6 text-[var(--site-muted)]">
+          <p className="mt-4 mb-0 text-[.74rem]/6 text-(--site-muted)">
             در مرورگر رومیزی با{" "}
-            <kbd className="rounded border border-[var(--line)] bg-[var(--site-surface)] px-1.5 py-0.5 font-mono text-[.7rem]">
+            <kbd className="rounded-sm border border-(--line) bg-(--site-surface) px-1.5 py-0.5 font-mono text-[.7rem]">
               Ctrl&nbsp;+&nbsp;K
             </kbd>{" "}
             هم باز می‌شود.

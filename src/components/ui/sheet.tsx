@@ -74,7 +74,7 @@ function SheetContent({
         data-slot="sheet-content"
         data-side={side}
         className={cn(
-          "bg-popover text-popover-foreground fixed z-50 flex flex-col gap-4 bg-clip-padding text-sm shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=bottom]:[--sheet-y:16px] data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-e data-[side=left]:[--sheet-x:-16px] data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-s data-[side=right]:[--sheet-x:16px] data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=top]:[--sheet-y:-16px] motion-reduce:animate-none! data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm",
+          "bg-popover text-popover-foreground fixed z-50 flex flex-col gap-4 bg-clip-padding text-sm shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=bottom]:[--sheet-y:16px] data-[side=left]:inset-y-0 data-[side=left]:inset-s-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-e data-[side=left]:[--sheet-x:-16px] data-[side=right]:inset-y-0 data-[side=right]:inset-e-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-s data-[side=right]:[--sheet-x:16px] data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=top]:[--sheet-y:-16px] motion-reduce:animate-none! data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm",
           !customAnimation &&
             "[&:where([data-state=open],[data-open]:not([data-open=false]))]:animate-sheet-in [&:where([data-state=closed],[data-closed]:not([data-closed=false]))]:animate-sheet-out",
           className,
@@ -86,7 +86,7 @@ function SheetContent({
           <SheetPrimitive.Close data-slot="sheet-close" asChild>
             <Button
               variant="ghost"
-              className="absolute end-3 top-3"
+              className="absolute inset-e-3 top-3"
               size="icon-sm"
             >
               <XIcon />

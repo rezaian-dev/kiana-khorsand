@@ -62,7 +62,7 @@ export function AuthForm({
     <>
       {/* Two links, one glass pill that slides between them. */}
       <nav
-        className="relative mb-[1rem] grid grid-cols-2 gap-1 rounded-[14px] border border-[#e7e1f1] bg-[#f1edf7]/80 p-1 backdrop-blur-sm dark:border-white/10 dark:bg-[#2b2438]/80"
+        className="relative mb-4 grid grid-cols-2 gap-1 rounded-[14px] border border-[#e7e1f1] bg-[#f1edf7]/80 p-1 backdrop-blur-sm dark:border-white/10 dark:bg-[#2b2438]/80"
         aria-label="حساب کاربری"
       >
         {[
@@ -126,7 +126,7 @@ export function AuthForm({
           <div className={fieldWrapClass}>
             <Phone aria-hidden="true" className={fieldIconClass} />
             <input
-              className={`${authInputClass} text-left`}
+              className={`${authInputClass} text-start`}
               id="auth-phone"
               name="phone"
               type="tel"
@@ -152,7 +152,7 @@ export function AuthForm({
             <Lock aria-hidden="true" className={fieldIconClass} />
             <input
               id="auth-password"
-              className={`${authInputClass} pl-[3.4rem]`}
+              className={`${authInputClass} ps-[3.4rem]`}
               name="password"
               type={showPassword ? "text" : "password"}
               autoComplete={register ? "new-password" : "current-password"}
@@ -165,7 +165,7 @@ export function AuthForm({
             />
             <button
               type="button"
-              className="absolute inset-y-0 left-0 grid w-11 place-items-center rounded-l-[12px] text-[#5a5170] transition-colors hover:text-[var(--field-accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--field-accent)] dark:text-[#b7accb]"
+              className="absolute inset-y-0 inset-s-0 grid w-11 place-items-center rounded-s-[12px] text-[#5a5170] transition-colors hover:text-(--field-accent) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--field-accent) dark:text-[#b7accb]"
               onClick={() => setShowPassword((value) => !value)}
               aria-label={
                 showPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"
@@ -256,14 +256,14 @@ export function AuthForm({
           whileHover={pending ? undefined : { y: -1 }}
           whileTap={pending ? undefined : { scale: 0.985 }}
           transition={motionTiming.hover}
-          className={`group relative mt-1 grid min-h-12 w-full cursor-pointer place-items-center overflow-hidden rounded-[14px] [background-image:linear-gradient(105deg,#12665f,#275576)] px-4 py-[.6rem] font-extrabold text-white shadow-[0_18px_36px_-20px_rgb(10_91_87/85%)] transition-colors disabled:cursor-wait disabled:opacity-70 dark:[background-image:linear-gradient(105deg,#8de2cc,#a6ceee)] dark:text-[#10222a] ${
+          className={`group relative mt-1 grid min-h-12 w-full cursor-pointer place-items-center overflow-hidden rounded-[14px] bg-[linear-gradient(105deg,#12665f,#275576)] px-4 py-[.6rem] font-extrabold text-white shadow-[0_18px_36px_-20px_rgb(10_91_87/85%)] transition-colors disabled:cursor-wait disabled:opacity-70 dark:bg-[linear-gradient(105deg,#8de2cc,#a6ceee)] dark:text-[#10222a] ${
             register ? "rounded-[14px_14px_14px_4px]" : ""
           }`}
         >
           {/* A slow sheen across the button — pure CSS, gone the moment the user taps. */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -translate-x-full [background-image:linear-gradient(100deg,transparent,rgb(255_255_255/28%),transparent)] transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden"
+            className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(100deg,transparent,rgb(255_255_255/28%),transparent)] transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden"
           />
           <span className="relative flex items-center gap-2">
             {pending ? (

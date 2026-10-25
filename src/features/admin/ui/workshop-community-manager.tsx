@@ -9,6 +9,10 @@ import {
   setEnrollmentStatus,
 } from "@/actions/workshop-reviews";
 
+/** One participant row. */
+const managerRowClassName =
+  "flex flex-wrap items-center justify-between gap-4 rounded-[14px] border border-(--panel-line,var(--line)) p-[.85rem]";
+
 type Enrollment = {
   id: string;
   userId: string;
@@ -41,7 +45,7 @@ export function WorkshopCommunityManager({
   reviews: Review[];
 }) {
   return (
-    <details className="workshop-admin-community border-t border-[var(--panel-line,var(--line))] py-4">
+    <details className="workshop-admin-community border-t border-(--panel-line,var(--line)) py-4">
       <summary>
         ثبت‌نام‌ها ({enrollments.length}) و نظرها ({reviews.length})
       </summary>
@@ -53,10 +57,7 @@ export function WorkshopCommunityManager({
           </p>
         )}
         {enrollments.map((item) => (
-          <div
-            className="flex flex-wrap items-center justify-between gap-4 rounded-[14px] border border-[var(--panel-line,var(--line))] p-[.85rem]"
-            key={item.id}
-          >
+          <div className={managerRowClassName} key={item.id}>
             <div className="min-w-0 flex-1 wrap-anywhere">
               <strong>{item.name}</strong>
               <p className={`${panelMutedClassName} leading-[1.8]`}>
@@ -120,10 +121,7 @@ export function WorkshopCommunityManager({
           <p className={panelMutedClassName}>هنوز نظری ارسال نشده است.</p>
         )}
         {reviews.map((item) => (
-          <div
-            className="flex flex-wrap items-center justify-between gap-4 rounded-[14px] border border-[var(--panel-line,var(--line))] p-[.85rem]"
-            key={item.id}
-          >
+          <div className={managerRowClassName} key={item.id}>
             <div className="min-w-0 flex-1 wrap-anywhere">
               <strong>
                 {item.name} · {item.rating} از ۵

@@ -34,7 +34,7 @@ function DesktopNavLink({
   const [hovered, setHovered] = useState(false);
   return (
     <MotionLink
-      className={`${navLinkClassName} ${active ? "is-active text-[var(--fg)]" : "text-[var(--muted)]"}`}
+      className={`${navLinkClassName} ${active ? "is-active text-(--fg)" : "text-(--muted)"}`}
       href={href}
       aria-current={active ? "page" : undefined}
       initial={false}

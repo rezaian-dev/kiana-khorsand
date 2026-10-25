@@ -103,12 +103,12 @@ export default async function Page({ searchParams }: CategorySearchProps) {
       <div className={siteContainerClassName}>
         <ReviewSubmission authenticated={Boolean(session)} />
         <form
-          className="public-search-panel mt-[clamp(1.3rem,3vw,2.5rem)] grid items-stretch gap-[1.15rem] rounded-[23px] border border-[color:color-mix(in_srgb,#569b96_15%,var(--site-line))] bg-[var(--site-surface)] [background-image:radial-gradient(circle_at_96%_8%,color-mix(in_srgb,#67ad9b_8%,transparent),transparent_36%)] p-[clamp(1.05rem,2.7vw,1.8rem)] shadow-[0_18px_42px_-34px_#1b566250]"
+          className="public-search-panel mt-[clamp(1.3rem,3vw,2.5rem)] grid items-stretch gap-[1.15rem] rounded-[23px] border border-[color-mix(in_srgb,#569b96_15%,var(--site-line))] bg-(--site-surface) bg-[radial-gradient(circle_at_96%_8%,color-mix(in_srgb,#67ad9b_8%,transparent),transparent_36%)] p-[clamp(1.05rem,2.7vw,1.8rem)] shadow-[0_18px_42px_-34px_#1b566250]"
           method="get"
           role="search"
         >
           <div className="flex min-w-0 items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-[13px] bg-[color:color-mix(in_srgb,#318b85_13%,var(--site-surface))] text-[#257b78] dark:text-[#a6e4d7]">
+            <span className="grid size-11 shrink-0 place-items-center rounded-[13px] bg-[color-mix(in_srgb,#318b85_13%,var(--site-surface))] text-[#257b78] dark:text-[#a6e4d7]">
               <ListFilter size={20} aria-hidden="true" />
             </span>
             <div className="grid min-w-0 gap-[.15rem]">
@@ -118,7 +118,7 @@ export default async function Page({ searchParams }: CategorySearchProps) {
               >
                 دسته‌بندی روایت‌ها
               </label>
-              <small className="text-[.8rem] leading-[1.7] text-[var(--site-muted)]">
+              <small className="text-[.8rem] leading-[1.7] text-(--site-muted)">
                 روایت‌ها را بر اساس موضوع مرور کنید.
               </small>
             </div>
@@ -143,7 +143,7 @@ export default async function Page({ searchParams }: CategorySearchProps) {
             {selected && (
               <Link
                 href="/testimonials"
-                className="inline-flex min-h-[46px] items-center justify-center gap-[.35rem] rounded-[10px] px-[.6rem] py-[.4rem] text-[.83rem] font-extrabold text-[#22746e] no-underline hover:bg-[color:color-mix(in_srgb,#3d9486_10%,var(--site-surface))] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#22746e] max-[620px]:justify-self-start dark:text-[#a4e5d7]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-[.35rem] rounded-[10px] px-[.6rem] py-[.4rem] text-[.83rem] font-extrabold text-[#22746e] no-underline hover:bg-[color-mix(in_srgb,#3d9486_10%,var(--site-surface))] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#22746e] max-[620px]:justify-self-start dark:text-[#a4e5d7]"
               >
                 <RotateCcw size={16} aria-hidden="true" /> نمایش همه
               </Link>
@@ -158,11 +158,11 @@ export default async function Page({ searchParams }: CategorySearchProps) {
             <div className="testimonial-list-heading flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 pt-[clamp(.6rem,2vw,1rem)]">
               <h2
                 id="testimonial-list-title"
-                className="text-[clamp(1.35rem,2.2vw,1.8rem)] leading-[1.55] font-[850] text-[var(--site-ink)]"
+                className="text-[clamp(1.35rem,2.2vw,1.8rem)] leading-[1.55] font-[850] text-(--site-ink)"
               >
                 روایت‌های همراهان
               </h2>
-              <p className="rounded-full bg-[color:color-mix(in_srgb,var(--c-teal)_8%,var(--site-surface))] px-3 py-[.4rem] text-[.82rem] font-[750] text-[var(--site-ink)]">
+              <p className="rounded-full bg-[color-mix(in_srgb,var(--c-teal)_8%,var(--site-surface))] px-3 py-[.4rem] text-[.82rem] font-[750] text-(--site-ink)">
                 {new Intl.NumberFormat("fa-IR").format(filtered.length)} روایت
               </p>
             </div>
@@ -180,7 +180,7 @@ export default async function Page({ searchParams }: CategorySearchProps) {
             </ScrollReveal>
           </section>
         ) : (
-          <p className="site-empty py-16 text-[var(--site-muted)]">
+          <p className="site-empty py-16 text-(--site-muted)">
             {labels.unavailable}
           </p>
         )}

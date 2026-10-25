@@ -58,7 +58,7 @@ export function UserActions({
 
   if (isSelf) {
     return (
-      <span className="text-[.75rem] font-bold text-[var(--panel-muted)]">
+      <span className="text-[.75rem] font-bold text-(--panel-muted)">
         حساب شما
       </span>
     );

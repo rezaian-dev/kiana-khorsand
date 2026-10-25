@@ -49,16 +49,16 @@ export default async function AdminLoginPage() {
   const signedInAsUser = Boolean(session);
 
   return (
-    <main className="relative isolate grid [--c-teal:#148b80] [--c-plum:#a63cad] dark:[--c-teal:#4ecdbc] dark:[--c-plum:#dfa0e6] min-h-dvh place-items-center overflow-hidden bg-[#f3f6fa] px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] text-[var(--site-ink)] sm:px-6 dark:bg-[#070b14]">
+    <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-[#f3f6fa] px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] text-(--site-ink) [--c-plum:#a63cad] [--c-teal:#148b80] sm:px-6 dark:bg-[#070b14] dark:[--c-plum:#dfa0e6] dark:[--c-teal:#4ecdbc]">
       {/* Ambient stage: three slow brand lights over a faint grid. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
-        <div className="absolute inset-0 [background-image:radial-gradient(60rem_40rem_at_80%_-10%,#bfe9e4cc,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#d8cdf6cc,transparent_60%)] dark:[background-image:radial-gradient(60rem_40rem_at_80%_-10%,#0f4a4a99,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#2b1f5e99,transparent_60%)]" />
-        <div className="admin-aurora absolute start-[18%] -top-24 size-[26rem] rounded-full bg-[#59c8bb]/30 blur-[90px] dark:bg-[#1fa596]/35" />
-        <div className="admin-aurora admin-aurora-slow absolute end-[8%] -bottom-32 size-[30rem] rounded-full bg-[#a98cf0]/28 blur-[110px] dark:bg-[#6f4fd6]/35" />
-        <div className="absolute inset-0 [background-image:linear-gradient(to_right,#0b1a3320_1px,transparent_1px),linear-gradient(to_bottom,#0b1a3320_1px,transparent_1px)] [mask-image:radial-gradient(70%_60%_at_50%_45%,#000,transparent)] [background-size:56px_56px] opacity-[.35] dark:[background-image:linear-gradient(to_right,#ffffff14_1px,transparent_1px),linear-gradient(to_bottom,#ffffff14_1px,transparent_1px)] dark:opacity-25" />
+        <div className="absolute inset-0 bg-[radial-gradient(60rem_40rem_at_80%_-10%,#bfe9e4cc,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#d8cdf6cc,transparent_60%)] dark:bg-[radial-gradient(60rem_40rem_at_80%_-10%,#0f4a4a99,transparent_62%),radial-gradient(46rem_34rem_at_4%_104%,#2b1f5e99,transparent_60%)]" />
+        <div className="admin-aurora absolute inset-s-[18%] -top-24 size-104 rounded-full bg-[#59c8bb]/30 blur-[90px] dark:bg-[#1fa596]/35" />
+        <div className="admin-aurora admin-aurora-slow absolute inset-e-[8%] -bottom-32 size-120 rounded-full bg-[#a98cf0]/28 blur-[110px] dark:bg-[#6f4fd6]/35" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0b1a3320_1px,transparent_1px),linear-gradient(to_bottom,#0b1a3320_1px,transparent_1px)] mask-[radial-gradient(70%_60%_at_50%_45%,#000,transparent)] bg-size-[56px_56px] opacity-[.35] dark:bg-[linear-gradient(to_right,#ffffff14_1px,transparent_1px),linear-gradient(to_bottom,#ffffff14_1px,transparent_1px)] dark:opacity-25" />
       </div>
 
       <div className="grid w-full max-w-[1120px] items-stretch gap-5 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,.9fr)] lg:gap-7">
@@ -73,7 +73,7 @@ export default async function AdminLoginPage() {
                 <BrandMark size={32} priority />
               </span>
               <div className="min-w-0">
-                <p className="m-0 text-[.72rem] font-extrabold tracking-[.14em] text-[var(--site-muted)] uppercase">
+                <p className="m-0 text-[.72rem] font-extrabold tracking-[.14em] text-(--site-muted) uppercase">
                   Kiana Khorsand
                 </p>
                 <p className="m-0 text-[.92rem] font-extrabold">پنل مدیریت</p>
@@ -87,11 +87,11 @@ export default async function AdminLoginPage() {
               >
                 ورود به فضای مدیریت
               </h1>
-              <p className="m-0 max-w-[42ch] text-[.85rem] leading-7 text-[var(--site-muted)]">
+              <p className="m-0 max-w-[42ch] text-[.85rem]/7 text-(--site-muted)">
                 این مسیر فقط برای مدیران سایت است. حساب مراجعان از صفحهٔ{" "}
                 <Link
                   href="/login"
-                  className="font-extrabold text-[var(--c-teal)] underline decoration-[color:color-mix(in_srgb,var(--c-teal)_35%,transparent)] underline-offset-4 hover:decoration-[var(--c-teal)]"
+                  className="font-extrabold text-(--c-teal) underline decoration-[color-mix(in_srgb,var(--c-teal)_35%,transparent)] underline-offset-4 hover:decoration-(--c-teal)"
                 >
                   ورود کاربران
                 </Link>{" "}
@@ -101,7 +101,7 @@ export default async function AdminLoginPage() {
           </header>
 
           {signedInAsUser && (
-            <div className="grid gap-2 rounded-[1rem] border border-[#d9cff0] bg-[#f6f1ff]/80 px-4 py-3 text-[.82rem] leading-6 text-[#4a3a6b] dark:border-[#4a3f63] dark:bg-[#2a2439]/80 dark:text-[#ddd2f7]">
+            <div className="grid gap-2 rounded-[1rem] border border-[#d9cff0] bg-[#f6f1ff]/80 px-4 py-3 text-[.82rem]/6 text-[#4a3a6b] dark:border-[#4a3f63] dark:bg-[#2a2439]/80 dark:text-[#ddd2f7]">
               <p className="m-0 font-extrabold">
                 اکنون با حساب «{session?.user.name}» وارد شده‌اید.
               </p>
@@ -121,9 +121,9 @@ export default async function AdminLoginPage() {
 
           <AdminLoginForm />
 
-          <p className="m-0 flex items-start gap-2 border-t border-white/60 pt-4 text-[.75rem] leading-6 text-[var(--site-muted)] dark:border-white/10">
+          <p className="m-0 flex items-start gap-2 border-t border-white/60 pt-4 text-[.75rem]/6 text-(--site-muted) dark:border-white/10">
             <ShieldCheck
-              className="mt-0.5 size-4 flex-none text-[var(--c-teal)]"
+              className="mt-0.5 size-4 flex-none text-(--c-teal)"
               aria-hidden="true"
             />
             تلاش‌های ورود ناموفق محدود می‌شوند و نشست این بخش جدا از حساب کاربری
@@ -132,7 +132,7 @@ export default async function AdminLoginPage() {
         </section>
 
         {/* Editorial side — the "why", plus the installed-app route into this page. */}
-        <aside className="relative hidden flex-col justify-between overflow-hidden rounded-[1.9rem] border border-white/15 [background-image:linear-gradient(160deg,#0f3f45,#16233f_58%,#241a3c)] p-8 text-[#eaf7f4] shadow-[0_40px_100px_-56px_#0b1626] lg:flex">
+        <aside className="relative hidden flex-col justify-between overflow-hidden rounded-[1.9rem] border border-white/15 bg-[linear-gradient(160deg,#0f3f45,#16233f_58%,#241a3c)] p-8 text-[#eaf7f4] shadow-[0_40px_100px_-56px_#0b1626] lg:flex">
           <div
             aria-hidden="true"
             className="absolute inset-0 [background:radial-gradient(20rem_16rem_at_100%_0%,#4fd0c740,transparent_62%),radial-gradient(22rem_18rem_at_0%_100%,#b07bd83d,transparent_62%)]"
@@ -173,12 +173,12 @@ export default async function AdminLoginPage() {
               />
               روی موبایل، اپ را نصب کنید
             </p>
-            <p className="m-0 text-[.76rem] leading-6 text-[#b6cfd3]">
+            <p className="m-0 text-[.76rem]/6 text-[#b6cfd3]">
               در نسخهٔ نصب‌شده نوار آدرس وجود ندارد؛ با فرمان «رفتن به آدرس»
               کافی است
               <span
                 dir="ltr"
-                className="mx-1 rounded bg-black/25 px-1.5 py-0.5 font-mono text-[.72rem] text-[#d8f5ef]"
+                className="mx-1 rounded-sm bg-black/25 px-1.5 py-0.5 font-mono text-[.72rem] text-[#d8f5ef]"
               >
                 /admin
               </span>

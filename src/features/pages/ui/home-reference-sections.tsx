@@ -87,8 +87,10 @@ export function ReferenceAreas({
           aria-hidden="true"
         />
       </span>
-      <h3 className={`${publicH3ClassName} mt-5 break-words`}>{area.title}</h3>
-      <p className="text-muted mt-3 line-clamp-2 text-sm leading-7 break-words">
+      <h3 className={`${publicH3ClassName} mt-5 wrap-break-word`}>
+        {area.title}
+      </h3>
+      <p className="text-muted mt-3 line-clamp-2 text-sm/7 wrap-break-word">
         {area.description}
       </p>
       <span className="text-fg mt-5 inline-flex grow items-center gap-1.5 text-sm font-bold">
@@ -109,28 +111,28 @@ export function ReferenceFees({
       className={`${index === 1 ? publicRainbowCardClassName : publicCardClassName} ${publicSpotClassName} group item-col art-fee-card relative flex min-w-0 flex-col ${artCornerClassName} ${artSurfaceClassName}`}
     >
       {index === 1 && (
-        <span className="accent-bar absolute start-6 -top-3 rounded-full [background-image:var(--grad-sunset)] px-3 py-1 text-[.6875rem] font-extrabold text-white">
+        <span className="accent-bar absolute inset-s-6 -top-3 rounded-full [background-image:var(--grad-sunset)] px-3 py-1 text-[.6875rem] font-extrabold text-white">
           پیشنهاد من
         </span>
       )}
       <span
-        className={`${publicIconTileBaseClassName} tile-${["violet", "teal", "plum"][index]} ${publicTileToneClassName(["violet", "teal", "plum"][index])} h-14 w-14 text-[1.75rem] ${artIconTileClassName}`}
+        className={`${publicIconTileBaseClassName} tile-${["violet", "teal", "plum"][index]} ${publicTileToneClassName(["violet", "teal", "plum"][index])} size-14 text-[1.75rem] ${artIconTileClassName}`}
       >
         <i className="ph-duotone ph-chats-circle" aria-hidden="true" />
       </span>
-      <h3 className={`${publicH3ClassName} mt-5 break-words`}>
+      <h3 className={`${publicH3ClassName} mt-5 wrap-break-word`}>
         {service.name}
       </h3>
       <p className="text-muted mt-2 text-xs font-extrabold tracking-wide">
         {service.duration} دقیقه
       </p>
       <p className="mt-5 flex items-baseline gap-2">
-        <span className="text-2xl font-extrabold break-words">
+        <span className="text-2xl font-extrabold wrap-break-word">
           {new Intl.NumberFormat("fa-IR").format(service.price)}
         </span>
         <span className="text-muted text-sm">تومان</span>
       </p>
-      <p className="text-muted mt-4 text-sm leading-7 break-words">
+      <p className="text-muted mt-4 text-sm/7 wrap-break-word">
         {service.features[0]}
       </p>
       <ul className="mt-5 flex flex-col gap-2.5">
@@ -140,7 +142,7 @@ export function ReferenceFees({
             className="text-muted flex items-start gap-2 text-sm"
           >
             <i
-              className="ph-bold ph-check-circle text-accent-teal mt-0.5 text-[1.05rem] [color:var(--c-teal)]"
+              className="ph-bold ph-check-circle text-accent-teal mt-0.5 text-[1.05rem] text-(--c-teal)"
               aria-hidden="true"
             />
             {feature}

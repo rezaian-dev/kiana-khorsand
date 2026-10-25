@@ -37,14 +37,14 @@ export function Quiz({ definition }: { definition: Model["assessments"] }) {
     >
       {state.score !== null ? (
         <section
-          className="grid gap-[.9rem] [&>p:last-child]:leading-[2] [&>p:last-child]:text-[var(--site-muted)]"
+          className="grid gap-[.9rem] [&>p:last-child]:leading-loose [&>p:last-child]:text-(--site-muted)"
           aria-live="polite"
         >
-          <span className="grid size-12 place-items-center rounded-[14px] bg-[color:color-mix(in_srgb,#389587_13%,var(--site-surface))] text-[#247c75]">
+          <span className="grid size-12 place-items-center rounded-[14px] bg-[color-mix(in_srgb,#389587_13%,var(--site-surface))] text-[#247c75]">
             <CircleCheck size={25} aria-hidden="true" />
           </span>
           <h2 className={`${siteHeadingClassName} mb-0`}>{labels.result}</h2>
-          <p className="justify-self-start rounded-[10px] bg-[color:color-mix(in_srgb,#389587_10%,var(--site-surface))] px-[.8rem] py-[.55rem] font-[850] text-[var(--site-ink)]">
+          <p className="justify-self-start rounded-[10px] bg-[color-mix(in_srgb,#389587_10%,var(--site-surface))] px-[.8rem] py-[.55rem] font-[850] text-(--site-ink)">
             {state.band} · {formatNumber(state.score)}
           </p>
           <p>{state.interpretation}</p>
@@ -57,7 +57,7 @@ export function Quiz({ definition }: { definition: Model["assessments"] }) {
               {formatNumber(definition.questions.length)}
             </span>
             <span
-              className="block h-2 w-full overflow-hidden rounded-full bg-[color:color-mix(in_srgb,#418e86_14%,var(--site-surface))]"
+              className="block h-2 w-full overflow-hidden rounded-full bg-[color-mix(in_srgb,#418e86_14%,var(--site-surface))]"
               role="progressbar"
               aria-label="پیشرفت پرسشنامه"
               aria-valuemin={1}
@@ -66,7 +66,7 @@ export function Quiz({ definition }: { definition: Model["assessments"] }) {
               aria-valuetext={`${formatNumber(index + 1)} از ${formatNumber(definition.questions.length)} پرسش`}
             >
               <m.span
-                className="block h-full rounded-[inherit] [background-image:linear-gradient(90deg,#247c78,#7865a0)]"
+                className="block h-full rounded-[inherit] bg-[linear-gradient(90deg,#247c78,#7865a0)]"
                 initial={false}
                 animate={{
                   width: `${((index + 1) / definition.questions.length) * 100}%`,
@@ -76,13 +76,13 @@ export function Quiz({ definition }: { definition: Model["assessments"] }) {
             </span>
           </div>
           <fieldset className="site-quiz-question m-0 min-w-0 border-0 p-0">
-            <legend className="mb-5 max-w-full text-[clamp(1.1rem,2vw,1.35rem)] leading-[1.75] font-[850] text-[var(--site-ink)]">
+            <legend className="mb-5 max-w-full text-[clamp(1.1rem,2vw,1.35rem)] leading-[1.75] font-[850] text-(--site-ink)">
               {question.prompt}
             </legend>
             {question.options.map((option) => (
               <label
                 key={option.value}
-                className="my-[.55rem] flex min-h-[58px] cursor-pointer items-center gap-3 rounded-[14px] border border-[color:color-mix(in_srgb,#367e83_15%,var(--site-line))] bg-[var(--site-surface)] px-4 py-[.8rem] text-[.94rem] leading-[1.7] text-[var(--site-ink)] focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-[#2b827c] hover:border-[#358980] hover:bg-[color:color-mix(in_srgb,#468f83_6%,var(--site-surface))] has-checked:border-[#257c75] has-checked:bg-[color:color-mix(in_srgb,#3a9588_12%,var(--site-surface))] has-checked:font-extrabold"
+                className="my-[.55rem] flex min-h-[58px] cursor-pointer items-center gap-3 rounded-[14px] border border-[color-mix(in_srgb,#367e83_15%,var(--site-line))] bg-(--site-surface) px-4 py-[.8rem] text-[.94rem] leading-[1.7] text-(--site-ink) focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-[#2b827c] hover:border-[#358980] hover:bg-[color-mix(in_srgb,#468f83_6%,var(--site-surface))] has-checked:border-[#257c75] has-checked:bg-[color-mix(in_srgb,#3a9588_12%,var(--site-surface))] has-checked:font-extrabold"
               >
                 <input
                   className="m-0 size-[19px] shrink-0 accent-[#247c75]"

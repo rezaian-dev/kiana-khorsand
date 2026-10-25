@@ -96,11 +96,11 @@ export default async function Page() {
         className={`${publicHeroSectionClassName} ${publicEditorialHeroClassName} contact-editorial-hero relative pb-10 md:pb-14`}
       >
         <div
-          className={`${publicBlobClassName} -start-20 -top-16 h-72 w-72 bg-[var(--c-teal)]`}
+          className={`${publicBlobClassName} -inset-s-20 -top-16 size-72 bg-(--c-teal)`}
           aria-hidden="true"
         />
         <div
-          className={`${publicBlobClassName} -end-24 top-16 h-80 w-80 bg-[var(--c-amber)]`}
+          className={`${publicBlobClassName} -inset-e-24 top-16 size-80 bg-(--c-amber)`}
           aria-hidden="true"
         />
         <div className={`${publicContainerClassName} relative`}>
@@ -112,13 +112,13 @@ export default async function Page() {
                 هر سؤالی داری،{" "}
                 <span className={publicGradTextClassName}>بنویس</span>
               </h1>
-              <p className={`${publicLeadClassName} mt-6 leading-[2]`}>
+              <p className={`${publicLeadClassName} mt-6 leading-loose`}>
                 اگر دربارهٔ شیوهٔ مشاوره یا رزرو پرسشی داری، اینجا راه‌های
                 ارتباط و ارسال پیام را پیدا می‌کنی. برای شرایط فوری، از خدمات
                 اورژانس کمک بگیر.
               </p>
             </div>
-            <div className="contact-hero-art relative h-[clamp(270px,28vw,390px)] overflow-hidden rounded-[115px_28px_28px_28px] border-[6px] border-[color:color-mix(in_srgb,var(--site-surface)_90%,transparent)] [box-shadow:0_28px_55px_-32px_#375a5a68] max-[760.02px]:h-[clamp(205px,52vw,300px)] max-[760.02px]:rounded-[84px_23px_23px_23px]">
+            <div className="contact-hero-art relative h-[clamp(270px,28vw,390px)] overflow-hidden rounded-[115px_28px_28px_28px] border-[6px] border-[color-mix(in_srgb,var(--site-surface)_90%,transparent)] [box-shadow:0_28px_55px_-32px_#375a5a68] max-[760.02px]:h-[clamp(205px,52vw,300px)] max-[760.02px]:rounded-[84px_23px_23px_23px]">
               <Image
                 src="/assets/images/intro-gather.jpg"
                 width={740}
@@ -146,7 +146,7 @@ export default async function Page() {
                 {channels.map((item) => (
                   <MotionCard
                     key={item.label}
-                    className="flex min-w-0 gap-4 rounded-[20px] border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[var(--shadow-soft)]"
+                    className="flex min-w-0 gap-4 rounded-[20px] border border-(--line) bg-(--surface) p-5 shadow-(--shadow-soft)"
                   >
                     <span
                       className={`${publicIconTileBaseClassName} ${publicIconTileShadowClassName} tile-${item.tone} ${publicTileToneClassName(item.tone)} size-[46px] shrink-0 rounded-[14px] text-[1.35rem]`}
@@ -154,15 +154,15 @@ export default async function Page() {
                       <Icon name={item.icon} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold text-[var(--muted)]">
+                      <p className="text-xs font-bold text-(--muted)">
                         {item.label}
                       </p>
-                      <p className="mt-[.2rem] text-base font-extrabold break-words text-[var(--fg)]">
+                      <p className="mt-[.2rem] text-base font-extrabold wrap-break-word text-(--fg)">
                         {item.href ? (
                           <a
                             href={item.href}
                             dir={item.label === "نشانی" ? undefined : "ltr"}
-                            className="hover:text-[var(--c-teal)] hover:underline hover:underline-offset-[.2em]"
+                            className="hover:text-(--c-teal) hover:underline hover:underline-offset-[.2em]"
                           >
                             {item.value}
                           </a>
@@ -189,14 +189,14 @@ export default async function Page() {
                     const open = Boolean(rule?.slots.length);
                     return (
                       <div
-                        className="flex justify-between gap-4 border-b border-dashed border-[var(--line)] py-[.65rem] text-sm last:border-b-0"
+                        className="flex justify-between gap-4 border-b border-dashed border-(--line) py-[.65rem] text-sm last:border-b-0"
                         key={day.key}
                       >
-                        <span className="font-bold text-[var(--muted)]">
+                        <span className="font-bold text-(--muted)">
                           {day.label}
                         </span>
                         <span
-                          className={`text-start font-bold [unicode-bidi:isolate] ${open ? "text-[var(--fg)]" : "text-[var(--c-rose)]"}`}
+                          className={`text-start font-bold [unicode-bidi:isolate] ${open ? "text-(--fg)" : "text-(--c-rose)"}`}
                           dir={open ? "ltr" : undefined}
                         >
                           {open
@@ -207,7 +207,7 @@ export default async function Page() {
                     );
                   })}
                 </div>
-                <p className="mt-4 text-xs text-[var(--muted)]">
+                <p className="mt-4 text-xs text-(--muted)">
                   در موارد خطر فوری، لطفاً با اورژانس اجتماعی ۱۲۳ یا خدمات
                   فوریت‌های محل زندگی خود تماس بگیر.
                 </p>
@@ -221,7 +221,7 @@ export default async function Page() {
                 <h3 className={`${publicH3ClassName} mt-5`}>
                   اگر ترجیح می‌دهی مستقیم وقت بگیری
                 </h3>
-                <p className="text-muted mt-3 text-sm leading-7">
+                <p className="text-muted mt-3 text-sm/7">
                   اگر سؤال خاصی نداری و آماده‌ای شروع کنی، می‌توانی بدون تماس،
                   وقت مشاوره رزرو کنی.
                 </p>
@@ -238,13 +238,13 @@ export default async function Page() {
               <div className={publicRainbowCardClassName} id="formCard">
                 <div className="flex items-center gap-3">
                   <span
-                    className={`${publicIconTileSizedClassName} tile-indigo h-12 w-12 text-[1.35rem] ${publicTileToneClasses.indigo}`}
+                    className={`${publicIconTileSizedClassName} tile-indigo size-12 text-[1.35rem] ${publicTileToneClasses.indigo}`}
                   >
                     <Icon name="paper-plane-tilt" />
                   </span>
                   <div className="min-w-0">
                     <h2 className={publicH3ClassName}>پیام کوتاه</h2>
-                    <p className="text-muted mt-2 text-sm leading-7">
+                    <p className="text-muted mt-2 text-sm/7">
                       اگر سؤالت کوتاه است یا می‌خواهی قبل از رزرو مطمئن شوی،
                       همین‌جا بنویس.
                     </p>

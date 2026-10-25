@@ -49,14 +49,14 @@ export function FilterableList({
       <div
         className={`admin-list-filter ${panelCardClassName} mb-4 flex flex-wrap items-center gap-x-4 gap-y-[.7rem]`}
       >
-        <div className="flex min-w-0 flex-[1_1_220px] items-center gap-[.55rem] rounded-[13px] border border-[var(--panel-line)] bg-[var(--panel-surface)] px-[.7rem] py-[.15rem] text-[var(--panel-muted)] focus-within:border-[#168f88] focus-within:ring-[3px] focus-within:ring-[rgba(25,143,137,.14)]">
+        <div className="flex min-w-0 flex-[1_1_220px] items-center gap-[.55rem] rounded-[13px] border border-(--panel-line) bg-(--panel-surface) px-[.7rem] py-[.15rem] text-(--panel-muted) focus-within:border-[#168f88] focus-within:ring-[3px] focus-within:ring-[rgba(25,143,137,.14)]">
           <label htmlFor={id} className="sr-only">
             {label}
           </label>
           <Search size={19} aria-hidden="true" />
           <input
             id={id}
-            className="h-[42px] w-full border-0 bg-transparent text-[.86rem] text-[var(--panel-text)] outline-none focus:shadow-none"
+            className="h-[42px] w-full border-0 bg-transparent text-[.86rem] text-(--panel-text) outline-none focus:shadow-none"
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -82,7 +82,7 @@ export function FilterableList({
                     <m.span
                       aria-hidden="true"
                       layoutId="panel-filter-indicator"
-                      className="pointer-events-none absolute inset-0 rounded-full bg-[var(--ar-brand-soft)]"
+                      className="pointer-events-none absolute inset-0 rounded-full bg-(--ar-brand-soft)"
                       transition={
                         reduce ? { duration: 0 } : motionTiming.indicator
                       }
@@ -95,7 +95,7 @@ export function FilterableList({
           </LayoutGroup>
         )}
         <p
-          className="admin-list-filter-count w-full text-xs text-[var(--panel-muted)]"
+          className="admin-list-filter-count w-full text-xs text-(--panel-muted)"
           aria-live="polite"
         >
           {new Intl.NumberFormat("fa-IR").format(visible.length)} مورد از{" "}

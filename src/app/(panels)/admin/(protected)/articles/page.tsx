@@ -44,7 +44,7 @@ export default async function Page() {
                   ) : null}
                   <Link
                     href={`/admin/article-editor?slug=${item.slug}`}
-                    className="panel-amount font-extrabold text-[var(--panel-accent)]"
+                    className="panel-amount font-extrabold text-(--panel-accent)"
                   >
                     ویرایش مقاله ←
                   </Link>

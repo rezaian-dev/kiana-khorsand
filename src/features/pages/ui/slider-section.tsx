@@ -92,12 +92,12 @@ export function SliderSection({
             </p>
             <h2
               id={id}
-              className={`${publicH2ClassName} mt-4 text-start ${editorial ? "text-[var(--fg)]!" : ""}`}
+              className={`${publicH2ClassName} mt-4 text-start ${editorial ? "text-(--fg)!" : ""}`}
             >
               {title}
             </h2>
             {description && (
-              <p className="mt-3 text-start text-sm leading-7 text-[var(--site-muted)]">
+              <p className="mt-3 text-start text-sm/7 text-(--site-muted)">
                 {description}
               </p>
             )}

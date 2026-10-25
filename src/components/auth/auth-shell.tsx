@@ -24,7 +24,7 @@ export function AuthShell({
       className={[
         fieldScopeClassName,
         fieldReducedMotionClassName,
-        "[--field-accent:#7a52c9] [--field-surface:#ffffff] dark:[--field-accent:#b9a3ff] [--field-surface-dark:#241c38] grid min-h-dvh grid-cols-1 text-[#26213f] [direction:ltr] motion-reduce:*:scroll-auto min-[851px]:grid-cols-[minmax(0,.9fr)_minmax(0,1fr)] dark:text-[#f7f3ff]",
+        "grid min-h-dvh grid-cols-1 text-[#26213f] [--field-accent:#7a52c9] [--field-surface-dark:#241c38] [--field-surface:#ffffff] [direction:ltr] motion-reduce:*:scroll-auto min-[851px]:grid-cols-[minmax(0,.9fr)_minmax(0,1fr)] dark:text-[#f7f3ff] dark:[--field-accent:#b9a3ff]",
         registerVisual
           ? "auth-new-shell-register bg-[#f8f7f3] dark:bg-[#191f23]"
           : "bg-[#fcfafc] dark:bg-[#191523]",
@@ -59,7 +59,7 @@ export function AuthShell({
             fill
             sizes="(max-width: 850px) 0px, 45vw"
             priority={loginVisual}
-            className="auth-new-aside-photo absolute inset-0 h-full w-full rounded-none bg-transparent object-cover object-center"
+            className="auth-new-aside-photo absolute inset-0 size-full rounded-none bg-transparent object-cover object-center"
           />
         )}
         <div
@@ -106,8 +106,8 @@ export function AuthShell({
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-1 overflow-hidden"
         >
-          <span className="absolute start-[6%] top-[8%] aspect-square w-[min(46vw,24rem)] animate-aurora rounded-full bg-[color-mix(in_srgb,#a78bfa_55%,transparent)] opacity-50 blur-[70px] motion-reduce:animate-none dark:opacity-30" />
-          <span className="absolute end-[2%] bottom-[6%] aspect-square w-[min(44vw,22rem)] animate-aurora-slow rounded-full bg-[color-mix(in_srgb,#34d3c0_45%,transparent)] opacity-50 blur-[70px] motion-reduce:animate-none dark:opacity-30" />
+          <span className="animate-aurora absolute inset-s-[6%] top-[8%] aspect-square w-[min(46vw,24rem)] rounded-full bg-[color-mix(in_srgb,#a78bfa_55%,transparent)] opacity-50 blur-[70px] motion-reduce:animate-none dark:opacity-30" />
+          <span className="animate-aurora-slow absolute inset-e-[2%] bottom-[6%] aspect-square w-[min(44vw,22rem)] rounded-full bg-[color-mix(in_srgb,#34d3c0_45%,transparent)] opacity-50 blur-[70px] motion-reduce:animate-none dark:opacity-30" />
         </div>
         {registerVisual && (
           <div
