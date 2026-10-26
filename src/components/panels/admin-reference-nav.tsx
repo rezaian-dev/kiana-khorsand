@@ -122,43 +122,43 @@ export function AdminReferenceNav() {
         className={`admin-ref-sidebar admin-ref-glass ${adminGlassClassName} ${adminSidebarClassName}`}
         aria-label="ناوبری اصلی"
       >
-        {/* Brand */}
+        {/* Brand — compact تا بدون اسکرول جا شود */}
         <Link
-          className="admin-ref-brand mb-3 flex items-center gap-2.5 rounded-[.6rem] border-b border-(--panel-line) px-2.5 pt-2 pb-4 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
+          className="admin-ref-brand mb-2 flex items-center gap-2.5 rounded-[.6rem] border-b border-(--panel-line) px-2 pt-1.5 pb-3 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
           href="/"
           aria-label="بازگشت به صفحه اصلی"
           title="بازگشت به صفحه اصلی"
         >
           <div className="flex items-center gap-2">
             <BrandMark
-              size={40}
-              className="admin-ref-logo size-[40px] flex-none rounded-[14px] shadow-[0_0_20px_rgba(20,124,131,0.35)] dark:shadow-[0_0_20px_rgba(163,232,220,0.25)]"
+              size={36}
+              className="admin-ref-logo size-[36px] flex-none rounded-[13px] shadow-[0_0_16px_rgba(20,124,131,0.32)] dark:shadow-[0_0_16px_rgba(163,232,220,0.22)]"
             />
             <div className="flex min-w-0 flex-col">
-              <strong className="text-[.98rem] font-extrabold tracking-tight">
+              <strong className="text-[.92rem] font-extrabold tracking-tight">
                 کیانا خرسند
               </strong>
-              <small className="text-[.7rem] text-(--panel-muted) min-[1024px]:text-[#547082] dark:min-[1024px]:text-[#b7d0da]">
+              <small className="text-[.68rem] text-(--panel-muted) min-[1024px]:text-[#547082] dark:min-[1024px]:text-[#b7d0da]">
                 پنل مدیریت
               </small>
             </div>
           </div>
         </Link>
 
-        {/* Sections */}
+        {/* Sections — gap فشرده، بدون اسکرول */}
         {sections.map((section, sectionIndex) => (
           <div
             key={section.kicker}
-            className="mt-[.9rem] mb-[.6rem] first:mt-0"
+            className="mt-[.55rem] mb-[.3rem] first:mt-0"
           >
             <p
-              className="admin-ref-nav-kicker ms-[.1rem] mb-[.35rem] text-[.62rem] font-[750] tracking-[.12em] text-(--panel-muted) uppercase min-[1024px]:text-[#617b87] dark:min-[1024px]:text-[#b7d0da]"
+              className="admin-ref-nav-kicker ms-[.1rem] mb-[.2rem] text-[.58rem] font-[750] tracking-[.12em] text-(--panel-muted) uppercase min-[1024px]:text-[#617b87] dark:min-[1024px]:text-[#b7d0da]"
               aria-hidden="true"
             >
               {section.kicker}
             </p>
             <nav
-              className="admin-ref-side-nav flex flex-col gap-[.15rem]"
+              className="admin-ref-side-nav flex flex-col gap-[.08rem]"
               aria-label={section.kicker}
             >
               {adminLinks
@@ -178,8 +178,8 @@ export function AdminReferenceNav() {
           </div>
         ))}
 
-        {/* Footer */}
-        <div className="admin-ref-side-foot mt-auto pt-3 [border-top:1px_solid_var(--panel-line)] min-[1024px]:border-[#c8dce0] dark:min-[1024px]:border-[#486674]">
+        {/* Footer — فشرده و بدون اسکرول */}
+        <div className="admin-ref-side-foot mt-auto pt-2 [border-top:1px_solid_var(--panel-line)] min-[1024px]:border-[#c8dce0] dark:min-[1024px]:border-[#486674]">
           <AdminSidebarItem
             link={{
               href: "/",
@@ -204,13 +204,11 @@ export function AdminReferenceNav() {
               whileHover={reduce ? undefined : sidebarItemGesture.whileHover}
               whileTap={reduce ? undefined : sidebarItemGesture.whileTap}
               transition={motionTiming.hover}
-              className="admin-ref-nav-item flex min-h-11 w-full items-center gap-[.7rem] rounded-[14px] px-[.7rem] py-2 text-start text-[.92rem] font-medium text-(--ar-text2) no-underline [background:transparent] [&_svg]:flex-none"
+              className="admin-ref-nav-item relative isolate flex min-h-9 w-full items-center gap-[.6rem] overflow-hidden rounded-[12px] px-[.6rem] py-[.35rem] text-start text-[.88rem] font-medium text-(--ar-text2) no-underline [background:transparent] [&_svg]:flex-none"
             >
-              <LogOut
-                size={19}
-                className="relative z-10 flex-none shrink-0"
-                aria-hidden="true"
-              />
+              <span className="relative z-10 flex-none shrink-0 rounded-[7px] bg-[#cfe5e58a] p-[2px] dark:bg-[#385767]">
+                <LogOut size={18} aria-hidden="true" />
+              </span>
               <span className="admin-ref-nav-label relative z-10">
                 خروج از حساب
               </span>

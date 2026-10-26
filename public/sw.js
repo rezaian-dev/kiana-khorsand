@@ -22,15 +22,15 @@
  * https://developer.chrome.com/docs/workbox/caching-strategies-overview
  */
 
-const CACHE_VERSION = "kiana-v2026-10-27";
+const CACHE_VERSION = "kiana-v2026-10-28";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const PAGE_CACHE = `${CACHE_VERSION}-pages`;
 const OFFLINE_URL = "/offline";
 
-/** How long a navigation waits for a fresh render before falling back to cache. */
-const FRESH_MS = 2500;
+/** How long a navigation waits for a fresh render before falling back to cache. Windows needs a snappier fallback. */
+const FRESH_MS = 1200;
 /** A request that has produced no response by now is treated as failed. */
-const DEAD_MS = 7000;
+const DEAD_MS = 4000;
 
 const PRECACHE = [
   OFFLINE_URL,

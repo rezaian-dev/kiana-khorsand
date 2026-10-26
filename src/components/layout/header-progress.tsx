@@ -29,6 +29,11 @@ export function HeaderProgress() {
         document.documentElement.scrollHeight - window.innerHeight;
       const percent = scrollable ? (window.scrollY / scrollable) * 100 : 0;
       el.style.width = `${Math.min(100, Math.max(0, percent))}%`;
+      // شیشه‌ی هدر فقط وقتی اسکرول شده فعال شود — خیلی دقت: کلاس
+      // header-progress-scrolled همان همانی‌ست که public-styles.ts با
+      // :has() می‌بیند تا backdrop-blur را روشن کند.
+      if (window.scrollY > 12) el.classList.add("header-progress-scrolled");
+      else el.classList.remove("header-progress-scrolled");
     };
 
     const schedule = () => {
@@ -49,7 +54,7 @@ export function HeaderProgress() {
   return (
     <div
       ref={bar}
-      className="accent-bar h-[3px] w-0 [background-image:var(--grad-sunset)]"
+      className="accent-bar header-progress h-[3px] w-0 [background-image:var(--grad-sunset)]"
       aria-hidden="true"
     />
   );

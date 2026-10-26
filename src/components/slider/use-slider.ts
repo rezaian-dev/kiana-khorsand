@@ -48,16 +48,17 @@ export function useSlider({
       align: "center",
       slidesToScroll: 1,
       containScroll: false,
+      // اجازه‌ی pan عمودی تا اسکرول صفحه گیر نکند — مخصوص ویندوز با ماوس
+      dragThreshold: 8,
       breakpoints: {
         "(min-width: 640px)": { align: "start", containScroll: "trimSnaps" },
       },
-      // Snap animation duration (Embla option `duration`, default 25). Users who ask
-      // for reduced motion get an instant jump instead of a slide.
+      // اسنپ سریع‌تر تا روی ویندوز حس گیر نداشته باشد
       duration:
         typeof window !== "undefined" &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ? 0
-          : 22,
+          : 18,
     }),
     [],
   );
@@ -68,12 +69,11 @@ export function useSlider({
         ? [
             Autoplay({
               delay: autoplayDelay,
-              // Started explicitly below so the reduced-motion policy always wins.
               playOnInit: false,
-              // A swipe must not kill the rotation for good — there is no play button
-              // to bring it back. Hover and focus still pause it (WCAG 2.2.2).
               stopOnInteraction: false,
-              stopOnMouseEnter: true,
+              // روی ویندوز هاورِ مداوم باعث توقف/شروعِ مکرر و لگ می‌شود
+              // فقط فوکوس (کیبورد/اسکرین‌ریدر) متوقف کند
+              stopOnMouseEnter: false,
               stopOnFocusIn: true,
             }),
           ]
