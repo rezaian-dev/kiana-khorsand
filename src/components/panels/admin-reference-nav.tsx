@@ -1,13 +1,16 @@
 "use client";
 
+import { m, useReducedMotion } from "motion/react";
+
+import { BrandMark } from "@/components/shared/brand-mark";
+import { AdminSidebarItem } from "@/components/motion/admin-sidebar-item";
+import { DockSpotlight } from "@/components/layout/dock-spotlight";
+
 import {
   mobileDockClassName,
   mobileDockIconClassName,
   mobileDockItemClassName,
 } from "@/components/layout/public-styles";
-
-import { BrandMark } from "@/components/shared/brand-mark";
-
 import {
   adminGlassClassName,
   adminSidebarClassName,
@@ -15,9 +18,6 @@ import {
 } from "./panel-styles";
 
 import Link from "next/link";
-import { m } from "motion/react";
-import { DockSpotlight } from "@/components/layout/dock-spotlight";
-
 import { usePathname } from "next/navigation";
 import { LayoutGrid, ExternalLink, LogOut } from "lucide-react";
 import { adminSignOutAction } from "@/actions/admin-auth";
@@ -30,18 +30,40 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  motionTiming,
+  sidebarItem,
+  sidebarItemGesture,
+} from "@/lib/motion-tokens";
 
-const MotionLink = m.create(Link);
-
-// One semantic nav skin for desktop, the mobile sheet, and the sidebar footer.
-const navItemClass =
-  "admin-ref-nav-item flex min-h-11 w-full items-center gap-[.7rem] rounded-[14px] [background:transparent] px-[.7rem] py-2 text-start text-[.92rem] font-medium text-[var(--ar-text2)] no-underline hover:bg-[var(--ar-brand-soft)] hover:text-[var(--ar-brand-ink)] aria-[current=page]:bg-[var(--ar-brand-soft)] aria-[current=page]:font-bold aria-[current=page]:text-[var(--ar-brand-ink)] [&_svg]:flex-none [.admin-ref-frame_&]:aria-[current=page]:[border-inline-start-width:3px]! max-[1023.02px]:[.admin-ref-frame_&]:aria-[current=page]:[border-inline-start:3px_solid_var(--panel-accent)] [.admin-ref-sidebar_&]:hover:[@media(scripting:none)]:[transform:translateX(-2px)]! motion-reduce:[.admin-ref-sidebar_&]:hover:[transform:translateX(-2px)]! min-[1024px]:[.admin-ref-sidebar_&]:transition-[background-color,color]! min-[1024px]:[.admin-ref-sidebar_&]:duration-200! min-[1024px]:[.admin-ref-sidebar_&]:ease-[ease]! motion-reduce:[.admin-ref-sidebar_&]:transition-none! motion-reduce:min-[1024px]:[.admin-ref-frame_.admin-ref-sidebar_&]:transition-[background-color,color]! motion-reduce:min-[1024px]:[.admin-ref-frame_.admin-ref-sidebar_&]:duration-200! motion-reduce:min-[1024px]:[.admin-ref-frame_.admin-ref-sidebar_&]:ease-[ease]!";
-// Radix portals the sheet to body: these tokens cannot inherit from .admin-ref-frame.
-const adminSheetPaletteClassName =
-  "[--panel-surface:#fff] [--panel-text:#182234] [--panel-muted:#526074] [--panel-line:#e4e9f0] [--ar-text2:#415064] [--ar-brand-soft:#e6f3f2] [--ar-brand-ink:#176c67] dark:[--panel-surface:#151a27] dark:[--panel-text:#eef1f7] dark:[--panel-muted:#aab5c7] dark:[--panel-line:#344052] dark:[--ar-text2:#c1cbd8] dark:[--ar-brand-soft:#213d42] dark:[--ar-brand-ink:#a3e8dc]";
-const sheetItemClass = `${navItemClass} flex-none min-h-[46px] font-[650]! rounded-none! aria-[current=page]:rounded-[14px_0_0_14px]! aria-[current=page]:[background:linear-gradient(100deg,#e7f8f4,#eaf2fa)]! aria-[current=page]:[box-shadow:inset_3px_0_#36ab9d]! aria-[current=page]:text-[#145b6b]! dark:aria-[current=page]:[background:linear-gradient(100deg,#244b4e,#263a58)]! dark:aria-[current=page]:text-[#bcf1e4]!`;
-const sheetFooterItemClass = `${sheetItemClass} min-h-[42px]!`;
-const mobileItemClass = `${mobileDockItemClassName}`;
+// --- section grouping for the desktop sidebar ---------------------------------
+// هر بخش یک کِکر کوچک دارد و آیتم‌های آن با تاخیر stagger وارد می‌شوند.
+const sections = [
+  {
+    kicker: "پیشخوان و نوبت‌ها",
+    hrefs: ["/admin", "/admin/calendar", "/admin/availability"],
+  },
+  {
+    kicker: "محتوای سایت",
+    hrefs: ["/admin/articles", "/admin/workshops", "/admin/testimonials"],
+  },
+  {
+    kicker: "مراجعین و کاربران",
+    hrefs: ["/admin/clients", "/admin/users"],
+  },
+  {
+    kicker: "پرداخت‌ها و خدمات",
+    hrefs: ["/admin/payments", "/admin/services"],
+  },
+  {
+    kicker: "تنظیمات",
+    hrefs: ["/admin/settings"],
+  },
+  {
+    kicker: "ارتباطات",
+    hrefs: ["/admin/inbox"],
+  },
+];
 
 const prominent = [
   "/admin",
@@ -49,12 +71,15 @@ const prominent = [
   "/admin/clients",
   "/admin/articles",
 ];
+
+const mobileItemClass = `${mobileDockItemClassName}`;
+
 const labelFor = (href: string, original: string) =>
   ({
-    "/admin": "داشبورد",
-    "/admin/calendar": "نوبت‌ها",
+    "/admin": "پیشخوان مدیریت",
+    "/admin/calendar": "تقویم و نوبت‌ها",
     "/admin/clients": "مراجعین",
-    "/admin/articles": "محتوا",
+    "/admin/articles": "مقالات",
   })[href] ?? original;
 
 export function AdminTopbarTitle() {
@@ -79,88 +104,116 @@ export function AdminTopbarTitle() {
   );
 }
 
+const selectedHref = (path: string): string => {
+  const exact = adminLinks.find(({ href }) => href === path);
+  if (exact) return exact.href;
+  if (path === "/admin/article-editor") return "/admin/articles";
+  return "/admin";
+};
+
 export function AdminReferenceNav() {
   const path = usePathname();
-  const selected = (href: string) =>
-    path === href ||
-    (href === "/admin/articles" && path === "/admin/article-editor");
+  const active = selectedHref(path);
+  const reduce = useReducedMotion();
+
   return (
     <>
       <aside
         className={`admin-ref-sidebar admin-ref-glass ${adminGlassClassName} ${adminSidebarClassName}`}
         aria-label="ناوبری اصلی"
       >
+        {/* Brand */}
         <Link
-          className="admin-ref-brand mb-1 flex items-center gap-2.5 rounded-[.4rem] border-b border-(--panel-line) px-2 pt-1.5 pb-3.5 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
+          className="admin-ref-brand mb-3 flex items-center gap-2.5 rounded-[.6rem] border-b border-(--panel-line) px-2.5 pt-2 pb-4 text-inherit no-underline transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#146e83] focus-visible:ring-offset-2 focus-visible:outline-none min-[1024px]:border-[#cedfe3] min-[1024px]:text-[#183c4d] dark:min-[1024px]:border-[#486674] dark:min-[1024px]:text-[#effffb]"
           href="/"
           aria-label="بازگشت به صفحه اصلی"
           title="بازگشت به صفحه اصلی"
         >
-          <BrandMark
-            size={42}
-            className="admin-ref-logo size-[42px] flex-none rounded-[14px]"
-          />
-          <span className="flex min-w-0 flex-col">
-            <strong className="text-[.95rem] font-bold">کیانا خرسند</strong>
-            <small className="text-[.72rem] text-(--panel-muted) min-[1024px]:text-[#547082] dark:min-[1024px]:text-[#b7d0da]">
-              پنل مدیریت
-            </small>
-          </span>
+          <div className="flex items-center gap-2">
+            <BrandMark
+              size={40}
+              className="admin-ref-logo size-[40px] flex-none rounded-[14px] shadow-[0_0_20px_rgba(20,124,131,0.35)] dark:shadow-[0_0_20px_rgba(163,232,220,0.25)]"
+            />
+            <div className="flex min-w-0 flex-col">
+              <strong className="text-[.98rem] font-extrabold tracking-tight">
+                کیانا خرسند
+              </strong>
+              <small className="text-[.7rem] text-(--panel-muted) min-[1024px]:text-[#547082] dark:min-[1024px]:text-[#b7d0da]">
+                پنل مدیریت
+              </small>
+            </div>
+          </div>
         </Link>
-        <p
-          className="admin-ref-nav-kicker min-[1024px]:m-[.05rem_.7rem_.15rem_0] min-[1024px]:text-[.68rem] min-[1024px]:font-[750] min-[1024px]:tracking-[.01em] min-[1024px]:text-[#617b87] dark:min-[1024px]:text-[#b7d0da]"
-          aria-hidden="true"
-        >
-          فضای مدیریت
-        </p>
-        <nav
-          className="admin-ref-side-nav flex flex-col gap-[.2rem] min-[1024px]:ms-[-0.58rem] min-[1024px]:min-h-0 min-[1024px]:scrollbar-thin min-[1024px]:[scrollbar-color:#92b7bf78_transparent] min-[1024px]:overflow-x-hidden min-[1024px]:overflow-y-auto min-[1024px]:overscroll-contain min-[1024px]:p-[.25rem_.15rem_.25rem_.25rem]"
-          aria-label="بخش‌های پنل"
-        >
-          {adminLinks.map(({ href, label, icon: Icon }) => (
-            <MotionLink
-              key={href}
-              href={href}
-              className={navItemClass}
-              initial={false}
-              whileHover={{ x: -2 }}
-              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-              aria-current={selected(href) ? "page" : undefined}
-            >
-              {selected(href) && (
-                <span
-                  className="admin-ref-rail-selection motion-safe:transition-opacity motion-safe:duration-300 min-[1024px]:pointer-events-none min-[1024px]:absolute min-[1024px]:inset-0 min-[1024px]:z-0 min-[1024px]:rounded-[18px_0_0_18px] min-[1024px]:[box-shadow:0_9px_24px_-14px_#27728574] min-[1024px]:[background:linear-gradient(104deg,#d9f1eb,#e2eef9)] min-[1024px]:[border:1px_solid_#a4d3d0] dark:min-[1024px]:border-[#598f90] dark:min-[1024px]:[box-shadow:0_9px_24px_-14px_#071426] dark:min-[1024px]:[background:linear-gradient(104deg,#245a63,#334e6c)]"
-                  aria-hidden="true"
-                />
-              )}
-              <Icon size={19} aria-hidden="true" />
-              <span className="admin-ref-nav-label">
-                {labelFor(href, label)}
-              </span>
-            </MotionLink>
-          ))}
-        </nav>
-        <div className="admin-ref-side-foot mt-auto pt-3 [border-top:1px_solid_var(--panel-line)] min-[1024px]:border-[#c8dce0] dark:min-[1024px]:border-[#486674]">
-          <MotionLink
-            className={navItemClass}
-            href="/"
-            initial={false}
-            whileHover={{ x: -2 }}
-            transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+
+        {/* Sections */}
+        {sections.map((section, sectionIndex) => (
+          <div
+            key={section.kicker}
+            className="mt-[.9rem] mb-[.6rem] first:mt-0"
           >
-            <ExternalLink size={19} aria-hidden="true" />
-            مشاهده سایت
-          </MotionLink>
+            <p
+              className="admin-ref-nav-kicker ms-[.1rem] mb-[.35rem] text-[.62rem] font-[750] tracking-[.12em] text-(--panel-muted) uppercase min-[1024px]:text-[#617b87] dark:min-[1024px]:text-[#b7d0da]"
+              aria-hidden="true"
+            >
+              {section.kicker}
+            </p>
+            <nav
+              className="admin-ref-side-nav flex flex-col gap-[.15rem]"
+              aria-label={section.kicker}
+            >
+              {adminLinks
+                .filter(({ href }) => section.hrefs.includes(href))
+                .map(({ href, label, icon: Icon }, itemIndex) => {
+                  const globalIndex = sectionIndex * 10 + itemIndex;
+                  return (
+                    <AdminSidebarItem
+                      key={href}
+                      link={{ href, label, icon: Icon }}
+                      isActive={href === active}
+                      index={globalIndex}
+                    />
+                  );
+                })}
+            </nav>
+          </div>
+        ))}
+
+        {/* Footer */}
+        <div className="admin-ref-side-foot mt-auto pt-3 [border-top:1px_solid_var(--panel-line)] min-[1024px]:border-[#c8dce0] dark:min-[1024px]:border-[#486674]">
+          <AdminSidebarItem
+            link={{
+              href: "/",
+              label: "مشاهده سایت",
+              icon: ExternalLink,
+            }}
+            isActive={false}
+            index={99}
+          />
           <form action={adminSignOutAction}>
             <m.button
               type="submit"
-              className={navItemClass}
-              initial={false}
-              whileHover={{ x: -2 }}
-              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              initial={
+                reduce
+                  ? undefined
+                  : { ...sidebarItem.hidden, transition: { delay: 1.05 } }
+              }
+              animate={{
+                ...sidebarItem.visible,
+                transition: { delay: 1.05, ...motionTiming.standard },
+              }}
+              whileHover={reduce ? undefined : sidebarItemGesture.whileHover}
+              whileTap={reduce ? undefined : sidebarItemGesture.whileTap}
+              transition={motionTiming.hover}
+              className="admin-ref-nav-item flex min-h-11 w-full items-center gap-[.7rem] rounded-[14px] px-[.7rem] py-2 text-start text-[.92rem] font-medium text-(--ar-text2) no-underline [background:transparent] [&_svg]:flex-none"
             >
-              <LogOut size={19} aria-hidden="true" />
-              خروج از حساب
+              <LogOut
+                size={19}
+                className="relative z-10 flex-none shrink-0"
+                aria-hidden="true"
+              />
+              <span className="admin-ref-nav-label relative z-10">
+                خروج از حساب
+              </span>
             </m.button>
           </form>
         </div>
@@ -175,6 +228,7 @@ export function AdminMobileTrigger() {
     path === href ||
     (href === "/admin/articles" && path === "/admin/article-editor");
   const extraActive = !prominent.some((href) => selected(href));
+
   return (
     <div className="admin-ref-menu-trigger block lg:hidden">
       <Sheet>
@@ -231,7 +285,7 @@ export function AdminMobileTrigger() {
         <SheetContent
           side="right"
           showCloseButton={true}
-          className={`${panelSheetClassName} ${adminSheetPaletteClassName} admin-ref-sheet box-border h-dvh min-h-0 w-[min(340px,calc(100vw-16px))]! max-w-none! overflow-hidden rounded-[22px_0_0_22px]! p-[1rem_.85rem_calc(1rem+env(safe-area-inset-bottom,0px))]! text-(--panel-text)! [box-shadow:-18px_0_52px_rgb(18_35_48/17%)] [background:#fff]! [border-inline-start:0]! [border:1px_solid_#dfe7ec] **:data-[slot=sheet-close]:rounded-[10px] **:data-[slot=sheet-close]:text-(--panel-text) motion-reduce:animate-none! motion-reduce:[transition:none]! dark:border-[#344052]! dark:[background:#151a27]! [&_:is(a,button):focus-visible]:[outline:3px_solid_var(--ar-brand-ink)]! [&_:is(a,button):focus-visible]:outline-offset-2! [&_:is(a,button):focus-visible]:outline-[#186778]! dark:[&_:is(a,button):focus-visible]:outline-[#bcefe4]!`}
+          className={`${panelSheetClassName} admin-ref-sheet box-border h-dvh min-h-0 w-[min(340px,calc(100vw-16px))]! max-w-none! overflow-hidden rounded-[22px_0_0_22px]! p-[1rem_.85rem_calc(1rem+env(safe-area-inset-bottom,0px))]! text-(--panel-text)! [box-shadow:-18px_0_52px_rgb(18_35_48/17%)] [background:#fff]! [border-inline-start:0]! [border:1px_solid_#dfe7ec] **:data-[slot=sheet-close]:rounded-[10px] **:data-[slot=sheet-close]:text-(--panel-text) motion-reduce:animate-none! motion-reduce:[transition:none]! dark:border-[#344052]! dark:[background:#151a27]! [&_:is(a,button):focus-visible]:[outline:3px_solid_var(--ar-brand-ink)]! [&_:is(a,button):focus-visible]:outline-offset-2! [&_:is(a,button):focus-visible]:outline-[#186778]! dark:[&_:is(a,button):focus-visible]:outline-[#bcefe4]!`}
           overlayClassName="admin-ref-overlay motion-reduce:animate-none! motion-reduce:[transition:none]! [background:rgb(10_19_34_/_42%)]! [backdrop-filter:blur(2px)]!"
         >
           <div className="admin-sheet-head flex min-h-[45px]! flex-none items-center p-[.4rem_.35rem_.7rem] px-1! pt-1! pb-[.8rem]! [border-bottom:1px_solid_var(--panel-line)]!">
@@ -255,7 +309,7 @@ export function AdminMobileTrigger() {
                 <SheetClose asChild key={href}>
                   <Link
                     href={href}
-                    className={sheetItemClass}
+                    className="sheet-item flex min-h-[46px] items-center gap-[.7rem] rounded-[14px] px-[.7rem] py-2 text-start text-[.92rem] font-medium text-(--ar-text2) no-underline hover:bg-(--ar-brand-soft) hover:text-(--ar-brand-ink) aria-[current=page]:bg-(--ar-brand-soft) aria-[current=page]:font-bold aria-[current=page]:text-(--ar-brand-ink) [&_svg]:flex-none"
                     aria-current={path === href ? "page" : undefined}
                   >
                     <Icon size={19} aria-hidden="true" />
@@ -266,13 +320,19 @@ export function AdminMobileTrigger() {
           </nav>
           <div className="admin-sheet-footer flex-none pt-2 [border-block-start:1px_solid_var(--panel-line)]">
             <SheetClose asChild>
-              <Link href="/" className={sheetFooterItemClass}>
+              <Link
+                href="/"
+                className="sheet-footer-item flex min-h-[42px] items-center gap-[.7rem] rounded-[14px] px-[.7rem] py-2 text-start text-[.92rem] font-medium text-(--ar-text2) no-underline hover:bg-(--ar-brand-soft) hover:text-(--ar-brand-ink) [&_svg]:flex-none"
+              >
                 <ExternalLink size={19} aria-hidden="true" />
                 مشاهده سایت
               </Link>
             </SheetClose>
             <form action={adminSignOutAction}>
-              <button type="submit" className={sheetFooterItemClass}>
+              <button
+                type="submit"
+                className="sheet-footer-item flex min-h-[42px] items-center gap-[.7rem] rounded-[14px] px-[.7rem] py-2 text-start text-[.92rem] font-medium text-(--ar-text2) no-underline hover:bg-(--ar-brand-soft) hover:text-(--ar-brand-ink) [&_svg]:flex-none"
+              >
                 <LogOut size={19} aria-hidden="true" />
                 خروج از حساب
               </button>

@@ -59,3 +59,29 @@ export const listItem: Variants = {
 export const hoverLift = { y: -3 } as const;
 export const hoverNudge = { y: -1 } as const;
 export const press = { scale: 0.97 } as const;
+
+/** Admin sidebar: staggered entrance, pointer lift, and the sliding active rail. */
+export const sidebarItem: Variants = {
+  hidden: { opacity: 0, x: 14 },
+  visible: { opacity: 1, x: 0 },
+} as const;
+
+export const sidebarItemGesture = {
+  whileHover: { x: -6 },
+  whileTap: { scale: 0.96 },
+} as const;
+
+export const sidebarRail: Variants = {
+  hidden: { width: 0, opacity: 0 },
+  visible: { width: "100%", opacity: 1 },
+} as const;
+
+/** Admin sheet (mobile menu) entrance. */
+export const adminSheet: Variants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0 },
+} as const;
+
+/** Admin surface lifts and stat-card lifts. */
+export const adminCardHover = { y: -4 } as const;
+export const adminStatHover = { y: -6 } as const;
