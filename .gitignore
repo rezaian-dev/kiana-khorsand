@@ -32,7 +32,6 @@ yarn-error.log*
 
 # env files — never commit
 .env*
-!.env.example
 
 # vercel
 .vercel
@@ -46,5 +45,4 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 
-# playwright session cache
-/e2e/.auth/
+# playwright session cache (e2e removed)
