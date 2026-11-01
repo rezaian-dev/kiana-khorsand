@@ -86,9 +86,9 @@ const panelVariants = {
     opacity: 1,
     transition: {
       type: "spring",
-      stiffness: 380,
-      damping: 34,
-      mass: 0.9,
+      stiffness: 320,
+      damping: 32,
+      mass: 0.8,
     },
   },
 } as const;
@@ -102,9 +102,9 @@ const socials = [
 ] as const;
 
 const socialToneClasses = {
-  instagram: "text-[var(--c-plum)]",
-  telegram: "text-[var(--c-teal)]",
-  whatsapp: "text-[var(--c-teal)]",
+  instagram: "text-[#E1306C]",
+  telegram: "text-[#0088CC]",
+  whatsapp: "text-[#25D366]",
 } as const;
 
 type SocialLinks = {
@@ -208,9 +208,10 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
         aria-describedby={undefined}
       >
         <m.div
+          initial={{ x: "100%", opacity: 0 }}
           animate={reduceMotion ? false : isMenuOpen ? "open" : "closed"}
           variants={panelVariants}
-          className="pointer-events-none inset-0 size-full"
+          className="inset-0 size-full"
         >
           <m.div
             data-menu-topline
