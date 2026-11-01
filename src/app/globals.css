@@ -164,6 +164,26 @@
   }
 }
 
+/* Mobile “بیشتر” menu — push drawer from the right.
+   When the sheet opens, slide the scrollable shell left so the menu pushes
+   page content aside instead of overlaying it. Header + mobile dock stay fixed
+   (they are siblings of .site-shell-pushable, so transforming only this wrapper
+   keeps fixed-positioned dock in place and avoids the fixed+transform trap).
+   Push width mirrors the panel width (min(88vw, 380px)) so content reveals
+   exactly the strip the menu fills. Reduced motion disables the shift. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.ref-menu-sheet[data-state="open"]) .site-shell-pushable {
+    transform: translateX(calc(-1 * min(88vw, 380px)));
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.ref-menu-sheet[data-state="open"]) .site-shell-pushable {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -45,10 +45,12 @@ export default function SiteLayout({
         پرش به محتوای اصلی
       </a>
       <Header />
-      <main id="main" className="[&:not(:has(.header-offset))]:pt-[75px]">
-        <PageReveal>{children}</PageReveal>
-      </main>
-      <Footer />
+      <div className="site-shell-pushable">
+        <main id="main" className="[&:not(:has(.header-offset))]:pt-[75px]">
+          <PageReveal>{children}</PageReveal>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
