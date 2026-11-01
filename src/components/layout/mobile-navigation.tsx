@@ -1,6 +1,7 @@
 "use client";
 
 import { BrandMark } from "@/components/shared/brand-mark";
+import { useState } from "react";
 
 import Link from "next/link";
 import { m } from "motion/react";
@@ -74,6 +75,26 @@ const lineTransition = {
   ease: [0.16, 1, 0.3, 1],
 } as const;
 
+/** Motion variants for the right-side push drawer. The panel always enters
+ *  from the right edge (x: "100%" → 0) and exits back to the right, never
+ *  flipping to the left side. A spring curve makes the opening feel lively
+ *  while reduced motion disables the shift entirely. */
+const panelVariants = {
+  closed: { x: "100%", opacity: 0 },
+  open: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 380,
+      damping: 34,
+      mass: 0.9,
+    },
+  },
+} as const;
+
+
+
 const socials = [
   { key: "instagram", label: "اینستاگرام", icon: "ph-instagram-logo" },
   { key: "telegram", label: "تلگرام", icon: "ph-telegram-logo" },
@@ -95,6 +116,7 @@ type SocialLinks = {
 export function MobileNavigation({ social }: { social?: SocialLinks }) {
   const pathname = usePathname();
   const reduceMotion = useLiveReducedMotion();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Never show public dock inside account/admin panels — those have their own panel docks
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) {
     return null;
@@ -113,7 +135,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
   };
 
   return (
-    <Sheet>
+    <Sheet onOpenChange={setIsMenuOpen}>
       <nav
         className={`site-bottom-dock ${mobileDockClassName} ${publicMovingDockClassName} min-[769px]:hidden`}
         data-dock-active={activeIndex}
@@ -186,13 +208,18 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
         aria-describedby={undefined}
       >
         <m.div
-          data-menu-topline
-          className="absolute inset-x-5 top-0 z-2 h-[3px] origin-right rounded-b-[99px] [background-image:var(--grad-sunset)]"
-          initial={reduceMotion ? false : { scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={lineTransition}
-          aria-hidden="true"
-        />
+          animate={reduceMotion ? false : isMenuOpen ? "open" : "closed"}
+          variants={panelVariants}
+          className="pointer-events-none inset-0 size-full"
+        >
+          <m.div
+            data-menu-topline
+            className="absolute inset-x-5 top-0 z-2 h-[3px] origin-right rounded-b-[99px] [background-image:var(--grad-sunset)]"
+            initial={reduceMotion ? false : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={lineTransition}
+            aria-hidden="true"
+          />
         <div className="ref-menu-content min-h-0 flex-1 scrollbar-thin [scrollbar-color:var(--line)_transparent] overflow-x-hidden overflow-y-auto overscroll-contain pt-4 pb-[.35rem] [&::-webkit-scrollbar]:inline-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-(--line) [&::-webkit-scrollbar-track]:bg-transparent">
           <m.div
             className="mb-2 flex items-center justify-between gap-2"
@@ -298,6 +325,7 @@ export function MobileNavigation({ social }: { social?: SocialLinks }) {
             )}
           </m.ul>
         </div>
+        </m.div>
       </SheetContent>
     </Sheet>
   );

@@ -153,7 +153,7 @@ export const publicAccountTriggerClassName =
 
 /** The phone menu sheet: slide-in panel with its own open/close curve. */
 export const mobileSheetPanelClassName =
-  "ref-menu-sheet [&:where([data-state=open],[data-open]:not([data-open=false]))]:animate-ref-menu-open [&:where([data-state=closed],[data-closed]:not([data-closed=false]))]:animate-ref-menu-close inset-e-0! inset-s-auto! flex! h-dvh! w-[min(88vw,380px)]! max-w-none! min-w-0 flex-col! gap-0! overflow-hidden! rounded-[28px_0_0_28px]! border! border-e-0! border-(--line)! bg-(--glass-strong)! px-[.875rem]! pt-[env(safe-area-inset-top,0px)]! pb-[calc(.55rem+env(safe-area-inset-bottom,0px))]! text-(--fg)! shadow-[-14px_0_50px_rgba(18,15,43,0.18)]! backdrop-blur-xl! backdrop-saturate-180! transition-none! motion-reduce:animate-none!";
+  "ref-menu-sheet inset-e-0! inset-s-auto! flex! h-dvh! w-[min(88vw,380px)]! max-w-none! min-w-0 flex-col! gap-0! overflow-hidden! rounded-[28px_0_0_28px]! border! border-e-0! border-(--line)! bg-(--glass-strong)! px-[.875rem]! pt-[env(safe-area-inset-top,0px)]! pb-[calc(.55rem+env(safe-area-inset-bottom,0px))]! text-(--fg)! shadow-[-14px_0_50px_rgba(18,15,43,0.18)]! backdrop-blur-xl! backdrop-saturate-180! transition-none! motion-reduce:animate-none!";
 
 /** One row of the phone menu: label, icon slot and a chevron that hints at motion. */
 export const mobileSheetLinkClassName =
